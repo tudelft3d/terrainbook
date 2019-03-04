@@ -1,0 +1,90 @@
+
+\documentclass[a4paper,10pt]{scrbook}
+
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc} %-- pour utiliser des accents en français
+\usepackage{mathpazo}
+\usepackage{amsmath,amssymb,amsthm} 
+\usepackage[round]{natbib}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage[left=20mm,top=20mm]{geometry}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{todonotes}
+\usepackage{ccicons}
+\usepackage{tikz}
+\usepackage[tikz]{mdframed}
+
+\newcommand{\ie}{ie}
+\newcommand{\eg}{eg}
+\newcommand{\reffig}[1]{Figure~\ref{#1}}
+\newcommand{\refsec}[1]{Section~\ref{#1}}
+
+\setcapindent{1em} %-- for captions of Figures
+\setcounter{tocdepth}{\sectiontocdepth}
+
+
+\renewcommand{\refname}{References \& further reading}
+\renewcommand{\contentsname}{\vspace{-15mm}}
+
+\definecolor{light-gray}{gray}{0.95}
+\newmdenv[%
+  outerlinewidth=2,%
+  roundcorner=10pt,%
+  linecolor=gray,%
+  backgroundcolor=light-gray,%
+]{practical-stuff}
+
+%-- setup
+%\onehalfspacing
+% \setkomafont{captionlabel}{\bfseries}
+% \addtokomafont{caption}{\small}
+% \setkomafont{pagehead}{\normalfont\sffamily}
+% \setkomafont{pagenumber}{\normalfont\sffamily} %\rmfamily}
+% \clearscrheadings
+% %\clearscrheadfoot
+% \cohead{\headmark}
+% \rohead{\pagemark}
+% \setheadwidth[0pt]{text}
+% \setheadsepline{1pt}
+
+
+
+\subject{An open access book}
+\title{Computational modelling of terrains}
+\author{Hugo Ledoux, Ken Arroyo Ohori, Ravi Peters}
+
+\date{\today}
+
+\begin{document}
+
+%-------------------------------------------
+\frontmatter
+\maketitle
+\tableofcontents
+% \listoffigures
+% \listoftables
+
+
+%-------------------------------------------
+\mainmatter
+% \pagestyle{scrheadings}
+
+%\onehalfspacing
+
+\include{whatisterrain/whatisterrain}
+\include{acquisition/acquisition}
+
+
+%-------------------------------------------
+\backmatter 
+\bibliographystyle{refs/tb.bst} 
+\bibliography{refs/tb}
+
+\end{document}
