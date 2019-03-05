@@ -28,8 +28,8 @@
 \usepackage{booktabs}
 \usepackage{colortbl}
 \usepackage{hyperref}
-\usepackage{lastpage}
-\usepackage{todonotes}
+% \usepackage{lastpage}
+% \usepackage{todonotes}
 \usepackage{fontawesome}
 \usepackage{ccicons}
 \usepackage{gensymb}
@@ -37,16 +37,15 @@
 \usepackage[tikz]{mdframed}
 
 \usepackage{floatrow}
-% \usepackage[footnote]{snotez}
-% \setsidenotes{text-mark-format=\textsuperscript{\normalfont#1},
-%               note-mark-format=#1:,
-%               note-mark-sep=\enskip}
+\usepackage{sidenotes}
 \addtokomafont{caption}{\footnotesize}
 
 \newcommand{\ie}{ie}
 \newcommand{\eg}{eg}
 \newcommand{\reffig}[1]{Figure~\ref{#1}}
 \newcommand{\refsec}[1]{Section~\ref{#1}}
+
+\extrafloats{100}
 
 \setcapindent{0em} %-- for captions of Figures
 \setcounter{tocdepth}{\sectiontocdepth}
@@ -64,7 +63,7 @@
                    floatwidth=\textwidth}
 
 % \renewcommand{\refname}{References \& further reading}
-\renewcommand{\contentsname}{\vspace{-15mm}}
+% \renewcommand{\contentsname}{\vspace{-15mm}}
 
 \definecolor{light-gray}{gray}{0.97}
 \definecolor{myred}{RGB}{111,12,31}
@@ -107,7 +106,7 @@
 \mainmatter
 
 \include{whatisterrain/whatisterrain}
-% \include{acquisition/acquisition}
+\include{acquisition/acquisition}
 % \include{dtvd/dtvd}
 % \include{interpol/interpol}
 % \include{kriging/kriging}
