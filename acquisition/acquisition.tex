@@ -275,10 +275,10 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}
 	\label{fig:processing}
 \end{figure}
-Or, one can attempt to detect and remove outliers caused \eg\  by multi-path effects or flocks of birds\sidenote{This is a topic of lesson 12}. 
+Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds\sidenote{This is a topic in Chapter~\ref{chap:pcprocessing}}. 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).
-And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\sidenote{Lessons 04 and 05 explore the topic of spatial interpolation in detail.}.
+And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with.
 
 Ultimately it is up to you, the DTM expert, to judge what processing methods and parameters are sensible for a given dataset.
 You need to consider on the one hand the types and severity of the artefacts, and on the other hand the limitations of the available algorithms to fix them. 
