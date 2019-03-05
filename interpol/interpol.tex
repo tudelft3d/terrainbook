@@ -184,6 +184,23 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
+
+%%%
+\paragraph{Data-dependent triangulations.}
+It was shown in Chapter~\ref{chap:dtvd} and in \reffig{fig:whydt} that, for terrain modelling, the Delaunay triangulation is preferred over other triangulations because it favours triangles that are as equilateral as possible.
+However, it should be noticed that the elevation of the vertices are not taken into account to obtain the DT, \ie\ if we changed the elevation of the samples we would always get the same triangulation.
+One might therefore wonder whether the DT best approximates the morphology of a terrain.
+
+A triangulation that considers the elevation (or any $z$ coordinate) is called a \emph{data-dependent triangulation}.
+The idea is to define a set of criteria (instead of the empty circumcircle).
+One example is trying to minimise the change in normals for the two incident triangles of an edge.
+While such methods will yield longer and skinnier triangles, these might better approximate the shape of the terrain for some specific cases.
+One drawback of these methods is that different criteria will be required for different cases, and that computing such triangulation can be computationally expensive.
+In practice, one would need to first compute the DT, and then take each edge (and the two incident triangles), and perform a local flip based on the elevation values; the final triangulation is obtained by optimisation the wished criterion.
+
+
+
+%%%
 \paragraph{Barycentric coordinates.}
 \begin{figure}
   \centering
@@ -332,7 +349,6 @@ where $a_i$ are 4 unknown that can be determined by solving 4 equations (one for
 %
 \section{Notes and comments}
 
-% No attempts will be made here to introduce categories (see Mitas and Mitasova (1999) and Watson (1992) for that)
 
 \citet{Watson92}, in his authoritative book, lists the essential properties of an `ideal' interpolation method for bivariate geoscientific datasets; we have added \emph{computationally efficient} and \emph{automatic} to the list.
 
@@ -354,8 +370,16 @@ The construction of a polynomial inside each triangle of a TIN can be done with 
 The simplest method is the Clough-Tocher method~\citep{Clough65,Farin85}.
 It splits each triangle into 3 sub-triangles (by inserting a temporary point at the centroid of the triangle) and a cubic function is built over each.
 
+\citet{Dyn93} shows how to obtain a data-dependent triangulation.
+\citet{Rippa90} proves that the DT is the triangulation that minimizes the roughness of the resulting terrain, no matter what the actual elevation of the data is. 
+Here, roughness is defined as the integral of the square of the $L^2$-norm of the gradient of the terrain.
+\citet{Gudmundsson02} shows that a variation of the DT (one where $k$ vertices can be inside the circumcircle of a given triangle) can yield fewer local minima; whether it yields a ``better' terrain is an open question.
+
 
 %%%
 %
 \section{Exercises}
 
+\begin{enumerate}
+  \item Given a triangle $\tau$ with coordinates (20.0, 72.0, 21.0), (116.0, 104.0, 32.0), and (84.0, 144.0, 26.0), estimate the elevation at $x$ = (92.0, 112.0) with linear interpolation in the triangle.
+\end{enumerate}
