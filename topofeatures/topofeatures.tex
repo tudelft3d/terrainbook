@@ -1,0 +1,370 @@
+%!TEX root = ../terrainbook.tex
+
+\graphicspath{{topofeatures/}}
+
+
+\chapter{Topographic features}
+
+
+While a DTM is a (2.5D) surface, it can also be conceptualised as an aggregation of many \emph{topographic features} that are inter-related.
+Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but one can think of application-specific ones such as the navigational channels in bathymetry, buildings in city modelling, or dikes for flood modelling.
+
+Identifying the different features forming a terrain enhances our understanding of the raw dataset.
+To help us extract and identify features, some operations/characteristics need to be extracted from terrains, \eg\ the slope, the aspect, the curvature, the roughness, etc.
+
+We describe in this lesson a few key features in terrains, and describe how they can be extracted.
+Since these differ from the data model used (TINs vs grids), we give examples for both.
+
+\newpage
+
+%%%
+%
+\section{Slope}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/slope_concept}
+  \caption{The slope at a given location $p_i$ is defined by the tangent plane $H_i$ to the surface. Here are 3 examples for a profile view of a terrain.}
+\label{fig:slope_concept}
+\end{figure}
+
+The slope at a given location $p$ on a terrain is defined by the plane $H$ that is tangent at $p$ to the surface representing the terrain (see Figure~\ref{fig:slope_concept}).
+What we casually refer to as ``slope'' has actually two components: (1) gradient; (2) aspect (see Figure~\ref{fig:slope_aspect}).
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/slope_aspect}
+  \caption{One DTM with contour lines, and the gradient and aspects concepts for a given location (blue cross).}
+\label{fig:slope_aspect}
+\end{figure}
+
+
+%%%
+\paragraph{Gradient.} 
+The gradient at a given point $p$ is the maximum rate of change in elevation. 
+It is obtained by the angle $\alpha$ between $H$ and the horizontal plane (Figure~\ref{fig:slope_aspect}).
+From a mathematical point-of-view, the gradient is the maximum value of the derivative at a point on the surface of the terrain (maximised over the direction).
+The gradient will often be expressed in degrees, or in percentage.
+
+Notice that if calculate the gradient at every location for a terrain, then we obtain a new field since the gradient is a continuous phenomena (values from 0\% to 100\% for instance).
+This means in practice that for a given terrain in raster, calculating its gradient will create a new raster file that can be further processed.
+
+
+%%%
+\paragraph{Aspect}
+At a given point $p$ on the terrain the gradient can be in any direction, the aspect is this direction projected to the $xy$-plane. 
+It is basically a 2D vector telling us the direction of the steepest slope at a given point.
+It is usually expressed in degrees from an arbitrary direction (most often the north).
+Observe that for the parts of the terrain that are horizontal (\eg\ a lake) the value of the aspect is unknown.
+Also observe that at a given location the aspect will always be perpendicular to the contour line.
+
+
+% GDAL: % https://www.gdal.org/gdaldem.html#gdaldem_aspect
+% values between 0° and 360° representing the azimuth that slopes are facing. The definition of the azimuth is such that : 0° means that the slope is facing the North, 90° it's facing the East, 180° it's facing the South and 270° it's facing the West (provided that the top of your input raster is north oriented).
+
+
+
+%%%
+\subsection{Slope in TINs}
+
+Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $\tau$ containing this point, and compute the normal vector $\vec{n}$ of $\tau$ (pointing outwards). 
+The projection of $\vec{n}$ on the $xy$-plane is the aspect (this is done by simply ignore the $z$-component of the vector).
+And the gradient is obtained easily.
+
+If $p$ is directly on a edge of the TIN then the solution cannot be obtained directly; it is common practice to calculate the normal vector of the 2 incident triangle and average them to obtain one $\vec{n}$.
+The same is applied if $p$ is directly on a vertex $v$ of the TIN: the average of all the normal vectors of all the incident triangle to $v$ is used.
+
+
+%%%
+\subsection{Slope in grids}
+
+If the terrain is represented as a regular grid (say of resolution $r$), then there exist several algorithm to obtain the slope at a given cell $c_{i,j}$.
+We list here a few common ones.
+It should be noticed that most algorithms use a 3$\times$3 kernel, \ie\ the value for the gradient/aspect at cell $c_{i,j}$ is computed by using (a subset of) the 8 neighbours.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figs/slope_grid}
+  \caption{Left: Given a cell $c_{i,j}$, the 3$\times$3 nes its 8 neighbours. Right: a hypothetical case with some elevations; orange = aspect for method \#2 below, purple = aspect for method \#3 below.}
+\label{fig:slope_grid}
+\end{figure}
+
+
+%%%
+\paragraph{1. Local triangulation + TIN method.}
+It is possible to locally triangulate the 9 points, calculate the normal of the 8 triangles, and then use the method above for TINs.
+
+
+%%%
+\paragraph{2. Maximum height difference.}
+This method simply picks the maximum height difference between $c_{i,j}$ and each of its 8 neighbours, the maximum absolute value is the direction of the aspect and the gradient can be trivially calculated.
+Notice that this means that there are only 8 possibilities for the slope (at 45\degree\ intervals).
+For the case in Figure~\ref{fig:slope_grid}, the aspect would be facing south (180\degree) and the gradient would be 45\degree.
+
+
+%%%
+\paragraph{3. Finite difference.}
+
+With this method, the height differences in the $x$-direction (west-east) and in the $y$-direction (south-north) are calculated separately, and then the 2 differences are combined to obtain the slope.
+This means that only the direct 4-neighbours of $c_{i,j}$ are used.
+
+\[
+  \frac{\partial z}{\partial x} = \frac{z_{i+1,j} - z_{i-1,j}}{2\,r}
+\, , 
+  \frac{\partial z}{\partial y} = \frac{z_{i,j+1} - z_{i,j-1}}{2\,r}
+\]
+The gradient is defined as:
+\[
+  \tan \alpha = \sqrt{(\frac{\partial z}{\partial x})^2 + (\frac{\partial z}{\partial y})^2}
+\]
+and the aspect as:
+\[
+  \tan \theta = \frac{\frac{\partial z}{\partial x}}{\frac{\partial z}{\partial y}}
+\]
+
+For the case in Figure~\ref{fig:slope_grid}, the aspect would be 195\degree\ and the gradient would be 45\degree.
+
+
+%%%
+\paragraph{4. Local polynomial fitting.}
+\label{sec:polynomial}
+
+Based on the 9 elevation points, it is possible to fit a polynomial (as explained in Lesson~04) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
+
+A quadratic polynomial could for instance be defined:
+\[
+  z = ax^2 + by^2 + dx + ey +d
+\]
+, and thus:
+\[
+  \frac{\partial z}{\partial x} = 2ax + cy + d
+\]
+\[
+  \frac{\partial z}{\partial y} = 2by + cx + e
+\]
+and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial z}{\partial x} = d$ and $\frac{\partial z}{\partial y} = e$.
+
+
+\begin{practical-stuff}
+\textbf{In practice: gdaldem.} 
+The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
+
+After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
+This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
+
+If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
+This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
+
+The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
+\end{practical-stuff}
+
+%%%
+\subsection{Hillshading}
+
+Hillshading is a technique used to help visualise the relief of a DTM (see Figure~\ref{fig:hillshade} for an example).
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/hillshade}
+  \caption{Left: a DTM visualised with height as a shade of blue. Right: when hillshading is applied.}
+\label{fig:hillshade}
+\end{figure}
+It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
+This image assumes that the source of light (the sun) is located at a given position.
+
+While it would be possible to use advanced computer graphics methods (see Lesson~13) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
+
+Given a regular gridded DTM, hillshading means that each cell gets a value which depicts the variation in tone, from light to dark.
+The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original gridded DTM (for convenience).
+The values computed for each cell need as input the gradient and the aspect of the DTM\@.
+The formula to compute the hillshade of a given cell $c_{i,j}$ differs from software to software, and we present here one (it is used in ArcGIS for example, and surely others).
+It assumes that the output hillshade value is an integer in the range $[0,255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known.
+Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a DTM\@.
+As above and in Figure~\ref{fig:hillshade-params}, 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{figs/hillshade-params}
+  \caption{The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).}
+\label{fig:hillshade-params}
+\end{figure}
+for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{i,j}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rand is the horizon, $\pi$ rand is the zenith).
+\[
+  hillshade_{i,j} = 250 \times ((\cos\gamma \times \cos\theta_{i,j}) + (\sin\gamma \times \sin\theta_{i,j} \times \cos (\psi - \alpha_{i,j}))) 
+\]
+(all angles need to be radians)
+
+
+
+%%%
+%
+\section{Features}
+
+
+%%%
+\subsection{Characteristic points on terrains}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/feature_points}
+  \caption{\textbf{(a)} Peaks and pits. \textbf{(b)} A saddle point (Figure from \url{https://www.armystudyguide.com})}
+\label{fig:feature_points}
+\end{figure}
+
+
+%%%
+\paragraph{Peak.}
+A point $p$ whose surrounding is formed only of points that are of lower elevation is a peak.
+The size and shape of the surrounding is dependent on the application and on the data model used to represent the terrain.
+If a grid is used, this surrounding could be the 8 neighbours; if a TIN is used they could be the vertices that of the triangles incident to $p$.
+Observe that a peak can be local, that is one point that happens to be a few cm higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
+A peak is therefore on the scale of the data.
+
+The contour line through the $p$ does not exist.
+
+%%%
+\paragraph{Pit.}
+A point $p$ whose surrounding is formed only of points that are of higher elevation is a pit.
+The same remarks as for peak apply here.
+The contour line through the $p$ does not exist.
+
+%%%
+\paragraph{Saddle point.}
+As shown in Figure~\ref{fig:feature_points}b, a saddle point, also called a pass, is a point whose neighbourhood is composed of higher elevations on two opposite directions, and 2 lower elevations in the other two directions.
+From a mathematic point-of-view, it is a point for which the derivates in orthogonal directions are 0, but the point is not maximum (peak) or a mininum (pit).
+
+%
+
+If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most point in a terrain this will be 2, except for peaks/pits where this is 0.
+Figure~\ref{fig:saddle_contour}
+% TODO: hm, the red lines don't really look like contours to me. as far as i know countours shoulnd't intersect and these are intersecting at 10
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.4\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/saddle_contour}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.4\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
+    \caption{}
+  \end{subfigure}
+\caption{\textbf{(a)} A saddle point at elevation 10m, and its surrounding points. \textbf{(b)} the triangulation of the area is created and used to extract the contour line segments at 10m (red lines).}
+\label{fig:saddle_contour}
+\end{figure}
+shows an example for a point with an elevation of 10m, the contour lines at 10m is drawn by linearly interpolating along the edges of the TIN of the surrounding.
+
+
+
+%%%
+\subsection{Valleys, ridges}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{figs/valley_ridge}
+  \caption{Edges in a TIN can be classified as valley, ridge, or neither}
+\label{fig:valley_ridge}
+\end{figure}
+Valleys and ridges are 1-dimensional features.
+If a terrain is represented as a TIN, we can extract the edges of the triangles that form a valley or a ridge.
+An edge $e$, incident to 2 triangles, is considered a valley-edge if the projection of the 2 normals of the triangles, projected to the $xy$-plane, point to $e$.
+If the 2 normals projected point in the opposite direction, then $e$ is a ridge.
+If they point is different directions, then $e$ is neither.
+
+
+
+%%%
+%
+\section{Curvature}
+
+The curvature is the 2nd derivative of the surface representing the terrain, it represents the rate of change of the gradient.
+We are often not interested in the value of the curvature itself ($\frac{\degree}{m}$) but whether the curvature is: convex, concave, or flat.
+
+The curvature at a point $p$ is often decomposed into types:
+\begin{enumerate}
+  \item \textbf{profile curvature:} the curvature of the vertical cross-section through $p$ perpendicular to the contour line passing through $p$ (or of the vertical plane along the 2D vector of the aspect at $p$)
+  \item \textbf{plan curvature:} the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$)
+\end{enumerate} 
+Because there are 2 types of curvatures and each have 3 potential values, there are 9 possible options (as Figure~\ref{fig:curvatures} shows).
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figs/curvatures}
+  \caption{Nine curvatures (Figure adapted from \citet{vanKreveld97}).}
+\label{fig:curvatures}
+\end{figure}
+
+
+%%%
+\subsection{Computing for grids}
+
+Computing the curvature is a complex operation and we will not describe one specific method.
+The idea is to reconstruct \emph{locally} the surface (\eg\ with the polynomial fitting from Section~\ref{sec:polynomial} above, or with a TIN), and then verify whether the 2 curvature types are convex/concave/flat.
+Observe that the curvature, as it is the case for the slope, is heavily influenced by the scale of the terrain (its resolution) and thus having a 3$\times$3 kernel might be influenced by the noise in the data, or by small features.
+
+
+%%%
+\subsection{Computing for TINs}
+
+For a TIN, it is possible to define for each vertex $v$ the profile and the plan curvatures by using the triangles that are incident to $v$ and extract the contour line for the elevation of $v$ (as is shown in Figure~\ref{fig:saddle_contour}).
+The idea is to classify each vertex into one of the 9 possibilities in Figure~\ref{fig:curvatures}.
+
+If there is no contour segment, then $v$ is either a peak or a pit.
+A peak will be profile and plan convex; a pit will be profile and plan concave.
+
+If there are 2 segments, then we can use these to estimate the direction of the aspect, it will be perpendicular (thus the bisector between the 2 segments is a good estimate) in the direction or lower elevations.
+If we simply look at the elevations higher and lower than $v$ along this direction, then we can easily verify whether $v$ is profile convex or concave.
+For the plan curvature, we can simply walk along one of the 2 edges so that higher elevations are on our left, $v$ is plan convex if the contour line makes a left turn at $v$, if it makes a right turn it is concave, and if it is straight then it is plan flat.
+
+If there are $>2$ segments, then $v$ is a saddle point and thus no curvatures can be defined.
+
+%
+
+% TODO B: why would we do this? what is its application?
+When each point has been assigned a curvature---a pair $(profile,plan)$---we can use for instance the Voronoi diagram, as shown in Figure~\ref{fig:vd}.
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/vd}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/vd}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/vd}
+    \caption{}
+  \end{subfigure}%
+\caption{\textbf{(a)} Points from a TIN classified according to their curvatures (con\textbf{v}ex, con\textbf{c}ave, \textbf{f}lat). \textbf{(b)} The VD of the points. \textbf{(c)} The Voronoi edges between the cells having the same label are removed, to create polygons.}
+\label{fig:vd}
+\end{figure}
+It suffices to remove the Voronoi edges incident to cells having the same label, and polygonal zones are obtained.
+
+
+
+
+%%%
+%
+\section{Notes and comments}
+
+The polynomial fitting method for computing the slope is from \citet{Evans80} and \citet{Wood96}.
+\citet{Skidmore89} carried out a comparison of 6 methods to extract slope from regular gridded DTMs, and concluded that methods using 8 neighbours perform better than those using only 4 or the biggest height difference.
+He did not however investigate how the resolution of the grid influences the results.
+
+The formula to calculate the hillshade for one cell in a gridded DTM is from \citet{Burrough98}, and the ArcGIS describes it in details (\url{https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm}).
+
+Some algorithms have been developed to identify the features forming a DTM: \citet{Kweon94} and \citet{Schneider05} can identify simple features in DEMs (if they are pre-processed into bilinear patches); and \citet{Magillo09} and \citet{Edelsbrunner01-1} describe algorithms to perform the same, but directly on TINs.
+
+The algorithm to extract profile and plan curvatures from a TIN is taken from \citet{vanKreveld97}.
+
+
+% A DTM is formed by an aggregation of many features that are inter-related~\citep{Pfalz76,Kweon94,DoD99,Wood96}.
+
+
+%%%
+%
+\section{Exercises}
+

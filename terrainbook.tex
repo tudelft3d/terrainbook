@@ -18,6 +18,7 @@
 \usepackage{lastpage}
 \usepackage{todonotes}
 \usepackage{ccicons}
+\usepackage{gensymb}
 \usepackage{tikz}
 \usepackage[tikz]{mdframed}
 
@@ -41,20 +42,6 @@
   backgroundcolor=light-gray,%
 ]{practical-stuff}
 
-%-- setup
-%\onehalfspacing
-% \setkomafont{captionlabel}{\bfseries}
-% \addtokomafont{caption}{\small}
-% \setkomafont{pagehead}{\normalfont\sffamily}
-% \setkomafont{pagenumber}{\normalfont\sffamily} %\rmfamily}
-% \clearscrheadings
-% %\clearscrheadfoot
-% \cohead{\headmark}
-% \rohead{\pagemark}
-% \setheadwidth[0pt]{text}
-% \setheadsepline{1pt}
-
-
 
 \subject{An open access book}
 \title{Computational modelling of terrains}
@@ -74,12 +61,13 @@
 
 %-------------------------------------------
 \mainmatter
-% \pagestyle{scrheadings}
-
-%\onehalfspacing
 
 \include{whatisterrain/whatisterrain}
 \include{acquisition/acquisition}
+\include{dtvd/dtvd}
+\include{interpol/interpol}
+\include{kriging/kriging}
+\include{topofeatures/topofeatures}
 
 
 %-------------------------------------------
