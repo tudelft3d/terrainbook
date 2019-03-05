@@ -9,8 +9,20 @@
 \usepackage[round]{natbib}
 \usepackage{url}
 \usepackage{xspace}
+
 % \usepackage[left=20mm,top=20mm]{geometry}
-\usepackage{geometry}
+% \usepackage{geometry}
+\usepackage[includemp,
+            paperwidth=210mm,
+            paperheight=297mm,
+            top=2.170cm,
+            bottom=3.510cm,
+            inner=1.9cm,
+            outer=1.9cm,
+            marginparwidth=4cm,
+            marginparsep=0.4cm]{geometry}
+
+
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{subcaption}
 \usepackage{booktabs}
@@ -24,14 +36,32 @@
 \usepackage{tikz}
 \usepackage[tikz]{mdframed}
 
+\usepackage{floatrow}
+% \usepackage[footnote]{snotez}
+% \setsidenotes{text-mark-format=\textsuperscript{\normalfont#1},
+%               note-mark-format=#1:,
+%               note-mark-sep=\enskip}
+\addtokomafont{caption}{\footnotesize}
+
 \newcommand{\ie}{ie}
 \newcommand{\eg}{eg}
 \newcommand{\reffig}[1]{Figure~\ref{#1}}
 \newcommand{\refsec}[1]{Section~\ref{#1}}
 
-\setcapindent{1em} %-- for captions of Figures
+\setcapindent{0em} %-- for captions of Figures
 \setcounter{tocdepth}{\sectiontocdepth}
 
+
+\floatsetup[figure]{margins=hangoutside,
+                    facing=yes,
+                    capposition=beside,
+                    capbesideposition={center,outside},
+                    floatwidth=\textwidth}
+\floatsetup[table]{margins=hangoutside,
+                   facing=yes,
+                   capposition=beside,
+                   capbesideposition={center,outside},
+                   floatwidth=\textwidth}
 
 % \renewcommand{\refname}{References \& further reading}
 \renewcommand{\contentsname}{\vspace{-15mm}}
@@ -77,11 +107,11 @@
 \mainmatter
 
 \include{whatisterrain/whatisterrain}
-\include{acquisition/acquisition}
-\include{dtvd/dtvd}
-\include{interpol/interpol}
-\include{kriging/kriging}
-\include{topofeatures/topofeatures}
+% \include{acquisition/acquisition}
+% \include{dtvd/dtvd}
+% \include{interpol/interpol}
+% \include{kriging/kriging}
+% \include{topofeatures/topofeatures}
 
 
 %-------------------------------------------

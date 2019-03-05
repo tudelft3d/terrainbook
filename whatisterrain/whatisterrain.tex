@@ -19,7 +19,7 @@
 
 
 \begin{center}
-  \includegraphics[width=0.95\linewidth]{figs/header.jpg}
+  \includegraphics[width=\linewidth]{figs/header.jpg}
 \end{center}
 
 Defining what a terrain, also called a \emph{digital terrain model} (DTM), is not simple because there is no universal agreement, neither among practitioners nor in the scientific literature.
@@ -34,12 +34,12 @@ It gives us the \emph{elevation}, which is the height above/below a certain refe
 
 However, the ``Earth's surface'' is also not a clear concept, since several objects on it can be present, \eg\ man-made structures like buildings, roads, power lines, and bridges, and other objects like trees.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.95\linewidth]{figs/dtmdsm}
-  \caption{\textbf{Left}: a terrain with a mountain, a tree, and a building. \textbf{Right}: its DSM and DTM.}
+\marginpar{
+  \captionsetup{type=figure}
+  \includegraphics[width=\marginparwidth]{figs/dtmdsm}
+  \caption{\textbf{Top}: a terrain with a mountain, a tree, and a building. \textbf{Bottom}: its DSM and DTM.}
 \label{fig:dtmdsm}
-\end{figure}
+}
 We use the following definitions in this course (see Figure~\ref{fig:dtmdsm}):
 \begin{description}
   \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@. 
@@ -55,7 +55,7 @@ It should be noticed that in some countries a DEM is often synonymous with a gri
 \section{Dimensionality of DTMs}
 
 The term `3D' is misleading in a DTM context, as it is in a GIS context, because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
-\begin{figure}[b]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
@@ -80,7 +80,7 @@ The term `3D' is misleading in a DTM context, as it is in a GIS context, because
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
     \caption{Volumetric modelling, or full 3D}\label{fig:dimgis:3}
   \end{subfigure}%
-  \caption{Difference meaning for `3D GIS' in the context of modelling terrains.}
+\caption{Different meanings for `3D GIS' in the context of terrains.}
 \label{fig:dimgis}
 \end{figure}
 
@@ -90,7 +90,8 @@ In other words, the surface can be projected to the $xy$-plane and maintain its 
 When we refer to terrains in this course, this is what is usually mean, unlike explicitly stated otherwise.
 This is often what is used in GIS software, and both the well-known raster/grid  is such a case.
 Observe that this restricts the real-world cases that can be modelled because, as shown in \reffig{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overfolds (\eg\ the balcony of a house) and caves are impossible to represent.
-As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of building could deviate by for instance 1 degree from the vertical. 
+As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of building could deviate by for instance 1 degree from the vertical.
+
 
 \subsection{2.75D} 
 This also refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see \reffig{fig:dimgis}c).
@@ -167,8 +168,8 @@ This function is usually a simple mathematical function:
 In general, we  classify the tessellations of space into three categories (as shown in \reffig{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/tesstype}
-  \caption{Type of tessellations and one example for each in two and three dimensions.} 
+  \includegraphics[width=\textwidth]{figs/tesstype}
+  \caption{Type of tessellations and one example for each.} 
 \label{fig:tesstypes}
 \end{figure}
 
@@ -245,12 +246,12 @@ The subdivision is potentially better than that obtained with regular tessellati
 
 The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.
 As shown in \reffig{fig:tin},
-\begin{figure}
-  \centering
-  \includegraphics[width=0.55\linewidth]{figs/tin}
-  \caption{A TIN is obtained by lifting the triangles to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle is empty of any other points in the plane. (The circumcircle for the green triangle is shown here.)}
+\marginpar{
+  \captionsetup{type=figure}
+  \includegraphics[width=\linewidth]{figs/tin}
+  \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}
 \label{fig:tin}
-\end{figure}
+}
 a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
@@ -260,7 +261,7 @@ As can be seen in Figure~\ref{fig:whydt},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/whydt}
-  \caption{Two TINs (left is a Delauny triangulation, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}
+  \caption{Two TINs (left is not a DT because one non-Delaunay edge; right is DT) and the result of estimating with linear interpolation at one location.}
 \label{fig:whydt}
 \end{figure}
 the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of 95m is not used).
@@ -339,7 +340,7 @@ The purpose of isolines on a map is to reveal the shape of the underlying terrai
 By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see Figure~\ref{fig:contours} for a few examples.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figs/contours.jpg}
+  \includegraphics[width=0.6\linewidth]{figs/contours.jpg}
   \caption{A few examples of terrain features and their contour lines. (Figure from \url{https://linguagemgeografica.blogspot.com/})}
 \label{fig:contours}
 \end{figure}
@@ -359,7 +360,7 @@ They are usually extracted directly from a TIN or a regular grid.
 As shown in Figure~\ref{fig:isoline},
 \begin{figure}
   \centering
-  \includegraphics[width=0.75\textwidth]{figs/isoline}
+  \includegraphics[width=\textwidth]{figs/isoline}
   \caption{Cross-section of a terrain (left), and the 200m isoline extracted from a TIN (right).} 
 \label{fig:isoline}
 \end{figure}
@@ -411,6 +412,7 @@ While more an academic exercise then something used in practice, multi-resolutio
 %
 \section{Exercises}
 
+% TODO : finish exercises
 \begin{enumerate}
   \item a;dkf
   \item aldskfsd Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
