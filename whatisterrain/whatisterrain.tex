@@ -14,7 +14,9 @@
 %   - discussion data model vs data structure?
 
 
-\chapter{What is a terrain?}
+\chapter{What is a terrain?}%
+\label{chap:whatisterrain}
+
 
 \begin{center}
   \includegraphics[width=0.95\linewidth]{figs/header.jpg}
@@ -252,7 +254,7 @@ As shown in \reffig{fig:tin},
 a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
-While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Lesson 03).
+While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Chapter~\ref{chap:dtvd}).
 The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they are behave better for interpolation.
 As can be seen in Figure~\ref{fig:whydt},
 \begin{figure}
