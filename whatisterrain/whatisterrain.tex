@@ -14,21 +14,19 @@
 %   - discussion data model vs data structure?
 
 
-\chapter{What is a digital terrain model?}
+\chapter{What is a terrain?}
 
+\begin{center}
+  \includegraphics[width=0.95\linewidth]{figs/header.jpg}
+\end{center}
 
-
-%%%
-%
-\section{DTM, DSM, DEM?}
-
-Defining what a \emph{digital terrain model} (DTM) is not simple because there is no universal agreement, neither among practitioners nor in the scientific literature.
+Defining what a terrain, also called a \emph{digital terrain model} (DTM), is not simple because there is no universal agreement, neither among practitioners nor in the scientific literature.
 Different terms are used, often interchangeably.
 
 In most cases, we can state that:
 
 \begin{quote}
-A digital terrain model is a representation of the Earth's surface. 
+A terrain is a representation of the Earth's surface. 
 It gives us the \emph{elevation}, which is the height above/below a certain reference point (a vertical datum)
 \end{quote}
 
@@ -339,7 +337,7 @@ The purpose of isolines on a map is to reveal the shape of the underlying terrai
 By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see Figure~\ref{fig:contours} for a few examples.
 \begin{figure}
   \centering
-  \includegraphics[width=0.65\linewidth]{figs/contours.jpg}
+  \includegraphics[width=0.5\linewidth]{figs/contours.jpg}
   \caption{A few examples of terrain features and their contour lines. (Figure from \url{https://linguagemgeografica.blogspot.com/})}
 \label{fig:contours}
 \end{figure}
@@ -359,7 +357,7 @@ They are usually extracted directly from a TIN or a regular grid.
 As shown in Figure~\ref{fig:isoline},
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{figs/isoline}
+  \includegraphics[width=0.75\textwidth]{figs/isoline}
   \caption{Cross-section of a terrain (left), and the 200m isoline extracted from a TIN (right).} 
 \label{fig:isoline}
 \end{figure}
@@ -381,11 +379,9 @@ It should be said that both have advantages and disadvantages (as we will see du
 This means converting between the two data models when it is necessary (topic of Lesson~08).
 
 
-
 %%%
 %
 \section{Notes and comments}
-
 
 \citet{Kumler94} carried out a 4-year comparison between TINs and rasters.
 He states that the common belief that a TIN is more space-efficient than raster is handicapped by the fact that a TIN must have \emph{at least} 3 times less points to be of equal space.
@@ -409,3 +405,16 @@ While more an academic exercise then something used in practice, multi-resolutio
 % Obtaining good slope from contour lines is possible, but is in practice a complex process.
 
 
+%%%
+%
+\section{Exercises}
+
+\begin{enumerate}
+  \item a;dkf
+  \item aldskfsd Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\end{enumerate}
