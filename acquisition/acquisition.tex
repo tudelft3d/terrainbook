@@ -60,12 +60,11 @@ This gives lidar the unique ability to sense a ground surface from the air, even
 On Earth, for DTM generation, only airborne lidar is used, attached to either planes or helicopters.
 However for celestial bodies that do not have an atmosphere (such as the Moon), lidar can also be used from space\footnote{NASA has used lidar on the Moon (\url{https://lola.gsfc.nasa.gov}) and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}.
 
-\begin{infobox}
-\textbf{You need to watch this YouTube video.}
-It explains the principles of an aerial LiDAR system.
+\begin{link-box}
+This YouTube video explains the principles of an aerial LiDAR system:
 \\
 \url{https://youtu.be/EYbhNSUnIdU}
-\end{infobox}
+\end{link-box}
 
 
 % TODO : put a side-by-side with vegetation and without lidar to show DTM and DSM
@@ -101,12 +100,11 @@ However, by using a comprehensive chain of processing operations based on the me
 With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\footnote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of 30 meters.
 
-\begin{infobox}
-	\textbf{You need to read this wikipedia page.}
-	It explains the principles of InSAR\@.
+\begin{link-box}
+The principles of InSAR\@.
 
-	\url{https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar}
-\end{infobox}
+\url{https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar}
+\end{link-box}
 
 \subsection{Echo sounding}
 Echo sounding is a form of sonar that can be used for bathymetry, \ie\ mapping underwater terrains from a boat. 
@@ -115,12 +113,11 @@ Similar to lidar, it uses the time-of-flight principle to compute distance, but 
 Single-beam and multi beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately. 
 For bathymetry usually a multi-beam echo sounder is used.
 
-\begin{infobox}
-  \textbf{You need to read this wikipedia page.}
-  It explains the principles of echo sounding.
+\begin{link-box}
+  The principles of echo sounding.
   \\
   \url{https://en.wikipedia.org/wiki/Echo_sounding}
-\end{infobox}
+\end{link-box}
 
 
 
@@ -286,12 +283,11 @@ And void-filling is only effective if the void area is not too large, since inte
 Ultimately it is up to you, the DTM expert, to judge what processing methods and parameters are sensible for a given dataset.
 You need to consider on the one hand the types and severity of the artefacts, and on the other hand the limitations of the available algorithms to fix them. 
 
-\begin{infobox}
-	\textbf{You need to read the following.}
-	This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM\@. It shows that even when artefacts seem to be under control, both techniques may measure different elevations \citep{Ressl16}. 
-	\\
-	PDF: \url{https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf}
-\end{infobox}
+\begin{link-box}
+This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM\@. It shows that even when artefacts seem to be under control, both techniques may measure different elevations \citep{Ressl16}. 
+
+PDF: \url{https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf}
+\end{link-box}
 
 %For instance, an outlier filter 
 %misclassified points, smoothing effects in DIM
@@ -327,12 +323,12 @@ If you would like to learn more about how a lidar scanner works, the article fro
 More details on InSAR can be found in the manual from \citet{ESA07}.
 
 \citet{Reuter09} give an elaborate overview of the processing that needs to be done to derive a high quality (raster) DTM from raw elevation measurements.
-%\begin{infobox}
+%\begin{link-box}
 %	\paragraph{You need to read the following.}
 %	This is an introduction to interferometric synthetic aperture radar (InSAR). It also explains how to generate a DEM from InSAR images. Read Chapter 1 and Chapter 2 up to and including Section 2.2.
 %	\\
 %	PDF: \url{https://www.esa.int/esapub/tm/tm19/TM-19_ptA.pdf}
-%\end{infobox}
+%\end{link-box}
 
 % fixing dem artefacts: https://www.sciencedirect.com/science/article/pii/S0166248108000044
 

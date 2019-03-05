@@ -18,6 +18,7 @@
 \usepackage{hyperref}
 \usepackage{lastpage}
 \usepackage{todonotes}
+\usepackage{fontawesome}
 \usepackage{ccicons}
 \usepackage{gensymb}
 \usepackage{tikz}
@@ -32,16 +33,28 @@
 \setcounter{tocdepth}{\sectiontocdepth}
 
 
-\renewcommand{\refname}{References \& further reading}
+% \renewcommand{\refname}{References \& further reading}
 \renewcommand{\contentsname}{\vspace{-15mm}}
 
-\definecolor{light-gray}{gray}{0.95}
+\definecolor{light-gray}{gray}{0.97}
+\definecolor{myred}{RGB}{111,12,31}
+\definecolor{mygreen}{RGB}{35,138,35}
+
 \newmdenv[%
-  outerlinewidth=2,%
-  roundcorner=10pt,%
-  linecolor=gray,%
+  outerlinewidth=1.5,%
+  roundcorner=5pt,%
+  linecolor=myred,%
   backgroundcolor=light-gray,%
-]{practical-stuff}
+  frametitle=\faExternalLink\ To read or watch,
+]{link-box}
+
+\newmdenv[%
+  outerlinewidth=1.5,%
+  roundcorner=5pt,%
+  linecolor=mygreen,%
+  backgroundcolor=light-gray,%
+  frametitle=\faCog\ How does work in practice?,
+]{practice-box}
 
 
 \subject{An open access book}

@@ -15,7 +15,6 @@ To help us extract and identify features, some operations/characteristics need t
 We describe in this lesson a few key features in terrains, and describe how they can be extracted.
 Since these differ from the data model used (TINs vs grids), we give examples for both.
 
-\newpage
 
 %%%
 %
@@ -143,8 +142,7 @@ A quadratic polynomial could for instance be defined:
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial z}{\partial x} = d$ and $\frac{\partial z}{\partial y} = e$.
 
 
-\begin{practical-stuff}
-\textbf{In practice: gdaldem.} 
+\begin{practice-box}
 The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
 After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
@@ -154,7 +152,7 @@ If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \ci
 This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
 
 The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
-\end{practical-stuff}
+\end{practice-box}
 
 %%%
 \subsection{Hillshading}
