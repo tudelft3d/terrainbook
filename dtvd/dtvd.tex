@@ -289,6 +289,41 @@ This process stops when every triangle having $p$ as one of its vertices respect
 
 
 %%%
+\paragraph{Initialisation: the big triangle.}
+\label{sec:big_tr}
+Most of the incremental DT/VD algorithms assume that the set $S$ of points is entirely contained in a \emph{big triangle} ($\tau_{big}$) several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
+Figure~\ref{fig:big_tr} illustrates this.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.45\textwidth]{figs/big_tr}
+  \caption[The big triangle containing all the dataset.]{The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.} 
+\label{fig:big_tr}
+\end{figure}
+The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
+
+%
+
+Doing this has many advantages. 
+First, when a single point $p$ needs to be inserted in DT($S$), this guarantees that $p$ is always inside an existing triangle; we thus do not have to deal explicitly with vertices added outside the convex hull. 
+Second, we do not have to deal with the (nasty) case of deleting a vertex that bounds conv($S$). 
+Third, since an edge is always guaranteed to be shared by two triangles, point location algorithms never ``fall off'' the convex hull. 
+Fourth, identifying the vertices that bounds conv($S$) is easy: they have one incident triangle that has one or more of the big triangle vertices.
+Fifth, the Voronoi cells of the points that bounds conv($S$) will be bounded, since the only unbounded cells will be the ones of the four points of $\tau_{big}$. 
+This can help for some of the spatial analysis operations, for instance interpolation based on the VD (see Chapter~\ref{sec:interpol}).
+
+%
+
+The main disadvantage is that more triangles than needed are constructed. 
+For example in Figure~\ref{fig:big_tr} only the shaded triangles would be part of DT($S$). 
+The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the three points forming $\tau_{big}$. 
+
+\begin{practice-box}
+Several implementations/APIs of the DT use a big triangle (or variation of it with a ``point at the infinity'',  CGAL (\url{https://www.cgal.org/}) being one example), and these often label vertices and/or triangles as ``infinite''.
+It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
+\end{practice-box}
+
+
+%%%
 \paragraph{Walk/Point location.} To find the triangle containing the new inserted point $p$, we can use the point-in-polygon test for every triangle (as explained in class), but that would be too slow. 
 An better alternative, is to use the adjacency relationships between the triangles, and use the \emph{side} tests as described in the book to navigation from one triangle to the other, until we find the the good one. 
 The idea is shown in Figure~\ref{fig:walk}
@@ -556,6 +591,8 @@ The local optimality of a DT, which implies globally optimality in the case of t
 The \emph{max-min angle optimality} of the DT was firstly observed by \citet{Sibson78}.
 This paraboloic lifting was first observed by \citet{Brown79} (who used a spherical transformation), further described by \citet{Seidel82,Edelsbrunner86}. 
 
+Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
+\citet{Liu05-1} explains the details.
 
 The fact that the DT is computed only in 2D (without taking into account the elevation of the vertices) has been criticised by several as sub-optimal for the modelling of terrain.
 To remedy to this, \citet{Dyn90} develop a \emph{data-dependent algorithm}, and \citet{Gudmundsson02} propose using \emph{higher-order} Delaunay triangulations (a modification where the empty circumcircle is also based on the neighbours of the neighbours).
