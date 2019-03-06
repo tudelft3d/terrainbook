@@ -298,7 +298,7 @@ As is the case for grids, quadtrees are relatively easily implemented in a compu
 The shortcomings of regular hierarchical tessellations are similar to those of regular tessellations: the rotation and scaling operations are difficult to handle.
 The main advantage of using them---saving memory space---is present only when there is spatial coherence between cells having the same attribute value, \ie\ when they are clustered together.
 Indeed, the size of a quadtree is not dependent on the number of cells, but on their distribution.
-The quadtree of a 2D grid having no two adjacent cells with the same value contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
+The quadtree of a 2D grid having no two adjacent cells with the same value (\eg\ a checkers board) contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
 Another disadvantages is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
 
 

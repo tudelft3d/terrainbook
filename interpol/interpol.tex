@@ -305,7 +305,7 @@ Resampling means transforming an input grid so that the resolution and/or the or
 \end{figure}
 
 Bilinear interpolation has been shown to give better results. 
-The method, which can be seen as an `extension' of linear interpolation for raster data, performs linear interpolation in one dimension (say along the $x$ axis), and then in the other dimension ($y$). 
+The method, which can be seen as an ``extension' of linear interpolation for raster data, performs linear interpolation in one dimension (say along the $x$ axis), and then in the other dimension ($y$). 
 Here one has to be careful about the meaning of a grid: does the value of a pixel represent the value of the whole pixel? or was the grid constructed by sampling the values at the middle of each pixel? 
 In most cases, unless metadata are available, it is not known. 
 But in the context of terrain modelling, we can assume that the value of a pixel represents the value at the centre of the pixel.
@@ -318,31 +318,20 @@ Suppose we have 4 adjacent pixels, each having an elevation, as in Figure~\ref{f
 \label{fig:bilinear}
 \end{figure}
 Bilinear interpolation uses the 4 centres to perform the interpolation at location $p = (p_x, p_y)$; it is thus a weighted-average method because the 4 samples are used, and their weight is based on the linear interpolation, as explained below.
-We need to linearly interpolation the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolation along the $y$ axis with these values. 
-Notice that the result is independent of the order of interpolation: we could start with interpolation along the $y$ axis and then the $x$ axis and we would get the same result. For the case in Figure~\ref{fig:bilinear}, the calculation would go as follows:
+We need to linearly interpolation the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values. 
+% Observe that while we perform three linear interpolations, the resulting interpolant is not linear but quadratic.
+Also, cotice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
+For the case in Figure~\ref{fig:bilinear}, the calculation would go as follows:
 \[
   \begin{array}{l}
-    f(q) = \frac{p_x - n4_x}{n3_x - n4_x} \times (n3_z - n4_z) + n4_z \\
+    q_z = \frac{p_x - n4_x}{n3_x - n4_x} \times (n3_z - n4_z) + n4_z \\
    \\
-    f(r) = \frac{p_x - n1_x}{n2_x - n1_x} \times  (n2_z - n1_z) + n1_z \\
+    r_z = \frac{p_x - n1_x}{n2_x - n1_x} \times (n2_z - n1_z) + n1_z \\
     \\
-    f(p) = \frac{p_y - r_y}{q_y - r_y} * (q_z - r_z) + r_z \\
+    p_z = \frac{p_y - r_y}{q_y - r_y} * (q_z - r_z) + r_z \\
   \end{array}
 \]
 
-The interpolant can be expressed as follows:
-\begin{equation}
-  f(x) = a_0 + a_1x + a_2y + a_3xy
-\end{equation}
-where $a_i$ are 4 unknown that can be determined by solving 4 equations (one for each grid node). If we assume that the lower-left pixel is at location $(0,0)$ and the top-right one at $(1,1)$, then the 4 coefficients are:
-\[
-  \begin{array}{l}
-    a_0 = n1_z \\
-    a_1 = n2_z - n1_z \\
-    a_2 = n3_z - n1_z \\
-    a_3 = n1_z -n2_z - n3_z + n4_z
-  \end{array}
-\]
 
 
 %%%
