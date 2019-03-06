@@ -613,7 +613,7 @@ Finding a valid ear of a simple polygon $P$ is relatively easy: if the points ar
 \section{Notes and comments}
 \label{sec:notes}
 
-For the construction of the DT, the incremental algorithm we use was first described by \citet{Lawson72-1}.
+For the construction of the DT, the incremental algorithm was first described by \citet{Lawson72-1}.
 \citet{Guibas85} describe a divide-and-conquer algorithm, and \citet{Fortune87} a sweep-line one.
 
 The local optimality of a DT, which implies globally optimality in the case of the DT, was proven by \citet{Delaunay34} himself.
@@ -623,19 +623,15 @@ This paraboloic lifting was first observed by \citet{Brown79} (who used a spheri
 Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
 \citet{Liu05-1} explains the details.
 
-The walking in the triangulation to location the triangle containing a newly inserted point is not \emph{per se} the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives.
-They both note that optimal algorithms do not necessarily mean better results in practice because of the amount of preprocessing involved, the extra storage needed, and also because the optimal algorithms do not always consider the dynamic case, where points in the DT could be deleted. 
+The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives.
+However, they both note that optimal algorithms do not necessarily mean better results in practice because of the amount of preprocessing involved, the extra storage needed, and also because the optimal algorithms do not always consider the dynamic case, where points in the DT could be deleted. 
 
-The fact that the DT is computed only in 2D (without taking into account the elevation of the vertices) has been criticised by several as sub-optimal for the modelling of terrain.
-To remedy to this, \citet{Dyn90} develop a \emph{data-dependent algorithm}, and \citet{Gudmundsson02} propose using \emph{higher-order} Delaunay triangulations (a modification where the empty circumcircle is also based on the neighbours of the neighbours).
-Nevertheless, there are still results stating that the Delaunay triangulation is still the one that minimises the roughness of a surface~\citep{Wang01,Rippa90}
+Several criteria for constructing data-dependent triangulations are discussed in \citet{Dyn90}. 
+While these can be used, in practice it was proven that the Delaunay triangulation is still the triangulation that minimises the roughness of a surface~\citep{Wang01,Rippa90}
 
 % TODO : complete this: uniqueness of the DT
 % If the input points of the DT are not in general position, it is still possible to obtain a unique DT\@.
 % This however means that 
 
-The Algorithm~\ref{algo:greedy}, is taken from \citet[p. 202]{Worboys04}.
-
 \citet{Shewchuk97} shows that while the triangle-based data structure requires twice as much code as with the quad-edge (to store and construct a ConsDT), the result is that the code runs twice as fast and the memory requirement as about 2X less.
 CGAL (\url{https://www.cgal.org/}), among many others, uses the triangle-based data structure.
-
