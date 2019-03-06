@@ -12,7 +12,7 @@ Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but
 Identifying the different features forming a terrain enhances our understanding of the raw dataset.
 To help us extract and identify features, some operations/characteristics need to be extracted from terrains, \eg\ the slope, the aspect, the curvature, the roughness, etc.
 
-We describe in this lesson a few key features in terrains, and describe how they can be extracted.
+We describe in this chapter a few key features in terrains, and describe how they can be extracted.
 Since these differ from the data model used (TINs vs grids), we give examples for both.
 
 
@@ -126,7 +126,7 @@ For the case in Figure~\ref{fig:slope_grid}, the aspect would be 195\degree\ and
 \paragraph{4. Local polynomial fitting.}
 \label{sec:polynomial}
 
-Based on the 9 elevation points, it is possible to fit a polynomial (as explained in Lesson~04) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
+Based on the 9 elevation points, it is possible to fit a polynomial (as explained in \refchap{chap:interpol}) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
 
 A quadratic polynomial could for instance be defined:
 \[
@@ -167,7 +167,7 @@ Hillshading is a technique used to help visualise the relief of a DTM (see Figur
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position.
 
-While it would be possible to use advanced computer graphics methods (see Lesson~13) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
+While it would be possible to use advanced computer graphics methods (see \refchap{chap:visibility}) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
 
 Given a regular gridded DTM, hillshading means that each cell gets a value which depicts the variation in tone, from light to dark.
 The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original gridded DTM (for convenience).

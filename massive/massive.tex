@@ -56,7 +56,7 @@ a pyramid means creating recursively copies at lower-resolutions of an original 
 Notice that the extra storage will be maximum $\frac{1}{3}$ of the original raster: the first pyramid is $\frac{1}{4}$, the second $\frac{1}{16}$, the third $\frac{1}{64}$, etc.
 
 Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
-The most common method is based on averaging the 4 pixels that are merged into one (as shown in Figure~\ref{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as see in Lesson 04)
+The most common method is based on averaging the 4 pixels that are merged into one (as shown in Figure~\ref{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
 \begin{practice-box}
   \textbf{gdaladdo.} 
@@ -221,7 +221,7 @@ A branch is only eliminated when $m$ points have been found and the branch canno
 %
 \section{Streaming paradigm to construct massive TINs and grids}
 
-The incremental construction algorithm for the Delaunay triangulation, presented in Lesson~05, will not work if the size of the input dataset is larger than the main memory.
+The incremental construction algorithm for the Delaunay triangulation, presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
 Or if it works, it will be very slow.
 
 %
@@ -257,9 +257,6 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
   \bibentry{Isenburg06-1}\\
   PDF: \url{http://dx.doi.org/10.1007/11863939_13}
 \end{link-box}
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%

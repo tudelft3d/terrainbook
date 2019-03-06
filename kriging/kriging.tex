@@ -4,10 +4,11 @@
 \graphicspath{{kriging/}}
 
 \chapter{Spatial interpolation: kriging}
+\label{chap:kriging}
 
 
 Kriging is a spatial interpolation method that was developed mostly by Georges Matheron based on the earlier work of Danie Krige, who used it to estimate the gold yields of mines in South Africa.
-In contrast to the other spatial interpolation methods seen in Lesson 4, it uses a statistical model to take into account the varying uncertainty and spatial correlation of a set of sample points.
+In contrast to the other spatial interpolation methods seen in \refchap{chap:interpol}, it uses a statistical model to take into account the varying uncertainty and spatial correlation of a set of sample points.
 
 Kriging is based on the fact that when one moves across space, values such as the gold content in rock and the elevation in a terrain have both a certain spatial trend (\eg\ a mean value, a fitted plane or a more complex polynomial) and also a certain spatially correlated randomness (\ie\ closer points tend to have more similar values).
 
@@ -49,7 +50,7 @@ Note that the covariance of \(Z_i\) with itself is equivalent to the variance of
 \mathrm{cov}(Z_i,Z_i) = E\left[\left(Z_i-E[Z_i]\right)^2\right] = \mathrm{var}(Z_i).
 \end{equation}
 
-While not used further in this lesson, it is good to know that the variance and the covariance can be used to calculate the Pearson correlation coefficient \(\rho_{ij}\), which is the most common correlation coefficient:
+While not used further in this chapter, it is good to know that the variance and the covariance can be used to calculate the Pearson correlation coefficient \(\rho_{ij}\), which is the most common correlation coefficient:
 
 \begin{equation}
 \rho_{ij}=\frac{\mathrm{cov}(Z_i, Z_j)}{\sqrt{\mathrm{var}(Z_i) \mathrm{var}(Z_j)}}.
@@ -155,7 +156,7 @@ Note how the gaussian function appears to be a better fit in this case.
 
 \section{Ordinary kriging}
 
-Ordinary kriging is similar to the other spatial interpolation methods that use a weighted average and were described in Lesson 4.
+Ordinary kriging is similar to the other spatial interpolation methods that use a weighted average and were described in \refchap{chap:interpol}.
 It defines a function \(\hat{Z}\) that estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) sample points \(x_i\) for \(1 \leq i \leq n\) that we will use for the interpolation.
 We denote this as:
 

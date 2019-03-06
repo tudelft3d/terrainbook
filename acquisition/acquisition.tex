@@ -3,6 +3,7 @@
 \graphicspath{{acquisition/}}
 
 \chapter{Acquisition of elevation measurements, and resulting artefacts}
+\label{chap:acquisition}
 
 The very first step in the process of terrain modelling is the acquisition of elevation measurements. 
 Nowadays, these measurement are usually collected in large quantities using some form of remote sensing, \ie\ sensors that measure---in our case---the distance to the Earth's surface from an airborne or even a spaceborne platform. 
@@ -278,7 +279,7 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 Or, one can attempt to detect and remove outliers caused \eg\  by multi-path effects or flocks of birds\footnote{This is a topic of lesson 12}. 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).
-And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\footnote{Lessons 04 and 05 explore the topic of spatial interpolation in detail.}.
+And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\footnote{Chapters~\ref{chap:interpol} and~\ref{chap:kriging} explore the topic of spatial interpolation in detail.}.
 
 Ultimately it is up to you, the DTM expert, to judge what processing methods and parameters are sensible for a given dataset.
 You need to consider on the one hand the types and severity of the artefacts, and on the other hand the limitations of the available algorithms to fix them. 
