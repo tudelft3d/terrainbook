@@ -350,13 +350,13 @@ A \emph{flip} is the operation that transforms the first triangulation into the 
 
 
 %%%
-\paragraph{Controlling the triangles.}
-To control which triangles have to be checked, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
+\paragraph{Controlling the flips.}
+To control which triangles have to be checked and potentially flipped, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
 When the stack is empty, then there are no more triangles to be tested, and we are guaranteed that all the triangles in the triangulation have an empty circumcircle.
 
 
 %%%
-\paragraph{Predicates}
+\paragraph{Predicates.}
 Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Insphere\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
 Both tests can be reduced to the computation of the determinant of a matrix:
 \begin{equation}
