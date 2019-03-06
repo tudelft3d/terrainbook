@@ -386,7 +386,7 @@ When the stack is empty, then there are no more triangles to be tested, and we a
 
 %%%
 \paragraph{Predicates.}
-Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Insphere\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
+Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Incircle\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
 Both tests can be reduced to the computation of the determinant of a matrix:
 \begin{equation}
   \textrm{O}\textsc{rientation}(a, b, p) = 
