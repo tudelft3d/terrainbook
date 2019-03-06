@@ -126,7 +126,7 @@ The representation of a field in a computer faces many problems.
 First, fields are continuous functions, and, by contrast, computers are discrete machines. 
 Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
-The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in Lesson 02).
+The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{chap:acquisition}).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
 
 
@@ -135,9 +135,9 @@ This fact is aggravated for fields as found in GIS-related disciplines because, 
 
 To represent a terrain in a computer, and be able to manipulate it (\ie\ edit the terrain and extract information such as slope), two things are needed:
 \begin{enumerate}
-  \item a set of samples that were collected to study the terrain, for instance a point cloud obtained from airbone laserscanning or photogrammetry (see Lesson 02 for details).
+  \item a set of samples that were collected to study the terrain, for instance a point cloud obtained from airbone laserscanning or photogrammetry (see \refchap{chap:acquisition} for details).
   \item a set of rules to obtain one and only one elevation value at any location ($x,y$); in other words, to reconstruct the continuity of the surface from the discrete samples.
-  This operation is referred to as spatial interpolation (Lessons 04 and 05). 
+  This operation is referred to as spatial interpolation (Chapters~\ref{chap:interpol} and~\ref{chap:kriging}). 
 \end{enumerate}
 
 
@@ -378,7 +378,7 @@ A data model will be judged more \emph{efficient} than another if it represents 
 This of course depends on the data structure used to store that data model.
 
 It should be said that both have advantages and disadvantages (as we will see during this course), and in practice one should the most appropriate model for the task at hand.
-This means converting between the two data models when it is necessary (topic of Lesson~08).
+This means converting between the two data models when it is necessary (topic of \refchap{chap:conversion}).
 
 
 %%%
