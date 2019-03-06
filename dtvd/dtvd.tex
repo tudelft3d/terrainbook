@@ -287,6 +287,7 @@ In a nutshell, for the insertion of a new point $p$ in a DT($S$), the triangle $
 Second, each new triangle is tested---according to the Delaunay criterion---against its opposite neighbour (with respect to $p$); if it is not a Delaunay triangle then the edge shared by the two triangles is \emph{flipped} (see below) and the two new triangles will also have to be tested later. 
 This process stops when every triangle having $p$ as one of its vertices respects the Delaunay criterion.
 
+
 %%%
 \paragraph{Walk/Point location.} To find the triangle containing the new inserted point $p$, we can use the point-in-polygon test for every triangle (as explained in class), but that would be too slow. 
 An better alternative, is to use the adjacency relationships between the triangles, and use the \emph{side} tests as described in the book to navigation from one triangle to the other, until we find the the good one. 
@@ -312,14 +313,15 @@ There exist exactly two ways to triangulate $S$: the first one contains the tria
 Only the first triangulation of $S$ is Delaunay because $d$ is outside the circumcircle of $abc$. 
 A \emph{flip} is the operation that transforms the first triangulation into the second, or vice-versa.
 
+
 %%%
 \paragraph{Controlling the triangles.}
-To control which triangles have to be checked, we use a stack. 
+To control which triangles have to be checked, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
 When the stack is empty, then there are no more triangles to be tested, and we are guaranteed that all the triangles in the triangulation have an empty circumcircle.
+
 
 %%%
 \paragraph{Predicates}
-
 Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Insphere\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
 Both tests can be reduced to the computation of the determinant of a matrix:
 \begin{equation}
