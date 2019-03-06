@@ -80,7 +80,7 @@ The term `3D' is misleading in a DTM context, as it is in a GIS context, because
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
     \caption{Volumetric modelling, or full 3D}\label{fig:dimgis:3}
   \end{subfigure}%
-  \caption{Difference meaning for `3D GIS' in the context of modelling terrains.}
+  \caption{Different meanings for `3D GIS' in the context of terrains.}
 \label{fig:dimgis}
 \end{figure}
 
@@ -168,7 +168,7 @@ In general, we  classify the tessellations of space into three categories (as sh
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{figs/tesstype}
-  \caption{Type of tessellations and one example for each in two and three dimensions.} 
+  \caption{Type of tessellations.} 
 \label{fig:tesstypes}
 \end{figure}
 
@@ -248,7 +248,7 @@ As shown in \reffig{fig:tin},
 \begin{figure}
   \centering
   \includegraphics[width=0.55\linewidth]{figs/tin}
-  \caption{A TIN is obtained by lifting the triangles to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle is empty of any other points in the plane. (The circumcircle for the green triangle is shown here.)}
+  \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}
 \label{fig:tin}
 \end{figure}
 a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
@@ -260,7 +260,7 @@ As can be seen in Figure~\ref{fig:whydt},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/whydt}
-  \caption{Two TINs (left is a Delauny triangulation, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}
+  \caption{Two TINs (left is a DT, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}
 \label{fig:whydt}
 \end{figure}
 the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of 95m is not used).
