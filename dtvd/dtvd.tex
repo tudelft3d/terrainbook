@@ -5,7 +5,7 @@
 
 \newcommand{\Orient}{O\textsc{rientation}\xspace}
 \newcommand{\walk}{W\textsc{alk}\xspace}
-\newcommand{\Insphere}{I\textsc{n}C\textsc{ircle}\xspace}
+\newcommand{\Incircle}{I\textsc{n}C\textsc{ircle}\xspace}
 
 \chapter{Triangulations \& Voronoi diagrams}%
 \label{chap:dtvd}
@@ -263,6 +263,7 @@ That hinders their use for some applications where new data coming from a sensor
 \label{fig:insertion_steps}
 \end{figure}
 \begin{algorithm}[tb] 
+  \DontPrintSemicolon
   \KwIn{A DT($S$) $\mathcal{T}$ , and a new point $p$ to insert}
   \KwOut{$\mathcal{T}^{p} = \mathcal{T} \cup \{p\}$ // the DT with point $p$}
   find triangle $\tau$ containing $p$\;
@@ -324,15 +325,43 @@ It is therefore essential to understand the mecanism, even if one is not constru
 
 
 %%%
-\paragraph{Walk/Point location.} To find the triangle containing the new inserted point $p$, we can use the point-in-polygon test for every triangle (as explained in class), but that would be too slow. 
-An better alternative, is to use the adjacency relationships between the triangles, and use the \emph{side} tests as described in the book to navigation from one triangle to the other, until we find the the good one. 
-The idea is shown in Figure~\ref{fig:walk}
+\paragraph{Walk/Point location.} To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that would be too slow. 
+A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described below, to navigate from one triangle to the other. 
+The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figs/walk}
   \caption{The Walk algorithm for a DT in two dimensions. The query point is $p$.}
 \label{fig:walk}
 \end{figure}
+\begin{algorithm}[t]
+  \DontPrintSemicolon
+  \KwIn{A DT($S$) $\mathcal{T}$, a starting triangle $\tau$, and a query point $p$}
+  \KwOut{$\tau_r$: the triangle in $\mathcal{T}$ containing $p$}
+  \BlankLine  
+  \While{$\tau_r$ not found}
+  {
+    \For{$i \leftarrow 0$ \KwTo 2}
+    {
+      $\sigma_i \leftarrow$ get edge opposite vertex $i$ in $\tau$\;
+      \If{\Orient($\tau_i, p$) $< 0$\nllabel{l:walk}} 
+      {
+        $\tau \leftarrow$ get neighbouring triangle of $\tau$ incident to $\sigma_i$\;
+        break\;
+      }
+    }  
+    \If{$i=2$}
+    {
+      \tcp{all the edges of $\tau$ have been tested}
+      Return ($\tau_r$ = $\tau$)\;
+    }
+  }
+  \caption{W\textsc{alk}($\mathcal{T}$, $\tau$, $p$)}
+\label{algo:walk}
+\end{algorithm}
+The idea is as follows: in a DT($S$), starting from a triangle $\tau$ (it can be any), we move to one of the adjacent triangle of $\tau$ ($\tau$ has three neighbours, we choose one neighbour $\tau_i$ such that the query point $p$ and $\tau$ are on each side of the edge shared by $\tau$ and $\tau_i$) until there is no such neighbour, then the simplex containing $p$ is $\tau$.
+Notice that this algorithm is not affected by degenerate cases, and that if an \textrm{O}\textsc{rientation} test returns 0 (collinearity), then it is simply considered a positive result. 
+This will ensure that if the query point $p$ is located exactly at the same position as one point in $S$, then one triangle incident to $p$ will be returned.
 
 
 %%%
@@ -593,6 +622,9 @@ This paraboloic lifting was first observed by \citet{Brown79} (who used a spheri
 
 Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
 \citet{Liu05-1} explains the details.
+
+The walking in the triangulation to location the triangle containing a newly inserted point is not \emph{per se} the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives.
+They both note that optimal algorithms do not necessarily mean better results in practice because of the amount of preprocessing involved, the extra storage needed, and also because the optimal algorithms do not always consider the dynamic case, where points in the DT could be deleted. 
 
 The fact that the DT is computed only in 2D (without taking into account the elevation of the vertices) has been criticised by several as sub-optimal for the modelling of terrain.
 To remedy to this, \citet{Dyn90} develop a \emph{data-dependent algorithm}, and \citet{Gudmundsson02} propose using \emph{higher-order} Delaunay triangulations (a modification where the empty circumcircle is also based on the neighbours of the neighbours).

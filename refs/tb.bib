@@ -2,12 +2,37 @@
 %% http://bibdesk.sourceforge.net/
 
 
-%% Created for Hugo Ledoux at 2019-03-06 08:28:27 +0100 
+%% Created for Hugo Ledoux at 2019-03-06 09:04:30 +0100 
 
 
 %% Saved with string encoding Unicode (UTF-8) 
 
 
+
+@article{Devillers02,
+	Annote = {For the 2d \& the 3d case.},
+	Author = {Devillers, Olivier and Pion, Sylvain and Teillaud, Monique},
+	Date-Added = {2019-03-06 09:04:26 +0100},
+	Date-Modified = {2019-03-06 09:04:26 +0100},
+	Journal = {International Journal of Foundations of Computer Science},
+	Keywords = {point location},
+	Number = {2},
+	Pages = {181--199},
+	Title = {{W}alking in a triangulation},
+	Volume = {13},
+	Year = {2002}}
+
+@article{Mucke99,
+	Annote = {Definition of point location problem: "Given a set of disjoint geometric objects, determine the objects containing a query point." (p. 63) "Unfortunately, algorithms that are optimal in theory do not necessarily yield to good practical performance. This is also true in the case of point location, mainly because of the necessary preprocessing time and additional storage requirements" The method presented in the paper is efficient in practice (not that much in theory), uses no preprocessing time and no additional storage. Edelsbrunner96 presents an algo faster in theory but probably slower in practice... The algo very good in theory uses preprocessing and/or storage. The algo is only for Delaunay triangulation. For arbitrary triangulation it may go into an infinite loop. see [15]. But this loop can be broken if the other edge (or face) is selected randomly among the possibilities when checking a triangle (tetra). (p. 64) (p. 80) "this procedure is only guaranteed to terminate for Delauany triangulations since they are proven to be 'acyclic for any fixed viewpoint' ". Edelsbrunner90 proves this. Difficult to tell the performance of an algo with Walking; but with the Marching is easier to analyse. Walking : the same algo i'm using; i.e. testing each edge (or face) of a triangle (tetra) and switching to the adjacent one if the test in negative. Till every facet of a simplex returns the same result. Marching : modification of the Walking. "we march towards q by strictly traversing the simplices intersected by a line segment L, starting at a vertex of the initial simplex, and ending in q." Jump-and-march : "we jump to a good starting point via random sampling on the point set. This enhances the overall procedure significantly; in a sense, we are simulating the effects of the bucketing approach by random sampling." Jump : just randomly generating sample points and choosing the closest one. It's like "bucketing". (p. 80) "In terms of the number of tetra visited, jump-and-walk can obviously be only worse than jump-and-march. However, orientation tests in 3d are computationally less involved than intersection tests; and this is particular true, if the implementation emphasizes robustness. Therefore, it is not surprising that experiments reveal the jump-and-walk to actually run faster in practice." Very good for my work.... very very good :-) He is not sampling points - probably because he would have to do a point location to identify inside which tetra those points are :^) - but instead samples facets. Then, he tests the query point q with the 3 vertices of each triangles and select the smallest distance; and finally starts the walk from the closest facet. (p. 80) "We chose m = 7n0.25 for the random sample. This was empirically determined to be the best choice with respect to actual CPU time. It is obvious that the larger m, the smaller the number of tetrahedra visited in the walk." (p. 81) procedure of jump-and-march in 3d delaunay triangulation has an expected running time of O(n0.25) for a random distribution. And jump-and-walk performs as good or even better!},
+	Author = {M\"{u}cke, Ernst P. and Saias, Isaac and Zhu, Binhai},
+	Date-Added = {2019-03-06 09:04:10 +0100},
+	Date-Modified = {2019-03-06 09:04:10 +0100},
+	Journal = {Computational Geometry---Theory and Applications},
+	Keywords = {point location; 3d Voronoi;},
+	Pages = {63--83},
+	Title = {{F}ast randomized point location without preprocessing in two- and three-dimensional {D}elaunay triangulations},
+	Volume = {12},
+	Year = {1999}}
 
 @inproceedings{Liu05-1,
 	Address = {Seoul, Korea},
