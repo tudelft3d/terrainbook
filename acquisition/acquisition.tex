@@ -45,7 +45,7 @@ What follows is a brief description of the four main techniques used in practice
 % FIXME image with flight parameters and strips
 
 \subsection{Lidar}
-A lidar system\sidenote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures distance to a target by illuminating it with pulsed laser light and measuring the reflected pulses with a sensor (see Figure~\ref{fig:acqLidar}). 
+A lidar system\footnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures distance to a target by illuminating it with pulsed laser light and measuring the reflected pulses with a sensor (see Figure~\ref{fig:acqLidar}). 
 It is generally considered to be the most accurate acquisition technique.
 By measuring the time-of-flight, \ie\ the difference in time between sending a pulse and sensing its return, the distance to the target that reflected the pulse can be found by multiplying the time-of-flight with the speed of light, which is a known constant.
 Lidar thus makes use of the natural phenomenon of \emph{backscattering}, \ie\ the reflection of (electromagnetic) waves or signals back to the direction they came from. 
@@ -58,7 +58,7 @@ For instance, when a pulse hits a leaf on a tree, part of the signal is immediat
 This gives lidar the unique ability to sense a ground surface from the air, even when it is covered with a forest, making it particularly suitable for highly vegetated areas.
 
 On Earth, for DTM generation, only airborne lidar is used, attached to either planes or helicopters.
-However for celestial bodies that do not have an atmosphere (such as the Moon), lidar can also be used from space\sidenote{NASA has used lidar on the Moon (\url{https://lola.gsfc.nasa.gov}) and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}.
+However for celestial bodies that do not have an atmosphere (such as the Moon), lidar can also be used from space\footnote{NASA has used lidar on the Moon (\url{https://lola.gsfc.nasa.gov}) and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}.
 
 \begin{link-box}
 This YouTube video explains the principles of an aerial LiDAR system:
@@ -97,7 +97,7 @@ It is quite different from airborne lidar or photo\-gramme\-try-based DTM acquis
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions. 
 As a result the speed of the radar signal is not known and the time-of-flight principle can not be used. 
 However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, elevation can still be measured. 
-With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\sidenote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
+With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\footnote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of 30 meters.
 
 \begin{link-box}
@@ -275,10 +275,10 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}
 	\label{fig:processing}
 \end{figure}
-Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds\sidenote{This is a topic in Chapter~\ref{chap:pcprocessing}}. 
+Or, one can attempt to detect and remove outliers caused \eg\  by multi-path effects or flocks of birds\footnote{This is a topic of lesson 12}. 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).
-And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with.
+And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\footnote{Lessons 04 and 05 explore the topic of spatial interpolation in detail.}.
 
 Ultimately it is up to you, the DTM expert, to judge what processing methods and parameters are sensible for a given dataset.
 You need to consider on the one hand the types and severity of the artefacts, and on the other hand the limitations of the available algorithms to fix them. 
