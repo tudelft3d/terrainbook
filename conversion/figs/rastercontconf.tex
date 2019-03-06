@@ -1,0 +1,98 @@
+\begin{tikzpicture}
+	[
+	scale=1,
+	normalnode/.style={draw=gray,text=gray,line width=1pt,shape=circle},
+	normalline/.style={draw=gray,line width=1pt},
+	contournode/.style={draw=black,text=gray,line width=2pt},
+	contourline/.style={draw=black,line width=2pt},
+	emptynode/.style={inner sep=0pt,minimum size=4pt,fill=white},
+	cbrace/.style={decorate,decoration={brace,mirror,amplitude=12pt}},
+	bracelabel/.style={midway,xshift=-1.2cm,text width=1.3cm,align=flush right,font=\small}
+	]
+	
+	\def\r{1.25}
+	\def\he{0.88}
+	
+	\newcommand{\rcnode}[2]{
+		\ifthenelse{\equal{#1}{0}}
+	           { \node [normalnode,contournode] (p#2) at (135+90*#2:\r) {$#1$}; }
+	           { \node [normalnode] (p#2) at (135+90*#2:\r) {$#1$}; };
+	};
+
+	\newcommand{\rcedge}[4]{
+		\ifthenelse{\equal{#1}{0} \AND \equal{#3}{0}}
+	           { \draw [contourline] (#2) -- (#4); }
+	           { \draw [normalline] (#2) -- (#4); };
+	};
+	
+	\newcommand{\xve}{
+		\node [normalnode,contournode,emptynode] (ive) at ($(p2)+(0,\he)$) {};
+		\draw [contourline] (p0) -- (ive);
+	};
+	
+	\newcommand{\xeed}{
+		\node [normalnode,contournode,emptynode] (ieed1) at ($(p0)+(\he,0)$) {};
+		\node [normalnode,contournode,emptynode] (ieed2) at ($(p0)-(0,\he)$) {};
+		\draw [contourline] (ieed1) -- (ieed2);
+	};
+
+	\newcommand{\xees}{
+		\node [normalnode,contournode,emptynode] (iees1) at ($(p0)+(\he,0)$) {};
+		\node [normalnode,contournode,emptynode] (iees2) at ($(p1)+(\he,0)$) {};
+		\draw [contourline] (iees1) -- (iees2);
+	};
+	
+	\newcommand{\xvv}{
+		\draw [contourline] (p0) -- (p2);
+	};
+	
+	\newcommand{\xamb}{
+		\node [normalnode,contournode,emptynode] (ieed1) at ($(p0)+(\he,0)$) {};
+		\node [normalnode,contournode,emptynode] (ieed2) at ($(p0)-(0,\he)$) {};
+		\draw [contourline, densely dashdotdotted, line width=1pt] (ieed1) -- (ieed2);
+
+		\node [normalnode,contournode,emptynode] (ieed3) at ($(p2)-(\he,0)$) {};
+		\node [normalnode,contournode,emptynode] (ieed4) at ($(p2)+(0,\he)$) {};
+		\draw [contourline, densely dashdotdotted, line width=1pt] (ieed3) -- (ieed4);
+
+		\node [normalnode,contournode,emptynode] (ieed5) at ($(p1)+(0,\he)$) {};
+		\node [normalnode,contournode,emptynode] (ieed6) at ($(p1)+(\he,0)$) {};
+		\draw [contourline, dashed, line width=1pt] (ieed5) -- (ieed6);
+
+
+		\node [normalnode,contournode,emptynode] (ieed7) at ($(p3)-(0,\he)$) {};
+		\node [normalnode,contournode,emptynode] (ieed8) at ($(p3)-(\he,0)$) {};
+		\draw [contourline, dashed, line width=1pt] (ieed7) -- (ieed8);
+	};
+	
+	\newcommand{\rc}[5]{
+	  	\node {
+    			\begin{tikzpicture}
+				\rcnode{#1}{0};
+				\rcnode{#2}{1};
+				\rcnode{#3}{2};
+				\rcnode{#4}{3};
+		           
+		        \rcedge{#1}{p0}{#2}{p1};
+		        \rcedge{#2}{p1}{#3}{p2};
+		        \rcedge{#3}{p2}{#4}{p3};
+		        \rcedge{#4}{p3}{#1}{p0};
+		        
+		       	#5;
+
+		     \end{tikzpicture}
+		 }
+	};
+
+		\matrix (mat) [matrix of nodes, nodes in empty cells,
+		column sep=.5cm,row sep=.5cm]{
+			\rc{\pm}{\pm}{\pm}{\pm}{}; 		&	\rc{0}{0}{0}{0}{}; 				&	\rc{0}{\pm}{\pm}{\pm}{}; 			\\
+			\rc{0}{0}{\pm}{\pm}{}; 			&	\rc{\pm}{\pm}{\mp}{\mp}{\xees};	&	\rc{\pm}{\mp}{\mp}{\mp}{\xeed};	\\
+			\rc{0}{\mp}{\mp}{\pm}{\xve};		&	\rc{0}{\pm}{0}{\pm}{\xvv}; & \rc{\pm}{\mp}{\pm}{\mp}{\xamb};\\
+		};
+
+%		https://tex.stackexchange.com/questions/183896/nodes-and-matrix-of-nodes
+%		\draw[cbrace] (mat-1-1.north west) -- (mat-1-1.south west) node[bracelabel] {Ignore};
+%		\draw[cbrace] (mat-2-1.north west) -- (mat-3-1.south west) node[bracelabel] {Intersect};
+		
+\end{tikzpicture}

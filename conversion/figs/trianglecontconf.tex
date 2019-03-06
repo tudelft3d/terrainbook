@@ -1,0 +1,63 @@
+\begin{tikzpicture}
+	[
+	scale=1,
+	normalnode/.style={draw=gray,text=gray,line width=1pt,shape=circle},
+	normalline/.style={draw=gray,line width=1pt},
+	contournode/.style={draw=black,text=gray,line width=2pt},
+	contourline/.style={draw=black,line width=2pt},
+	emptynode/.style={inner sep=0pt,minimum size=4pt,fill=white},
+	cbrace/.style={decorate,decoration={brace,mirror,amplitude=12pt}},
+	bracelabel/.style={midway,xshift=-1.2cm,text width=1.3cm,align=flush right,font=\small}
+	]
+	
+	\newcommand{\tcnode}[2]{
+		\ifthenelse{\equal{#1}{0}}
+	           { \node [normalnode,contournode] (p#2) at (90+120*#2:1) {$#1$}; }
+	           { \node [normalnode] (p#2) at (90+120*#2:1) {$#1$}; };
+	};
+
+	\newcommand{\tcedge}[4]{
+		\ifthenelse{\equal{#1}{0} \AND \equal{#3}{0}}
+	           { \draw [contourline] (#2) -- (#4); }
+	           { \draw [normalline] (#2) -- (#4); };
+	};
+	
+	\newcommand{\xve}{
+		\node [normalnode,contournode,emptynode] (ive) at ($(p2)+(120:0.866)$) {};
+		\draw [contourline] (p1) -- (ive);
+	};
+	
+	\newcommand{\xee}{
+		\node [normalnode,contournode,emptynode] (iee1) at ($(p1)+(60:0.866)$) {};
+		\node [normalnode,contournode,emptynode] (iee2) at ($(p1)+(0:0.866)$) {};
+		\draw [contourline] (iee1) -- (iee2);
+	};
+	
+	\newcommand{\tc}[4]{
+	  	\node {
+    			\begin{tikzpicture}
+				\tcnode{#1}{0};
+				\tcnode{#2}{1};
+				\tcnode{#3}{2};
+		           
+		        \tcedge{#1}{p0}{#2}{p1};
+		        \tcedge{#2}{p1}{#3}{p2};
+		        \tcedge{#3}{p2}{#1}{p0};
+		        
+		       	#4;
+
+		     \end{tikzpicture}
+		 }
+	};
+
+		\matrix (mat) [matrix of nodes, nodes in empty cells,
+		column sep=.5cm,row sep=.5cm]{
+			\tc{\pm}{\pm}{\pm}{}; 		& \tc{0}{0}{0}{}; 					& \tc{0}{\pm}{\pm}{};	\\
+			\tc{\pm}{0}{\mp}{\xve};		& \tc{\pm}{\mp}{\pm}{\xee};	& \tc{0}{0}{\pm}{};		\\
+		};
+	
+%		https://tex.stackexchange.com/questions/183896/nodes-and-matrix-of-nodes
+%		\draw[cbrace] (mat-1-1.north west) -- (mat-1-1.south west) node[bracelabel] {Ignore};
+%		\draw[cbrace] (mat-2-1.north west) -- (mat-2-1.south west) node[bracelabel] {Intersect};
+
+\end{tikzpicture}
