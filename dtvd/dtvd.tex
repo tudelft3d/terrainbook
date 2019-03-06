@@ -10,7 +10,11 @@
 \chapter{Triangulations \& Voronoi diagrams}%
 \label{chap:dtvd}
 
-% TODO : introduction to the chapter: DT and VD are fundamental structures in terrains, both for representation but also for processing (interpolation and many other operations with terrains and point clouds)
+Delaunay triangulations (DT) and Voronoi diagrams (VD) are fundamental data structures for terrains, both for their representation and for their processing (\eg\ interpolation and several operations on terrains and point clouds are based on one of these structures).
+
+%
+
+This chapter formally defines the VD and DT in two dimensions, and introduces several concepts in computational geometry and combinatorial topology that are needed to understand, construct, and manipulate them in practice. 
 
 
 \section{The Voronoi Diagram}
@@ -526,6 +530,8 @@ If 2 segments are nearly parallel, many points could be necessary (for $m$ segme
 %
 \section{Notes and comments}
 \label{sec:notes}
+
+The DT and the VD have been discovered, rediscovered and studied many times and in many different fields, see \citet{Okabe00} for a complete history.
 
 For the construction of the DT, the incremental algorithm was first described by \citet{Lawson72-1}.
 \citet{Guibas85} describe a divide-and-conquer algorithm, and \citet{Fortune87} a sweep-line one.
