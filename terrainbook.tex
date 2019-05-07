@@ -7,7 +7,6 @@
 \usepackage{mathpazo}
 \usepackage{amsmath,amssymb,amsthm} 
 \usepackage[square]{natbib}
-\usepackage{bibentry}
 \usepackage{url}
 \usepackage{xspace}
 \usepackage[left=25mm,top=25mm]{geometry}
@@ -26,6 +25,8 @@
 \usepackage{tikz}
 \usepackage[tikz]{mdframed}
 
+\usepackage{bibentry}
+\nobibliography*
 
 \newcommand{\ie}{ie}
 \newcommand{\eg}{eg}
@@ -81,16 +82,18 @@
 %-------------------------------------------
 \mainmatter
 
-\include{whatisterrain/whatisterrain}
-\include{acquisition/acquisition}
-\include{dtvd/dtvd}
-\include{interpol/interpol}
-\include{kriging/kriging}
-\include{topofeatures/topofeatures}
-\include{runoff/runoff}
-\include{conversion/conversion}
+% \include{whatisterrain/whatisterrain}
+% \include{acquisition/acquisition}
+% \include{dtvd/dtvd}
+% \include{interpol/interpol}
+% \include{kriging/kriging}
+% \include{topofeatures/topofeatures}
+% \include{runoff/runoff}
+% \include{conversion/conversion}
 \include{massive/massive}
-\include{visibility/visibility}
+% \include{visibility/visibility}
+\include{pcprocessing/pcprocessing}
+% \include{mat/mat}
 
 
 %-------------------------------------------
