@@ -25,6 +25,13 @@
 \usepackage{tikz}
 \usepackage[tikz]{mdframed}
 
+\usepackage{etoc}
+\newcommand*\chaptertoc{
+    \etocsetnexttocdepth{1}
+    \etocsettocstyle{\section*{}}{}
+    \localtableofcontents
+}
+
 \usepackage{bibentry}
 \nobibliography*
 
@@ -83,9 +90,9 @@
 \mainmatter
 
 % \include{whatisterrain/whatisterrain}
-\include{acquisition/acquisition}
+% \include{acquisition/acquisition}
 % \include{dtvd/dtvd}
-% \include{interpol/interpol}
+\include{interpol/interpol}
 % \include{kriging/kriging}
 % \include{topofeatures/topofeatures}
 % \include{runoff/runoff}
