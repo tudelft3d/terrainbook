@@ -256,10 +256,25 @@ It uses two VDs: one for the set $S$ of data points, and another one where a poi
 The insertion of $x$ modifies \emph{locally} a VD($S$): the Voronoi cell $\mathcal{V}_{x}$ of $x$ `steals' some parts of some Voronoi cells of VD($S$), as shown in Figure~\ref{fig:nnc}.
 \begin{figure}
   \centering
-  \includegraphics[width=0.65\textwidth]{figs/nnc}
-  \caption{Natural neighbour coordinates in 2D for the interpolation point $x$. The shaded polygon is $\mathcal{V}_{x}$.} 
-\label{fig:nnc}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=1]{figs/laplace.pdf}
+    \caption{}\label{fig:nn-a}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=2]{figs/laplace.pdf}
+    \caption{}\label{fig:nnc}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=3]{figs/laplace.pdf}
+    \caption{}\label{fig:laplace}
+  \end{subfigure}%
+\caption{\textbf{(a)} The VD of a set of points with an interpolation location $x$. \textbf{(b)} Natural neighbour coordinates in 2D for $x$. The shaded polygon is $\mathcal{V}^{+}_{x}$. \textbf{(c)} The weight for the Laplace interpolant.}
+\label{fig:nn}
 \end{figure}
+
 This idea forms the basis of natural neighbour coordinates, which define quantitatively the amount $\mathcal{V}_{x}$ steals from each of its natural neighbours. 
 Let $\mathcal{D}$ be the VD($S$), and $\mathcal{D}^{+} = \mathcal{D} \cup \{x\}$. 
 The Voronoi cell of a point $p$ in $\mathcal{D}$ is defined by $\mathcal{V}_{p}$, and $\mathcal{V}^{+}_{p}$ is its cell in $\mathcal{D}^{+}$. 
@@ -290,6 +305,47 @@ where $f(x)$ is the interpolated function value at the location $x$.
 
 The natural neighbour interpolant possesses all the wished properties from above, except that the first derivative is undefined at the data points. 
 Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD.
+
+
+
+%-------------------------------------------
+%-
+\subsection{Laplace interpolant}
+
+The Laplace interpolant, or non-Sibsonian interpolation, is a computationally faster variant of the natural neighbour interpolation method.
+It is faster because no (stolen) areas need to be computed, instead the lengths of the Delaunay and the Voronoi edges are used.
+
+%
+
+For a given interpolation location $x$, the natural neighbours $p_i$ of $x$ are used for the Laplace interpolant.
+The weight $w_i$ of a $p_i$ is obtained, as shown in the Figure~\ref{fig:laplace}, by:
+\begin{equation}
+  w_{i}(x) = \frac{|edge_i(\mathcal{V}^{+}_{x})|}{|xp_i|}
+  \label{eq:laplace}
+\end{equation}
+where $|edge_i(\mathcal{V}^{+}_{x})|$ represents the length of the Voronoi edge between $x$ and $p_i$ (the orange edge in Figure~\ref{fig:laplace} for one neighbour); 
+and $|xp_i|$ the Euclidean distance (in 2D) between $x$ and $p_i$ (which is the Delaunay edge).
+
+%
+
+If we consider that each data point in $S$ has an attribute $a_{i}$ (its elevation), the interpolation function value at $x$ is:
+\begin{equation}
+  f(x) = \frac{\sum_{i=1}^{k} w_{i}(x) \, a_{i}}{\sum_{i=1}^{k} w_{i}(x)}
+  \label{eq:laplace2}
+\end{equation}
+
+Note that the fraction becomes indeterminate when $x$ equals one of the sample points $p_i$. 
+In this case the Laplace interpolant therefore simply defines that $f(x) = a_i$.
+
+%
+
+Firstly the Laplace interpolant is exact: the interpolation method returns the exact value, rather than some estimate, of a sample point when it is queried at that precise location. 
+Secondly, it is continuous and continuously differentiable ($C^1$) everywhere except at sites where finitely many Voronoi circles intersect. 
+% We found that this is not a problem in practice.
+Thirdly, it is local, \ie\ it uses only a local subset of data for the interpolation of a point. 
+This limits the computational cost and supports efficient addition or removal of new data points. 
+Finally, like the VD itself, it is adaptive to the spatial configuration of sample points. 
+Unlike other methods such as IDW interpolation, the Laplace interpolant requires no user-defined parameters.
 
 
 
