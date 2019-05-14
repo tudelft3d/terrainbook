@@ -69,6 +69,7 @@ Figure~\ref{fig:ideal} illustrates what is expected by hydrographers.
 %%%%%%%%%%%%%%%%%%%%
 %
 \subsection{Generalisation is required to obtain good depth contours}
+\label{sec:good-depth-contours}
 
 Creating good depth-contours requires \emph{generalisation}, \ie\ the process of meaningfully reducing information.
 
@@ -246,19 +247,17 @@ This methodology uses several of the algorithms and data structures studied in t
 %
 
 The key idea behind a the methodology, called a Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
-Instead of performing generalisation by moving lines or using a subset of the original samples, we manipulate the surface directly with operators.
+Instead of performing generalisation by moving lines or using a subset of the original samples, we manipulate the surface directly with operators that fulfil the constraints listed in Section~\ref{sec:good-depth-contours}.
 
 %
 
-% TODO : remove the reshaping operator
-Figure~\ref{fig:surfapproach} 
+Figure~\ref{fig:surfapproach} gives a schematic overview of the different components of our Voronoi-based surface concept. 
 \begin{figure}
   \centering
   \includegraphics[width=0.6\textwidth]{figs/surfaceapproach_V2.pdf}
   \caption{Overview of the Voronoi- and surface-based approach.}
 \label{fig:surfapproach}
 \end{figure}
-gives a schematic overview of the different components of our Voronoi-based surface concept. 
 
 Firstly, all the input points of a given area are used to construct a Delaunay TIN.
 Secondly, a number of generalisation operators are used that alter the TIN using Laplace interpolation, which is based on the Voronoi diagram.
@@ -267,18 +266,11 @@ Finally, contour lines are derived from the altered TIN using linear interpolati
 
 
 Representing a field in a computer is problematic since computers are discrete machines.
-We therefore need to \emph{discretise} the field, \ie partition it into several pieces that cover the whole area (usually either grid cells or triangles).
+We therefore need to \emph{discretise} the field, \ie\ partition it into several pieces that cover the whole area (usually either grid cells or triangles).
 Contours in Figure~\ref{fig:raw} are not smooth basically because the seabed is represented simply with a TIN of the original samples, which is a C$^0$ interpolant.
+However, as we demonstrate below, we can obtain a smooth looking approximation of the field by densifying the TIN using the Laplace interpolant (see Section~\ref{sec:laplace}), which is C$^1$.
 
 %
-
-However, as we demonstrate in the next section, we can obtain a smooth looking approximation of the field by densifying the TIN using the Laplace interpolant (see Section~\ref{sec:laplace}), which is C$^1$.
-
-
-%%%
-%
-\subsection{Operators on the surface}
-\label{sec:operators}
 
 Two generalisation operators allow us to obtain a smoother surface from which depth-contours can be extracted: 
 \begin{enumerate}
@@ -287,7 +279,56 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 \end{enumerate}
 % These two operators are based on the Laplace interpolation algorithm (described in Algorithm~\ref{alg:intdepth}, and referred to as \interpolateDepth in the following) to interact with the surface. 
 % As shown in Algorithm~\ref{alg:intchkdepth} \interpolateCheckDepth, is used to ensure that the safety constraint is never violated (the newly interpolated depth is only returned if it is shallower than the current depth at the vertex). 
-If the interpolated depth is deeper than the current depth, the current depth is returned.
+% If the interpolated depth is deeper than the current depth, the current depth is returned.
+
+
+%%%
+%
+\subsubsection{The smoothing operator}
+\label{chap:myapproach:smoothing}
+
+The smoothing operator basically estimates, with the Laplace interpolant, the depth of each vertex in a dataset by considering its natural neighbour (see Figure~\ref{fig:1Dsmoothop}).
+If this depth is shallower, then the vertex is assigned this value; if it is deeper than nothing is done.
+Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths. 
+\begin{figure}[tbh]
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=1]{figs/1Dsmoothop.pdf}
+    \caption{Initial TIN}\label{fig:1Dsmoothop:a}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=2]{figs/1Dsmoothop.pdf}
+    \caption{Estimation using only neighbours}\label{fig:1Dsmoothop:b}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=3]{figs/1Dsmoothop.pdf}
+    \caption{Comparison of depths}\label{fig:1Dsmoothop:c}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth,page=4]{figs/1Dsmoothop.pdf}
+    \caption{Resulting TIN}\label{fig:1Dsmoothop:d}
+  \end{subfigure}
+  \caption{Cross-section view of the smoothing of a single vertex in a TIN.}
+\label{fig:1Dsmoothop}
+\end{figure}
+
+To perform the Laplace interpolation for each vertex $v$ in the Voronoi diagram $\mathcal{D}$, it suffices to obtain the natural neighbours $p_i$ of $v$, and for each calculate the lengths of the Delaunay and the dual Voronoi edge (as explained in Section~\ref{sec:laplace}).
+There is no need to insert/remove $v$ in the dataset, since we are only interested in estimating its depth (without considering the depth it is already assigned).
+
+The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall feature shape. 
+Applying it both reduces the angle between the planes spanned by adjacent triangles and simplifies overall shape.
+
+It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $O(n)$.
+
+Observe also that the operator can be performed either on a portion of a dataset, or on the whole dataset. 
+Furthermore this operator can be applied any number of times, delivering more generalisation with each pass.
 
 
 

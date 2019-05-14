@@ -117,7 +117,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2019-05-13 13:16:05 +0000</string>
+	<string>2019-05-14 12:49:51 +0000</string>
 	<key>Modifier</key>
 	<string>Hugo Ledoux</string>
 	<key>MovementHandleVisible</key>
@@ -227,7 +227,7 @@
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{395.99999114871025, 217.43999513983727}, {128, 18}}</string>
+					<string>{{395.99999114871025, 223.21454049782324}, {128, 18}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -332,7 +332,7 @@
 					<key>OrthogonalBarPoint</key>
 					<string>{0, 0}</string>
 					<key>OrthogonalBarPosition</key>
-					<real>9.6491477272727195</real>
+					<real>9.6491479873657227</real>
 					<key>Points</key>
 					<array>
 						<string>{254.90105383224895, 317.77053404032597}</string>
@@ -623,7 +623,7 @@
 								<key>element</key>
 								<string>MOVETO</string>
 								<key>point</key>
-								<string>{299.95052843119214, 214.90969951450822}</string>
+								<string>{299.95052843119214, 221.38969936966896}</string>
 							</dict>
 							<dict>
 								<key>element</key>
@@ -635,7 +635,7 @@
 					</dict>
 					<key>Points</key>
 					<array>
-						<string>{299.95052843119214, 214.90969951450822}</string>
+						<string>{299.95052843119214, 221.38969936966896}</string>
 						<string>{299.95052843119214, 288.14554110347638}</string>
 					</array>
 					<key>Style</key>
@@ -668,7 +668,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{250.82917020361364, 179.27999599277973}, {98.242712874946463, 35.129703521728516}}</string>
+					<string>{{250.82917020361364, 185.75999584794044}, {98.242712874946463, 35.129703521728516}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -919,7 +919,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{246.25871984787398, 397.43999111652374}, {107.38361358642578, 35.129703521728516}}</string>
+					<string>{{246.25871984787398, 400.6011961224408}, {107.38361358642578, 35.129703521728516}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>FontInfo</key>
@@ -1007,7 +1007,7 @@
 								<key>element</key>
 								<string>MOVETO</string>
 								<key>point</key>
-								<string>{299.95052664108687, 396.93999111652374}</string>
+								<string>{299.95052664108687, 400.1011961224408}</string>
 							</dict>
 							<dict>
 								<key>element</key>
@@ -1019,7 +1019,7 @@
 					</dict>
 					<key>Points</key>
 					<array>
-						<string>{299.95052664108687, 396.93999111652374}</string>
+						<string>{299.95052664108687, 400.1011961224408}</string>
 						<string>{299.95052664108687, 328.14554110347638}</string>
 					</array>
 					<key>Style</key>
@@ -1242,7 +1242,7 @@
 								<key>r</key>
 								<real>0.96470588445663452</real>
 								<key>space</key>
-								<string>9eaea0911d89d63e39e95f2e2116eaec7e0bb91e</string>
+								<string>srgb</string>
 							</dict>
 						</dict>
 						<key>shadow</key>
@@ -1274,7 +1274,7 @@
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{87, 225.35999496281147}, {468, 151.19999662041664}}</string>
+					<string>{{87, 231.9054495082662}, {468, 151.19999662041664}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
@@ -1302,7 +1302,7 @@
 								<key>r</key>
 								<real>0.87361878156661987</real>
 								<key>space</key>
-								<string>9eaea0911d89d63e39e95f2e2116eaec7e0bb91e</string>
+								<string>srgb</string>
 							</dict>
 							<key>CornerRadius</key>
 							<real>3</real>
@@ -1396,7 +1396,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{74.181818181818244, 132.7272727272728}, {499.63636363636363, 344.36363636363632}}</string>
+		<string>{{68.363636363636374, 114.90909090909098}, {499.63636363636374, 344.36363636363632}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
@@ -1417,7 +1417,7 @@
 	<key>createSinglePDFKey</key>
 	<integer>0</integer>
 	<key>exportAreaKey</key>
-	<integer>3</integer>
+	<integer>1</integer>
 	<key>exportQualityKey</key>
 	<real>100</real>
 	<key>exportSizesKey</key>
