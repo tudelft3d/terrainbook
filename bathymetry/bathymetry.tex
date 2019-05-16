@@ -212,19 +212,19 @@ In terms of safety this method has the same drawbacks as max rasterization.
 As Figure~\ref{fig:simpfail} shows, 
 \begin{figure}
 \centering
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=1]{figs/simpfail.pdf}
     \caption{Initial configuration}\label{fig:simpfail:a}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/simpfail.pdf}
     \caption{1st vertex removal}\label{fig:simpfail:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/simpfail.pdf}
     \caption{2nd vertex removal}\label{fig:simpfail:c}
@@ -272,14 +272,7 @@ However, as we demonstrate below, we can obtain a smooth looking approximation o
 
 %
 
-Two generalisation operators allow us to obtain a smoother surface from which depth-contours can be extracted: 
-\begin{enumerate}
-  \item smoothing, 
-  \item densification.
-\end{enumerate}
-% These two operators are based on the Laplace interpolation algorithm (described in Algorithm~\ref{alg:intdepth}, and referred to as \interpolateDepth in the following) to interact with the surface. 
-% As shown in Algorithm~\ref{alg:intchkdepth} \interpolateCheckDepth, is used to ensure that the safety constraint is never violated (the newly interpolated depth is only returned if it is shallower than the current depth at the vertex). 
-% If the interpolated depth is deeper than the current depth, the current depth is returned.
+Two generalisation operators allow us to obtain a smoother surface from which depth-contours can be extracted: (1) smoothing; (2) densification.
 
 
 %%%
@@ -339,25 +332,25 @@ Furthermore this operator can be applied any number of times, delivering more ge
 Its objective is primarily to minimise the discretisation error between the Laplace interpolated field and the contours that are extracted from the DT, this is illustrated in Figure~\ref{fig:1Ddensop}.
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=1]{figs/1Ddensop.pdf}
     \caption{Initial TIN}\label{fig:1Ddensop:a}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/1Ddensop.pdf}
     \caption{Interpolated field (dashed)}\label{fig:1Ddensop:b}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/1Ddensop.pdf}
-    \caption{Addition of intermediate points (orange) in accordance with the interpolated field}\label{fig:1Ddensop:c}
+    \caption{Addition of intermediate points (orange)}\label{fig:1Ddensop:c}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=4]{figs/1Ddensop.pdf}
     \caption{Resulting TIN}\label{fig:1Ddensop:d}
@@ -440,39 +433,36 @@ It performs a single pass on the input triangles, thus with every call the resol
 \section{Some examples of results with real-world datasets}
 
 
-
 Figure~\ref{fig:zl1845fieldview} shows the results obtained with the implementation of the method described in this chapter.
-This was tested with an MBES dataset from Zeeland, in the Netherlands: it contains 102,954 sample points, in an area of 0.32km$^2$.
+This was tested with an MBES dataset from Zeeland, in the Netherlands.
 \begin{figure}
 \centering
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_o.pdf}
     \caption{}\label{fig:zl1845fieldview_o}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_s.pdf}
     \caption{}\label{fig:zl1845fieldview_s}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_raster_d.pdf}
     \caption{}\label{fig:zl1845fieldview_raster_d}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/zl1845rmsdiffplot.pdf}
-    \caption{}\label{fig:zl1845rmsdiffplot}
-  \end{subfigure}
-  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100x smoothed interpolated and rasterized fields (pixelsize 50 cm). \textbf{(d)} RMS of differences with respect to the initial interpolated field as a function of the number of smoothing passes}
+  % \begin{subfigure}[b]{0.45\linewidth}
+    % \centering
+    % \includegraphics[width=\textwidth]{figs/zl1845rmsdiffplot.pdf}
+    % \caption{}\label{fig:zl1845rmsdiffplot}
+  % \end{subfigure}
+  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100x smoothed interpolated and rasterized fields (pixelsize 50 cm).}
 \label{fig:zl1845fieldview}
 \end{figure}
-
-
 As can be observed from Figure~\ref{fig:zl1845fieldview_o}, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 
 However, the smoothed contours (100 smoothing passes) from Figure~\ref{fig:zl1845fieldview_s} have a much cleaner and less cluttered appearance. 
 Clearly, the number of contour lines has diminished. 
@@ -482,41 +472,43 @@ Notice also that a third effect of the smoothing operator is the enlargement of 
 
 %
 
-As to be expected, the overall effect of the smoothing operator on the morphology of the surface is significant.
-As shown by the plot of the root mean square (RMS) error between the initial and the generalised field in Figure~\ref{fig:zl1845rmsdiffplot}, the smoothing of the surface is most significant in the earlier smoothing passes and results in a per pixel difference of tens of centimetres.
-That supports the idea that the smoothing of the surface works against the preservation of \emph{all} morphological features. 
-However, from the difference map in Figure~\ref{fig:zl1845fieldview_raster_d}, it can be seen that the high frequency features are especially altered, thus preserving the general surface shape (low frequency pattern). 
+% As to be expected, the overall effect of the smoothing operator on the morphology of the surface is significant.
+% As shown by the plot of the root mean square (RMS) error between the initial and the generalised field in Figure~\ref{fig:zl1845rmsdiffplot}, the smoothing of the surface is most significant in the earlier smoothing passes and results in a per pixel difference of tens of centimetres.
+% That supports the idea that the smoothing of the surface works against the preservation of \emph{all} morphological features. 
+% However, from the difference map in Figure~\ref{fig:zl1845fieldview_raster_d}, it can be seen that the high frequency features are especially altered, thus preserving the general surface shape (low frequency pattern). 
 
-% The effects of the densification operator are illustrated in Figure~\ref{fig:lm9_densfield_comb}. 
-% The sharp edges of the undensified lines are caused by the large triangles in the initial TIN, however after densification these large triangles are subdivided into much smaller ones. 
-% The result is a much smoother contour line that still respects the sample points. 
-% Figure~\ref{fig:lm9_rmsdiffplot} shows how the approximation error of the TIN with respect to a Laplace interpolation of the input sample points improves with more densification passes.
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[b]{0.45\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth]{figs/lm9_combined.pdf}
-%     \caption{TIN before densification (left), TIN after 3x densification (centre) and comparison of corresponding contour lines (right). Original sample points shown in the background. (detail)}\label{fig:lm9_densfield_comb}
-%   \end{subfigure}
-%   \quad
-%   \begin{subfigure}[b]{0.45\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth]{figs/lm9_rmsdiffplot.pdf}
-%     \caption{Approximation error of TIN interpolation with respect to the initial Laplace interpolated field as a function of the number of densification passes. Computed for a rasterization of the fields with 10 m pixelsize.}\label{fig:lm9_rmsdiffplot}
-%   \end{subfigure}
-%   }
-%   \caption{Densification illustrated on the Antilles dataset.}
-% \label{fig:lm9_dens0overlay5}
-% \end{figure}
+%
+
+The effects of the densification operator are also visible. 
+The sharp edges of the undensified lines are caused by the large triangles in the initial TIN, however after densification these large triangles are subdivided into much smaller ones. 
+The result is a much smoother contour line that still respects the sample points. 
+
+
+%
+
+
+Naturally, the smoothing operator also smoothes and simplifies the resulting contour lines. 
+This is demonstrated in Figure~\ref{fig:zl1845lineview_all} illustrates the effect of the smoothing operator on a single contour over 30 smoothing passes. 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{figs/zl1845detailcontours0-30.pdf}
+  \caption{From 0x smoothing (outer) to 30x smoothing (inner) for a given dataset.}
+\label{fig:zl1845lineview}
+\end{figure}
+It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 
+What can also be seen is that the line is simplified (the details on the outer rim disappear, note however that the point count stays the same) and smoothed. 
+% That is further supported by Figures~\ref{fig:zl1845lineview_o} and \ref{fig:zl1845lineview_s} that shows the point angularity before and after smoothing. It is evident that the number of points with a medium to high angularity are significantly reduced, which also corresponds to a smoother and more simplified contour line.
+
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes \& comments}
 
-The algorithm and the methodology of this chapter are taken from \citet{Peters14}.
+The algorithm and the methodology of this chapter are (mostly) taken from \citet{Peters14}.
 
-As \citet{Zhang11} state, the generalisation of the content of a nautical chart is hindered by the fact that the following four constraints must be respected:
+\citet{Zhang11} explains in details that the generalisation of the content of a nautical chart is hindered by  the four constraints.
 
+% TODO : finish comments
 
 
 %%%%%%%%%%%%%%%%%%%%

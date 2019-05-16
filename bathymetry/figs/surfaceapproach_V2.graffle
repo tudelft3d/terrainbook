@@ -777,9 +777,9 @@
 {\*\expandedcolortbl;;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 Laplace Interpolation}</string>
+\f0\fs24 \cf0 Laplace interpolation}</string>
 						<key>TextAlongPathGlyphAnchor</key>
-						<string>left</string>
+						<string>center</string>
 					</dict>
 				</dict>
 				<dict>
@@ -839,9 +839,9 @@
 {\*\expandedcolortbl;;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
-\f0\fs24 \cf0 Voronoi Diagram}</string>
+\f0\fs24 \cf0 Voronoi diagram}</string>
 						<key>TextAlongPathGlyphAnchor</key>
-						<string>left</string>
+						<string>center</string>
 					</dict>
 				</dict>
 				<dict>
@@ -1396,7 +1396,7 @@
 		<key>Sidebar_Tab</key>
 		<integer>0</integer>
 		<key>VisibleRegion</key>
-		<string>{{68.363636363636374, 114.90909090909098}, {499.63636363636374, 344.36363636363632}}</string>
+		<string>{{62.545454545454554, 97.090909090909165}, {499.63636363636368, 344.36363636363632}}</string>
 		<key>WindowInfo_InspectorTab</key>
 		<array>
 			<string>com.omnigroup.OmniGraffle.inspectorGroup.object</string>
