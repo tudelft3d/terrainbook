@@ -108,14 +108,14 @@ The method is available in the GRASS GIS\@.
 
 The five interpolation methods discussed in this section are \emph{weighted-average methods}.
 These are methods that use a subset of the sample points, to which a weight (importance) are assigned, to estimate the value of the dependent variable. 
-The interpolation function $f$ of such methods have the following form:
+The interpolation function $f$ of such methods, with which we obtain an estimation $\hat{a}$ of the dependent variable $a_i$, have the following form:
 \begin{equation}
-  f(x) = \frac{\sum_{i=1}^{k} w_{i}(x) \, a_{i}}{\sum_{i=1}^{k} w_{i}(x)}
+  f(x) = \hat{a_i} = \frac{\sum_{i=1}^n w_{i}(x) \, a_{i}}{\sum_{i=1}^{n} w_{i}(x)}
   \label{eq:wai}
 \end{equation}
-where $w_{i}(x)$ is the weight of each neighbouring data point $p_i$ (with respect to the interpolation location $x$) used in the interpolation process, and $a_i$ the attribute of $p_i$. 
+where $w_{i}(x)$ is the weight of each neighbouring data point $p_i$ (with respect to the interpolation location $x$) used in the interpolation process. 
 A neighbour $p_i$ here is a sample point that is used to estimate the value of location $x$.
-In the context of terrain modelling, the attribute $a$ is elevation.
+In the context of terrain modelling, the attribute $a$ is the elevation.
 
 
 %-------------------------------------------
@@ -402,7 +402,7 @@ One simple technique, which is also very easy to implement, is called \emph{jack
 It is a simple statistics resampling technique to estimate the bias and the variance of an estimation.
 
 Imagine you have a dataset $S$ consisting of $n$ sample points.
-The main idea is to remove/omit from $S$ one sample point $p$ and calculate the estimation $\hat{z}_p$  obtained for the elevation at the location ($x,y$) of $p$, and to compare this value with the real value of $p$ ($z_p$).
+The main idea is to remove/omit from $S$ one sample point $p$ and calculate the estimation $\hat{a}_p$  obtained for the elevation at the location ($x,y$) of $p$, and to compare this value with the real value of $p$ ($a_p$).
 And then to repeat this for each of the $n$ points in $S$; each estimation is thus obtained with $n-1$ points.
 
 How good one method performs can be summarised by computing the root-mean-square error:
