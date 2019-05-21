@@ -411,10 +411,10 @@ One method (with given parameters) for a given dataset can be characterised by c
 \end{equation}
 
 And it is a good idea to plot the results to observe where the largest differences between the estimation and the real values are obtained, this can help in idenfiying which parameters should be fine-tuned.
-
+See for instance one example in Figure~\ref{fig:jackknife}.
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.41\linewidth}
+  \begin{subfigure}[b]{0.40\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/jackknife/jk1.pdf}
     \caption{}
@@ -436,9 +436,13 @@ And it is a good idea to plot the results to observe where the largest differenc
     \includegraphics[width=\textwidth]{figs/jackknife/jk4.pdf}
     \caption{}
   \end{subfigure}
-\caption{Pictures of animals}
-\label{fig:animals}
+\caption{\textbf{(a)} A terrain of a given area containing 2 hills. \textbf{(b)} A sample of 1000 points of this terrain. \textbf{(c)} A plot of the errors (absolute values) obtained from the jackkknife (with IDW and a given search radius and power). \textbf{(d)} A plot of the absolute elevation versus the estimated ones .}
+\label{fig:jackknife}
 \end{figure}
+It can be seen in Figure~\ref{fig:jackknife}c that the largest differences between the observed and estimated values are (mostly) concentrated around the two peaks of the terrain, which is not surprising.
+The differences in the lower areas (which is water) are smaller since these areas have a flatter morphology.
+Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scattered plot of the observed values versus the estimated one.
+
 
 
 %%%
