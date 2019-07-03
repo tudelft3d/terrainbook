@@ -1,0 +1,48 @@
+%!TEX root = ../terrainbook.tex
+
+\graphicspath{{spatialextent/}}
+
+\chapter{The spatial extent of a point cloud}
+\label{chap:spatialextent}
+
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.22\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
+  \end{subfigure}%
+  \quad
+  \begin{subfigure}[b]{0.22\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/idea.pdf}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.22\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/idea.pdf}
+  \end{subfigure}%
+  \quad
+  \begin{subfigure}[b]{0.22\linewidth}
+    \centering
+    \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
+  \end{subfigure}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Notes \& comments}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Exercises}
+
+\begin{enumerate}
+  \item When converting isolines to a TIN, what main ``problem'' should you be aware of? Describe \emph{in details} one algorithm to convert isolines (given for instance in a \emph{shapefile}) to a TIN and avoid this problem.
+  \item How would the isocontours of a 2.75D terrain look like?
+  \item In Section~\ref{sec:structuring}, it is mentioned that merging the segments will form on polygon. But how to ensure that the orientation of that resulting curve is consistent, that it is for instance having higher terrains on the right?
+  \item Given a raster terrain (GeoTiff format) that contains several cells with \texttt{no\_data} values, describe the methodology you would use to extract contour lines from it. As a reminder, contours lines should be closed curves, except at the boundary of the dataset.
+\end{enumerate}
