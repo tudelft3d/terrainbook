@@ -7,25 +7,25 @@
 
 \begin{figure}[h]
   \centering
-  \begin{subfigure}[b]{0.22\linewidth}
+  \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
     \caption{A set of points in $\mathbb{R}^2$}
   \end{subfigure}%
-  \quad
-  \begin{subfigure}[b]{0.22\linewidth}
+  \qquad
+  \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/idea.pdf}
     \caption{Its convex hull}
   \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{0.22\linewidth}
+  \qquad
+  \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/idea.pdf}
     \caption{A $\chi$-shape}
   \end{subfigure}%
-  \quad
-  \begin{subfigure}[b]{0.22\linewidth}
+  \qquad
+  \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
     \caption{An $\alpha$-shape}
@@ -35,24 +35,100 @@
 \end{figure}
 
 Given a point cloud, one operation that practitioners need to perform is to define the spatial extent of the dataset.
-That is, they need to define the region, which is represented by a one or more polygons, that best abstracts the set of points; in the context of terrains this region is often in two dimensions.
+That is, they need to define the shape of the region that best abstracts the set of points; in the context of terrains this region is often in two dimensions.
+% , which is represented by a one or more polygons,
 This is useful for instance to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), to get a quick overview of several datasets it is faster to load a few polygons and not billions of points, etc.
 
 %
 
 The spatial extent is often called: envelope, hull, concave hull, or footprints.
-It is important to notice that the spatial extent is not uniquely defined, as Figure~\ref{fig:ideas} shows there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
+It is important to notice that the spatial extent is not uniquely defined and can a vague concept, as Figure~\ref{fig:ideas} shows there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
 
 %
 
 We present in this chapter a few methods/algorithms that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are projected to the plane.
 
+% TODO : linear approximation only here
 
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Properties of the region}
+\label{sec:properties}
+
+Let $S$ be a set of points in $\mathbb{R}^2$, and $R(S)$ the region that characterise the spatial extent of $S$.
+The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance) and in practice most algorithms will computer a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
+
+To evaluate the different algorithms, we list here different properties that one must consider when defining the spatial extent of a set of points.
+\begin{description}
+  \item[Polygons need to be \emph{regular}?] Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
+  \item[Are points allowed to be on the boundary of the region?] All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
+  \item[All points part of the region?] Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
+  \item[Region is one connected component?] Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
+  \item[Are holes allowed in a polygon?] Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
+\end{description}
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/properties.pdf}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=4,width=\textwidth]{figs/properties.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=5,width=\textwidth]{figs/properties.pdf}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=6,width=\textwidth]{figs/properties.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/properties.pdf}
+    \caption{}
+  \end{subfigure}
+\caption{Different properties for the spatial extent}
+\label{fig:properties}  
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Convex hull}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Moving arm}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{$\chi$-shape}
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{$\alpha$-shape}
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes \& comments}
 
+The properties listed in Section~\ref{sec:properties} are taken, and slightly adapted, from \citet{Galton06}.
 
 
 %%%%%%%%%%%%%%%%%%%%
