@@ -5,29 +5,48 @@
 \chapter{The spatial extent of a point cloud}
 \label{chap:spatialextent}
 
-
 \begin{figure}[h]
   \centering
   \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
+    \caption{A set of points in $\mathbb{R}^2$}
   \end{subfigure}%
   \quad
   \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/idea.pdf}
+    \caption{Its convex hull}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/idea.pdf}
+    \caption{A $\chi$-shape}
   \end{subfigure}%
   \quad
   \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
+    \caption{An $\alpha$-shape}
   \end{subfigure}
+\caption{Different methods to obtain the spatial extent of a given set of points in the plane.}
+\label{fig:ideas}  
 \end{figure}
+
+Given a point cloud, one operation that practitioners need to perform is to define the spatial extent of the dataset.
+That is, they need to define the region, which is represented by a one or more polygons, that best abstracts the set of points; in the context of terrains this region is often in two dimensions.
+This is useful for instance to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), to get a quick overview of several datasets it is faster to load a few polygons and not billions of points, etc.
+
+%
+
+The spatial extent is often called: envelope, hull, concave hull, or footprints.
+It is important to notice that the spatial extent is not uniquely defined, as Figure~\ref{fig:ideas} shows there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
+
+%
+
+We present in this chapter a few methods/algorithms that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are projected to the plane.
+
 
 
 %%%%%%%%%%%%%%%%%%%%
