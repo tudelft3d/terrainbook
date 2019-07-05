@@ -155,8 +155,27 @@ P5. & No holes in the region.  \\
 %
 \section{Moving arm}
 
-The moving arm is a generalisation of the gift wrapping algorithm
+The moving arm is a generalisation of the gift wrapping algorithm where the infinite line used to calculate the polar angles is replaced by a line segment of a given length $r$ (the ``moving arm'').
+This means that not all points are considered at each step, and that potentially the result is a polygon that is not convex.
+Figure~\ref{fig:movingarm} shows the first few steps for a given length, and it can be observed that 2 points are not part of the final region (which is non-convex).
+Observe that if $r$ had been larger then the convex of $S$ could have been obtained.
 
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.4\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
+    \caption{}
+  \end{subfigure}%
+  \qquad \qquad \quad
+  \begin{subfigure}[b]{0.4\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/movingarm.pdf}
+    \caption{}
+  \end{subfigure}
+  \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}
+\label{fig:movingarm}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%
 %
