@@ -122,7 +122,7 @@ One of them is the well-known \emph{gift wrapping algorithm}, shown in Figure~\r
   \caption{First four steps of the gift wrapping algorithm to compute the convex hull.}
 \label{fig:giftwrapping}
 \end{figure}
-It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} that is the point with the lowest $y$-coordinate), and then picks the point in $S$ for which the polar angle between the horizontal line and that point (at $a$) is the smallest.
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} that is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest.
 Then for $b$, the polar angle is calculated from the line $ab$.
 The algorithm terminates when $a$ is visited again.
 
