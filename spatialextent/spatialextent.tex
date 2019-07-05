@@ -61,11 +61,11 @@ The region is potentially formed by a set of polygons (if $S$ forms two distinct
 
 To evaluate the different algorithms, we list here different properties that one must consider when defining the spatial extent of a set of points.
 \begin{description}
-  \item[Polygons need to be \emph{regular}?] Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
-  \item[Are points allowed to be on the boundary of the region?] All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
-  \item[All points part of the region?] Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
-  \item[Region is one connected component?] Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
-  \item[Are holes allowed in a polygon?] Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
+  \item[P1.] \textbf{Polygons need to be \emph{regular}?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
+  \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
+  \item[P3.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
+  \item[P4.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
+  \item[P5.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
 \end{description}
 \begin{figure}
   \centering
@@ -103,11 +103,27 @@ To evaluate the different algorithms, we list here different properties that one
 \end{figure}
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Convex hull}
+
+As explained in Section~\ref{sec:convexhull}, given $S$ a set of points in $\mathbb{R}^2$, its convex hull, denoted here conv($S$), is the minimal convex set containing $S$.
+Two examples of convex hulls are in Figures~\ref{fig:ideas}b and~\ref{sec:properties}a.
+
+%
+
+For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
+It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or there exists specific algorithms.
+
+%
+Properties:
+\begin{description}
+  \item[P1.] The solve polygon is guaranteed to be regular. 
+  \item[P2.] A subset of $S$, or all of them, forms the region.
+  \item[P3.] Outlier part of the region.
+  \item[P4.] One component. 
+  \item[P5.] No holes in the region. 
+\end{description}
 
 
 
@@ -128,7 +144,7 @@ To evaluate the different algorithms, we list here different properties that one
 %
 \section{Notes \& comments}
 
-The properties listed in Section~\ref{sec:properties} are taken, and slightly adapted, from \citet{Galton06}.
+The properties listed in Section~\ref{sec:properties} are taken, and slightly adapted, from \citet{Galton06}. 
 
 
 %%%%%%%%%%%%%%%%%%%%
