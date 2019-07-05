@@ -66,6 +66,7 @@ To evaluate the different algorithms, we list here different properties that one
   \item[P3.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
   \item[P4.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
   \item[P5.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
+  % TODO : do we speak of time complexity of each algorithm? 
 \end{description}
 \begin{figure}
   \centering
@@ -114,22 +115,37 @@ Two examples of convex hulls are in Figures~\ref{fig:ideas}b and~\ref{sec:proper
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
 It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or there exists specific algorithms.
+One of them is the well-known \emph{gift wrapping algorithm}, shown in Figure~\ref{fig:giftwrapping}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figs/giftwrapping}
+  \caption{First four steps of the gift wrapping algorithm to compute the convex hull.}
+\label{fig:giftwrapping}
+\end{figure}
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} that is the point with the lowest $y$-coordinate), and then picks the point in $S$ for which the polar angle between the horizontal line and that point (at $a$) is the smallest.
+Then for $b$, the polar angle is calculated from the line $ab$.
+The algorithm terminates when $a$ is visited again.
 
 %
 Properties:
-\begin{description}
-  \item[P1.] The solve polygon is guaranteed to be regular. 
-  \item[P2.] A subset of $S$, or all of them, forms the region.
-  \item[P3.] Outlier part of the region.
-  \item[P4.] One component. 
-  \item[P5.] No holes in the region. 
-\end{description}
+\\
+\begin{tabular}{@{}ll@{}}
+\toprule
+P1. & The solve polygon is guaranteed to be regular.  \\  
+P2. & A subset of $S$, or all of them, forms the region. \\ 
+P3. & Outlier part of the region. \\ 
+P4. & One component.  \\ 
+P5. & No holes in the region.  \\  
+\bottomrule
+\end{tabular}
 
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Moving arm}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -146,6 +162,7 @@ Properties:
 
 The properties listed in Section~\ref{sec:properties} are taken, and slightly adapted, from \citet{Galton06}. 
 
+The gift wrapping algorithm to compute the convex hull of a set of points in $\mathbb{R}^2$ is from \citet{Jarvis73}.
 
 %%%%%%%%%%%%%%%%%%%%
 %
