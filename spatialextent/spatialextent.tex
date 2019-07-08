@@ -62,10 +62,10 @@ The region is potentially formed by a set of polygons (if $S$ forms two distinct
 To evaluate the different algorithms, we list here different properties that one must consider when defining the spatial extent of a set of points.
 \begin{description}
   \item[P1.] \textbf{Polygons need to be \emph{regular}?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
-  \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
-  \item[P3.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
-  \item[P4.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
-  \item[P5.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
+  % \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
+  \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
+  \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
+  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
   % TODO : do we speak of time complexity of each algorithm? 
 \end{description}
 \begin{figure}
@@ -87,12 +87,12 @@ To evaluate the different algorithms, we list here different properties that one
     \includegraphics[page=5,width=\textwidth]{figs/properties.pdf}
     \caption{}
   \end{subfigure}%
-  \qquad
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=6,width=\textwidth]{figs/properties.pdf}
-    \caption{}
-  \end{subfigure}
+  % \qquad
+  % \begin{subfigure}[b]{0.15\linewidth}
+  %   \centering
+  %   \includegraphics[page=6,width=\textwidth]{figs/properties.pdf}
+  %   \caption{}
+  % \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
@@ -141,11 +141,11 @@ Properties:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & The sove polygon is guaranteed to be regular.  \\  
-P2. & A subset of $S$, or all of them, forms the region. \\ 
-P3. & Outlier part of the region. \\ 
-P4. & One component.  \\ 
-P5. & No holes in the region.  \\  
+P1. & The sole polygon is guaranteed to be regular (and convex).  \\  
+% P2. & A subset of $S$, or all of them, forms the region. \\ 
+P2. & All points are on or inside the region. \\ 
+P3. & One component.  \\ 
+P4. & No holes in the region.  \\  
 \bottomrule
 \end{tabular}
 
@@ -243,10 +243,10 @@ Properties:
 \begin{tabular}{@{}ll@{}}
 \toprule
 P1. & The sole polygon could be degenerate (self-intersection).  \\  
-P2. & A subset of $S$, or all of them, forms the region. \\ 
-P3. & Outliers can be discarded. \\ 
-P4. & One component.  \\ 
-P5. & No holes in the region.  \\  
+% P2. & A subset of $S$, or all of them, forms the region. \\ 
+P2. & Outliers can be discarded. \\ 
+P3. & One component.  \\ 
+P4. & No holes in the region.  \\  
 \bottomrule
 \end{tabular}
 
@@ -261,19 +261,19 @@ The idea is to construct one polygon that is potentially non-convex, and that co
 Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape}c).
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/chishape.pdf}
     \caption{}
   \end{subfigure}
   \qquad 
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/chishape.pdf}
     \caption{}
   \end{subfigure}
   \qquad 
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/chishape.pdf}
     \caption{}
@@ -289,10 +289,10 @@ Properties:
 \begin{tabular}{@{}ll@{}}
 \toprule
 P1. & The sole polygon is guaranteed to be regular.  \\  
-P2. & A subset of $S$, or all of them, forms the region. \\ 
-P3. & All points are part of the region \\ 
-P4. & One component.  \\ 
-P5. & No holes in the region.  \\  
+% P2. & A subset of $S$, or all of them, forms the region. \\ 
+P2. & All points are part of the region \\ 
+P3. & One component.  \\ 
+P4. & No holes in the region.  \\  
 \bottomrule
 \end{tabular}
 
@@ -309,9 +309,9 @@ The $\alpha$-shape is conceptually a generalisation of the convex hull of a set 
 
 It is best understood with the following analogy.
 First imagine that $\mathbb{R}^2$ is filled with Styrofoam and that the points in $S$ are made of hard material.
-Now imagine that you have a carving tool which is a circle in the plane of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), it is only stopped by the points.
+Now imagine that you have a carving tool which is a circle of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), and that it is only stopped by the points.
 The result after carving, called $\alpha$-hull, is one or more pieces of Styrofoam.
-If we straighten the circular edges of it we obtain the $\alpha$-shape.
+If we straighten the circular edges then we obtain the $\alpha$-shape.
 
 %
 
@@ -327,9 +327,9 @@ Furthermore, it is a subcomplex of the Delaunay triangulation (DT) of $S$.
 That is, the easiest method to construct an $\alpha$-shape is by constructing DT($S$), and then remove all edges that are shorter then $2\alpha$.
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
+For each $k$-simplex, we can thus assign a range where it will be present.
 % TODO : write this?
-% Implementations of the $\alpha$-shape will also offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected
-
+Implementations of the $\alpha$-shape will also offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected and contains only one polygon.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.15\linewidth}
@@ -371,10 +371,10 @@ Properties:
 \begin{tabular}{@{}ll@{}}
 \toprule
 P1. & A complex of $k$-simplices.  \\  
-P2. & A subset of $S$, or all of them, are on the boundary of the region. \\ 
-P3. & Some points can be omitted. \\ 
-P4. & Several component possible.  \\ 
-P5. & Regions can contain holes.  \\  
+% P2. & A subset of $S$, or all of them, are on the boundary of the region. \\ 
+P2. & Some points can be omitted. \\ 
+P3. & Several components possible.  \\ 
+P4. & Regions can contain holes.  \\  
 \bottomrule
 \end{tabular}
 
@@ -404,8 +404,10 @@ The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and f
 \section{Exercises}
 
 \begin{enumerate}
-  \item When converting isolines to a TIN, what main ``problem'' should you be aware of? Describe \emph{in details} one algorithm to convert isolines (given for instance in a \emph{shapefile}) to a TIN and avoid this problem.
-  \item How would the isocontours of a 2.75D terrain look like?
-  \item In Section~\ref{sec:structuring}, it is mentioned that merging the segments will form on polygon. But how to ensure that the orientation of that resulting curve is consistent, that it is for instance having higher terrains on the right?
-  \item Given a raster terrain (GeoTiff format) that contains several cells with \texttt{no\_data} values, describe the methodology you would use to extract contour lines from it. As a reminder, contours lines should be closed curves, except at the boundary of the dataset.
+  \item Given a DT($S$), how to extract conv($S$)?
+  \item Given an $\alpha$-shape of $S$, how to calculate how many components are part of it? 
+  \item Draw what would happen if one of the 2 edges was removed in Figure~\ref{fig:chishape}c.
+  \item What is the influence of $k$ for the moving arm algorithm (with a \emph{kdd})? Will a higher $k$ create a larger or smaller region in general?
 \end{enumerate}
+
+
