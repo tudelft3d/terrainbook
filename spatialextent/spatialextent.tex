@@ -256,9 +256,36 @@ P5. & No holes in the region.  \\
 %
 \section{$\chi$-shape}
 
+The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the current envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
+The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
+Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection.
+
+
+
+
+%
+
+Properties:
+\\
+\begin{tabular}{@{}ll@{}}
+\toprule
+P1. & The sole polygon is guaranteed to be regular.  \\  
+P2. & A subset of $S$, or all of them, forms the region. \\ 
+P3. & All points are part of the region \\ 
+P4. & One component.  \\ 
+P5. & No holes in the region.  \\  
+\bottomrule
+\end{tabular}
+
+
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{$\alpha$-shape}
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%
 %
