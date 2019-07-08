@@ -141,7 +141,7 @@ Properties:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & The solve polygon is guaranteed to be regular.  \\  
+P1. & The sove polygon is guaranteed to be regular.  \\  
 P2. & A subset of $S$, or all of them, forms the region. \\ 
 P3. & Outlier part of the region. \\ 
 P4. & One component.  \\ 
@@ -155,27 +155,102 @@ P5. & No holes in the region.  \\
 %
 \section{Moving arm}
 
-The moving arm is a generalisation of the gift wrapping algorithm where the infinite line used to calculate the polar angles is replaced by a line segment of a given length $r$ (the ``moving arm'').
-This means that not all points are considered at each step, and that potentially the result is a polygon that is not convex.
-Figure~\ref{fig:movingarm} shows the first few steps for a given length, and it can be observed that 2 points are not part of the final region (which is non-convex).
-Observe that if $r$ had been larger then the convex of $S$ could have been obtained.
-
+\paragraph{Arm of length $l$.} 
+The moving arm is a generalisation of the gift wrapping algorithm where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
+This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
+This also means that potentially the result is a polygon that is not convex.
+Figure~\ref{fig:movingarm}a shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region (.
+Observe that if $l$ had been larger then the convex of $S$ could have been obtained.
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.4\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
     \caption{}
   \end{subfigure}%
-  \qquad \qquad \quad
-  \begin{subfigure}[b]{0.4\linewidth}
+  \qquad 
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/movingarm.pdf}
     \caption{}
   \end{subfigure}
-  \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}
+  \qquad 
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/movingarm.pdf}
+    \caption{}
+  \end{subfigure}
+  \caption{\textbf{(a)} First four steps of the \emph{moving arm algorithm} (with a lenght $l$) to compute the spatial extent. \textbf{(b)} First four steps of the \emph{moving arm algorithm} (with a \emph{knn} where $k=3$) to compute the spatial extent. \textbf{(c)} The resulting region is the same for both, and it is concave. Observe that 1 point from $S$ (highlighted in red) is not part of the concave region.}
 \label{fig:movingarm}
 \end{figure}
+
+%
+
+\paragraph{Adaptative arm with \emph{knn}} 
+There exists a variation of this algorithm where the moving arm has an adaptative length at each step: the $k$ nearest neighbours (knn) of a given point $p$ are used instead.
+As can be seen in Figure~\ref{fig:movingarm}b, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
+
+%
+
+\paragraph{No guarantee to work.} 
+Both versions of the algorithm will work in most cases, but there are no guarantee that they will for all input.
+Figure~\ref{fig:movingarm_kdd} shows a concrete example.
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=4,width=\textwidth]{figs/movingarm.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=5,width=\textwidth]{figs/movingarm.pdf}
+    \caption{}
+  \end{subfigure}
+\caption{Moving arm with \emph{kdd} when $k=4$. \textbf{(a)} When the point $e$ is being processed, $f$ is the next one chosen. \textbf{(b)} From $f$, no other points can be chosen since the resulting region would be self-intersecting.}
+\label{fig:movingarm_kdd}
+\end{figure}
+A solution to this problem would be in this case to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
+
+
+%
+\paragraph{Different clusters?} 
+One drawback of the moving arm method is that only one polygon is output.
+While this can be useful to discrard unwanted outliers, if $S$ is distributed and forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' (since the lowest point is picked as a starting point) will be output for the region.
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.35\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/clusters.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad \qquad
+  \begin{subfigure}[b]{0.35\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/clusters.pdf}
+    \caption{}
+  \end{subfigure}
+\caption{\textbf{(a)} $S$ has two distinct clusters. {(b)} Typical output if $S$ processed as a single cluster with a moving arm algorithm.}
+\label{fig:clusters}
+\end{figure}
+In practice, when it is the case, the input points are sometimes first preprocessed with a clustering algorithm (in the case of Figure~\ref{fig:clusters}a two clusters should be detected) and then each cluster is processed independently.
+
+%
+
+Properties:
+\\
+\begin{tabular}{@{}ll@{}}
+\toprule
+P1. & The sole polygon could be degenerate (self-intersection).  \\  
+P2. & A subset of $S$, or all of them, forms the region. \\ 
+P3. & Outliers can be discarded. \\ 
+P4. & One component.  \\ 
+P5. & No holes in the region.  \\  
+\bottomrule
+\end{tabular}
+
+
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -193,6 +268,10 @@ The properties listed in Section~\ref{sec:properties} are taken, and slightly ad
 
 The gift wrapping algorithm to compute the convex hull of a set of points in $\mathbb{R}^2$ is from \citet{Jarvis73}.
 
+The moving arm with a lenght is described in \citet{Galton06}, and the adaptative one in \citet{Moreira07}.
+The authors describe different strategy to avoid make the algorithm works for all input, but these do not have any warranty to output a simple polygon.
+
+% https://en.wikipedia.org/wiki/DBSCAN
 % https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#/media/File:Animation_depicting_the_gift_wrapping_algorithm.gif
 
 %%%%%%%%%%%%%%%%%%%%
