@@ -282,7 +282,6 @@ Before removing an edge, we must verify that it will not introduce a topological
 \label{fig:chishape}
 \end{figure}
 
-
 %
 
 Properties:
@@ -302,8 +301,82 @@ P5. & No holes in the region.  \\
 %
 \section{$\alpha$-shape}
 
+The $\alpha$-shape is conceptually a generalisation of the convex hull of a set $S$ of points.
+% The $\alpha$-shape has stronger mathematical foundations then the alternatives mentioned above, and conceptually, it is a generalisation of the convex hull of a set $S$ of points.
+% While the concepts are valid in any dimension, let us explain it here for the two-dimensional case.
 
+%
 
+It is best understood with the following analogy.
+First imagine that $\mathbb{R}^2$ is filled with Styrofoam and that the points in $S$ are made of hard material.
+Now imagine that you have a carving tool which is a circle in the plane of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), it is only stopped by the points.
+The result after carving, called $\alpha$-hull, is one or more pieces of Styrofoam.
+If we straighten the circular edges of it we obtain the $\alpha$-shape.
+
+%
+
+Now let $\alpha$ be a real number with $0 \leq \alpha \leq \infty$.
+If $\alpha = \infty$, then $\alpha$-shape is conv($S$); because you will not be able to carve inside conv($S$).
+As $\alpha$ decreases, the $\alpha$-shape shrinks and cavities can appear, and different components can be created.
+If $\alpha = 0$ then the $\alpha$-shape is $S$.
+
+%
+
+The $\alpha$-shape is not a polygon or a region, but a complex formed of $k$-simplices, where $0 \leq k \leq 2$.
+Furthermore, it is a subcomplex of the Delaunay triangulation (DT) of $S$.
+That is, the easiest method to construct an $\alpha$-shape is by constructing DT($S$), and then remove all edges that are shorter then $2\alpha$.
+
+In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
+% TODO : write this?
+% Implementations of the $\alpha$-shape will also offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/alphashape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/alphashape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/alphashape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=4,width=\textwidth]{figs/alphashape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=5,width=\textwidth]{figs/alphashape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+\caption{$\alpha$-shape for different $\alpha$ decreasing values.}
+\label{fig:alphashape}
+\end{figure}
+
+Properties:
+\\
+\begin{tabular}{@{}ll@{}}
+\toprule
+P1. & A complex of $k$-simplices.  \\  
+P2. & A subset of $S$, or all of them, are on the boundary of the region. \\ 
+P3. & Some points can be omitted. \\ 
+P4. & Several component possible.  \\ 
+P5. & Regions can contain holes.  \\  
+\bottomrule
+\end{tabular}
 
 
 
@@ -318,6 +391,11 @@ The gift wrapping algorithm to compute the convex hull of a set of points in $\m
 The moving arm with a lenght is described in \citet{Galton06}, and the adaptative one in \citet{Moreira07}.
 The authors describe different strategy to avoid make the algorithm works for all input, but these do not have any warranty to output a simple polygon.
 
+The $\chi$-shape is from \citet{Duckham08}.
+
+The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from CGAL documentation\footnote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
+
+% TODO 
 % https://en.wikipedia.org/wiki/DBSCAN
 % https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#/media/File:Animation_depicting_the_gift_wrapping_algorithm.gif
 
