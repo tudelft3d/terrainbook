@@ -256,11 +256,31 @@ P5. & No holes in the region.  \\
 %
 \section{$\chi$-shape}
 
-The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the current envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
+The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
 The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
-Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection.
-
-
+Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape}c).
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/chishape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/chishape.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/chishape.pdf}
+    \caption{}
+  \end{subfigure}
+\caption{$\chi$-shape examples. \textbf{(a)} $S$, its DT, and its envelope (cons($S$)). \textbf{(b)} After some edges have been removed. \textbf{(c)} The final result for a given threshold.}
+\label{fig:chishape}
+\end{figure}
 
 
 %
