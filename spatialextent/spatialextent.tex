@@ -7,6 +7,37 @@
 
 \begin{figure}[h]
   \centering
+  \begin{subfigure}[b]{0.57\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/ahn3-water.png}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.37\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
+    \caption{}
+  \end{subfigure}
+\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} A aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
+\label{fig:examples}  
+\end{figure}
+
+
+Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
+That is, they need to define the shape of the region that best abstracts or represents the set of points.
+As seen in Figure~\ref{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (since water does not contain lidar samples, or seldom), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+
+%
+
+Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
+
+%
+
+The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
+It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
+As Figure~\ref{fig:ideas} shows, there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
+\begin{figure}
+  \centering
   \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
@@ -34,21 +65,10 @@
 \label{fig:ideas}  
 \end{figure}
 
-Given a point cloud, one operation that practitioners need to perform is to define the spatial extent of the dataset.
-That is, they need to define the shape of the region that best abstracts the set of points; in the context of terrains this region is often in two dimensions.
-% , which is represented by a one or more polygons,
-This is useful for instance to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), to get a quick overview of several datasets it is faster to load a few polygons and not billions of points, etc.
-
 %
 
-The spatial extent is often called: envelope, hull, concave hull, or footprints.
-It is important to notice that the spatial extent is not uniquely defined and can a vague concept, as Figure~\ref{fig:ideas} shows there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
+We present in this chapter a few methods/algorithms that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are first projected to a two-dimensional plane.
 
-%
-
-We present in this chapter a few methods/algorithms that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are projected to the plane.
-
-% TODO : linear approximation only here
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -404,10 +424,10 @@ The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and f
 \section{Exercises}
 
 \begin{enumerate}
-  \item What are the disadvantages of the $\chi$-shape compared with the $\alpha$-shape?
-  \item If the parameter $l$ for the $\chi$-shape is equal to the $\alpha$ parameter, will the resulting shape be the same? compared with the $\alpha$-shape?
-  \item Given an $\alpha$-shape of $S$, how to calculate how many components are part of it? 
   \item Given a DT($S$), how to extract conv($S$)?
+  \item What are the disadvantages of the $\chi$-shape compared with the $\alpha$-shape?
+  \item If the parameter $l$ for the $\chi$-shape is equal to the $\alpha$ parameter for an $\alpha$-shape, will the resulting shapes be the same?
+  \item Given an $\alpha$-shape of $S$, how to calculate how many components are part of it? 
   \item Draw what would happen if one of the 2 edges was removed in Figure~\ref{fig:chishape}c.
   \item What is the influence of $k$ for the moving arm algorithm (with a \emph{kdd})? Will a higher $k$ create a larger or smaller region in general?
 \end{enumerate}
