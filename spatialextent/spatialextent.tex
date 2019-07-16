@@ -77,11 +77,11 @@ We present in this chapter a few methods/algorithms that are used in practice to
 \label{sec:properties}
 
 Let $S$ be a set of points in $\mathbb{R}^2$, and $R(S)$ the region that characterise the spatial extent of $S$.
-The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance) and in practice most algorithms will computer a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
+The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance), and in practice most algorithms will computer a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
 
-To evaluate the different algorithms, we list here different properties that one must consider when defining the spatial extent of a set of points.
+To evaluate the different algorithms to create R($S$), we list here different properties that one must consider when defining the spatial extent of a set of points.
 \begin{description}
-  \item[P1.] \textbf{Polygons need to be \emph{regular}?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
+  \item[P1.] \textbf{\emph{Regular} polygons?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
   % \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
   \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
   \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
@@ -128,8 +128,8 @@ To evaluate the different algorithms, we list here different properties that one
 %
 \section{Convex hull}
 
-As explained in Section~\ref{sec:convexhull}, given $S$ a set of points in $\mathbb{R}^2$, its convex hull, denoted here conv($S$), is the minimal convex set containing $S$.
-Two examples of convex hulls are in Figures~\ref{fig:ideas}b and~\ref{sec:properties}a.
+As explained in Section~\ref{sec:convexhull}, given $S$, a set of points in $\mathbb{R}^2$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
+Two examples of convex hulls are in Figures~\ref{sec:properties}a and~\ref{fig:ideas}b.
 
 %
 
@@ -153,7 +153,7 @@ One of them is the well-known \emph{gift wrapping algorithm}, shown in Figure~\r
   \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}
 \label{fig:giftwrapping}
 \end{figure}
-It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} that is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
 Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
 
 %
@@ -178,9 +178,9 @@ P4. & No holes in the region.  \\
 \paragraph{Arm of length $l$.} 
 The moving arm is a generalisation of the gift wrapping algorithm where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
 This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
-This also means that potentially the result is a polygon that is not convex.
-Figure~\ref{fig:movingarm}a shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region (.
-Observe that if $l$ had been larger then the convex of $S$ could have been obtained.
+This also means that potentially the result is a polygon that is non-convex.
+Figure~\ref{fig:movingarm}a shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
+Observe also that if $l$ had been larger then conv($S$) could have been obtained.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
@@ -206,14 +206,14 @@ Observe that if $l$ had been larger then the convex of $S$ could have been obtai
 
 %
 
-\paragraph{Adaptative arm with \emph{knn}} 
+\paragraph{Adaptative arm with \emph{knn}.} 
 There exists a variation of this algorithm where the moving arm has an adaptative length at each step: the $k$ nearest neighbours (knn) of a given point $p$ are used instead.
 As can be seen in Figure~\ref{fig:movingarm}b, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
 
 %
 
 \paragraph{No guarantee to work.} 
-Both versions of the algorithm will work in most cases, but there are no guarantee that they will for all input.
+Both versions of the algorithm will work in most cases, but there are no guarantee that they will for all inputs.
 Figure~\ref{fig:movingarm_kdd} shows a concrete example.
 \begin{figure}
   \centering
@@ -231,13 +231,13 @@ Figure~\ref{fig:movingarm_kdd} shows a concrete example.
 \caption{Moving arm with \emph{kdd} when $k=4$. \textbf{(a)} When the point $e$ is being processed, $f$ is the next one chosen. \textbf{(b)} From $f$, no other points can be chosen since the resulting region would be self-intersecting.}
 \label{fig:movingarm_kdd}
 \end{figure}
-A solution to this problem would be in this case to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
+In this case, a solution to this problem would be to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
 
 
 %
 \paragraph{Different clusters?} 
-One drawback of the moving arm method is that only one polygon is output.
-While this can be useful to discrard unwanted outliers, if $S$ is distributed and forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' (since the lowest point is picked as a starting point) will be output for the region.
+One drawback of the moving arm method is that only one polygon is obtained as a region.
+While this can be useful to discrard unwanted outliers, if $S$ forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.35\linewidth}
@@ -331,20 +331,20 @@ It is best understood with the following analogy.
 First imagine that $\mathbb{R}^2$ is filled with Styrofoam and that the points in $S$ are made of hard material.
 Now imagine that you have a carving tool which is a circle of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), and that it is only stopped by the points.
 The result after carving, called $\alpha$-hull, is one or more pieces of Styrofoam.
-If we straighten the circular edges then we obtain the $\alpha$-shape.
+If we straighten the circular edges, then we obtain the $\alpha$-shape.
 
 %
 
 Now let $\alpha$ be a real number with $0 \leq \alpha \leq \infty$.
-If $\alpha = \infty$, then $\alpha$-shape is conv($S$); because you will not be able to carve inside conv($S$).
+If $\alpha = \infty$, then the $\alpha$-shape is conv($S$) because you will not be able to carve inside conv($S$).
 As $\alpha$ decreases, the $\alpha$-shape shrinks and cavities can appear, and different components can be created.
-If $\alpha = 0$ then the $\alpha$-shape is $S$.
+If $\alpha = 0$ then the $\alpha$-shape is $S$ (which is a valid $\alpha$-shape).
 
 %
 
 The $\alpha$-shape is not a polygon or a region, but a complex formed of $k$-simplices, where $0 \leq k \leq 2$.
 Furthermore, it is a subcomplex of the Delaunay triangulation (DT) of $S$.
-That is, the easiest method to construct an $\alpha$-shape is by constructing DT($S$), and then remove all edges that are shorter then $2\alpha$.
+That is, the easiest method to construct an $\alpha$-shape is by first constructing DT($S$), and then removing all edges that are shorter then $2\alpha$.
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
@@ -406,14 +406,16 @@ P4. & Regions can contain holes.  \\
 
 The properties listed in Section~\ref{sec:properties} are taken, and slightly adapted, from \citet{Galton06}. 
 
+The \emph{quickhull} algorithm is the most known and used convex hull algorithm, and it is valid in any dimensions. See \citet{Barber96} for the details, and \url{http://www.qhull.org/} for implementations.
+
 The gift wrapping algorithm to compute the convex hull of a set of points in $\mathbb{R}^2$ is from \citet{Jarvis73}.
 
-The moving arm with a lenght is described in \citet{Galton06}, and the adaptative one in \citet{Moreira07}.
-The authors describe different strategy to avoid make the algorithm works for all input, but these do not have any warranty to output a simple polygon.
+The moving arm with a length is presented and described in \citet{Galton06}, and the adaptative one in \citet{Moreira07}.
+In both papers, the authors describe different strategies to make the algorithm work for all input, but these do not have any warranty to output a simple polygon.
 
-The $\chi$-shape is from \citet{Duckham08}.
+The $\chi$-shape was introduced in \citet{Duckham08}.
 
-The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from CGAL documentation\footnote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
+The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from the CGAL documentation\footnote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
 
 % TODO 
 % https://en.wikipedia.org/wiki/DBSCAN
