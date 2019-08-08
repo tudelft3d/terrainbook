@@ -99,7 +99,7 @@ Let $S$ be a set of points in $\mathbb{R}^2$, the \emph{convex hull} of $S$, den
 It is best understood with the elastic band analogy: imagine each point in $\mathbb{R}^2$ being a nail sticking out of the plane, and a rubber band stretched to contain all the nails, as shown in Figure~\ref{fig:convex_hull}. 
 \begin{figure}
   \centering
-  \includegraphics[width=0.35\textwidth]{figs/convex_hull}
+  \includegraphics[width=0.4\textwidth]{figs/convex_hull}
   \caption{The convex hull of a set of points in $\mathbb{R}^2$.} 
 \label{fig:convex_hull}
 \end{figure}
@@ -118,8 +118,8 @@ An edge $\sigma$ is said to be \emph{locally} Delaunay if it either:
 The second case is illustrated in Figure~\ref{fig:local}: the triangles $abd$ and $bcd$ are Delaunay, and thus is the edge $bd$; the edge $ac$ is not Delaunay.
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/local}
-  \caption{Only one configuration is Delaunay (the left one).} 
+  \includegraphics[width=0.95\textwidth]{figs/local}
+  \caption{The quadrilateral $abcd$ (in grey, in the middle) can be triangulated in two different ways: only the left configuration is Delaunay.} 
 \label{fig:local}
 \end{figure}
 In an arbitrary triangulation, not every edge that is locally Delaunay is necessarily a edge of DT($S$), but local optimality implies globally optimality in the case of the DT:
@@ -375,7 +375,7 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{figs/flip22}
+  \includegraphics[width=0.65\textwidth]{figs/flip22}
   \caption{A flip22}
 \label{p:flip22}
 \end{figure}
