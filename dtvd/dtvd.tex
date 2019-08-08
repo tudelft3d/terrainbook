@@ -141,17 +141,16 @@ Notice here that maximising the minimum angle is not the same as minimising the 
 \subsection{Lifting on the paraboloid}
 \label{sec:parabolic_lifting}
 
-There exists a close relationship between DTs in $\mathbb{R}^{d}$ and convex polytopes in $\mathbb{R}^{d+1}$. 
+There exists a close relationship between DTs in $\mathbb{R}^{2}$ and convex polyhedra in $\mathbb{R}^{3}$. 
 
-Let $S$ be a set of points in $\mathbb{R}^{d}$, and let $x_{1}, x_{2}, \ldots , x_{d}$ be the coordinates axes. 
-The parabolic lifting map projects each vertex $v(v_{x1}, v_{x2}, \ldots , v_{xd})$ to a vertex $v^{+}(v_{x1}, v_{x2}, \ldots , v_{xd}, v_{x1}^{2}+v_{x2}^{2}+\cdots+v_{xd}^{2})$ on the paraboloid of revolution in $\mathbb{R}^{d+1}$. 
+Let $S$ be a set of points in $\mathbb{R}^{2}$. 
+The parabolic lifting map projects each vertex $v(v_{x}, v_{y})$ to a vertex $v^{+}(v_{x}, v_{y}, v_{x}^{2}+v_{y}^{2})$ on the paraboloid of revolution in $\mathbb{R}^{3}$. 
 The set of points thus obtained is denoted $S^{+}$. 
-Observe that, for the two-dimensional case, the paraboloid in three dimensions defines a surface whose vertical cross sections are parabolas, and whose horizontal cross sections are circles; the same ideas are valid in higher dimensions. 
+Observe that the paraboloid in three dimensions defines a surface whose vertical cross sections are parabolas, and whose horizontal cross sections are circles. 
 
 %
 
-The relationship is the following: every facet (a $d$-dimensional simplex) of the lower envelope of conv($S^{+}$) projects to a $d$-simplex of the Delaunay triangulation of $S$. 
-This is illustrated in Figure~\ref{fig:paraboloid} for the construction of the DT in $\mathbb{R}^{2}$. 
+The relationship is the following: every triangle of the lower envelope of conv($S^{+}$) projects to a triangle of the Delaunay triangulation of $S$; this is illustrated in Figure~\ref{fig:paraboloid} for a simple DT. 
 \begin{figure}
   \centering
   \includegraphics[width=0.4\textwidth]{figs/paraboloid}
@@ -161,8 +160,13 @@ This is illustrated in Figure~\ref{fig:paraboloid} for the construction of the D
 
 %
 
-In short, the construction of the $d$-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in ($d+1$) dimensions.
-In practice, since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this method.
+In short, the construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
+
+
+\begin{practice-box}
+Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
+\end{practice-box}
+
 
 
 
