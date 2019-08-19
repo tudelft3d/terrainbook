@@ -447,6 +447,28 @@ Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scatter
 
 %%%
 %
+\section{Summary}
+
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lccccccl@{}}
+\toprule
+                         & exact         & continuous & local        & adaptable & efficient & automatic \\ \midrule
+\textbf{global function} & $\times$      & $C^{2+}$   & $\times$     & --        & --        & $\times$     \\
+\textbf{splines}         & $\times$      & $C^{2+}$   & depends      & 0         & -         & $\times$     \\ 
+\textbf{nearest neigh.}  & $\checkmark$  & $\times$   & $\checkmark$ & +         & ++        & $\checkmark$ \\ 
+\textbf{IDW}             & $\checkmark$  & $\times$   & $\checkmark$ & -         & 0         & $\times$     \\ 
+\textbf{TIN}             & $\checkmark$  & $C^0$      & $\checkmark$ & +         & ++        & $\checkmark$ \\ 
+\textbf{nni}             & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & 0         & $\checkmark$ \\ 
+\textbf{nni-c1}          & $\checkmark$  & $C^1$      & $\checkmark$ & ++        & -         & $\checkmark$ \\ 
+\textbf{laplace}         & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & +         & $\checkmark$ \\ 
+\textbf{bilinear}        & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & ++        & $\checkmark$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
+%%%
+%
 \section{Notes and comments}
 
 
