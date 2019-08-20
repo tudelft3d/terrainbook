@@ -304,7 +304,33 @@ If we consider that each data point in $S$ has an attribute $a_{i}$ (its elevati
 where $f(x)$ is the interpolated function value at the location $x$. 
 
 The natural neighbour interpolant possesses all the wished properties from above, except that the first derivative is undefined at the data points. 
-Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD.
+Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD\@.
+
+
+%%%
+\paragraph{Higher-order function  (\textbf{NNI-c1}).}
+
+The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant.
+
+It has been modified so that the first derivative is possible everywhere, including at the data points.
+This was achieved by modifying the weights so that they are not linear anymore.
+The gradient of the surface at each sample point is taken into account, \ie\ for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this course.
+The resulting interpolant is $C^1$, and Figure~\ref{}
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/nni.png}
+    \caption{NNI}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/nni_c1.png}
+    \caption{NNI ($C^1$)}
+  \end{subfigure}
+\caption{(a)}
+\label{fig:comp_nni}
+\end{figure}
 
 
 
