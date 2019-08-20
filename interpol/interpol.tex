@@ -120,7 +120,7 @@ In the context of terrain modelling, the attribute $a$ is the elevation.
 
 %-------------------------------------------
 %-
-\subsection{Nearest Neighbour Interpolation}
+\subsection{Nearest Neighbour Interpolation (\textbf{nn})}
 
 Nearest neigbour, or closest neighbour, is a simple interpolation method: the value of an attribute at location $x$ is simply assumed to be equal to the attribute of the nearest data point. 
 This data point gets a weight of \emph{1.0}.
@@ -139,7 +139,7 @@ The interpolation function is indeed discontinuous at the border of cells; if th
 
 %-------------------------------------------
 %-
-\subsection{Inverse distance weighting (IDW)}
+\subsection{Inverse distance weighting (\textbf{IDW})}
 
 Inverse distance weighting (IDW)---also called inverse distance to a power, or distance-based methods---is a family of interpolation methods using distance to identify the neighbours used, and to assign them weights.
 IDW is probably the most known interpolation method and it is widely used in many disciplines.
@@ -175,7 +175,7 @@ If the closest data points in each quadrant are used, then the method can be mad
 
 %-------------------------------------------
 %-
-\subsection{Linear Interpolation in a TIN}
+\subsection{Linear Interpolation in triangulation (\textbf{TIN})}
 
 This method is popular for terrain modelling applications and is based on a triangulation of the data points. 
 As is the case for the VD, a triangulation is a piecewise subdivision (tessellation) of the plane, and in the context of interpolation a linear function is assigned to each piece (each triangle). 
@@ -230,7 +230,7 @@ This equation can be solved and we find that the 3 coefficients are equal of the
 
 
 %%%
-\paragraph{Higher-order function in each triangle.}
+\paragraph{Higher-order function in each triangle (\textbf{TIN-c1}).}
 % TODO : Clough-Tocher? Since in QGIS, C^1, easy to implement. But complex to explain... probably out of scope for this course?
 % http://lagrange.univ-lyon1.fr/docs/scipy/0.17.1/generated/scipy.interpolate.CloughTocher2DInterpolator.html#id4
 % Very good explanation: https://www.youtube.com/watch?v=3jnySeiLkLY
@@ -249,7 +249,7 @@ To achieve this the normals of each vertex is calculated by averaging the normal
 
 %-------------------------------------------
 %-
-\subsection{Natural Neighbour Interpolation}
+\subsection{Natural Neighbour Interpolation (\textbf{NNI})}
 
 This is a method based on the Voronoi diagram for both selecting the data points involved in the process, and assigning them a weight.  
 It uses two VDs: one for the set $S$ of data points, and another one where a point $x$ is inserted at the estimation location. 
