@@ -310,12 +310,20 @@ Its main disadvantage is that its implementation is rather complex, and obtainin
 %%%
 \paragraph{Higher-order function  (\textbf{NNI-c1}).}
 
-The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant.
+The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant (see Figure~\ref{fig:nni-1d}).
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{figs/nni-1d}
+  \caption{\textbf{(a)} The NNI interpolant in 1D is equivalent to a linear interpolation. \textbf{(b)} If the gradient at each sample points are calculated/estimated, then it is possible to modify the weights so that a $C^1$ interpolant is obtained.}
+\label{fig:nni-1d}
+\end{figure}
+
+%
 
 It has been modified so that the first derivative is possible everywhere, including at the data points.
 This was achieved by modifying the weights so that they are not linear anymore.
 The gradient of the surface at each sample point is taken into account, \ie\ for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this course.
-The resulting interpolant is $C^1$, and Figure~\ref{}
+The resulting interpolant is $C^1$, and Figure~\ref{fig:comp_nni}
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.5\linewidth}
@@ -328,7 +336,7 @@ The resulting interpolant is $C^1$, and Figure~\ref{}
     \includegraphics[width=\textwidth]{figs/nni_c1.png}
     \caption{NNI ($C^1$)}
   \end{subfigure}
-\caption{(a)}
+\caption{Notice how the \textbf{NNI} interpolant creates ``inverted cups'' around each sample point, and how \textbf{NNI-c1} results in a more rounded surface.}
 \label{fig:comp_nni}
 \end{figure}
 
@@ -473,8 +481,10 @@ Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scatter
 
 %%%
 %
-\section{Summary}
+\section{Overview of all methods}
 
+Figure~\ref{fig:results_interpol} shows the result of 8 different interpolants for the same (real-world) sample points.
+You can better visualise these datasets, and download them, at \url{https://3d.bk.tudelft.nl/courses/geo1015/extra/interpol/comparisons/}.
 
 \begin{tabular}{@{}lccccccl@{}}
 \toprule
@@ -484,9 +494,9 @@ Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scatter
 \textbf{nearest neigh.}  & $\checkmark$  & $\times$   & $\checkmark$ & +         & ++        & $\checkmark$ \\ 
 \textbf{IDW}             & $\checkmark$  & $\times$   & $\checkmark$ & -         & 0         & $\times$     \\ 
 \textbf{TIN}             & $\checkmark$  & $C^0$      & $\checkmark$ & +         & ++        & $\checkmark$ \\ 
-\textbf{nni}             & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & 0         & $\checkmark$ \\ 
-\textbf{nni-c1}          & $\checkmark$  & $C^1$      & $\checkmark$ & ++        & -         & $\checkmark$ \\ 
-\textbf{laplace}         & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & +         & $\checkmark$ \\ 
+\textbf{NNI}             & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & 0         & $\checkmark$ \\ 
+\textbf{NNI-c1}          & $\checkmark$  & $C^1$      & $\checkmark$ & ++        & -         & $\checkmark$ \\ 
+\textbf{Laplace}         & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & +         & $\checkmark$ \\ 
 \textbf{bilinear}        & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & ++        & $\checkmark$ \\ \bottomrule
 \end{tabular}
 
@@ -558,14 +568,11 @@ This method has also been implemented in the open-source GIS GRASS\@.
 
 For a discussion about influence of the power in IDW on the resulting surface, please see \citet{Watson92}.
 
+The description of the barycentric coordinates is mostly taken from \citet{Eberly18}.
+
 The natural neighbour interpolation method is also called Sibson's interpolation, after the name of the inventor~\citep{Sibson81}. 
 
-To obtain a continuous interpolant even at the data points, Sibson uses the weights defined in Equation~\ref{eq:nnc} in a quadratic equation where the gradient at $x$ is considered. 
-Other ways to remove the discontinuities at the data points have been proposed: \citet{Watson92} describes different methods to estimate the gradient at $x$ and how to incorporate it in Equation~\ref{eq:nni}; and \citet{Gold89} proposes to modify the weight of each $p_{i}$ with a simple hermitian polynomial so that, as $x$ approaches $p_{i}$, the derivative of $f(x)$ approaches 0. 
-Modifying Equation~\ref{eq:nni} to obtain a continuous function can yield very good results in some cases, but with some datasets the resulting surface can contain unwanted effects.
-Different datasets require different methods and parameters, and, for this reason, modifications should be applied with great care. 
-
-The description of the barycentric coordinates is mostly taken from \citet{Eberly18}.
+An excellent summary of the methods to modify Equation~\ref{eq:nni} to obtain a continuous function is found in \citet{Flototto03}. 
 
 The construction of a polynomial inside each triangle of a TIN can be done with several methods. 
 The simplest method is the Clough-Tocher method~\citep{Clough65,Farin85}.
