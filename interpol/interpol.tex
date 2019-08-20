@@ -449,8 +449,7 @@ Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scatter
 %
 \section{Summary}
 
-\begin{table}[]
-\centering
+
 \begin{tabular}{@{}lccccccl@{}}
 \toprule
                          & exact         & continuous & local        & adaptable & efficient & automatic \\ \midrule
@@ -464,7 +463,61 @@ Figure~\ref{fig:jackknife}d shows the same absolute differences but in a scatter
 \textbf{laplace}         & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & +         & $\checkmark$ \\ 
 \textbf{bilinear}        & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & ++        & $\checkmark$ \\ \bottomrule
 \end{tabular}
-\end{table}
+
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/nn.png}
+    \caption{Nearest neighour}
+  \end{subfigure}%
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/idw_r1500_p2.png}
+    \caption{IDW (radius=1500m; pow=2)}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/idw_r1500_p4.png}
+    \caption{IDW (radius=1500m; pow=4)}
+  \end{subfigure}  
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/tin.png}
+    \caption{TIN (linear)}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/tin_c1.png}
+    \caption{TIN ($C^1$)}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/nni.png}
+    \caption{Natural neighbours}
+  \end{subfigure}  
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/nni_c1.png}
+    \caption{Natural neighbours ($C^1$)}
+  \end{subfigure}  
+  \quad
+  \begin{subfigure}[b]{0.41\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/results/laplace.png}
+    \caption{Laplace}
+  \end{subfigure}  
+\caption{Results of a few interpolation methods for the same dataset; the samples are shown on the surface (red dots).}
+\label{fig:results_interpol}
+\end{figure}
+
 
 
 %%%
