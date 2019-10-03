@@ -335,7 +335,7 @@ It is therefore essential to understand the mecanism, even if one is not constru
 
 
 %%%
-\paragraph{Walk/Point location.} To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that would be too slow. 
+\paragraph{Walk/Point location.} To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow. 
 A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described below, to navigate from one triangle to the other. 
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
@@ -349,27 +349,31 @@ The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are 
   \KwIn{A DT($S$) $\mathcal{T}$, a starting triangle $\tau$, and a query point $p$}
   \KwOut{$\tau_r$: the triangle in $\mathcal{T}$ containing $p$}
   \BlankLine  
-  \While{$\tau_r$ not found}
+  $\tau_r$ = None\;
+  \While{$\tau_r$ == None}
   {
+    visitededges = 0\;
     \For{$i \leftarrow 0$ \KwTo 2}
     {
-      $\sigma_i \leftarrow$ get edge opposite vertex $i$ in $\tau$\;
-      \If{\Orient($\tau_i, p$) $< 0$\nllabel{l:walk}} 
+      $\sigma_i \leftarrow$ get edge opposite to vertex $i$ in $\tau$\;
+      \If{\Orient($\sigma_i, p$) $< 0$\nllabel{l:walk}} 
       {
         $\tau \leftarrow$ get neighbouring triangle of $\tau$ incident to $\sigma_i$\;
         break\;
       }
+      visitededges += 1\;
     }  
-    \If{$i=2$}
+    \If{$visitededges == 3$}
     {
       \tcp{all the edges of $\tau$ have been tested}
-      Return ($\tau_r$ = $\tau$)\;
+      $\tau_r$ = $\tau$\;
     }
   }
+  Return($\tau_r$)
   \caption{W\textsc{alk}($\mathcal{T}$, $\tau$, $p$)}
 \label{algo:walk}
 \end{algorithm}
-The idea is as follows: in a DT($S$), starting from a triangle $\tau$ (it can be any), we move to one of the adjacent triangle of $\tau$ ($\tau$ has three neighbours, we choose one neighbour $\tau_i$ such that the query point $p$ and $\tau$ are on each side of the edge shared by $\tau$ and $\tau_i$) until there is no such neighbour, then the simplex containing $p$ is $\tau$.
+The idea is as follows: in a DT($S$), starting from a triangle $\tau$ (it can be any), we move to one of the adjacent triangle of $\tau$ ($\tau$ has three neighbours, we choose one neighbour $\tau_i$ such that the query point $p$ and $\tau$ are on each side of the edge shared by $\tau$ and $\tau_i$) until there is no such neighbour, then the simplex containing $p$ is the current triangle $\tau$.
 Notice that this algorithm is not affected by degenerate cases, and that if an \textrm{O}\textsc{rientation} test returns 0 (collinearity), then it is simply considered a positive result. 
 This will ensure that if the query point $p$ is located exactly at the same position as one point in $S$, then one triangle incident to $p$ will be returned.
 
