@@ -148,7 +148,7 @@ Commonly encountered thinning methods in practice are
   \item[grid] Overlay a 2D or 3D regular grid over the point cloud and keep one point per grid cell. That can be one of the original points, an average of those, or the exact center of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
 \end{description}
 See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and grid thinning.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.95\linewidth}
     \centering
@@ -219,7 +219,7 @@ These are not isolated points since each outlier will have plenty of other point
 A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
 This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers. 
 Figure~\ref{fig:mbes} gives an example.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.4\linewidth}
     \centering
@@ -249,7 +249,7 @@ Or, the non-ground points can be used as input for another classifier, \eg\ to c
 Ground filtering methods are typically based on the assumptions that 1) the ground is a continuous surface without sudden elevation jumps, and 2) for a given 2D neighborhood, the ground points are the ones with the lowest elevation.
 This is reasonable because non-ground points are typically measurements from objects above the ground such as trees, street furniture and buildings (see \eg\ Figure~\ref{fig:axelsson:profiles}).
 
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figs/axelsson-profiles.png}
   \caption{Cross-section of a terrain with lamp posts and trees before (top) and after (bottom) ground filtering \citep{axelsson2000generation}.}
@@ -278,7 +278,7 @@ Each point that is inserted into the TIN is considered to be a ground point.
 
 In the second step two geometric properties are computed for each unclassified point.
 These properties are based on the relation between the point $\mathbf{p}$ and the triangle in the current TIN that intersects its vertical projection. The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
@@ -312,7 +312,7 @@ Of course, if the triangles in the TIN change, the properties of the overlapping
 When all remaining points fail the ground test, the algorithm terminates.
 Figure~\ref{fig:axelsson} gives an example result.
 
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
@@ -411,7 +411,7 @@ If $d<\epsilon$ we say that $p$ is an inlier, otherwise $p$ is an outlier.
 The complete set of inliers is called the \emph{consensus set}, and its size is referred to as the \emph{score}.
 The whole process from picking a minimal set to computing the consensus set and its score, as shown in Algorithm~\ref{algo:ransac}, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (Figure~\ref{fig:ransac:d}). 
 
-\begin{algorithm}[htb] 
+\begin{algorithm}
 	\KwIn{An input point cloud $P$, the error threshold $\epsilon$, the minimal number of points needed to uniquely construct the shape of interest $n$, and the number of iterations $k$}
 	\KwOut{the detected shape instance $\mathcal{I}_{best}$}
 	$s_{best} \leftarrow 0$\;
@@ -461,7 +461,7 @@ The detected shape instance can therefore also be different every time you run t
 This could be a disadvantage.
 
 %Another disadvantage is that RANSAC can output spurious results in some cases. This is shown in Figure~\ref{fig:ransac-spurious} where RANSAC found a plane 
-%\begin{figure}[htb]
+%\begin{figure}
 %	\centering
 %	\includegraphics[width=0.8\textwidth]{figs/ransac-spurious.png}
 %	\caption{Detection of a spurious plane by RANSAC \citep{Limberger15}.}
@@ -524,7 +524,7 @@ When this happens, the algorithm proceeds to the next seed point to grow a new r
 Algorithm~\ref{algo:region-growing} gives the pseudo-code for the region growing algorithm.
 Notice that the set $S$ is used to keep track of the points in the current region whose neighbours still need to be checked.
 Also notice that candidate points that are already assigned to a region are skipped.
-\begin{algorithm}[htb] 
+\begin{algorithm}
 	\KwIn{An input point cloud $P$, a list of seed points $L_S$, a function to find the neighbours of a point $neighbours()$}
 	\KwOut{A list with detected regions $L_R$}
 	
@@ -632,7 +632,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection and Algorit
 	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\theta,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=ax+b$ form for example).}
 	\label{fig:hough-transform}
 \end{figure}
-\begin{algorithm}[htb] 
+\begin{algorithm} 
 	\KwIn{An input point cloud $P$, an accumulator matrix $A$, a detection threshold $\alpha$}
 	\KwOut{A list with detected shape instances $L_I$}
 	
@@ -700,7 +700,7 @@ A comparison with several other ground filtering methods can be found in the wor
    \item The LAS standard gives a global point offset in the header. What is the benefit of using such a global offset?  
    \item What is the difference between thinning an point cloud prior to triangulation and TIN simplification?
   \item What is the probability that the line instance in Figure~\ref{fig:ransac:d} is detected with $k=2$ iterations?
-  \item In Chapter~\ref{chap:acquisition} it is described how point density can vary based on the acquisition conditions. How could a ()strongly) varying point density affect the effectiveness of the region growing algorithm?
+  \item In Chapter~\ref{chap:acquisition} it is described how point density can vary based on the acquisition conditions. How could a (strongly) varying point density affect the effectiveness of the region growing algorithm?
   \item Give a parametrisation for a plane. How many axes would an accumulator need for plane detection with the Hough transform?
 
 \end{enumerate}
