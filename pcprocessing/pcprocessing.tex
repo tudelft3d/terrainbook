@@ -5,8 +5,7 @@
 
 \chapter{Point cloud processing}
 
-In this lesson we discuss the basics tools and algorithms necessary for point cloud processing: storage in various file formats, thinning, outlier detection, ground filtering, and segmentation (to extract buildings or other features from a point cloud).
-
+In this lesson we discuss the basic tools and algorithms necessary for point cloud processing: storage in various file formats, thinning, outlier detection, ground filtering, and shape detection.
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -116,7 +115,7 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
 These codes are to be used as values for the classification field of a point record, and are intended to indicate the type of object a point belongs to.
 Which classes are used strongly depends on the dataset at hand.
 The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
-To be exact, the code $0$ is used for points that where never subject to a classication algorithm, whereas the code $1$ is used for points that where processed by an classification algorithm, but could not succesfully be assigned to a class.
+To be exact, the code $0$ is used for points that where never subject to a classication algorithm, whereas the code $1$ is used for points that where processed by an classification algorithm, but could not successfully be assigned to a class.
 It is possible to define your own classes using code ranges that are reserved for that purpose in the standard.
 For example, the Dutch AHN3 dataset, which is disseminated in the LAS format, uses the code $26$ for an `artefact' class that includes infrastructural works such as bridges and viaducts (see Figure~\ref{fig:ahn3}).
 \begin{figure}
@@ -149,7 +148,7 @@ Commonly encountered thinning methods in practice are
   \item[grid] Overlay a 2D or 3D regular grid over the point cloud and keep one point per grid cell. That can be one of the original points, an average of those, or the exact center of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
 \end{description}
 See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and grid thinning.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.95\linewidth}
     \centering
@@ -166,7 +165,9 @@ See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and gri
 \label{fig:randvsgrid}
 \end{figure}
 
-From Lesson 08 you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
+%TODO: add figures for thinning methods
+
+From \refsec{sec:tin-simpl} you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
 However, for a given number of resulting points TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
 Thinning methods on the other hand do not consider the `importance' of a point in any way, and might discard a lot of potentially meaningful details.
 So why bother with thinning? The answer is that thinning methods are a lot faster since they do not require something like a computationally expensive triangulation.
@@ -174,12 +175,12 @@ Especially in scenarios where the point density is very high and the available t
 
 
 \section{Outlier detection}
-Recall from Lesson 02 that outliers are points that have a large error in their coordinates.
+Recall from Chapter~\ref{chap:acquisition} that outliers are points that have a large error in their coordinates.
 Outliers are typically located far away from the terrain surface and often occur in relatively low densities.
 Outlier detection aims to detect and remove outliers and is a common processing step for point clouds.
 
 Most outlier detection methods revolve around analysing the local neighbourhood of a point.
-The neighbourhood can be defined using a $k$-nearest neigbhour (knn) search, a fixed radius search, or by superimposing a regular grid on the point cloud and finding the points that are in the same grid-cell.
+The neighbourhood can be defined using a $k$-nearest neighbour (knn) search, a fixed radius search, or by superimposing a regular grid on the point cloud and finding the points that are in the same grid-cell.
 The points that are determined to be in the neighbourhood of a point of interest $\mathbf{p}$ are used to determine whether $\mathbf{p}$ is an outlier or not.
 
 The underlying assumption of most outlier detection methods is that an outlier is often an isolated point, \ie\ there are not many points in its neighbourhood. We distinguish the following outlier detection methods (see also Figure~\ref{fig:outlier-detection}):
@@ -210,16 +211,15 @@ The underlying assumption of most outlier detection methods is that an outlier i
   \item[knn distance] Find the $k$ nearest neigbhours of $\mathbf{p}$, \eg\ using a kd-tree (see Lesson 10), and compute the mean or median of the distances between $\mathbf{p}$ and its neigbhours. If this value is above a given threshold, $\mathbf{p}$ is marked as an outlier.
 \end{description}
 
-%TODO note on sonar cleaning method with DT from Lars Arge \citep{Arge10}
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding\footnote{See Lesson 02.} a common issue is the occurence of (shoals of) fish. 
+For example in case of a point cloud derived from multi-beam echo sounding\footnote{See \refsec{sec:acquisistion-techniques}.} a common issue is the occurence of (shoals of) fish. 
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
 This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers. 
 Figure~\ref{fig:mbes} gives an example.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.4\linewidth}
     \centering
@@ -236,15 +236,12 @@ Figure~\ref{fig:mbes} gives an example.
 \label{fig:mbes}
 \end{figure}
 
-%TODO: add figures for outlier detection methods
-
 
 %%%%%%%%%%%%%%%%%%%%
 %
 
 \section{Ground filtering}
-Ground filtering is a common processing-step for point clouds.
-It involves classifying the points of a point cloud into ground points and non-ground points.
+Ground filtering involves classifying the points of a point cloud into ground points and non-ground points.
 Ground points are those points that are part of the bare-earth surface of the earth, thus excluding vegetation and man-made structures such as buildings and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:segmentation}).
@@ -252,7 +249,7 @@ Or, the non-ground points can be used as input for another classifier, \eg\ to c
 Ground filtering methods are typically based on the assumptions that 1) the ground is a continuous surface without sudden elevation jumps, and 2) for a given 2D neighborhood, the ground points are the ones with the lowest elevation.
 This is reasonable because non-ground points are typically measurements from objects above the ground such as trees, street furniture and buildings (see \eg\ Figure~\ref{fig:axelsson:profiles}).
 
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figs/axelsson-profiles.png}
   \caption{Cross-section of a terrain with lamp posts and trees before (top) and after (bottom) ground filtering \citep{axelsson2000generation}.}
@@ -264,7 +261,7 @@ If needed, these holes can be filled in a subsequent processing step involving s
 
 \subsection{TIN refinement for ground filtering}
 We will now discuss an effective ground filtering method that is based on the greedy insertion of ground points into a TIN\@.
-Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in Lesson 08 is used.
+Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in \refsec{sec:tin-simpl} is used.
 The algorithm consists of three main steps:
 \begin{enumerate}
   \item construction of a rudimentary initial TIN,
@@ -281,7 +278,7 @@ Each point that is inserted into the TIN is considered to be a ground point.
 
 In the second step two geometric properties are computed for each unclassified point.
 These properties are based on the relation between the point $\mathbf{p}$ and the triangle in the current TIN that intersects its vertical projection. The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
@@ -306,7 +303,6 @@ These properties are based on the relation between the point $\mathbf{p}$ and th
 \end{figure}
 The first property, denoted $d$, is the perpendicular distance between the $\mathbf{p}$ and the triangle.
 The second property, denoted $\alpha$, is the largest angle of the angles between the triangle and the three vectors that connect each vertex with $\mathbf{p}$. 
-% TODO figure
 
 In the ground test of the final step, it is simply checked for each point if its $d$ is below a given threshold $d_{max}$ and if its $\alpha$ is below a given threshold $\alpha_{max}$.
 If this is indeed the case, the point is labelled as a ground point and inserted into the TIN.
@@ -316,15 +312,14 @@ Of course, if the triangles in the TIN change, the properties of the overlapping
 When all remaining points fail the ground test, the algorithm terminates.
 Figure~\ref{fig:axelsson} gives an example result.
 
-\begin{figure}[htb]
+\begin{figure}
   \centering
-  \begin{subfigure}[b]{0.9\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/axelsson-before.png}
     \caption{Before}
   \end{subfigure}
-
-  \begin{subfigure}[b]{0.9\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/axelsson-after.png}
     \caption{After}
@@ -333,28 +328,346 @@ Figure~\ref{fig:axelsson} gives an example result.
 \label{fig:axelsson}
 \end{figure}
 
-\section{Segmentation}
-\label{sec:segmentation}
-Segmentation is the process of grouping point clouds into multiple homogeneous regions with similar properties.
-% Precisely what similarity properties to use depends on your goal.
-A popular application of segmentation is the detection of planar regions in a point cloud.
-In this case the point cloud is segmented into groups of points that each correspond to a plane.
-This can be helpful for something like building classification, if we assume that buildings consist of planar surfaces.
 
-\begin{link-box}
-  It explains two segmention techniques: RANSAC and region growing. They are explained in respectively
-  \\ \\
-  \bibentry{Vosselman10}
+%%%%%%%%%%%%%%%%%%%%
+%
 
-  \begin{itemize}
-  	\item Section 2.3.2 from page 67 up to and including page 69
-  	\item Section 2.3.3 on pages 72--74
-  \end{itemize}
- 
-  Online access: \url{https://tudelft.on.worldcat.org/oclc/843860784}
-\end{link-box}
+\section{Shape detection}
+\label{sec:shape-detection}
+Using shape detection we are able to automatically detect simple shapes such as planes in a point cloud.
+See for example Figure~\ref{fig:bk-planes}, where the points are colored according to the corresponding planes.
+Shape detection is an important step in the extraction and reconstruction of more complex objects, \eg\ man-made structure such as buildings are often composed of planar surfaces.
+
+In this section three shape detection methods will be introduced.
+These methods are described in a general way, \ie\ without specialisations for one particular shape.
+Only for illustrative purposes specific shapes such as a line or a plane are sometimes used to (visually) explain the basic concept of each shape detection method.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.95\textwidth]{figs/bk-planes.png}
+	\caption{Planar regions in the AHN3 point cloud. Each region was assigned a random colour.}
+	\label{fig:bk-planes}
+\end{figure}
+
+But first we need to declare some common terminology.
+Let $P$ denote a point cloud. 
+If we perform shape detection on $P$ we aim to find a subset of points $S \subset P$ that fit with a particular shape. 
+Most shape detection methods focus on shapes that can be easily parametrised such as a line, a plane, or a sphere. 
+If we specify values for the parameters of a such a parametrised shape, we define an \emph{instance} of that shape.
+A line for example can be parametrised using the equation $y = ax + b$, in this case $a$ and $b$ are the parameters\footnote{Notice that this particular parametrisation can not represent vertical lines, because $a$ would need become infinity which is usually a problem on computers. A line parametrisation without this problem does exist and is shown in Figure~\ref{fig:hough-transform}a. }.
+We can create an instance of a line by specifying values for its parameters $a$ and $b$, effectively fixing the slope and the position of the line.
+
+%In the following we will focus on plane detection  and discuss three different methods that can do that.
+
+%The shapes are represented using a
+%A prerequisite for a shape to be suitable for most shape detection methods, is that it has a simple mathematical model.
+%A line for example can mathematically be represented with a point and a vector, so can a plane, and circles and spheres can be represented with a point and radius.
+%When point is said to support 
+%Segmentation is the process of grouping point clouds into multiple homogeneous regions with similar properties.
+%% Precisely what similarity properties to use depends on your goal.
+%A popular application of segmentation is the detection of planar regions in a point cloud.
+%In this case the point cloud is segmented into groups of points that each correspond to a plane.
+%This can be helpful for something like building classification, if we assume that buildings consist of planar surfaces.
+
+\subsection{RANSAC}
+% how does it work, pseudocode
+RANSAC is short for RANdom Sampling Consensus and as its name implies it works by randomly sampling the input points.
+In fact it starts by picking a random set of points $M \subset P$. 
+This set $M$ is called the \emph{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
+From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (See Figures~\ref{fig:ransac:b} and \ref{fig:ransac:c}).
+\begin{figure}[htb]
+	\centering
+	\begin{subfigure}[b]{0.24\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=1]{figs/ransac.pdf}
+		\caption{Input points}
+		\label{fig:ransac:a}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=2]{figs/ransac.pdf}
+		\caption{First minimal set}
+		\label{fig:ransac:b}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=3]{figs/ransac.pdf}
+		\caption{Second minimal set}
+		\label{fig:ransac:c}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.24\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=4]{figs/ransac.pdf}
+		\caption{Detected line instance}
+		\label{fig:ransac:d}
+	\end{subfigure}
+	
+	\caption{RANSAC for line detection ($k=2$ iterations)}
+	\label{fig:ransac}
+\end{figure}
+The algorithm then checks for each point $p \in P\setminus M$ if it fits with $\mathcal{I}$. 
+This is usually done by computing the distance $d$ from $p$ to $\mathcal{I}$ and comparing $d$ against a user-defined threshold $\epsilon$.
+If $d<\epsilon$ we say that $p$ is an inlier, otherwise $p$ is an outlier.
+The complete set of inliers is called the \emph{consensus set}, and its size is referred to as the \emph{score}.
+The whole process from picking a minimal set to computing the consensus set and its score, as shown in Algorithm~\ref{algo:ransac}, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (Figure~\ref{fig:ransac:d}). 
+
+\begin{algorithm}
+	\KwIn{An input point cloud $P$, the error threshold $\epsilon$, the minimal number of points needed to uniquely construct the shape of interest $n$, and the number of iterations $k$}
+	\KwOut{the detected shape instance $\mathcal{I}_{best}$}
+	$s_{best} \leftarrow 0$\;
+	$\mathcal{I}_{best} \leftarrow$ nil\;
+
+	\For{$i \leftarrow 0...k$}
+	{
+		$M \leftarrow n$ randomly selected points from $P$\;
+		$\mathcal{I} \leftarrow$ shape instance constructed from $M$\;
+		$C \leftarrow \emptyset$ \;
+		\For{all $p \in P \setminus M$} 
+		{
+			$d \leftarrow$ distance$(p,\mathcal{I})$\;
+			\If{$d < \epsilon$}{
+				add $p$ to $C$\;
+			}
+		}
+		$s \leftarrow$ score$(C)$\;
+		\If{$s > s_{best}$}{
+			$s_{best} \leftarrow s$ \;
+			$\mathcal{I}_{best} \leftarrow \mathcal{I}$\;
+		}
+	}
+	\caption{The RANSAC algorithm}
+	\label{algo:ransac}
+\end{algorithm}
 
 
+%Refit? Minimum size consensus set. Different evaluation than score
+
+% parameter tuning and probablity of finding a good solution...
+
+% pros and cons
+The most touted benefit of RANSAC is its robustness, \ie\ its performance in the presence of many outliers. 
+The probability that a shape instance is detected with RANSAC depends mainly on two criteria:
+\begin{enumerate}
+	\item the number of inliers in $P$, and
+	\item the number of iterations $k$.
+\end{enumerate}
+Naturally, it will be easier to detect a shape instance in a dataset with a relatively low number of outliers.
+And it is more likely that a shape instance is found if more minimal sets are evaluated.
+Picking a sufficiently high $k$ is therefore important for the success of the algorithm (although a higher $k$ also increases the computation time).
+%With the right parameters it can detect shapes in point clouds with up to 50\% outliers.
+
+Because of the random nature of RANSAC, the minimal sets that it will evaluate will be different every time you run the algorithm, even if the input data is the same.
+The detected shape instance can therefore also be different every time you run the algorithm\footnote{RANSAC is therefore said to be a \emph{non-deterministic} algorithm.}.
+This could be a disadvantage.
+
+%Another disadvantage is that RANSAC can output spurious results in some cases. This is shown in Figure~\ref{fig:ransac-spurious} where RANSAC found a plane 
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{figs/ransac-spurious.png}
+%	\caption{Detection of a spurious plane by RANSAC \citep{Limberger15}.}
+%	\label{fig:ransac-spurious}
+%\end{figure}
+%- can detect shapes in wrong places, eg. single lidar scanline is perfectly planar.  Eg if there is a set of seemingly arbitrarily coplanar points that is larger than the  set of points corresponding to the smallest plane you want  to detect, than it is more likely to detect the false plane.
+
+
+\subsection{Region growing}
+Region growing works by gradually growing sets of points called \emph{regions} that fit a particular shape instance.
+A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
+More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
+To check if a candidate point $c$ should be added to $R$, a test is performed.
+In the case of region growing for plane detection (See Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector\footnote{If point normals are not available they can be estimated using principal component analysis.} of $c$ and the normal vector of its neighbour in $R$.
+If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
+Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
+\begin{figure}[htb]
+	\centering
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=1]{figs/region-growing.pdf}
+		\caption{Input points with normals and three seed points}
+		\label{fig:region-growing:a}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=2]{figs/region-growing.pdf}
+		\caption{Start growing. Add neighbours if the angle difference is small.}
+		\label{fig:region-growing:b}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=3]{figs/region-growing.pdf}
+		\caption{Continue growing from new region point}
+		\label{fig:region-growing:c}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=4]{figs/region-growing.pdf}
+		\caption{Stop growing where the angle difference is too great}
+		\label{fig:region-growing:d}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=5]{figs/region-growing.pdf}
+		\caption{Final regions from all three seed points}
+		\label{fig:region-growing:e}
+	\end{subfigure}
+	
+	\caption{Region growing for plane detection based on the angle between neighbouring point normals}
+	\label{fig:region-growing}
+\end{figure}
+This process of growing $R$ continues until no more candidates can be found that are compatible with $R$.
+When this happens, the algorithm proceeds to the next seed point to grow a new region.
+
+Algorithm~\ref{algo:region-growing} gives the pseudo-code for the region growing algorithm.
+Notice that the set $S$ is used to keep track of the points in the current region whose neighbours still need to be checked.
+Also notice that candidate points that are already assigned to a region are skipped.
+\begin{algorithm}
+	\KwIn{An input point cloud $P$, a list of seed points $L_S$, a function to find the neighbours of a point $neighbours()$}
+	\KwOut{A list with detected regions $L_R$}
+	
+	$L_R \leftarrow [\xspace]$\;
+	\For{each $s$ in $L_S$} {
+		$S \leftarrow \{s\}$\;
+		$R \leftarrow \emptyset$\;
+		\While{$S$ is not empty}
+		{
+			$p \leftarrow $ pop$(S)$\;
+			\For{each candidate point $c \in$ neighbours$(p)$} 
+			{
+				\If{$c$ was not previously assigned to any region} {
+					\If{$c$ fits with $R$}{
+						add $c$ to $S$\;
+						add $c$ to $R$\;
+					}
+				}
+			}
+		}
+		append $R$ to $L_R$\;
+	}
+	\caption{The Region growing algorithm}
+	\label{algo:region-growing}
+\end{algorithm}
+
+The seed points can be generated by assessing the local neighbourhood of each input point. 
+For example in case of plane detection one could fit a plane through each point neighbourhood and subsequently sort all points on the fitting error. 
+Naturally, points with a low plane fitting error are probably part of a planar region so we can expect them to be good seeds.
+
+Region growing is based on the idea that we can always find a path of neighbouring points between any pair of points within the same region.
+To compute the point neighbourhoods a k-nearest neighbour search or a fixed radius search can be used, which can both be implemented efficiently using a kd-tree (See Chapter~\ref{chap:massive}).
+As a result, two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
+Notice that the other shape detection methods described in this chapter do not need point neighbourhood information.
+
+% pros and cons
+%- normal estimation is unreliable around corners and affected by noise
+%- segmentation that goes around a corner to include  points that still lier within the e-band
+%-/+ depends on point neighbourhood
+%+ flexible, it can work without a very explicit shape model, eg curved surfaces
+
+
+\subsection{Hough transform}
+The Hough transform uses a voting mechanism to detect shapes.
+It lets every point $p \in P$ vote on each shape instance that could possible contain $p$.
+Possible shape instances thus accumulate votes from the input points.
+The detected shape instances are the ones that receive the highest number of votes.
+Figure~\ref{fig:hough-transform} shows an example for line detection and Algorithm~\ref{algo:hough-transform} gives the full pseudo-code.
+\begin{figure}[htb]
+	\centering
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=1]{figs/hough-transform.pdf}
+		\caption{Line parametrisation}
+		\label{fig:hough-transform:a}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=2]{figs/hough-transform.pdf}
+		\caption{Input points}
+		\label{fig:hough-transform:b}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=3]{figs/hough-transform.pdf}
+		\caption{Line instances for each point}
+		\label{fig:hough-transform:c}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\begin{minipage}[c]{0.45\textwidth}
+			% \hspace{1.1em}
+			\centering
+			\begin{tabular}{r|ll}
+				\tikz{\node[below left, inner sep=1pt] (def) {$r$};%
+					\node[above right,inner sep=1pt] (abc) {$\theta$};%
+					\draw (def.north west|-abc.north west) -- (def.south east-|abc.south east);}
+				& $0^{\circ}$ & $90^{\circ}$ \\
+				\hline
+				$0.0$ & $0$ & $0$\\
+				$0.5$ & $0$ & $\color[rgb]{0,1,0}{0}$\\
+				$1.5$ & $\mathbf{\color[rgb]{0,0,1}{3}}\leftarrow$ & $\color[rgb]{0.647,0.165,0.165}{1}$\\
+				$2.0$ & $0$ & $\mathbf{\color[rgb]{0.627,0.125,0.941}{3}}\leftarrow$\\
+				$2.5$ & $\color[rgb]{1,0.647,0}{1}$ & $0$\\
+				$3.0$ & $0$ & $0$\\
+				$3.5$ & $0$ & $\color[rgb]{1,0,0}{1}$\\
+				$4.0$ & $\color[rgb]{0,0.392,0}{2}$ & $\color[rgb]{1,0.843,0}{1}$\\
+				$4.5$ & $\color[rgb]{0.678,0.847,0.902}{1}$ & $\color[rgb]{1,0.753,0.796}{1}$\\
+			\end{tabular}
+			\hspace{1cm}
+		\end{minipage}
+		\caption{Accumulator. Most occurring line instances are highlighted.}
+		\label{fig:hough-transform:d}
+	\end{subfigure}
+	\quad
+	\begin{subfigure}[b]{0.3\linewidth}
+		\centering
+		\includegraphics[width=\textwidth,page=4]{figs/hough-transform.pdf}
+		\caption{Detected line instances}
+		\label{fig:hough-transform:e}
+	\end{subfigure}
+	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\theta,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=ax+b$ form for example).}
+	\label{fig:hough-transform}
+\end{figure}
+\begin{algorithm} 
+	\KwIn{An input point cloud $P$, an accumulator matrix $A$, a detection threshold $\alpha$}
+	\KwOut{A list with detected shape instances $L_I$}
+	
+	\For{each $p$ in $P$} {
+		\For{each instance $i$ from $A$ that fits with $p$} 
+		{
+			increment $A[i]$\;
+		}
+	}
+	$L_I \leftarrow$ all shape instances from $A$ with a more than $\alpha$ votes\;
+	\caption{The Hough transform algorithm}
+	\label{algo:hough-transform}
+\end{algorithm}
+
+The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
+Each element in the accumulator thus represents one shape instance.
+Because an accumulator is used the parameters need to be quantised.
+The chosen quantisation affects the possible shape instances that can be detected.
+The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\theta$ parameter only has two possible values.
+Notice that the accumulator can be made more sensitive by choosing a finer quantisation, effectively increasing the size of the accumulator (although that will also make the algorithm run slower).
+
+%%%%%%%%%%%%%%%%%%%%
+%
+%
+%\section{Clustering}
+%\label{sec:clustering}
+%Clustering is the task of grouping a set of points in such a way that points in the same group (called a cluster) are more similar to each other than to those in other groups (clusters).
+%It can be achieved by various algorithms that differ significantly in their understanding of what constitutes a cluster and how to efficiently find them.
+%
+%For example building object clustering from points in a particular class (building, vegetation, ...).
+%
+%\subsection{DBSCAN}
+%
+%\subsection{Connected components}
+%Stems from graph theory.
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -364,14 +677,18 @@ More information on the PLY format can be found online\footnote{\url{http://paul
 
 The full LAS specification is described in \citet{LAS13}, and \citet{Isenburg13} describes the details of the compressed LAZ format.
 
+\citet{Arge10} introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN.
+
 \citet{axelsson2000generation} originally proposed the greedy TIN insertion algorithm for ground filtering.
 He also describes how to handle discontinuities in the terrain such as cliffs.
 It should be said that his paper is a bit scarce on details, and if you are interested in those you are better off reading some excerpts of the work of \citet{Lin14}. 
 
 A comparison with several other ground filtering methods can be found in the work of \citet{Meng10}.
 
+%RANSAC
+\citet{Fischler81} originally introduced the RANSAC algorithm and applied to cartography in that same paper. On wikipedia you can read how you can compute the required number of RANSAC iterations to achieve a certain probability of success given that you know how many outliers there are in your dataset\footnote{\url{https://en.wikipedia.org/wiki/Random_sample_consensus\#Parameters}}.
 
-
+\citet{Limberger15} describes how to efficiently do plane detection in large point clouds using a variant of the Hough transform.
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -380,6 +697,10 @@ A comparison with several other ground filtering methods can be found in the wor
 % TODO : add exercices
 
 \begin{enumerate}
-  \item laba33
-  \item aldkfj
+   \item The LAS standard gives a global point offset in the header. What is the benefit of using such a global offset?  
+   \item What is the difference between thinning an point cloud prior to triangulation and TIN simplification?
+  \item What is the probability that the line instance in Figure~\ref{fig:ransac:d} is detected with $k=2$ iterations?
+  \item In Chapter~\ref{chap:acquisition} it is described how point density can vary based on the acquisition conditions. How could a (strongly) varying point density affect the effectiveness of the region growing algorithm?
+  \item Give a parametrisation for a plane. How many axes would an accumulator need for plane detection with the Hough transform?
+
 \end{enumerate}
