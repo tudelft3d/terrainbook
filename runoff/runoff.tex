@@ -6,7 +6,7 @@
 \nobibliography*
 
 
-\chapter{Application: Runoff modelling}
+\chapter{Runoff modelling}
 
 Many interesting DTM operations are based on runoff modelling, \ie\ the computation of the flow and accumulation of water on a terrain.
 Examples include: knowing where streams will form in the case of heavy rainfall, finding the areas that will be affected by a waterborne pollutant, tracing the areas that could become submerged by floodwater, or calculating the rate of erosion or sedimentation in a given area.
@@ -23,12 +23,12 @@ Such models can be quite accurate, but they require high-resolution data that is
 \end{figure}
 
 By contrast, the simpler GIS models of runoff can be performed automatically in large areas with only a DTM\@.
-These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter, but most methods work with other representations.
-In order to achieve this, two big assumptions are usually made:
+These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter, but the methods described here mostly work just as well with other representations (\eg\ a TIN).
+In order for the GIS models of runoff to achieve their results, two big assumptions are usually made:
 
 \begin{enumerate}
 \item that all water flow is \emph{overland}, thus ignoring all subsurface flows and dismissing factors such as evaporation and infiltration; and
-\item that a good estimate for the total flow at any point is the drainage area upstream from it, \ie\ the area above the point which drains to it, which is roughly equivalent to rain that is falling evenly all over a terrain.
+\item that a good estimate for the total flow at any point is the drainage area upstream from it, \ie\ the area above the point which drains through/to it, which is roughly equivalent to rain that is falling evenly all over a terrain.
 \end{enumerate}
 
 Based on these assumptions, runoff modelling is simplified by considering only two values, which are computed for every cell in a DTM\@:
@@ -45,26 +45,27 @@ We look at a few different methods to compute these values in the next two secti
 \section{Computing the flow direction}%
 \label{se:direction}
 
-Theoretically, the flow direction of a point is the direction with the steepest descent at that location, which does correspond to the direction that water would naturally flow towards.
+Theoretically, the flow direction of a point is the direction with the steepest descent at that location, which does correspond to the direction towards which water would naturally flow.
 However, the discretisation of a terrain into DTM cells means that some kind of an approximation needs to be made.
-There are two broad approaches that can be followed to do this: computing a single flow direction or multiple flow directions per DTM cell.
+There are two broad approaches that can be followed to do this: computing a single flow direction, which assumes that all the water in a DTM cell flows to one other cell, or multiple flow directions, which assumes that the water in a DTM cell can flow towards multiple other cells.
 
 \subsection{Single flow direction}
 
 % Perpendicular to contours in a 2D map
 
 The earliest and simplest method to compute the flow direction of a cell is to compute the slope between the centre of the cell and the centre of all its neighbouring cells (using the distance between the centres and the difference in elevation), then assign the flow direction towards the neighbour with the steepest descent.
-The method is known as the \emph{single flow direction (SFD)} approach, and when applied to a raster grid, where there are eight neighbours to each pixel (left, right, up, down and the diagonals), it is also known as the \emph{eight flow directions (D8)} approach.
+The method is known as the \emph{single flow direction (SFD)} approach, and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals).
+For this reason, it is also known as the \emph{eight flow directions (D8)} approach.
 
 On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
-For instance, in a square grid, they can be of up to \(22.5^\circ{}\) (because the method is forced to choose a neighbouring cell in increments of \(45^\circ{}\)).
+For instance, in a square grid, the errors can be of up to \(22.5^\circ{}\) (because the method is forced to choose a neighbouring cell in increments of \(45^\circ{}\)).
 This method can therefore easily create artefacts in certain geometric configurations (Figure~\ref{fig:d8}).
 
-Many of these artefacts can be eliminated by using the rho8 method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
+Many of these artefacts can be eliminated by using the rho8 (\(\rho8\)) method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
 However, it produces non-deterministic results, which is often a sufficient reason not to use it.
 
-Despite its limitations, the SFD method is still widely used and available in many GIS tools\@.
+Despite its age and limitations, the SFD method is still widely used and available in many GIS tools\@.
 
 \begin{figure}[htbp]
 \centering
@@ -75,8 +76,8 @@ Despite its limitations, the SFD method is still widely used and available in ma
 
 \subsection{Multiple flow directions}
 
-In an attempt to overcome the limitations of the SFD method, a variety of methods assign the flow direction of a DTM cell fractionally to all of its lower neighbouring cells according to some criteria.
-These methods are collectively known as multiple flow directions (MFD), and they usually look like:
+In an attempt to overcome the limitations of the SFD method, a variety of methods assign the flow direction of a DTM cell fractionally to some or all of its lower neighbouring cells according to some criteria.
+These methods are collectively known as multiple flow directions (MFD), and they usually use a variation of this equation:
 
 \begin{equation}
 F_i = \frac{\left(L_i \tan{\alpha_i}\right)^x}{\sum_{j=1}^{n}\left(L_j \tan{\alpha_j}\right)^x}
@@ -108,7 +109,7 @@ After the flow directions in all the cells of a DTM have been computed, the usua
 As stated in the assumptions we make for GIS models of runoff, the flow accumulation at a given DTM cell can be estimated by the area that drains to it.
 Note that in the case of a square grid, it is simply the number of cells that drain to it.
 
-In practical terms, the flow accumulation is usually computed with a recursive operation:
+In practical terms, the flow accumulation is defined based on a recursive operation:
 
 \begin{equation}
 A_0 = a_0 + \sum_{i=1}^{n} p_i A_i
@@ -120,8 +121,9 @@ Note that this calculation can be sped up substantially by: (i) storing the accu
 \section{Solving issues with sinks}
 
 Sinks, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
-Some of these are natural features that are present in the terrain (\eg\ lakes and dry lakebeds) and where water would flow towards in reality, and are thus not a problem for runoff modelling.
-However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions) or very small and easily flooded\@, in which case we need to implement a mechanism to route water flows out of these depressions.
+Some of these are natural features that are present in the terrain (\eg\ lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
+However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that easily flooded, after which water would flow out of them.
+In the latter case, we need to implement a mechanism to route water flows out of these depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
 
 \subsection{Filling in sinks}
@@ -207,4 +209,13 @@ It covers how to make much more complex runoff models than the ones described he
 \citet{Barnes14a} describes how to fill in sinks, while \citet{Metz11} describes how to use a variation of \(A^{*}\) search algorithm to route water out of them.
 \citet{Barnes14} describes how to assign the drainage direction over flats.
 
+%%%
+%
+\section{Exercises}
 
+\begin{enumerate}
+\item Given a raster map of precipitation values, how would you be able to improve the flow accumulation estimates?
+\item Why is the flow width important?
+\item You have a cycle in your drainage network. How can that happen? How would you solve it?
+\item How can you detect endorheic basins without finding all other basins first?
+\end{enumerate}
