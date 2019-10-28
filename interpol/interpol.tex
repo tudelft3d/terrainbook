@@ -47,7 +47,7 @@ The essential properties of an `ideal' interpolation method for bivariate geosci
   \item \textbf{smooth}: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^1$ and $C^2$ interpolants.
   \item \textbf{local}: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
   \item \textbf{adaptability}: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
-  \item \textbf{computationally efficient}: it should be possible to implement the method and get an efficient result. Efficient is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient.
+  \item \textbf{computationally efficient}: it should be possible to implement the method and get an efficient result. Efficient is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
   \item \textbf{automatic}: the method must require as little input as possible from the user, \ie\ it should not rely on user-defined parameters that require \emph{a priori} knowledge of the dataset.
 \end{enumerate}
 \begin{figure}
@@ -136,6 +136,11 @@ Although the method possesses many of the desirable properties (it is exact, loc
 The interpolation function is indeed discontinuous at the border of cells; if the location $x$ is directly on an edge or vertex of the VD($S$), then which value should be returned?
 % It is nevertheless the perfect method for reconstructing discrete fields, and is also often used in remote sensing to avoid averaging or blurring the resulting image.
 
+The implementation of the method sounds easy: simply find the closest data point and assign its value to the interpolation location. 
+The difficulty lies in finding an efficient way to get the closest data point. 
+The simplest way consists of measuring the distance for each of the $n$ points in the dataset, but this yields a $\mathcal{O}(n)$ behaviour for each interpolation, which is too slow for large datasets. 
+To speed up this brute-force algorithm, auxiliary data structures that will spatially index the points must be used, see for instance the $k$d-tree in Section~\ref{sec:kdtree}.
+
 
 %-------------------------------------------
 %-
@@ -169,7 +174,8 @@ Figure~\ref{fig:idw}c shows one example where one circle, when used with a datas
 The major problem with the method comes from the fact that the criterion, for both selecting data points and assigning them a weight, is one-dimensional and therefore does not take into account the spatial distribution of the data points close to the interpolation location.
 
 IDW is exact, local, and can be implemented in an efficient manner.
-However, as mentioned above, there are cases where is might not be continuous (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
+However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see Section~\ref{sec:kdtree}) otherwise each interpolation requires $\mathcal{O}(n)$ operations.
+Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
 If the closest data points in each quadrant are used, then the method can be made automatic and continuous.
 
 
@@ -186,6 +192,8 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
+If the point location strategy is used to identify the triangle containing $x$ (Section~\ref{sec:dtwalk}), then the interpolation itself is performed in constant time.
+
 
 %%%
 \paragraph{Data-dependent triangulations.}
@@ -199,6 +207,8 @@ One example is trying to minimise the change in normals for the two incident tri
 While such methods will yield longer and skinnier triangles, these might better approximate the shape of the terrain for some specific cases.
 One drawback of these methods is that different criteria will be required for different cases, and that computing such triangulation can be computationally expensive.
 In practice, one would need to first compute the DT, and then take each edge (and the two incident triangles), and perform a local flip based on the elevation values; the final triangulation is obtained by optimisation the wished criterion.
+
+
 
 
 
@@ -305,6 +315,7 @@ where $f(x)$ is the interpolated function value at the location $x$.
 
 The natural neighbour interpolant possesses all the wished properties from above, except that the first derivative is undefined at the data points. 
 Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD\@.
+From Section~\ref{sec:dtconstruction} we know that one insertion of a single point $p$ in a DT can be done in $\mathcal{O}(\log n)$, but the deletion of a point is a more complex operation (outside the scope of this book).
 
 
 %%%
