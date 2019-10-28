@@ -265,6 +265,8 @@ for an example).
 In sharp contrast to this, other strategies to construct a DT (\eg\ divide-and-conquer and plane sweep algorithms, see Section~\ref{sec:notes}), build a DT in \emph{one} operation (this is a batch operation), and if another point needs to be inserted after this, the whole construction operation must be done again from scratch. 
 That hinders their use for some applications where new data coming from a sensor would have to be added.
 
+The incremental insertion algorithm, and the other well-known algorithm, can all construct the DT of $n$ points randomly distributed in the Euclidean plane in $\mathcal{O}(n \log n)$.
+
 
 \begin{figure}
   \centering
@@ -336,6 +338,8 @@ It is therefore essential to understand the mecanism, even if one is not constru
 
 %%%
 \paragraph{Walk/Point location.} To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow. 
+The complexity of that algorithm is $\mathcal{O}(n^2)$.
+
 A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described below, to navigate from one triangle to the other. 
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
@@ -379,7 +383,8 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 
 
 %%%
-\paragraph{Flips.}The \emph{flip} operation we use to modify the triangulation is a simple local topological operation that modifies the configuration of two adjacent triangles. 
+\paragraph{Flips.}The \emph{flip} operation we use to modify the triangulation is a simple \emph{local} topological operation that modifies the configuration of two adjacent triangles. 
+It is performed in constant time $\mathcal{O}(1)$.
 Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
 \begin{figure}
   \centering
@@ -556,8 +561,9 @@ This paraboloic lifting was first observed by \citet{Brown79} (who used a spheri
 Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
 \citet{Liu05-1} explains the details.
 
-The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives.
+The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives that are optimal ($\mathcal{O}(\log n)$).
 However, they both note that optimal algorithms do not necessarily mean better results in practice because of the amount of preprocessing involved, the extra storage needed, and also because the optimal algorithms do not always consider the dynamic case, where points in the DT could be deleted. 
+
 
 Several criteria for constructing data-dependent triangulations are discussed in \citet{Dyn90}. 
 While these can be used, in practice it was proven that the Delaunay triangulation is still the triangulation that minimises the roughness of a surface~\citep{Wang01,Rippa90}
