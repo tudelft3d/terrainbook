@@ -18,24 +18,27 @@ The information appearing on an ENC are standardised, and there are open formats
 
 %
 
-We focus in this chapter on one element of these charts: depth-contours, which are contour lines, as seen in Chapter~\ref{chap:conversion}, but show the depth with respect to a given level of water.
+We focus in this chapter on one element of these charts: depth-contours.
+These are contour lines that, instead of elevation, show the depth with respect to a given level of water.
+The creation of these depth-contours from an input point cloud of depth measurements requires many tools that were introduced in this book; Delaunay triangulation and the Voronoi diagram (Chapter~\ref{chap:dtvd}), interpolation (Chapter~\ref{chap:interpol}), and contour generation from a TIN (Chapter~\ref{chap:conversion}).
 
 
 %%%
 %
 \section{How are depth-contours produced in practice?}
 
-Traditionally, the depth-contours have been drawn by hand by skilled hydrographers.
-They used a limited set of scattered surveyed depth measurements to deduct and depict the morphology of the seafloor with smooth-looking curves.
+Traditionally, depth-contours were drawn by hand by skilled hydrographers.
+They used a sparse set of scattered surveyed depth measurements to deduct and depict the morphology of the seafloor with smooth-looking curves.
 
 %
 
 Nowadays, with technologies such as multibeam echosounders (MBES) offering an almost full coverage of the seafloor (see Section~\ref{sec:mbes}), one would expect the contouring process to be fully automatic.
 It is however in practice still a (semi-)manual process since the new technologies have ironically brought new problems: computers have problems processing the massive amount of data, especially in choosing which data is relevant and which is not.
+%It also turns out to be challenging to guarantee that the contours are both pleasing to read and safe.
 
 %
 
-Contours constructed directly from MBES datasets are often not satisfactory for navigational purposes since, as Figure~\ref{fig:raw} shows,
+The raw contours constructed directly from MBES datasets are often not satisfactory for navigational purposes since, as Figure~\ref{fig:raw} shows,
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
@@ -56,7 +59,7 @@ Contours constructed directly from MBES datasets are often not satisfactory for 
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/aggregation.png}
-    \caption{}
+    \caption{}\label{fig:aggregation}
   \end{subfigure}
 \caption{Comparison of \textbf{(a)} depth-contours obtained automatically from the raw MBES data and \textbf{(b)} the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. \textbf{(c)} Pits are removed, while peaks are preserved or integrated with another contour. \textbf{(d)} Groups of nearby contour lines are aggregated}
 \label{fig:contouringaspects}
@@ -75,7 +78,8 @@ Creating good depth-contours requires \emph{generalisation}, \ie\ the process of
 
 %
 
-However, the generalisation of the content of a hydrographic chart is hindered by the fact that four constraints must be respected:
+The process of generalisation is guided by constraints that essentially define when a depth-contour is ``good''.
+A good depth contour satisfies all of the following four generalisation constraints.
 \begin{enumerate}
   \item The \emph{safety constraint}.  
   At every location, the indicated depth must not be deeper than the depth that was originally measured at that location; this is to guarantee that a ship never runs aground because of a faulty map.
@@ -107,18 +111,18 @@ It is therefore evident that the end result must be a reasonable compromise betw
 \section{Common methods used in practice are not satisfactory}
 
 The generation of depth contours, and their generalisation, can be done by several methods.
-We present here the most frequently used methodologies.
+We present here the most frequently used methodologies to generate depth-contours from an MBES point cloud.
 
 % We demonstrate in the next section that such workflows can \emph{not} guarantee that the safety constraint is respected, and should therefore not be used.
 
 %%%
 \subsection{Displacement and generalisation of the lines}
 
-It is tempting to use a generalisation operator for the lines to simplify them, \eg\ the Douglas-Peucker method.
+It is tempting to start with the raw contours lines and use a generalisation operator to simplify them, \eg\ the Douglas-Peucker method.
 It should however be noticed that this method does \emph{not} guarantee that the safety constraint will be respected, that is the generalised line will be ``pushed'' both to the deeper and the shallower part (there is no control for this with the Douglas-Peucker method).
 
-There exist a few algorithms to control the direction in which a line can be moved (these methods are outside the scope of this book), but these methods work only on line individually and thus the resulting set of lines can contain intersecting lines.
-Furthermore, this solution does not solve the presence of many island contours, or can at best delete the small ones (and not aggregate them).
+There exist a few algorithms to control the direction in which a line can be moved (these methods are outside the scope of this book), but these methods work only on lines individually and thus the resulting set of lines can contain intersecting lines.
+Furthermore, this solution does not solve the presence of many island contours, or can at best delete the small ones (and not aggregate them as in Figure~\ref{fig:aggregation}).
 
 %%%
 \subsection{Creation of a simplified raster}
@@ -179,13 +183,13 @@ While different functions can be used to select the point (\eg\ deepest, shallow
 \label{fig:filterraster}
 \end{figure}
 It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
-The problem is that contour extraction algorithms perform a linear interpolation on the cells of the surface (raster cells or triangles). 
+The problem is that contour extraction algorithms perform a linear interpolation on the raster cells. 
 As can be observed from Figure~\ref{fig:fr:vg:b}, this easily results in safety violations at `secondary' local maxima in a grid cell. 
 The number and severity of these violation is related to the cellsize of the virtual grid: a bigger cellsize will result in more and more severely violated points.
 Notice that it is not possible to reduce the cellsize such that the safety issue can be guaranteed.  
 
 %
-\paragraph{Max rasterization.}
+\paragraph{Max rasterisation.}
 As Figure~\ref{fig:fr:mg:a} shows, it is similar to virtual gridding, the main difference is that a raster (a surface) is created where every cell in the virtual grid becomes a raster cell whose depth is the shallowest of all the samples.
 This disregards the exact location of the original sample points, and moves the shallowest point in the grid cell to the centre of the pixel. 
 That means that the morphology constraint is not respected.
@@ -198,18 +202,20 @@ For hydrographic charts, the raster surface is often constructed with spatial in
 Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place extrema are disregarded and subsequently the safety constraint is also violated. 
 
 %
-\paragraph{Raster coarsening.}
-Raster coarsening is somewhat similar to max rasterization, the difference is that it takes a raster as input rather than sample points. 
-Based on that input raster, a new raster is created that has larger cellsize. 
-In this way small details in the surface are omitted. Subsequently the contour lines that correspond to this coarsened raster surface also contain fewer small details. 
-In terms of safety this method has the same drawbacks as max rasterization.
+%\paragraph{Raster coarsening.}
+%Raster coarsening is somewhat similar to max rasterisation, the difference is that it takes a raster as input rather than sample points. 
+%Based on that input raster, a new raster is created that has larger cellsize. 
+%In this way small details in the surface are omitted. Subsequently the contour lines that correspond to this coarsened raster surface also contain fewer small details. 
+%In terms of safety this method has the same drawbacks as max rasterisation.
 
 
 
 %%%
 \subsection{TIN simplification}
   
-As Figure~\ref{fig:simpfail} shows, 
+One could use TIN simplification as explained in Chapter~\ref{chap:pcprocessing} to simplify the riverbed.
+This would also simplify the depth-contours that are generated from the TIN. 
+However, as Figure~\ref{fig:simpfail} shows, 
 \begin{figure}
 \centering
   \begin{subfigure}[b]{0.22\linewidth}
@@ -232,7 +238,7 @@ As Figure~\ref{fig:simpfail} shows,
 \caption{Due to the re-triangulation after a removal, violations of the safety constraint may occur after a series of points are removed. The first vertex is removed (locally the resulting surface will be shallower). However, the second removal changes the configuration of triangles and at that location the surface is now deeper. A lower number means a shallower point.}
 \label{fig:simpfail}
 \end{figure}
-the safety constraint is also not guaranteed to be respected when vertices are removed from a TIN.
+the safety constraint is not guaranteed to be respected when vertices are removed from a TIN.
 This is due to the fact that the triangulation must be updated (with flips, see Chapter~\ref{chap:dtvd}) and the shape of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
 
 
@@ -241,13 +247,13 @@ This is due to the fact that the triangulation must be updated (with flips, see 
 \section{A Voronoi-based surface approach}
 
 Part of the problems with existing approaches to generate depth-contours is the fact that the different processes, such as spatial interpolation, generalisation and contouring, are treated as independent processes.
-These are in fact interrelated, and we present in the following a methodology where the different processes are integrated into one consistent framework.
-This methodology uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are safe and legible.
+These are in fact interrelated, and we introduce in the following a method where the different processes are integrated.
+This method uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are safe and legible.
 
 %
 
-The key idea behind a the methodology, called a Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
-Instead of performing generalisation by moving lines or using a subset of the original samples, we manipulate the surface directly with operators that fulfil the constraints listed in Section~\ref{sec:good-depth-contours}.
+The key idea behind the method, called tje Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
+Instead of performing generalisation by moving lines or using a subset of the original samples, we include all MBES points in a triangulation (the surface) and manipulate this triangulation directly with generalisation operators that fulfil the constraints listed in Section~\ref{sec:good-depth-contours}.
 
 %
 
@@ -316,11 +322,11 @@ To perform the Laplace interpolation for each vertex $v$ in the Voronoi diagram 
 There is no need to insert/remove $v$ in the dataset, since we are only interested in estimating its depth (without considering the depth it is already assigned).
 
 The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall feature shape. 
-Applying it both reduces the angle between the planes spanned by adjacent triangles and simplifies overall shape.
+Applying it reduces the angle between adjacent triangles which gives the surface a smoother look.
 
-It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $O(n)$.
+%It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $O(n)$.
 
-Observe also that the operator can be performed either on a portion of a dataset, or on the whole dataset. 
+Observe that the operator can be performed either on a portion of a dataset, or on the whole dataset. 
 Furthermore this operator can be applied any number of times, delivering more generalisation with each pass.
 
 
@@ -360,7 +366,7 @@ Its objective is primarily to minimise the discretisation error between the Lapl
 \end{figure}
 
 By inserting extra vertices in large triangles (to break them into three triangles), the resolution of the DT is improved.
-As a result also the extracted contour lines have smoother appearance because they now have shorter line-segments; see Section\ref{sec:smoothness-contours} for an explanation.
+As a result also the extracted contour lines have a smoother appearance because they now have shorter line-segments; see Section\ref{sec:smoothness-contours} for an explanation.
 We insert a new vertex at the centre of the circumscribed circle of any triangle that has an area greater than a preset threshold; its depth is assigned with the Laplace interpolant.
 The circumcenter is chosen here because that location is equidistant to its three closest points, and subsequently results in a very natural point distribution.
 
@@ -415,11 +421,11 @@ It should be noticed that the ``top'' of the pyramid was densified, and not so m
 
 %
 
-Considering that the conceptual surface is defined as the Laplace interpolated field, densification does not actually change that conceptual surface, instead it aims to improve the approximation of the conceptual surface---and, with that also the resolution of the extracted contours.
+Densification aims to improve the reduce the difference between the linear TIN and the Laplace interpolated field of its vertices---effectively improving the resolution of the extracted contours.
 Therefore, densification is to be applied just before the extraction of the depth-contours.
 If applied \emph{before} the smoothing operator, it would limit the effectiveness of that operator, since a denser triangulation smoothes more slowly.
 
-The densification operator uses an area-threshold that determines which triangles should be  densified. 
+The densification operator uses an area-threshold that determines which triangles should be densified. 
 This way triangles that are already sufficiently small are not densified. 
 It performs a single pass on the input triangles, thus with every call the resolution of the DT is increased, until all triangles have reached a certain area.
 
@@ -467,7 +473,6 @@ As can be observed from Figure~\ref{fig:zl1845fieldview_o}, the raw and ungenera
 However, the smoothed contours (100 smoothing passes) from Figure~\ref{fig:zl1845fieldview_s} have a much cleaner and less cluttered appearance. 
 Clearly, the number of contour lines has diminished. 
 This is both because pits (local minima) have been lifted upwards by the smoothing operator, and nearby peaks (local maxima) have been aggregated (because the region in-between has been lifted upwards). 
-Thus omission and aggregation take place in the contour lines.
 Notice also that a third effect of the smoothing operator is the enlargement of certain features as a result of the uplifting of the points surrounding a local maximum. 
 
 %
@@ -506,7 +511,7 @@ What can also be seen is that the line is simplified (the details on the outer r
 
 The algorithm and the methodology of this chapter are (mostly) taken from \citet{Peters14}.
 
-\citet{Zhang11} explains in details that the generalisation of the content of a nautical chart is hindered by  the four constraints.
+\citet{Zhang11} explains in detail how the generalisation of the content of a nautical chart is hindered by the four constraints.
 
 % TODO : finish comments
 
@@ -516,7 +521,8 @@ The algorithm and the methodology of this chapter are (mostly) taken from \citet
 \section{Exercises}
 
 \begin{enumerate}
+  \item Explain why it is easier to respect the safety constraint using a TIN that has all the original MBES points as opposed to using a set of raw contours generated directly from that MBES dataset.
   \item Explain why simplification with Douglas-Peucker is not applicable in a bathymetric context. And give a concrete example.
-  \item For a terrain ``on the land'', if Douglas-Peucker is used to simplify isocontours, what problems can be obtain?
+  \item For a terrain ``on the land'', if Douglas-Peucker is used to simplify isocontours, what problems can be expected?
   \item The Laplace interpolation is used in the methodology presented, but would the natural neighbour interpolation method also be suitable?
 \end{enumerate}
