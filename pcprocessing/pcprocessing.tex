@@ -21,8 +21,6 @@ A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point 
 The order and meaning of the fields in a record is fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
-%TODO figure + description of point record
-
 Notice that, in additions to the widely used formats mentioned here, there are also many proprietary formats. These are often specific to one particular software and are therefore not very useful for data exchange.
 
 \subsection{ASCII formats}
@@ -143,21 +141,22 @@ For example, the Dutch AHN3 dataset, which is disseminated in the LAS/LAZ format
   \label{fig:ahn3}
 \end{figure}
 
-%TODO: some remarks about user-defined classification codes
+%TODO: Example of all classes in AHN3
 
 % The standard technically allows for additional user-defined attributes
 
 \paragraph{LAS Compression: LAZ format}
 Finally, a compressed variant of the LAS format, dubbed the LAZ format, exists.
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
-Through the use of lossless compression algorithms, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
-Observe that the compressed is fully usable as is, that is one does not need to first uncompress the files to extract the points and their attributes (like with ZIP files for instance).
+Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
+This makes it more effective than simply using ZIP compression on a LAS file.
+In addition support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression does take some time).
 
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
 Each block is individually compressed, which makes it possible to partially decompress only the needed blocks from a file (instead of always needing to compress the whole file).
-This can save a lot of time if only a few point from a huge point cloud are needed.
-Notice that the effectiveness of the compression algorithms depends on the similarity in information between subsequent point records.
+This can save a lot of decompression computations if only a few point from a huge point cloud are needed.
+Also notice that the effectiveness of the compression algorithms depends on the similarity in information between subsequent point records.
 Typically information is quite similar for points that are close to each other in space.
 Therefore, a greater compression factor can often be achieved after spatially sorting the points.
 
@@ -193,8 +192,6 @@ See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and gri
 \caption{Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.}
 \label{fig:randvsgrid}
 \end{figure}
-
-%TODO: add figures for thinning methods
 
 From \refsec{sec:tin-simpl} you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
 However, for a given number of resulting points, TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
@@ -392,7 +389,7 @@ Let $P$ denote a point cloud.
 If we perform shape detection on $P$ we aim to find a subset of points $S \subset P$ that fit with a particular shape. 
 Most shape detection methods focus on shapes that can be easily parametrised, such as a line, a plane, or a sphere. 
 If we specify values for the parameters of such a parametrised shape, we define an \emph{instance} of that shape.
-A line for example can be parametrised using the equation $y = ax + b$, in this case $a$ and $b$ are the parameters\footnote{Notice that this particular parametrisation can not represent vertical lines, because $a$ would need become infinity which is usually a problem on computers. A line parametrisation without this problem does exist and is shown in Figure~\ref{fig:hough-transform}a. }.
+A line for example can be parametrised using the equation $y = ax + b$, in this case $a$ and $b$ are the parameters.
 We can create an instance of a line by specifying values for its parameters $a$ and $b$, effectively fixing the slope and the position of the line.
 
 In the following, the methods are described in a general way, \ie\ without specialisations for one particular shape.
@@ -520,7 +517,7 @@ Region growing works by gradually growing sets of points called \emph{regions} t
 A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
 To check if a candidate point $c$ should be added to $R$, a test is performed.
-In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector\footnote{If point normals are not available they can be estimated using principal component analysis.} of $c$ and the normal vector of its neighbour in $R$.
+In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector of its neighbour in $R$.
 If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
 Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 \begin{figure}[htb]
@@ -535,7 +532,7 @@ Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=2]{figs/region-growing.pdf}
-		\caption{Start growing. Add neighbours if the angle difference is small.}
+		\caption{Start growing. Add neighbours if the normal angle is small.}
 		\label{fig:region-growing:b}
 	\end{subfigure}
 	\quad
@@ -549,7 +546,7 @@ Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=4]{figs/region-growing.pdf}
-		\caption{Stop growing where the angle difference is too great}
+		\caption{Stop growing where the normal angle is too great}
 		\label{fig:region-growing:d}
 	\end{subfigure}
 	\quad
@@ -604,6 +601,8 @@ Region growing is based on the idea that we can always find a path of neighbouri
 To compute the point neighbourhoods a k-nearest neighbour search or a fixed radius search can be used, which can both be implemented efficiently using a $k$d-tree (see Section~\ref{chap:kdtree}).
 As a result, two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
 Notice that the other shape detection methods described in this chapter do not need point neighbourhood information.
+
+%TODO: add note on PCA \footnote{If point normals are not available they can be estimated using principal component analysis.}
 
 % pros and cons
 %- normal estimation is unreliable around corners and affected by noise
@@ -698,6 +697,9 @@ Because an accumulator is used the parameters need to be quantised.
 The chosen quantisation affects the possible shape instances that can be detected.
 The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\theta$ parameter only has two possible values.
 Notice that the accumulator can be made more sensitive by choosing a finer quantisation, effectively increasing the size of the accumulator (although that will also make the algorithm run slower).
+
+%TODO: section on paramtrisation of lines and planes
+%\footnote{Notice that this particular parametrisation can not represent vertical lines, because $a$ would need become infinity which is usually a problem on computers. A line parametrisation without this problem does exist and is shown in Figure~\ref{fig:hough-transform}a. }.
 
 %%%%%%%%%%%%%%%%%%%%
 %
