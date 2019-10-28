@@ -82,6 +82,7 @@ The most common method is based on averaging the 4 pixels that are merged into o
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Indexing points in 3D space with the kd-tree}
+\label{sec:kdtree}
 
 A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
 In the context of terrains, $k$ is in most cases either 2 or 3.
@@ -222,6 +223,7 @@ A branch is only eliminated when $m$ points have been found and the branch canno
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Streaming paradigm to construct massive TINs and grids}
+\label{sec:streaming}
 
 The incremental construction algorithm for the Delaunay triangulation, presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
 Or if it works, it will be very slow.
