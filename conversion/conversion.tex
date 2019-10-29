@@ -110,6 +110,9 @@ The basic algorithm for extracting one isoline is shown in Algorithm~\ref{algo:i
 \end{figure}
 Note that since the algorithm contours every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
 It is thus a scalable algorithm.
+Its time complexity is $\mathcal{O}(c)$, where $c$ is the number of cells.
+Recall from Chapter~\ref{chap:dtvd} that for $n$ points a DT contains about $2n$ triangles.
+
 The same idea can be used to extract all the isolines: for each triangle/cell and each level value, extract all the necessary line segments.
 
 

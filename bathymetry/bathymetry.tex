@@ -324,7 +324,7 @@ There is no need to insert/remove $v$ in the dataset, since we are only interest
 The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall feature shape. 
 Applying it reduces the angle between adjacent triangles which gives the surface a smoother look.
 
-%It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $O(n)$.
+It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $\mathcal{O}(n)$.
 
 Observe that the operator can be performed either on a portion of a dataset, or on the whole dataset. 
 Furthermore this operator can be applied any number of times, delivering more generalisation with each pass.
@@ -429,9 +429,9 @@ The densification operator uses an area-threshold that determines which triangle
 This way triangles that are already sufficiently small are not densified. 
 It performs a single pass on the input triangles, thus with every call the resolution of the DT is increased, until all triangles have reached a certain area.
 
-% If the maximum area threshold is ignored, a single call to \densify costs $O(n)$ time, as it only requires a single pass over the $n$ triangles of the TIN. 
-% However, when a number of $t$ densification passes is sequentially performed, it only scales to $O(3^t n)$ time, since every point insertion creates two new triangles. 
-% However, because of the maximum area threshold, that worst case scenario will never be reached in practice with large $t$.
+If the maximum area threshold is ignored, a single call to costs $\mathcal{O}(n)$ time, as it only requires a single pass over the $n$ triangles of the TIN\@. 
+However, when a number of $t$ densification passes is sequentially performed, it only scales to $\mathcal{O}(3^t \, n)$ time, since every point insertion creates two new triangles. 
+However, because of the maximum area threshold, that worst case scenario will never be reached in practice with large $t$.
 
 
 %%%

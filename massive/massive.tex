@@ -213,6 +213,12 @@ In the Figure~\ref{fig:kdtree_nn}d, this is possible since the bounding box is o
 The algorithm continues until all subtrees have either been visited or eliminated.
 At the end, $c$ is ($6,4$).
 
+
+\paragraph{Time complexity.}
+To insert a new point, and to search for a nearest neighbour, the time complexity on average is $\mathcal{O}(\log n)$.
+The tree stores one node per point, thus the space complexity is $\mathcal{O}(n)$.
+
+\paragraph{$m$-closest neighbours.}
 % from Wiki
 The algorithm can be extended in several ways by simple modifications. 
 It can provide the $m$ nearest neighbours to a point by maintaining $m$ current closest points instead of just one. 

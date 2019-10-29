@@ -341,8 +341,7 @@ It is therefore essential to understand the mecanism, even if one is not constru
 \paragraph{Walk/Point location.} 
 \label{sec:dtwalk}
 
-To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow. 
-The complexity of that algorithm is $\mathcal{O}(n^2)$.
+To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ since each triangle must be checked).
 
 A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described below, to navigate from one triangle to the other. 
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
@@ -567,7 +566,8 @@ This paraboloic lifting was first observed by \citet{Brown79} (who used a spheri
 Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
 \citet{Liu05-1} explains the details.
 
-The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives that are optimal ($\mathcal{O}(\log n)$).
+The walking algorithm described, with a few modifications, can perform point location in $\mathcal{O}(n^{1/3}$).
+The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives that are optimal (\ie\ $\mathcal{O}(\log n)$).
 However, they both note that optimal algorithms do not necessarily mean better results in practice because of the amount of preprocessing involved, the extra storage needed, and also because the optimal algorithms do not always consider the dynamic case, where points in the DT could be deleted. 
 
 

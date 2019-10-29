@@ -140,6 +140,7 @@ The implementation of the method sounds easy: simply find the closest data point
 The difficulty lies in finding an efficient way to get the closest data point. 
 The simplest way consists of measuring the distance for each of the $n$ points in the dataset, but this yields a $\mathcal{O}(n)$ behaviour for each interpolation, which is too slow for large datasets. 
 To speed up this brute-force algorithm, auxiliary data structures that will spatially index the points must be used, see for instance the $k$d-tree in Section~\ref{sec:kdtree}.
+This would speed up each query to $\mathcal{O}(\log n)$.
 
 
 %-------------------------------------------
@@ -192,7 +193,8 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
-If the point location strategy is used to identify the triangle containing $x$ (Section~\ref{sec:dtwalk}), then the interpolation itself is performed in constant time.
+If the point location strategy is used to identify the triangle containing $x$ (Section~\ref{sec:dtwalk}), then $\mathcal{O}(n^{1/3}$) on average is used.
+The interpolation itself is performed in constant time.
 
 
 %%%
