@@ -272,7 +272,7 @@ Figure~\ref{fig:mbes} gives an example.
 Ground filtering involves classifying the points of a point cloud into ground points and non-ground points.
 Ground points are those points that are part of the bare-earth surface of the earth, thus excluding vegetation and man-made structures such as buildings and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
-Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:segmentation}).
+Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:regiongrowing}).
 
 Ground filtering methods are typically based on the assumptions that 
 \begin{enumerate}
@@ -513,6 +513,7 @@ This could be a disadvantage.
 
 
 \subsection{Region growing}
+\label{sec:regiongrowing}
 Region growing works by gradually growing sets of points called \emph{regions} that fit a particular shape instance.
 A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
