@@ -77,7 +77,7 @@ We present in this chapter a few methods/algorithms that are used in practice to
 \label{sec:properties}
 
 Let $S$ be a set of points in $\mathbb{R}^2$, and $R(S)$ the region that characterise the spatial extent of $S$.
-The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance), and in practice most algorithms will computer a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
+The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance), and in practice most algorithms will compute a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
 
 To evaluate the different algorithms to create R($S$), we list here different properties that one must consider when defining the spatial extent of a set of points.
 \begin{description}
@@ -86,7 +86,7 @@ To evaluate the different algorithms to create R($S$), we list here different pr
   \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
   \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
   \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
-  % TODO : do we speak of time complexity of each algorithm? 
+  \item[P5.] \textbf{Computational efficiency} What is the time complexity of the algorithm, and does it require large and complex auxiliary data structures?
 \end{description}
 \begin{figure}
   \centering
@@ -156,16 +156,20 @@ One of them is the well-known \emph{gift wrapping algorithm}, shown in Figure~\r
 It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
 Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
 
+If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
+However, there exist more efficient algorithm that have $\mathcal{O}(n \log n)$.
+
 %
-Properties:
+Properties convex hull:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & The sole polygon is guaranteed to be regular (and convex).  \\  
-% P2. & A subset of $S$, or all of them, forms the region. \\ 
-P2. & All points are on or inside the region. \\ 
-P3. & One component.  \\ 
-P4. & No holes in the region.  \\  
+  P1. & The sole polygon is guaranteed to be regular (and convex).  \\  
+  % P2. & A subset of $S$, or all of them, forms the region. \\ 
+  P2. & All points are on or inside the region. \\ 
+  P3. & One component.  \\ 
+  P4. & No holes in the region.  \\  
+  P5. & $\mathcal{O}(n \log n)$  \\  
 \bottomrule
 \end{tabular}
 
@@ -207,12 +211,12 @@ Observe also that if $l$ had been larger then conv($S$) could have been obtained
 %
 
 \paragraph{Adaptative arm with \emph{knn}.} 
-There exists a variation of this algorithm where the moving arm has an adaptative length at each step: the $k$ nearest neighbours (knn) of a given point $p$ are used instead.
+There exists a variation of this algorithm where the moving arm has an adaptative length at each step: the $k$ nearest neighbours (knn) of a given point $p$ are used instead (see Section~\ref{sec:kdtree}).
 As can be seen in Figure~\ref{fig:movingarm}b, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
 
 %
 
-\paragraph{No guarantee to work.} 
+\paragraph{No guarantee that it will work.} 
 Both versions of the algorithm will work in most cases, but there are no guarantee that they will for all inputs.
 Figure~\ref{fig:movingarm_kdd} shows a concrete example.
 \begin{figure}
@@ -258,15 +262,20 @@ In practice, when it is the case, the input points are sometimes first preproces
 
 %
 
-Properties:
+The time complexity is the same as the gift wrapping: $\mathcal{O}(n \, h)$.
+If a $k$d-tree is used, this stays the same but in practice will be sped up as the subset of $S$ tested will be smaller. 
+Each query in a $k$d-tree takes $\mathcal{O}(\log n)$ on average, but we need to store an auxiliary structure that takes $\mathcal{O}(n)$.
+
+Properties moving arm:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & The sole polygon could be degenerate (self-intersection).  \\  
-% P2. & A subset of $S$, or all of them, forms the region. \\ 
-P2. & Outliers can be discarded. \\ 
-P3. & One component.  \\ 
-P4. & No holes in the region.  \\  
+  P1. & The sole polygon could be degenerate (self-intersection).  \\  
+  % P2. & A subset of $S$, or all of them, forms the region. \\ 
+  P2. & Outliers can be discarded. \\ 
+  P3. & One component.  \\ 
+  P4. & No holes in the region.  \\  
+  P5. & $\mathcal{O}(n \, h)$  \\  
 \bottomrule
 \end{tabular}
 
@@ -304,15 +313,19 @@ Before removing an edge, we must verify that it will not introduce a topological
 
 %
 
-Properties:
+A DT can be constructed in $\mathcal{O}(n log n)$.
+The number of edges in a DT of $n$ points is roughly $3n$ (thus $\mathcal{O}(n)$), and since verifying the topological constraint can be done locally (previous and next edge) the overall time complexity is $\mathcal{O}(n \log n)$
+
+Properties $\chi$-shape:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & The sole polygon is guaranteed to be regular.  \\  
-% P2. & A subset of $S$, or all of them, forms the region. \\ 
-P2. & All points are part of the region \\ 
-P3. & One component.  \\ 
-P4. & No holes in the region.  \\  
+  P1. & The sole polygon is guaranteed to be regular.  \\  
+  % P2. & A subset of $S$, or all of them, forms the region. \\ 
+  P2. & All points are part of the region \\ 
+  P3. & One component.  \\ 
+  P4. & No holes in the region.  \\  
+  P5. & $\mathcal{O}(n log n)$  \\  
 \bottomrule
 \end{tabular}
 
@@ -386,15 +399,22 @@ Implementations of the $\alpha$-shape will also offer to compute automatically a
 \label{fig:alphashape}
 \end{figure}
 
-Properties:
+%
+
+A DT can be constructed in $\mathcal{O}(n log n)$, and the algorithm only requires to visit once each of the $\mathcal{O}(n)$ triangles, thus $\mathcal{O}(n log n)$.
+
+%
+
+Properties $\alpha$-shape:
 \\
 \begin{tabular}{@{}ll@{}}
 \toprule
-P1. & A complex of $k$-simplices.  \\  
-% P2. & A subset of $S$, or all of them, are on the boundary of the region. \\ 
-P2. & Some points can be omitted. \\ 
-P3. & Several components possible.  \\ 
-P4. & Regions can contain holes.  \\  
+  P1. & A complex of $k$-simplices.  \\  
+  % P2. & A subset of $S$, or all of them, are on the boundary of the region. \\ 
+  P2. & Some points can be omitted. \\ 
+  P3. & Several components possible.  \\ 
+  P4. & Regions can contain holes.  \\  
+  P5. & $\mathcal{O}(n log n)$  \\ 
 \bottomrule
 \end{tabular}
 
