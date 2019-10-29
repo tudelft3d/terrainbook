@@ -59,16 +59,18 @@ Notice that the extra storage will be maximum $\frac{1}{3}$ of the original rast
 Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
 The most common method is based on averaging the 4 pixels that are merged into one (as shown in Figure~\ref{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
-\begin{practice-box}
-  \textbf{gdaladdo.} 
-  For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
-  For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
+\begin{myfloat}
+  \begin{practice-box}
+    \textbf{gdaladdo.} 
+    For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
+    For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
 
-  The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
-  The downsampling method can be chosen.
+    The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
+    The downsampling method can be chosen.
 
-  In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in Figure~\ref{fig:qgis}
-\end{practice-box}
+    In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in Figure~\ref{fig:qgis}
+  \end{practice-box}
+\end{myfloat}
 
 \begin{figure}
   \centering

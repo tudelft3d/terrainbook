@@ -162,10 +162,11 @@ The relationship is the following: every triangle of the lower envelope of conv(
 
 In short, the construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
 
-
-\begin{practice-box}
-Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
-\end{practice-box}
+\begin{myfloat}
+  \begin{practice-box}
+  Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
+  \end{practice-box}
+\end{myfloat}
 
 
 
@@ -331,10 +332,13 @@ The main disadvantage is that more triangles than needed are constructed.
 For example in Figure~\ref{fig:big_tr} only the shaded triangles would be part of DT($S$). 
 The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the three points forming $\tau_{big}$. 
 
+\begin{myfloat}
 \begin{practice-box}
-Several implementations/APIs of the DT use a big triangle (or variation of it with a ``point at the infinity'',  CGAL (\url{https://www.cgal.org/}) being one example), and these often label vertices and/or triangles as ``infinite''.
+Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
 It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
+There is also a variation on the big triangle: when an extra point is ``at the infinity''.
 \end{practice-box}
+\end{myfloat}
 
 
 %%%

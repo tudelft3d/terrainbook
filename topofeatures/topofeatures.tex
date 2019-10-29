@@ -142,17 +142,19 @@ A quadratic polynomial could for instance be defined:
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial f}{\partial x} = d$ and $\frac{\partial f}{\partial y} = e$.
 
 
-\begin{practice-box}
-The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
+\begin{myfloat}
+  \begin{practice-box}
+  The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
-After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
-This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
+  After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
+  This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
 
-If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
-This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
+  If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
+  This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
 
-The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
-\end{practice-box}
+  The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
+  \end{practice-box}
+\end{myfloat}
 
 %%%
 \subsection{Hillshading}
