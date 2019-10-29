@@ -15,15 +15,15 @@ Like other geostatistical models, kriging is based on the fact that when one mov
 Both of these elements can be modelled in kriging.
 
 In the simplest case, when the trend is completely known, it is possible to use \emph{simple kriging}.
-This is admittedly not very useful in practice, but we nevertheless cover it because teaches the basics of the technique and is helpful to understand other types of kriging.
-Then, we will look at \emph{ordinary kriging}, which attempts to estimate the trend as a constant and is the simplest case that is widely used in practice.
+This is admittedly not very useful in practice, but we will nevertheless first cover it because it teaches the basics of the technique and is helpful to understand other types of kriging.
+Then, we will look at \emph{ordinary kriging}, which attempts to estimate the trend as a constant and is the simplest case of kriging that is widely used in practice.
 
 \section{Statistical background}
 
 The physical processes that shape the world can be considered to be at least partly deterministic.
 In the case of a DTM, the elevation is determined by processes that we can model (more or less accurately), such as plate tectonics, volcanic activity and erosion.
 However, these processes are much too complex and not well-enough understood to use them to obtain accurate elevation values.
-Because of this, the value of sufficiently complex properties, such as the elevation of a terrain, are usually defined as the result of \emph{random processes}.
+Because of this, the value of sufficiently complex properties, such as the elevation of a terrain, can usually be defined as the result of \emph{random processes}.
 
 Based on this inherent randomness, geostatistical models consider that the value of a property at a location is just one of the infinitely many values that are possible at that location.
 These possible values are not all equally likely, but they are instead represented by a \emph{probability distribution}, which we can associate with a function (\ie\ a \emph{probability distribution function}) or with a set of standard statistical measures, such as the \emph{mean} and \emph{variance}.
@@ -77,7 +77,7 @@ We therefore have:
 
 \begin{equation}
 \label{eq:geostat}
-Z = E\left[Z\right] + R = 0.
+Z = E\left[Z\right] + R.
 \end{equation}
 
 It is important to consider a couple important aspects here.
@@ -215,8 +215,8 @@ w = A^{-1}d.
 \end{equation}
 
 Now, the obvious remaining questions are: (i) what expectation \(E[Z]\) to use, and (ii) what covariance function \(C\) to use.
-Without an external evaluation of the dataset, there are no optimal answers for either of those questions, which is the main weakness of simple kriging and the the reason why it is not used widely in practice.
-That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\) and an arbitrary covariance function, such as the exponential, gaussian and spherical functions that we discuss in the following section.
+Without an external evaluation of the dataset, there are no optimal answers for either of those questions, which is the main weakness of simple kriging and the reason why it is not used widely in practice.
+That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\), and an arbitrary covariance function, such as the exponential, gaussian and spherical functions that we discuss in the following section.
 
 \section{The variogram}
 
@@ -252,7 +252,7 @@ In this case, only 1\% randomly selected point pairs were used.}%
 
 In this figure, it is possible to see some typical characteristics of a variogram cloud.
 Since nearby sample points tend to have similar values, the dissimilarity tends to increase as the distance between sample points increases.
-However, it is worth noting that since the farthest away pairs of sample points have similar values in this dataset, the dissimilarity also decreases at the highest distances.
+However, it is worth noting that since the farthest away pairs of sample points have similar values in this specific dataset, the dissimilarity also decreases at the highest distances.
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
 Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins}).
@@ -317,7 +317,7 @@ Note that this means that the covariance is high when \(|h|\) is small and it de
 
 \section{Ordinary kriging}
 
-Ordinary kriging is similar to simple kriging and to other spatial interpolation methods that use a weighted average.
+Ordinary kriging is similar to simple kriging and to other spatial interpolation methods that use a weighted average (see Equation~\ref{eq:wask}).
 It thus defines a function \(\hat{Z}_0\) that estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
 We denote this as:
 
@@ -327,7 +327,7 @@ We denote this as:
 \end{equation}
 
 Like simple kriging, ordinary kriging is \emph{unbiased}.
-This means that it creates a model where the expected value of the estimation at a location \(x_0\) is equal to the expected value at that location (Equation~\ref{eq:unbiased}).
+This means that it creates a model where the expected value of the estimation at a location \(x_0\) is equal to the expected value at that location.
 In practice, this means that if we put the weighted average from the previous equation in Equation~\ref{eq:unbiased}, it results in the following:
 
 \begin{equation}
@@ -347,7 +347,7 @@ and since also \(E\left[Z_i\right] = E\left[ Z_0 \right] \) (because of the stat
 \sum_{i=1}^n w_i = 1.
 \end{equation}
 
-This is the reason why we can use the variogram in ordinary kriging but not in simple kriging.
+Fulfilling this criterion means that we can use the variogram in ordinary kriging, which is not true for simple kriging.
 
 Like simple kriging, ordinary kriging \emph{minimises the variance of the estimation error}, which is given by \(\mathrm{var}\left(\hat{Z}_0 - Z_0\right)\).
 For this, we can use the same derivation as for simple kriging up to Equation~\ref{eq:variancesk} but using the variogram for the final step.
@@ -400,7 +400,7 @@ w = A^{-1}d
 
 %%%
 %
-\section{Notes and comments}
+\section{Implementation}
 
 Kriging can be directly applied to any point on the plane, yielding a result such as the one in Figure~\ref{fig:interpolation}.
 However, much like other interpolation methods, kriging is only reliable in the domain (\ie\ roughly the convex hull of the points).
@@ -419,16 +419,20 @@ The reason for this is because matrix \(A\) will be very large, and inverting a 
 However, inverting very large matrices is not really needed in practice.
 When a sample point is far from the interpolated point, its weight will be low, and it will thus have only a small influence on it.
 Because of this, it is usually best to only take into account a few sample points in the calculation, either by limiting the sample points to those within a given search radius, or by selecting only a given number of its closest sample points.
-However, you should note that this can cause artifacts in the final result.
+However, you should note that this can cause artefacts in the final result.
+
+%%%
+%
+\section{Notes and comments}
 
 \citet{Krige51} is the original publication by Danie Krige, which was later formalised by Georges Matheron~\citep{Matheron62,Matheron65}.
 How this came to be is best explained in \citet{cressie93}.
 
 If you have trouble following the derivations of the kriging equations or want to know more about them, \citet{Lichtenstern13} explains this well.
-If your statistics background is the issue, you might want to have a look at \citet{Fewster14}, particularly for Chapter~3.
+If you feel like your statistics background is a bit weak, you first might want to have a look at \citet{Fewster14}, particularly Chapter~3.
 
 A relatively simple explanation of Kriging with agricultural examples that is accessible from the campus or VPN is given by \citet{Oliver15}.
-A standard reference textbook is \citet{Wackernagel03}.
+A standard reference textbook that is good but not so easy to follow is \citet{Wackernagel03}.
 
 Two other good Youtube videos that explain kriging:
 \begin{itemize}
