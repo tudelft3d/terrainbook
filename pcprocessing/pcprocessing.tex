@@ -134,18 +134,18 @@ Which classes are used strongly depends on the dataset at hand.
 The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
 To be exact, the code $0$ is used for points that where never subject to a classification algorithm, whereas the code $1$ is used for points that where processed by an classification algorithm, but could not successfully be assigned to a class.
 It is possible to define your own classes using code ranges that are reserved for that purpose.
-For example, the Dutch AHN3 dataset, which is disseminated in the LAS/LAZ format, uses the code $26$ for an `artefact' class that includes infrastructural works such as bridges and viaducts (see Figure~\ref{fig:ahn3}).
+
+\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture and cars.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
   \caption{Classification codes used in the AHN3 dataset.}
   \label{fig:ahn3}
 \end{figure}
 
-%TODO: Example of all classes in AHN3
 
 % The standard technically allows for additional user-defined attributes
 
-\paragraph{LAS Compression: LAZ format}
+\paragraph{The LAZ format}
 Finally, a compressed variant of the LAS format, dubbed the LAZ format, exists.
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
@@ -518,7 +518,7 @@ Region growing works by gradually growing sets of points called \emph{regions} t
 A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
 To check if a candidate point $c$ should be added to $R$, a test is performed.
-In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector of its neighbour in $R$.
+In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\footnote{The normal vector for a point $p\inP$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
 If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
 Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 \begin{figure}[htb]
@@ -603,7 +603,6 @@ To compute the point neighbourhoods a k-nearest neighbour search or a fixed radi
 As a result, two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
 Notice that the other shape detection methods described in this chapter do not need point neighbourhood information.
 
-%TODO: add note on PCA \footnote{If point normals are not available they can be estimated using principal component analysis.}
 
 % pros and cons
 %- normal estimation is unreliable around corners and affected by noise
@@ -693,10 +692,11 @@ Figure~\ref{fig:hough-transform} shows an example for line detection and Algorit
 \end{algorithm}
 
 The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
-Each element in the accumulator thus represents one shape instance.
-Because an accumulator is used the parameters need to be quantised.
-The chosen quantisation affects the possible shape instances that can be detected.
-The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\theta$ parameter only has two possible values.
+Notice that each element in the accumulator represents one possible shape instance.
+Because each axes only has a limited number of elements, each parameter is \emph{quantised}.
+This means that each parameter is restricted in the possible values it can have.
+The chosen quantisation determines the sensitivity of the accumulator.
+The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\theta$ parameter is quantised in only two possible values.
 Notice that the accumulator can be made more sensitive by choosing a finer quantisation, effectively increasing the size of the accumulator (although that will also make the algorithm run slower).
 
 %TODO: section on paramtrisation of lines and planes
