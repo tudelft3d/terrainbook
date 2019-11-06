@@ -18,18 +18,18 @@
     \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
     \caption{}
   \end{subfigure}
-\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} A aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
+\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
 \label{fig:examples}  
 \end{figure}
 
 
 Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
 That is, they need to define the shape of the region that best abstracts or represents the set of points.
-As seen in Figure~\ref{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (since water does not contain lidar samples, or seldom), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+As seen in Figure~\ref{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
 
 %
 
-Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
+Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), or to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
 
 %
 
@@ -42,24 +42,28 @@ As Figure~\ref{fig:ideas} shows, there are several potential regions for a rathe
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
     \caption{A set of points in $\mathbb{R}^2$}
+    \label{fig:ideas:a}
   \end{subfigure}%
   \qquad
   \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/idea.pdf}
     \caption{Its convex hull}
+    \label{fig:ideas:b}
   \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/idea.pdf}
     \caption{A $\chi$-shape}
+    \label{fig:ideas:c}
   \end{subfigure}%
   \qquad
   \begin{subfigure}[b]{0.21\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
     \caption{An $\alpha$-shape}
+    \label{fig:ideas:d}
   \end{subfigure}
 \caption{Different methods to obtain the spatial extent of a given set of points in the plane.}
 \label{fig:ideas}  
@@ -67,7 +71,7 @@ As Figure~\ref{fig:ideas} shows, there are several potential regions for a rathe
 
 %
 
-We present in this chapter a few methods/algorithms that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are first projected to a two-dimensional plane.
+In this chapter we present methods that are used in practice to define the spatial extent of a set of points in $\mathbb{R}^2$, which implies that the points in a point cloud are first projected to a two-dimensional plane.
 
 
 
@@ -81,11 +85,12 @@ The region is potentially formed by a set of polygons (if $S$ forms two distinct
 
 To evaluate the different algorithms to create R($S$), we list here different properties that one must consider when defining the spatial extent of a set of points.
 \begin{description}
-  \item[P1.] \textbf{\emph{Regular} polygons?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties}b
+  \item[P1.] \textbf{\emph{Regular} polygons?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties:b}
   % \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
-  \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties}a they are all part, in Figure~\ref{fig:properties}b--e one outlier is not (if we consider that $S$ represents the letter ``b'').
-  \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties}a--d there is one component, but Figure~\ref{fig:properties}e has two.
-  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties}a/c/d have only an exterior boundary, while in Figure~\ref{fig:properties}e one polygon has an interior boundary too (a hole).
+  \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties:a}/\subref{fig:properties:b} they are all part of the region, in Figure~\ref{fig:properties:c}/\subref{fig:properties:d} one outlier is not.
+%   (if we consider that $S$ represents the letter ``b'').
+  \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties:a}--\subref{fig:properties:c} there is one component, but Figure~\ref{fig:properties:d} has two.
+  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties:a}--\subref{fig:properties:c} have only an exterior boundary, while in Figure~\ref{fig:properties:d} one polygon has an interior boundary too (a hole).
   \item[P5.] \textbf{Computational efficiency} What is the time complexity of the algorithm, and does it require large and complex auxiliary data structures?
 \end{description}
 \begin{figure}
@@ -94,30 +99,35 @@ To evaluate the different algorithms to create R($S$), we list here different pr
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/properties.pdf}
     \caption{}
+    \label{fig:properties:a}
   \end{subfigure}%
   \qquad
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/properties.pdf}
     \caption{}
+    \label{fig:properties:b}
   \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=5,width=\textwidth]{figs/properties.pdf}
     \caption{}
+    \label{fig:properties:c}
   \end{subfigure}%
   % \qquad
   % \begin{subfigure}[b]{0.15\linewidth}
   %   \centering
   %   \includegraphics[page=6,width=\textwidth]{figs/properties.pdf}
   %   \caption{}
+  %  \label{g:properties:a}
   % \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/properties.pdf}
     \caption{}
+    \label{fig:properties:d}
   \end{subfigure}
 \caption{Different properties for the spatial extent}
 \label{fig:properties}  
@@ -129,13 +139,13 @@ To evaluate the different algorithms to create R($S$), we list here different pr
 \section{Convex hull}
 
 As explained in Section~\ref{sec:convexhull}, given $S$, a set of points in $\mathbb{R}^2$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
-Two examples of convex hulls are in Figures~\ref{sec:properties}a and~\ref{fig:ideas}b.
+Two examples of convex hulls are in Figures~\ref{fig:ideas:b} and~\ref{fig:properties:a}.
 
 %
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
-It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or there exists specific algorithms.
-One of them is the well-known \emph{gift wrapping algorithm}, shown in Figure~\ref{fig:giftwrapping}.
+It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or compute directly using a specialised algorithm.
+For example, using the well-known \emph{gift wrapping algorithm}, shown in Figure~\ref{fig:giftwrapping}.
 \begin{figure}
   \centering
   \centering
@@ -157,7 +167,7 @@ It begins with a point that is guaranteed to be on conv($S$) (we can take an `ex
 Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
 
 If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
-However, there exist more efficient algorithm that have $\mathcal{O}(n \log n)$.
+However, there exist more efficient algorithm that have a time complexity of $\mathcal{O}(n \log n)$.
 
 %
 Properties convex hull:
@@ -211,13 +221,13 @@ Observe also that if $l$ had been larger then conv($S$) could have been obtained
 %
 
 \paragraph{Adaptative arm with \emph{knn}.} 
-There exists a variation of this algorithm where the moving arm has an adaptative length at each step: the $k$ nearest neighbours (knn) of a given point $p$ are used instead (see Section~\ref{sec:kdtree}).
+There exists a variation of this algorithm where the length of the moving arm is adaptive at each step; the $k$ nearest neighbours (knn) of a given point $p$ are used to determine it (see Section~\ref{sec:kdtree}).
 As can be seen in Figure~\ref{fig:movingarm}b, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
 
 %
 
 \paragraph{No guarantee that it will work.} 
-Both versions of the algorithm will work in most cases, but there are no guarantee that they will for all inputs.
+Both versions of the algorithm will work in most cases, but there is no guarantee that they will for all inputs.
 Figure~\ref{fig:movingarm_kdd} shows a concrete example.
 \begin{figure}
   \centering
@@ -241,30 +251,33 @@ In this case, a solution to this problem would be to either choose another $k$, 
 %
 \paragraph{Different clusters?} 
 One drawback of the moving arm method is that only one polygon is obtained as a region.
-While this can be useful to discrard unwanted outliers, if $S$ forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
+If $S$ forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/clusters.pdf}
     \caption{}
+    \label{fig:clusters:a}
   \end{subfigure}
   \qquad \qquad
   \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/clusters.pdf}
     \caption{}
+    \label{fig:clusters:b}
   \end{subfigure}
 \caption{\textbf{(a)} $S$ has two distinct clusters. {(b)} Typical output if $S$ processed as a single cluster with a moving arm algorithm.}
 \label{fig:clusters}
 \end{figure}
-In practice, when it is the case, the input points are sometimes first preprocessed with a clustering algorithm (in the case of Figure~\ref{fig:clusters}a two clusters should be detected) and then each cluster is processed independently.
+Notice that this can be also be useful to discard unwanted outliers (unless the lowest point is an outlier).
+In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of Figure~\ref{fig:clusters:a} two clusters should be detected) and then each cluster is processed separately.
 
 %
 
-The time complexity is the same as the gift wrapping: $\mathcal{O}(n \, h)$.
+The worst case time complexity is the same as for the gift wrapping algorithm: $\mathcal{O}(n \, h)$.
 If a $k$d-tree is used, this stays the same but in practice will be sped up as the subset of $S$ tested will be smaller. 
-Each query in a $k$d-tree takes $\mathcal{O}(\log n)$ on average, but we need to store an auxiliary structure that takes $\mathcal{O}(n)$.
+Each query in a $k$d-tree takes $\mathcal{O}(\log n)$ on average, but we need to store an auxiliary structure that takes $\mathcal{O}(n)$ storage.
 
 Properties moving arm:
 \\
@@ -272,7 +285,7 @@ Properties moving arm:
 \toprule
   P1. & The sole polygon could be degenerate (self-intersection).  \\  
   % P2. & A subset of $S$, or all of them, forms the region. \\ 
-  P2. & Outliers can be discarded. \\ 
+  P2. & Outliers can be discarded. \\  %TODO: except if lowest point is an outlier??
   P3. & One component.  \\ 
   P4. & No holes in the region.  \\  
   P5. & $\mathcal{O}(n \, h)$  \\  
@@ -287,25 +300,28 @@ Properties moving arm:
 
 The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
 The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
-Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape}c).
+Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape:c}). %TODO: you just get a dangling edge no?
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/chishape.pdf}
     \caption{}
+    \label{fig:chishape:a}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/chishape.pdf}
     \caption{}
+    \label{fig:chishape:b}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/chishape.pdf}
     \caption{}
+    \label{fig:chishape:c}
   \end{subfigure}
 \caption{$\chi$-shape examples. \textbf{(a)} $S$, its DT, and its envelope (cons($S$)). \textbf{(b)} After some edges have been removed. \textbf{(c)} The final result for a given threshold.}
 \label{fig:chishape}
@@ -343,7 +359,7 @@ The $\alpha$-shape is conceptually a generalisation of the convex hull of a set 
 It is best understood with the following analogy.
 First imagine that $\mathbb{R}^2$ is filled with Styrofoam and that the points in $S$ are made of hard material.
 Now imagine that you have a carving tool which is a circle of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), and that it is only stopped by the points.
-The result after carving, called $\alpha$-hull, is one or more pieces of Styrofoam.
+The result after carving, called the $\alpha$-hull, is one or more pieces of Styrofoam.
 If we straighten the circular edges, then we obtain the $\alpha$-shape.
 
 %
@@ -401,7 +417,7 @@ Implementations of the $\alpha$-shape will also offer to compute automatically a
 
 %
 
-A DT can be constructed in $\mathcal{O}(n log n)$, and the algorithm only requires to visit once each of the $\mathcal{O}(n)$ triangles, thus $\mathcal{O}(n log n)$.
+A DT can be constructed in $\mathcal{O}(n log n)$ time, and the algorithm only requires to visit once each of the $\mathcal{O}(n)$ triangles, thus the time complexity is $\mathcal{O}(n log n)$.
 
 %
 
