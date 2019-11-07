@@ -17,7 +17,7 @@ jobs:
           root_file: terrainbook.tex
           extra_packages: lastpage was ccicons mdframed needspace isodate algorithm2e todonotes fontawesome xpatch ifoddpage relsize cancel substr
       - name: Upload pdf output
-      - uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@master
         with:
           name: terrainbook-$GITHUB_SHA
           path: terrainbook.pdf
