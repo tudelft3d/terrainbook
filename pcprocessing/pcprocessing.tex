@@ -389,8 +389,8 @@ Let $P$ denote a point cloud.
 If we perform shape detection on $P$ we aim to find a subset of points $S \subset P$ that fit with a particular shape. 
 Most shape detection methods focus on shapes that can be easily parametrised, such as a line, a plane, or a sphere. 
 If we specify values for the parameters of such a parametrised shape, we define an \emph{instance} of that shape.
-A line for example can be parametrised using the equation $y = ax + b$, in this case $a$ and $b$ are the parameters.
-We can create an instance of a line by specifying values for its parameters $a$ and $b$, effectively fixing the slope and the position of the line.
+A line for example can be parametrised using the equation $y = mx + b$, in this case $m$ and $b$ are the parameters.
+We can create an instance of a line by specifying values for its parameters $m$ and $b$, respectively fixing the slope and the position of the line.
 
 In the following, the methods are described in a general way, \ie\ without specialisations for one particular shape.
 Only for illustrative purposes specific shapes such as a line or a plane are used to (visually) explain the basic concept of each shape detection method, but the same could be done with spheres, cones, or others.
@@ -518,7 +518,7 @@ Region growing works by gradually growing sets of points called \emph{regions} t
 A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
 To check if a candidate point $c$ should be added to $R$, a test is performed.
-In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\footnote{The normal vector for a point $p\inP$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
+In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\footnote{The normal vector for a point $p\in P$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
 If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
 Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 \begin{figure}[htb]
@@ -616,7 +616,24 @@ The Hough transform uses a voting mechanism to detect shapes.
 It lets every point $p \in P$ vote on each shape instance that could possible contain $p$.
 Possible shape instances thus accumulate votes from the input points.
 The detected shape instances are the ones that receive the highest number of votes.
-Figure~\ref{fig:hough-transform} shows an example for line detection and Algorithm~\ref{algo:hough-transform} gives the full pseudo-code.
+To find the possible shape instances for $p$, the algorithm simply checks all possible parameter combinations that give a shape instance that fits with $p$.
+
+It is thus important to choose a good parametrisation of the shape that is to be detected.
+For instance when detecting lines one could use the slope-intercept form, \ie\ $y = mx+b$. 
+However, this particular parametrisation can not easily represent vertical lines, because $m$ would need become infinite which is computationally difficult to manage. 
+A more better line parametrisation is the Hesse normal form which is defined as 
+\[
+r = x\cos{\phi} + y\sin{\phi}. 
+\]
+As illustrated in Figure~\ref{fig:hough-transform:a} $(r,\phi)$ are the polar coordinates of the point on the line that is closest to the origin, \ie\ $r$ is the distance from the origin to the closest point on the line, and $\phi \in [0^\circ, 180^\circ]$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line. 
+This parametrisation has no problems with vertical lines (\ie\ $\phi=90^{\circ}$).
+Similarly, for plane detection we can use the parametrisation
+\[
+r = x \cos{\theta} \sin{\phi} + y \sin{\phi} \sin{\theta} + z \cos{\phi}.
+\]
+Where $(r, \theta, \phi)$ are the spherical coordinates of the point on the plane that is closest to the origin.
+
+Figure~\ref{fig:hough-transform} shows an example for line detection with the Hough transform and Algorithm~\ref{algo:hough-transform} gives the full pseudo-code.
 \begin{figure}[htb]
 	\centering
 	\begin{subfigure}[b]{0.3\linewidth}
@@ -647,7 +664,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection and Algorit
 			\centering
 			\begin{tabular}{r|ll}
 				\tikz{\node[below left, inner sep=1pt] (def) {$r$};%
-					\node[above right,inner sep=1pt] (abc) {$\theta$};%
+					\node[above right,inner sep=1pt] (abc) {$\phi$};%
 					\draw (def.north west|-abc.north west) -- (def.south east-|abc.south east);}
 				& $0^{\circ}$ & $90^{\circ}$ \\
 				\hline
@@ -673,7 +690,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection and Algorit
 		\caption{Detected line instances}
 		\label{fig:hough-transform:e}
 	\end{subfigure}
-	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\theta,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=ax+b$ form for example).}
+	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}
 	\label{fig:hough-transform}
 \end{figure}
 \begin{algorithm} 
@@ -690,17 +707,14 @@ Figure~\ref{fig:hough-transform} shows an example for line detection and Algorit
 	\caption{The Hough transform algorithm}
 	\label{algo:hough-transform}
 \end{algorithm}
-
 The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
 Notice that each element in the accumulator represents one possible shape instance.
 Because each axes only has a limited number of elements, each parameter is \emph{quantised}.
 This means that each parameter is restricted in the possible values it can have.
 The chosen quantisation determines the sensitivity of the accumulator.
-The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\theta$ parameter is quantised in only two possible values.
+The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\phi$ parameter is quantised in only two possible values.
 Notice that the accumulator can be made more sensitive by choosing a finer quantisation, effectively increasing the size of the accumulator (although that will also make the algorithm run slower).
 
-%TODO: section on paramtrisation of lines and planes
-%\footnote{Notice that this particular parametrisation can not represent vertical lines, because $a$ would need become infinity which is usually a problem on computers. A line parametrisation without this problem does exist and is shown in Figure~\ref{fig:hough-transform}a. }.
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -750,6 +764,6 @@ A comparison with several other ground filtering methods can be found in the wor
    \item What is the difference between thinning an point cloud prior to triangulation and TIN simplification?
   \item What is the probability that the line instance in Figure~\ref{fig:ransac:d} is detected with $k=2$ iterations?
   \item In Chapter~\ref{chap:acquisition} it is described how point density can vary based on the acquisition conditions. How could a (strongly) varying point density affect the effectiveness of the region growing algorithm?
-  \item Give a parametrisation for a plane. How many axes would an accumulator need for plane detection with the Hough transform?
+  \item How many axes would an accumulator need for plane detection with the Hough transform?
 
 \end{enumerate}
