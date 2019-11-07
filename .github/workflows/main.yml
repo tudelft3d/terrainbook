@@ -15,4 +15,4 @@ jobs:
        uses: xu-cheng/latex-action@master
        with:
          root_file: terrainbook.tex
-         extra_packages: lastpage was ccicons mdframed needspace isodate algorithm2e todonotes fontawesome 
+         extra_packages: lastpage was ccicons mdframed needspace isodate algorithm2e todonotes fontawesome xpatch ifoddpage relsize cancel
