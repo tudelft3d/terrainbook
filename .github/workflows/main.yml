@@ -6,13 +6,18 @@ on:
      - master
 
 jobs:
- build_latex:
-   runs-on: ubuntu-latest
-   steps:
-     - name: Set up Git repository
-       uses: actions/checkout@v1
-     - name: Compile LaTeX document
-       uses: xu-cheng/latex-action@master
-       with:
-         root_file: terrainbook.tex
-         extra_packages: lastpage was ccicons mdframed needspace isodate algorithm2e todonotes fontawesome xpatch ifoddpage relsize cancel substr
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v1
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@master
+        with:
+          root_file: terrainbook.tex
+          extra_packages: lastpage was ccicons mdframed needspace isodate algorithm2e todonotes fontawesome xpatch ifoddpage relsize cancel substr
+      - name: Upload pdf output
+      - uses: actions/upload-artifact@master
+        with:
+          name: terrainbook-$GITHUB_SHA
+          path: terrainbook.pdf
