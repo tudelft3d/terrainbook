@@ -486,8 +486,8 @@ The whole process from picking a minimal set to computing the consensus set and 
 % parameter tuning and probablity of finding a good solution...
 
 % pros and cons
-The most touted benefit of RANSAC is its robustness, \ie\ its performance in the presence of many outliers. 
-Other algorithms to identify planes, \eg\ fitting a plane with least-square adjustment, are sensitive to the presence of noise and outliers (which are always present in real-world datasets).
+The most touted benefit of RANSAC is its robustness, \ie\ its performance in the presence of many outliers (up to 50\%). 
+Other algorithms to identify planes, \eg\ fitting a plane with least-square adjustment, are usually more sensitive to the presence of noise and outliers (which are always present in real-world datasets).
 The probability that a shape instance is detected with RANSAC depends mainly on two criteria:
 \begin{enumerate}
 	\item the number of inliers in $P$, and
@@ -603,6 +603,7 @@ To compute the point neighbourhoods a k-nearest neighbour search or a fixed radi
 As a result, two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
 Notice that the other shape detection methods described in this chapter do not need point neighbourhood information.
 
+%The computational complexity of RANSAC is $\mathcal{O}(kn)$
 
 % pros and cons
 %- normal estimation is unreliable around corners and affected by noise
