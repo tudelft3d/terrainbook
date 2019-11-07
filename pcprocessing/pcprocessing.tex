@@ -502,6 +502,8 @@ Because of the random nature of RANSAC, the minimal sets that it will evaluate w
 The detected shape instance can therefore also be different every time you run the algorithm; RANSAC is therefore said to be a \emph{non-deterministic} algorithm.
 This could be a disadvantage.
 
+%The computational complexity of RANSAC is $\mathcal{O}(kn)$.
+
 %Another disadvantage is that RANSAC can output spurious results in some cases. This is shown in Figure~\ref{fig:ransac-spurious} where RANSAC found a plane 
 %\begin{figure}
 %	\centering
@@ -600,10 +602,8 @@ Naturally, points with a low plane fitting error are probably part of a planar r
 
 Region growing is based on the idea that we can always find a path of neighbouring points between any pair of points within the same region.
 To compute the point neighbourhoods a k-nearest neighbour search or a fixed radius search can be used, which can both be implemented efficiently using a $k$d-tree (see Section~\ref{sec:kdtree}).
-As a result, two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
+This does mean that two groups of points that fit the same shape instance but are not connected though point neighbourhoods will end up in different regions.
 Notice that the other shape detection methods described in this chapter do not need point neighbourhood information.
-
-%The computational complexity of RANSAC is $\mathcal{O}(kn)$
 
 % pros and cons
 %- normal estimation is unreliable around corners and affected by noise
@@ -716,6 +716,7 @@ The chosen quantisation determines the sensitivity of the accumulator.
 The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\phi$ parameter is quantised in only two possible values.
 Notice that the accumulator can be made more sensitive by choosing a finer quantisation, effectively increasing the size of the accumulator (although that will also make the algorithm run slower).
 
+%The computational complexity is $\mathcal{O}(nm)$, where m is the number of elements in the accumulator.
 
 %%%%%%%%%%%%%%%%%%%%
 %
