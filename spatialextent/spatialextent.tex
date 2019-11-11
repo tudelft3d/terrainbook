@@ -284,8 +284,7 @@ Properties moving arm:
 \begin{tabular}{@{}ll@{}}
 \toprule
   P1. & The sole polygon could be degenerate (self-intersection).  \\  
-  % P2. & A subset of $S$, or all of them, forms the region. \\ 
-  P2. & Outliers can be discarded. \\  %TODO: except if lowest point is an outlier??
+  P2. & Outliers can be discarded (except if it is the lowest point) \\
   P3. & One component.  \\ 
   P4. & No holes in the region.  \\  
   P5. & $\mathcal{O}(n \, h)$  \\  
@@ -300,7 +299,7 @@ Properties moving arm:
 
 The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
 The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
-Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape:c}). %TODO: you just get a dangling edge no?
+Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape:c}, the dangling edge is there twice, once in each direction). 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.25\linewidth}
@@ -362,7 +361,8 @@ Now imagine that you have a carving tool which is a circle of radius $\alpha$, a
 The result after carving, called the $\alpha$-hull, is one or more pieces of Styrofoam.
 If we straighten the circular edges, then we obtain the $\alpha$-shape.
 See Figure~\ref{fig:alphashape} for an example.
-%TODO: I like the ice-cream analogy better
+% TODO: I like the ice-cream analogy better
+
 %
 
 Now let $\alpha$ be a real number with $0 \leq \alpha \leq \infty$.
@@ -378,43 +378,37 @@ That is, the easiest method to construct an $\alpha$-shape is by first construct
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
-% TODO : write this?
-Implementations of the $\alpha$-shape will also offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected and contains only one polygon.
+Implementations of the $\alpha$-shape will often offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected and contains only one polygon.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}
-    \label{fig:aplhashape:a}
+    \caption{}\label{fig:aplhashape:a}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}
-    \label{fig:aplhashape:b}
+    \caption{}\label{fig:aplhashape:b}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}
-    \label{fig:aplhashape:c}
+    \caption{}\label{fig:aplhashape:c}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}
-    \label{fig:aplhashape:d}
+    \caption{}\label{fig:aplhashape:d}
   \end{subfigure}
   \qquad 
   \begin{subfigure}[b]{0.15\linewidth}
     \centering
     \includegraphics[page=5,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}
-    \label{fig:aplhashape:e}
+    \caption{}\label{fig:aplhashape:e}
   \end{subfigure}
   \qquad 
 \caption{$\alpha$-shape for decreasing $\alpha$ values.}
@@ -459,7 +453,7 @@ The $\chi$-shape was introduced in \citet{Duckham08}.
 
 The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from the CGAL documentation\footnote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
 
-% TODO 
+% TODO: add that stuff?
 % https://en.wikipedia.org/wiki/DBSCAN
 % https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#/media/File:Animation_depicting_the_gift_wrapping_algorithm.gif
 
