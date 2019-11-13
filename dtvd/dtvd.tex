@@ -113,14 +113,22 @@ Let $\mathcal{T}$ be a triangulation of $S$ in $\mathbb{R}^2$.
 An edge $\sigma$ is said to be \emph{locally} Delaunay if it either:
 \begin{description}
   \item[(i)] belongs to only one triangle, and thus bounds conv($S$), or
-  \item[(ii)] belongs to two triangles $\tau_a$ and $\tau_b$, formed by the vertices of $\sigma$ and respectively the vertices $p$ and $q$, and $q$ is outside of the circumcircle of $\tau_a$. 
+  \item[(ii)] belongs to two triangles $\tau_a$ and $\tau_b$, formed by the vertices of $\sigma$ and respectively the vertices $p$ and $q$, and $q$ is outside of the circumcircle of $\tau_a$ (see Figure~\ref{fig:local:a}). 
 \end{description}
-The second case is illustrated in Figure~\ref{fig:local}: the triangles $abd$ and $bcd$ are Delaunay, and thus is the edge $bd$; the edge $ac$ is not Delaunay.
+Figure~\ref{fig:local:b} gives an example that violates the second criteria: both $p$ and $q$ are contained by the circumcircles of their opposing triangles, \ie\ of $\tau_b$ and $\tau_a$ respectively.
 \begin{figure}
-  \centering
-  \includegraphics[width=0.95\textwidth]{figs/local}
-  \caption{The quadrilateral $abcd$ (in grey, in the middle) can be triangulated in two different ways: only the left configuration is Delaunay.} 
-\label{fig:local}
+	\centering
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\textwidth,page=1]{figs/local}
+		\caption{$\sigma$ is locally Delaunay}\label{fig:local:a}
+	\end{subfigure}%
+	\qquad
+	\begin{subfigure}[b]{0.45\linewidth}
+		\includegraphics[width=\textwidth,page=2]{figs/local}
+		\caption{$\sigma$ is not locally Delaunay}\label{fig:local:b}
+	\end{subfigure}%
+	\caption{A quadrilateral that can be triangulated in two different ways. Only \subref{fig:local:a} is Delaunay.}
+	\label{fig:local}
 \end{figure}
 In an arbitrary triangulation, not every edge that is locally Delaunay is necessarily an edge of DT($S$), but local optimality implies globally optimality in the case of the DT:
 \begin{quote}
