@@ -113,7 +113,7 @@ Let $\mathcal{T}$ be a triangulation of $S$ in $\mathbb{R}^2$.
 An edge $\sigma$ is said to be \emph{locally} Delaunay if it either:
 \begin{description}
   \item[(i)] belongs to only one triangle, and thus bounds conv($S$), or
-  \item[(ii)] belongs to two triangles $\tau_a$ and $\tau_b$, formed by the vertices of $\sigma$ and respectively the vertices $p$ and $p$, and $p$ is outside of the circumcircle of $\tau_a$. 
+  \item[(ii)] belongs to two triangles $\tau_a$ and $\tau_b$, formed by the vertices of $\sigma$ and respectively the vertices $p$ and $q$, and $q$ is outside of the circumcircle of $\tau_a$. 
 \end{description}
 The second case is illustrated in Figure~\ref{fig:local}: the triangles $abd$ and $bcd$ are Delaunay, and thus is the edge $bd$; the edge $ac$ is not Delaunay.
 \begin{figure}
@@ -122,11 +122,11 @@ The second case is illustrated in Figure~\ref{fig:local}: the triangles $abd$ an
   \caption{The quadrilateral $abcd$ (in grey, in the middle) can be triangulated in two different ways: only the left configuration is Delaunay.} 
 \label{fig:local}
 \end{figure}
-In an arbitrary triangulation, not every edge that is locally Delaunay is necessarily a edge of DT($S$), but local optimality implies globally optimality in the case of the DT:
+In an arbitrary triangulation, not every edge that is locally Delaunay is necessarily an edge of DT($S$), but local optimality implies globally optimality in the case of the DT:
 \begin{quote}
   Let $\mathcal{T}$ be a triangulation of a point set $S$ in $\mathbb{R}^2$. If every edge of $\mathcal{T}$ is locally Delaunay, then $\mathcal{T}$ is the Delaunay triangulation of $S$.
 \end{quote}
-This has serious implications as the DT---and its dual---are locally modifiable, \ie\ we can theoretically insert, delete or move a points in $S$ without recomputing DT($S$) from scratch.
+This has serious implications as the DT---and its dual---are locally modifiable, \ie\ we can theoretically insert, delete or move a point in $S$ without recomputing DT($S$) from scratch.
 
 
 %%%

@@ -6,7 +6,7 @@
 \label{chap:acquisition}
 
 The very first step in the process of terrain modelling is the acquisition of elevation measurements. 
-Nowadays, these measurement are usually collected in large quantities using some form of remote sensing, \ie\ sensors that measure---in our case---the distance to the Earth's surface from an airborne or even a spaceborne platform. 
+Nowadays, these measurements are usually collected in large quantities using some form of remote sensing, \ie\ sensors that measure---in our case---the distance to the Earth's surface from an airborne or even a spaceborne platform. 
 In raw form elevation measurements are typically stored as a point cloud, \ie\ a collection of georeferenced 3D points with each point representing one elevation measurement on the Earth's surface.
 
 As with any kind of real-world measurement, there are various uncertainties and restrictions that lead to distortions---called \emph{artefacts}---in the acquired data. 
@@ -82,7 +82,7 @@ Second, considering that we know the orientation and position of the camera, the
 
 % interior orientation (camera parameters such as focal length) and the exterior orientation (camera position and orientation)
 
-The number of 3D point measurements resulting from photogrammetry thus depends on the number of features that are visible in multiple images, \ie the so-called \emph{matches}.
+The number of 3D point measurements resulting from photogrammetry thus depends on the number of features that are visible in multiple images, \ie\ the so-called \emph{matches}.
 With \emph{dense image matching} it is attempted to find a match for every pixel in an image. 
 If the \emph{ground sampling distance}, \ie\ the pixel size on ground level, is small (around 5cm for state-of-the-art systems), point densities of hundreds of points per square meter can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square meter). 
 
@@ -90,7 +90,7 @@ In photogrammetry we distinguish between \emph{nadir} images, that are taken in 
 Vertical features such as building facades are only visible on oblique images.
 Therefore, oblique images are needed if one wants to see building facades in a dense image matching point cloud.
 
-Because photography is used, photogrammetry gives us also the colour of a the target surface, in addition to the elevation.
+Because photography is used, photogrammetry gives us also the colour of the target surface, in addition to the elevation.
 This could be considered an advantage over lidar which capture several attributes for each point (\eg\ the intensity of measured laser pulse and the exact GPS time of measurement), but colour is not among them.
 
 Both airborne and spaceborne photogrammetry are possible.

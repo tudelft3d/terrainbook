@@ -255,7 +255,7 @@ a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
 While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Chapter~\ref{chap:dtvd}).
-The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they are behave better for interpolation.
+The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
 As can be seen in Figure~\ref{fig:whydt},
 \begin{figure}
   \centering
@@ -299,7 +299,7 @@ The shortcomings of regular hierarchical tessellations are similar to those of r
 The main advantage of using them---saving memory space---is present only when there is spatial coherence between cells having the same attribute value, \ie\ when they are clustered together.
 Indeed, the size of a quadtree is not dependent on the number of cells, but on their distribution.
 The quadtree of a 2D grid having no two adjacent cells with the same value (\eg\ a checkers board) contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
-Another disadvantages is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
+Another disadvantage is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
 
 
 %%%
@@ -330,7 +330,7 @@ Isolines have been traditionally used to represent the elevation in topographic 
 
 %
 
-One particular property of an isoline is that its direction is alway perpendicular to the direction of the steepest slope of the terrain. 
+One particular property of an isoline is that its direction is always perpendicular to the direction of the steepest slope of the terrain. 
 Another property that follows from the $2.5D$ property of the field is that contours neither intersect themselves nor each other.
 
 %
