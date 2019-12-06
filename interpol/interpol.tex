@@ -307,13 +307,7 @@ The natural neighbour coordinates are influenced by both the distance from $x$ t
 %
 
 Natural neighbour interpolation is based on the natural neighbour coordinates. 
-The points used to estimate the value of an attribute at location $x$ are the natural neighbours of $x$, and the weight of each neighbour is equal to the natural neighbour coordinate of $x$ with respect to this neighbour. 
-If we consider that each data point in $S$ has an attribute $a_{i}$ (its elevation), the natural neighbour interpolation function is
-\begin{equation}
-  f(x) = \sum_{i=1}^{k} w_{i}(x) \, a_{i}
-  \label{eq:nni}
-\end{equation}
-where $f(x)$ is the interpolated function value at the location $x$. 
+The points used to estimate the value of an attribute at location $x$ are the natural neighbours of $x$, and the weight of each neighbour is equal to the natural neighbour coordinate of $x$ with respect to this neighbour.  
 
 The natural neighbour interpolant possesses all the wished properties from above, except that the first derivative is undefined at the data points. 
 Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD\@.
