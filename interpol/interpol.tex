@@ -47,7 +47,7 @@ The essential properties of an `ideal' interpolation method for bivariate geosci
   \item \textbf{smooth}: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^1$ and $C^2$ interpolants.
   \item \textbf{local}: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
   \item \textbf{adaptability}: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
-  \item \textbf{computationally efficient}: it should be possible to implement the method and get an efficient result. Efficient is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
+  \item \textbf{computationally efficient}: it should be possible to implement the method and get an efficient result. Efficiency is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
   \item \textbf{automatic}: the method must require as little input as possible from the user, \ie\ it should not rely on user-defined parameters that require \emph{a priori} knowledge of the dataset.
 \end{enumerate}
 \begin{figure}
@@ -420,7 +420,7 @@ Suppose we have 4 adjacent pixels, each having an elevation, as in Figure~\ref{f
 Bilinear interpolation uses the 4 centres to perform the interpolation at location $p = (p_x, p_y)$; it is thus a weighted-average method because the 4 samples are used, and their weight is based on the linear interpolation, as explained below.
 We need to linearly interpolation the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values. 
 % Observe that while we perform three linear interpolations, the resulting interpolant is not linear but quadratic.
-Also, cotice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
+Also, notice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
 For the case in Figure~\ref{fig:bilinear}, the calculation would go as follows:
 \[
   \begin{array}{l}
