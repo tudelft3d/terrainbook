@@ -97,14 +97,14 @@ For instance, the morphology constraint tells us to stay close to the measured s
 
 %
 
-Also, because of the safety constraint, isocontours can only be modified such that the safety is respected at all times: contours can only be pushed towards the deeper side during generalisation, as illustrated in Fig~\ref{fig:genvalidornot}. 
+Also, because of the safety constraint, depth-contours can only be modified such that the safety is respected at all times: contours can only be pushed towards the deeper side during generalisation, as illustrated in Fig~\ref{fig:genvalidornot}. 
 \begin{figure}
   \centering
   \includegraphics[width=0.5\textwidth]{figs/genvalidornot}
   \caption{During generalisation, depth-contours can only be moved towards greater depth (indicated by a ``--'' in the figure).}
 \label{fig:genvalidornot}
 \end{figure}
-It is therefore evident that the end result must be a reasonable compromise between the four constraints, although the hard constraints must not be broken.
+It is therefore obvious that the end result must be a reasonable compromise between the four constraints, although the hard constraints must not be broken.
 
 
 %%%
@@ -218,19 +218,19 @@ This would also simplify the depth-contours that are generated from the TIN.
 However, as Figure~\ref{fig:simpfail} shows, 
 \begin{figure}
 \centering
-  \begin{subfigure}[b]{0.22\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=1]{figs/simpfail.pdf}
     \caption{Initial configuration}\label{fig:simpfail:a}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.22\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/simpfail.pdf}
     \caption{1st vertex removal}\label{fig:simpfail:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.22\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/simpfail.pdf}
     \caption{2nd vertex removal}\label{fig:simpfail:c}
@@ -260,7 +260,7 @@ Instead of performing generalisation by moving lines or using a subset of the or
 Figure~\ref{fig:surfapproach} gives a schematic overview of the different components of our Voronoi-based surface concept. 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{figs/surfaceapproach_V2.pdf}
+  \includegraphics[width=0.7\textwidth]{figs/surfaceapproach_V2.pdf}
   \caption{Overview of the Voronoi- and surface-based approach.}
 \label{fig:surfapproach}
 \end{figure}
