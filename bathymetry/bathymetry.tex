@@ -152,13 +152,13 @@ While different functions can be used to select the point (\eg\ deepest, shallow
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/maxgridding.pdf}
-    \caption{Max rasterization}\label{fig:fr:mg:a}
+    \caption{Max rasterisation}\label{fig:fr:mg:a}
   \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=4]{figs/1Didw.pdf}
-    \caption{IDW rasterization}\label{fig:fr:idw:a}
+    \caption{IDW rasterisation}\label{fig:fr:idw:a}
   \end{subfigure}
   \qquad
   \quad
@@ -171,15 +171,15 @@ While different functions can be used to select the point (\eg\ deepest, shallow
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/maxgridding.pdf}
-    \caption{Max rasterization and contours}\label{fig:fr:mg:b}
+    \caption{Max rasterisation and contours}\label{fig:fr:mg:b}
   \end{subfigure}
   \qquad
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=5]{figs/1Didw.pdf}
-    \caption{IDW rasterization and contours}\label{fig:fr:idw:b}
+    \caption{IDW rasterisation and contours}\label{fig:fr:idw:b}
   \end{subfigure}
-\caption{On the top: profile views of different filtering and rasterization methods. On the bottom: the corresponding contours. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}
+\caption{On the top: profile views of different filtering and rasterisation methods. On the bottom: the corresponding contours. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}
 \label{fig:filterraster}
 \end{figure}
 It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
@@ -252,7 +252,7 @@ This method uses several of the algorithms and data structures studied in this b
 
 %
 
-The key idea behind the method, called tje Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
+The key idea behind the method, called the Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
 Instead of performing generalisation by moving lines or using a subset of the original samples, we include all MBES points in a triangulation (the surface) and manipulate this triangulation directly with generalisation operators that fulfil the constraints listed in Section~\ref{sec:good-depth-contours}.
 
 %
@@ -368,7 +368,7 @@ Its objective is primarily to minimise the discretisation error between the Lapl
 By inserting extra vertices in large triangles (to break them into three triangles), the resolution of the DT is improved.
 As a result also the extracted contour lines have a smoother appearance because they now have shorter line-segments; see Section\ref{sec:smoothness-contours} for an explanation.
 We insert a new vertex at the centre of the circumscribed circle of any triangle that has an area greater than a preset threshold; its depth is assigned with the Laplace interpolant.
-The circumcenter is chosen here because that location is equidistant to its three closest points, and subsequently results in a very natural point distribution.
+The circumcentre is chosen here because that location is equidistant to its three closest points, and subsequently results in a very natural point distribution.
 
 %
 
@@ -416,7 +416,7 @@ Figure~\ref{fig:interpol_smooth}
 shows an example of these ideas. 
 Figure~\ref{fig:interpol_smooth}a and Figure~\ref{fig:interpol_smooth}b show the original dataset, which is a very simple pyramid having its base at elevation 0, and its summit at 10. 
 Figure~\ref{fig:interpol_smooth}d--f shows the results when a densification operator based on the Laplace interpolant is used. 
-It should be noticed that the ``top'' of the pyramid was densified, and not so much the bottom, therefore the contour lines near the bottom should be ignored (the fact that they are close to the border of the dataset also creates artifacts).
+It should be noticed that the ``top'' of the pyramid was densified, and not so much the bottom, therefore the contour lines near the bottom should be ignored (the fact that they are close to the border of the dataset also creates artefacts).
 
 
 %
@@ -466,7 +466,7 @@ This was tested with an MBES dataset from Zeeland, in the Netherlands.
     % \includegraphics[width=\textwidth]{figs/zl1845rmsdiffplot.pdf}
     % \caption{}\label{fig:zl1845rmsdiffplot}
   % \end{subfigure}
-  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100x smoothed interpolated and rasterized fields (pixelsize 50 cm).}
+  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixelsize 50 cm).}
 \label{fig:zl1845fieldview}
 \end{figure}
 As can be observed from Figure~\ref{fig:zl1845fieldview_o}, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 
@@ -497,7 +497,7 @@ This is demonstrated in Figure~\ref{fig:zl1845lineview} illustrates the effect o
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/zl1845detailcontours0-30.pdf}
-  \caption{From 0x smoothing (outer) to 30x smoothing (inner) for a given dataset.}
+  \caption{From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.}
 \label{fig:zl1845lineview}
 \end{figure}
 It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 
