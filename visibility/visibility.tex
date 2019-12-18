@@ -158,61 +158,6 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 
 %%%%%%%%%%%%%%%%%%%%
 %
-% \section{Visibility in point clouds}
-% TODO : ravi for 3D MAT overview? Just this solution perhaps? With filling voxels I guess?
-% the lesson is already pretty long... so we decide what to do there.
-
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[b]{0.3\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth,page=1,trim=0 0 0 210, clip]{figs/mavis_diagrams.pdf}
-%     \caption{}
-%   \end{subfigure}%
-%   \quad
-%   \begin{subfigure}[b]{0.3\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth,page=2]{figs/mavis_diagrams.pdf}
-%     \caption{}
-%   \end{subfigure}
-%   \quad
-%   \begin{subfigure}[b]{0.3\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth,page=3]{figs/mavis_diagrams.pdf}
-%     \caption{}
-%   \end{subfigure}
-% \caption{\textbf{(a)}A point cloud. \textbf{(b)} The point cloud is filled its MAT balls. \textbf{(c)} Visibility queries can be performed.}
-% \label{fig:mavis}
-% \end{figure}
-
-
-% Performing visibility queries directly on a point cloud cannot be direclty performed with methods above because points are 0-dimensional objects, and the odds that rays hit one is fairly low.
-% Thus, points that are representing an invisible façade of a building will still be visible.
-
-
-% \cite{Katz07} introduced the hidden point removal operator to determine the visible points in a point cloud as viewed from a given viewpoint by first performing a spherical flipping on the point cloud and then a convex hull computation. 
-% The algorithm does not require point normals, and is shown to be useful for shadow mapping and view-dependent surface reconstruction.
-% However, unlike the algorithm that we present in this paper, the hidden point removal operator can only determine the visibility of points that are part of the point cloud itself, which limits its potential applications.
-% \cite{Mehra10} extend the algorithm from \cite{Katz07} for handling noisy point clouds.
-% % Problems with these? Single POV, tolerance for Radius, and for the longest edge of the triangles coming from the CH step (their Fig.14).
-% % Voxel-based ray casting are not an option with real-world datasets because of the sparse sampling on the walls of buildings.
-% % And I would show one example here
-
-% \cite{Pfister00}, \cite{Sainz04} and \cite{Kobbelt04} compute visibility for well-sampled and oriented point clouds as part of a point-based rendering pipeline. 
-% They render points as splats; disks that are aligned with the point normals. 
-% Using these splats a depthmap is computed for the viewport to determine point visibility.
-% However, when the sampling density of the point cloud is low and non-uniform it becomes non-trivial to choose optimal splat radii. 
-% Another significant difference with the approach we present in this paper is that we compute a volumetric representation of the sampled surface, whereas a splatting approach can represent only the boundary of the sampled surface.
-% Holes are therefore handled quite differently (see also Figure~\ref{fig:vlaksa_detail}).
-
-% \cite{Wald05} perform ray-tracing in a point cloud based on an implicit surface representation. It works well for high quality point clouds that are densely sampled.
-
-% Finally, \cite{Jalba12} implement a rendering pipeline that performs on-screen surface reconstruction by directly rendering interior medial balls.
-% This is somewhat comparable to our approach, but we focus specifically on performing efficient visibility queries for arbitrary query points.
-
-
-%%%%%%%%%%%%%%%%%%%%
-%
 \section{Notes \& comments}
 
 The `tangent algorithm' to compute viewsheds was first described by \citet{Blelloch90}.
