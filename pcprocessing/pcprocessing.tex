@@ -132,10 +132,10 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
 These codes are to be used as values for the classification field of a point record, and are intended to indicate the type of object a point belongs to.
 Which classes are used strongly depends on the dataset at hand.
 The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
-To be exact, the code $0$ is used for points that where never subject to a classification algorithm, whereas the code $1$ is used for points that where processed by an classification algorithm, but could not successfully be assigned to a class.
+To be exact, the code $0$ is used for points that never subject to a classification algorithm, whereas the code $1$ is used for points that have been processed by a classification algorithm, but could not successfully be assigned to a class.
 It is possible to define your own classes using code ranges that are reserved for that purpose.
 
-\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture and cars.
+\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
   \caption{Classification codes used in the AHN3 dataset.}
