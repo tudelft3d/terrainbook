@@ -18,7 +18,7 @@ Regardless of the format, a point cloud file can often be seen as an array of \e
 
 A point record consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
 A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number or colour information.
-The order and meaning of the fields in a record is fixed for all the point records in one file.
+The order and meaning of the fields in a record are fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
 Notice that, in additions to the widely used formats mentioned here, there are also many proprietary formats. These are often specific to one particular software and are therefore not very useful for data exchange.
@@ -28,7 +28,7 @@ ASCII formats are plain text files.
 The point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
 In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated values (CSV) files~\footnote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
-The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes varies and also the used coordinate reference system (CRS) is usually not documented in the file.
+The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes varies and also the used coordinate reference system (CRS) are usually not documented in the file.
 \begin{figure}[h]
   % \begin{footnotesize}
   \begin{lstlisting}
@@ -132,10 +132,10 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
 These codes are to be used as values for the classification field of a point record, and are intended to indicate the type of object a point belongs to.
 Which classes are used strongly depends on the dataset at hand.
 The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
-To be exact, the code $0$ is used for points that where never subject to a classification algorithm, whereas the code $1$ is used for points that where processed by an classification algorithm, but could not successfully be assigned to a class.
+To be exact, the code $0$ is used for points that never subject to a classification algorithm, whereas the code $1$ is used for points that have been processed by a classification algorithm, but could not successfully be assigned to a class.
 It is possible to define your own classes using code ranges that are reserved for that purpose.
 
-\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture and cars.
+\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
   \caption{Classification codes used in the AHN3 dataset.}
@@ -155,7 +155,7 @@ In addition support for LAZ is typically built into point cloud reading and writ
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
 Each block is individually compressed, which makes it possible to partially decompress only the needed blocks from a file (instead of always needing to compress the whole file).
-This can save a lot of decompression computations if only a few point from a huge point cloud are needed.
+This can save a lot of decompression computations if only a few points from a huge point cloud are needed.
 Also notice that the effectiveness of the compression algorithms depends on the similarity in information between subsequent point records.
 Typically information is quite similar for points that are close to each other in space.
 Therefore, a greater compression factor can often be achieved after spatially sorting the points.
@@ -171,7 +171,7 @@ A point cloud with fewer points is easier to manage and quicker to visualise and
 Therefore a point cloud is sometimes \emph{thinned}, which simply means that a portion of the points is discarded and not used for processing.
 Commonly encountered thinning methods in practice are:
 \begin{description}
-  \item[random] randomly remove a given percentage of the points,
+  \item[random] randomly remove a given percentage of the points.
   \item[nth-point] iterate through the points and keep only the first point for every $n$ points. For example a dataset with 1000 points is reduced to 100 points if $n=10$. This is the quickest thinning method.
   \item[grid] Overlay a 2D or 3D regular grid over the point cloud and keep one point per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
 \end{description}
@@ -363,7 +363,7 @@ Figure~\ref{fig:axelsson} gives an example result.
 \label{fig:axelsson}
 \end{figure}
 
-\paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need te recompute the geometric properties of at most $n$ points.
+\paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need to recompute the geometric properties of at most $n$ points.
 
 %%%
 %
@@ -718,7 +718,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 \end{algorithm}
 The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
 Notice that each element in the accumulator represents one possible shape instance.
-Because each axes only has a limited number of elements, each parameter is \emph{quantised}.
+Because each axis only has a limited number of elements, each parameter is \emph{quantised}.
 This means that each parameter is restricted in the possible values it can have.
 The chosen quantisation determines the sensitivity of the accumulator.
 The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\phi$ parameter is quantised in only two possible values.
