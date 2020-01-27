@@ -239,7 +239,7 @@ However, as Figure~\ref{fig:simpfail} shows,
 \label{fig:simpfail}
 \end{figure}
 the safety constraint is not guaranteed to be respected when vertices are removed from a TIN.
-This is due to the fact that the triangulation must be updated (with flips, see Chapter~\ref{chap:dtvd}) and the shape of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
+This is due to the fact that the triangulation must be updated (with flips, see Chapter~\ref{chap:dtvd}) and the shapes of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
 
 
 %%%
@@ -287,7 +287,7 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 \label{chap:myapproach:smoothing}
 
 The smoothing operator basically estimates, with the Laplace interpolant (see Section~\ref{sec:laplace} on page~\pageref{sec:laplace}), the depth of each vertex in a dataset by considering its natural neighbour (see Figure~\ref{fig:1Dsmoothop}).
-If this depth is shallower, then the vertex is assigned this value; if it is deeper than nothing is done.
+If this depth is shallower, then the vertex is assigned this value; if it is deeper then nothing is done.
 Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths. 
 \begin{figure}[tbh]
   \centering
