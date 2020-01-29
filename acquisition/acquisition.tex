@@ -48,7 +48,7 @@ What follows is a brief description of the four main techniques used in practice
 \subsection{Lidar}
 A lidar system\footnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures distance to a target by illuminating it with pulsed laser light and measuring the reflected pulses with a sensor (see Figure~\ref{fig:acqLidar}). 
 It is generally considered to be the most accurate acquisition technique.
-By measuring the time-of-flight, \ie\ the difference in time between sending a pulse and sensing its return, the distance to the target that reflected the pulse can be found by multiplying the time-of-flight with the speed of light, which is a known constant.
+By measuring the time-of-flight, \ie\ the difference in time between sending a pulse and sensing its return, the distance to the target that reflected the pulse can be found by multiplying half of the time-of-flight with the speed of light, which is a known constant.
 Lidar thus makes use of the natural phenomenon of \emph{backscattering}, \ie\ the reflection of (electromagnetic) waves or signals back to the direction they came from. 
 %The strength of the return signal, \ie~its intensity, is also recorded for each point.
 %Most often an infra-red laser is used, but sometimes another wavelengths is used. 
@@ -113,7 +113,7 @@ The principles of InSAR\@.
 Echo sounding is a form of sonar that can be used for bathymetry, \ie\ mapping underwater terrains from a boat. 
 Similar to lidar, it uses the time-of-flight principle to compute distance, but sound is used instead of light. 
 
-Single-beam and multi beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately. 
+Single-beam and multi-beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately. 
 For bathymetry usually a multi-beam echo sounder is used.
 
 \begin{link-box}
@@ -150,7 +150,7 @@ We distinguish three types of artefacts, 1) those that occur due to problems in 
 % different cost, update cycles
 
 \subsection{Sensor}
-The sensor position and orientation is continuously monitored during acquisition, \eg\  by means of GNSS and an IMU for airborne and seaborne systems, and used to determine the 3D coordinates of the measured points. 
+The sensor position and orientation are continuously monitored during acquisition, \eg\  by means of GNSS and an IMU for airborne and seaborne systems, and used to determine the 3D coordinates of the measured points. 
 Consequently, any errors in the position and orientation of the sensor platform affect the elevation measurements. 
 For this reason adjacent flight strips (see Figure~\ref{fig:lidarStrips}) often need to be adjusted to match with each other using ground control points. 
 \begin{figure}
