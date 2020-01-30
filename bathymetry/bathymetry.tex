@@ -199,7 +199,7 @@ Again, the severity of these problems depends on the chosen cellsize.
 %
 \paragraph{Interpolation to a raster.}
 For hydrographic charts, the raster surface is often constructed with spatial interpolation, particularly with the method of \emph{inverse distance weighting} (IDW).
-Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place extrema are disregarded and subsequently the safety constraint is also violated. 
+Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place, extrema are disregarded and subsequently the safety constraint is also violated. 
 
 %
 %\paragraph{Raster coarsening.}
@@ -421,7 +421,7 @@ It should be noticed that the ``top'' of the pyramid was densified, and not so m
 
 %
 
-Densification aims to improve the reduce the difference between the linear TIN and the Laplace interpolated field of its vertices---effectively improving the resolution of the extracted contours.
+Densification aims to reduce the difference between the linear TIN and the Laplace interpolated field of its vertices---effectively improving the resolution of the extracted contours.
 Therefore, densification is to be applied just before the extraction of the depth-contours.
 If applied \emph{before} the smoothing operator, it would limit the effectiveness of that operator, since a denser triangulation smoothes more slowly.
 
@@ -429,7 +429,7 @@ The densification operator uses an area-threshold that determines which triangle
 This way triangles that are already sufficiently small are not densified. 
 It performs a single pass on the input triangles, thus with every call the resolution of the DT is increased, until all triangles have reached a certain area.
 
-If the maximum area threshold is ignored, a single call to costs $\mathcal{O}(n)$ time, as it only requires a single pass over the $n$ triangles of the TIN\@. 
+If the maximum area threshold is ignored, a single call costs $\mathcal{O}(n)$ time, as it only requires a single pass over the $n$ triangles of the TIN\@. 
 However, when a number of $t$ densification passes is sequentially performed, it only scales to $\mathcal{O}(3^t \, n)$ time, since every point insertion creates two new triangles. 
 However, because of the maximum area threshold, that worst case scenario will never be reached in practice with large $t$.
 
