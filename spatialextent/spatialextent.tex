@@ -270,7 +270,7 @@ If $S$ forms different clusters (see for instance Figure~\ref{fig:clusters}a, th
 \caption{\textbf{(a)} $S$ has two distinct clusters. {(b)} Typical output if $S$ processed as a single cluster with a moving arm algorithm.}
 \label{fig:clusters}
 \end{figure}
-Notice that this can be also be useful to discard unwanted outliers (unless the lowest point is an outlier).
+Notice that this can also be useful to discard unwanted outliers (unless the lowest point is an outlier).
 In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of Figure~\ref{fig:clusters:a} two clusters should be detected) and then each cluster is processed separately.
 
 %
@@ -378,7 +378,7 @@ That is, the easiest method to construct an $\alpha$-shape is by first construct
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
-Implementations of the $\alpha$-shape will often offer to compute automatically an $\alpha$ such that the complex obtain is for instance connected and contains only one polygon.
+Implementations of the $\alpha$-shape will often offer to compute automatically an $\alpha$ such that the complex obtained is for instance connected and contains only one polygon.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.15\linewidth}
