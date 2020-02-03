@@ -168,7 +168,7 @@ The relationship is the following: every triangle of the lower envelope of conv(
 
 %
 
- of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
+ Construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
 
 \begin{myfloat}
   \begin{practice-box}
@@ -493,7 +493,7 @@ We are mostly interested in the \emph{constrained Delaunay triangulation} (ConsD
 Given a set $S$ of points and straight-line segments in $\mathbb{R}^2$, the ConsDT permits us to decompose the convex hull of $S$ into non-overlapping triangles, and every segment of $S$ appears as an edge in ConsDT($S$). 
 ConsDT is similar to the Delaunay triangulation, but the triangles in ConsDT are not necessarily Delaunay (\ie\ their circumcircle might contain other points from $S$). 
 The empty circumcircle for a ConsDT is less strict: a triangle is Delaunay if its circumcircle contains no other points in $S$ that are \emph{visible} from the triangle.
-The constrained segments in $S$ act a visibility blockers. 
+The constrained segments in $S$ act as visibility blockers. 
 Figure~\ref{fig:cdt_buildings} shows one example.
 \begin{figure}
   \centering
