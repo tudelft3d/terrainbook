@@ -1,7 +1,6 @@
 
 # Computational modelling of terrains
 
-
 The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct, manipulate, and extract information from terrains.
 
 It covers different representations of terrains (eg TINs, rasters, point clouds, contour lines) and presents techniques to handle large datasets.
