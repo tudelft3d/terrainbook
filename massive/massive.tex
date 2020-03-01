@@ -1,17 +1,24 @@
 %!TEX root = ../terrainbook.tex
 
-\graphicspath{{massive/}}
+% \setchapterpreamble[u]{\margintoc \marginnote{\faYoutube\ https://3d.bk.tudelft.nl}}
+% TODO : youtube link?
+\setchapterpreamble[u]{\margintoc}
+% \setchapterpreamble[u]{\marginnote{\faYoutube\ https://3d.bk.tudelft.nl}}
 
 \chapter{Handling massive terrains}
 \label{chap:massive}
+\labch{massive}
+
+\graphicspath{{massive/}}
+
 
 In this chapter we discuss three methods to deal with massive terrains (or input datasets).
 
 %
 
 ``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 10 years ago a point cloud dataset containing 5 million points was considered massive, while in 2018 it is not.
-There are some massive datasets even in small areas, \eg\ a Lidar one of Dublin\footnote{\url{https://www.gim-international.com/content/news/world-s-densest-urban-aerial-lidar-dataset-released}}, containing around 1.4 billion points with a density of 300pts/m$^2$, which was collected with airborne laser scanners.
-The Lidar dataset of the Netherlands, AHN\footnote{\emph{Actueel Hoogtebestand Nederland}: \url{http://www.ahn.nl}}, has about 10pts/m$^2$ covering the whole country, thus comprising more than 700 billion points which can be freely downloaded.
+There are some massive datasets even in small areas, \eg\ a Lidar one of Dublin\sidenote{\url{https://bit.ly/32GXiFq}}, containing around 1.4 billion points with a density of 300pts/m$^2$, which was collected with airborne laser scanners.
+The Lidar dataset of the Netherlands, AHN\sidenote{\emph{Actueel Hoogtebestand Nederland}: \url{http://www.ahn.nl}}, has about 10pts/m$^2$ covering the whole country, thus comprising more than 700 billion points which can be freely downloaded.
 % TODO : other massive dataset examples? SRTM? Rotterdam?
 
 %
@@ -36,7 +43,7 @@ Indeed, the traditional GISs and terrain modelling tools are limited by the main
 Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large grids.
 They are also used for images (and called `tiled pyramidal images' or `overview images') and many software support them since they optimise visualisation and thus the speed of a software dealing with large images.
 
-As shown in Figure~\ref{fig:pyramids}, 
+As shown in \reffig{fig:pyramids}, 
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.6\linewidth}
@@ -50,40 +57,39 @@ As shown in Figure~\ref{fig:pyramids},
     \includegraphics[width=\textwidth]{figs/pyramids2.pdf}
     \caption{}
   \end{subfigure}
-\caption{\textbf{(a)} The pyramid for a given raster file. \textbf{(b)} One 4x4 raster downsampled twice with average-method.}
-\label{fig:pyramids}
+\caption{\textbf{(a)} The pyramid for a given raster file. \textbf{(b)} One 4x4 raster downsampled twice with average-method.}%
+\labfig{fig:pyramids}
 \end{figure}
 a pyramid means creating recursively copies at lower-resolutions of an original raster (having $x$ columns and $y$ rows), the first copy having a size ($\frac{x}{2}$, $\frac{y}{2}$), the second ($\frac{x}{4}$, $\frac{y}{4}$), and so on (the number of images is arbitrary and defined by the user).
 Notice that the extra storage will be maximum $\frac{1}{3}$ of the original raster: the first pyramid is $\frac{1}{4}$, the second $\frac{1}{16}$, the third $\frac{1}{64}$, etc.
 
 Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
-The most common method is based on averaging the 4 pixels that are merged into one (as shown in Figure~\ref{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
+The most common method is based on averaging the 4 pixels that are merged into one (as shown in \reffig{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
-\begin{myfloat}
-  \begin{practice-box}
-    \textbf{gdaladdo.} 
-    For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
-    For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
 
-    The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
-    The downsampling method can be chosen.
+\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
+  \textbf{gdaladdo.} 
+  For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
+  For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
 
-    In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in Figure~\ref{fig:qgis}
-  \end{practice-box}
-\end{myfloat}
+  The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
+  The downsampling method can be chosen.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\linewidth]{figs/qgis}
-  \caption{QGIS has the option to create the pyramids automatically.}
-\label{fig:qgis}
-\end{figure}
+  % In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
+\end{kaobox}
+
+% \begin{marginfigure}
+%   \centering
+%   \includegraphics[width=\linewidth]{figs/qgis}
+%   \caption{QGIS has the option to create the pyramids automatically.}%
+% \labfig{fig:qgis}
+% \end{marginfigure}
 
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Indexing points in 3D space with the kd-tree}
+\section[3D kd-tree]{Indexing points in 3D space with the kd-tree}
 \label{sec:kdtree}
 
 A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
@@ -92,13 +98,13 @@ Notice that in practice we would never say a ``2d-tree'' or a ``3d-tree'': we ca
 
 %
 
-As shown in Figure~\ref{fig:kdtree},
-\begin{figure}
+As shown in \reffig{fig:kdtree},
+\begin{marginfigure}
   \centering
-  \includegraphics[width=0.5\linewidth]{figs/kdtree}
-  \caption{Example of $k$d-tree in 3D, with the dimensions used at each level.}
-\label{fig:kdtree}
-\end{figure} 
+  \includegraphics[width=\linewidth]{figs/kdtree}
+  \caption{Example of $k$d-tree in 3D, with the dimensions used at each level.}%
+\labfig{fig:kdtree}
+\end{marginfigure} 
 a $k$d-tree is a binary tree (thus each node has a maximum of 2 children, if any), and the main idea is that each level of the tree compares against one specific dimension.
 We `cycle through' the dimensions as we walk down the levels of the tree.
 
@@ -109,12 +115,12 @@ Each point $p_i$ in $S$ is a node of $\kappa$.
 A node implies a hyperplane that divides the space into 2 halfspaces according to one dimension; the hyperplane is perpendicular to the dimension of the node (which is linked to the level in the tree).
 Points with a lower coordinate value than the node along that dimension (corresponding to `left' or `under' the hyperplane) are put into the left subtree of the node, and the other ones into the right subtree.
 
-Consider the $k$d-tree in 2D in Figure~\ref{fig:kdtree2}.
+Consider the $k$d-tree in 2D in \reffig{fig:kdtree2}.
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.75\linewidth]{figs/kdtree2}
-  \caption{Example of $k$d-tree for 8 points in the $\mathbb{R}^2$.}
-\label{fig:kdtree2}
+  \includegraphics[width=0.9\linewidth]{figs/kdtree2}
+  \caption{Example of $k$d-tree for 8 points in the $\mathbb{R}^2$.}%
+\labfig{fig:kdtree2}
 \end{figure}
 The first dimension splits the data into 2 halfplanes along the line $x=5$, then each of these halfplanes is independently split according to the $y$ dimension (with the lines $y=7$ and $y=5$), then the 4 regions are split according to the $x$ dimension, and so on recursively.
 
@@ -122,7 +128,7 @@ The first dimension splits the data into 2 halfplanes along the line $x=5$, then
 \paragraph{Construction of a kd-tree.}
 In theory, any point could be used to divide the space according to each dimension, and that would yield a valid $k$d-tree.
 However, selecting the \emph{median} point creates a \emph{balanced} binary tree, which is desirable because it will improve searching and visiting the tree (see below).
-The tree in Figure~\ref{fig:kdtree2} is balanced, but if for instance ($1,3$) had been selected as the root, then there would be no children on the left, and all of them would be on the right.
+The tree in \reffig{fig:kdtree2} is balanced, but if for instance ($1,3$) had been selected as the root, then there would be no children on the left, and all of them would be on the right.
 
 The median point is the one whose value for the splitting dimension is the median of all the points involved in the operation.
 This implies that to construct the $k$d-tree of a set $S$ of $n$ points, as a first step $n$ values need to be sorted, which is a rather slow operation.
@@ -131,12 +137,12 @@ While this does not guarantee a balanced tree, in practice the tree should be cl
 
 The tree is built incrementally, \ie\ points are added in the tree one after the other, and after each insertion the tree is updated.
 Each insertion is simple: traverse the tree starting from the root, go left or right depending on the splitting dimension value, and insert the new point as a new leaf in the tree.
-Figure~\ref{fig:kdtree_insert}
+\reffig{fig:kdtree_insert}
 \begin{figure}[tbp]
   \centering
-  \includegraphics[width=0.75\linewidth]{figs/kdtree_insert}
-  \caption{Insertion of a new point ($7,3$) in a $k$d-tree.}
-\label{fig:kdtree_insert}
+  \includegraphics[width=0.9\linewidth]{figs/kdtree_insert}
+  \caption{Insertion of a new point ($7,3$) in a $k$d-tree.}%
+\labfig{fig:kdtree_insert}
 \end{figure} 
 illustrates this for one point.
 
@@ -157,8 +163,8 @@ An alternative is to construct the Voronoi diagram (actually the Delaunay triang
 %
 
 First observe that the obvious method to find the cell in the $k$d-tree containing $q$ does not work because $q$ can be far away in the tree.
-Figure~\ref{fig:kdtree_nn}a illustrates this: $c$ is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
-\begin{figure}[tbp]
+\reffig{fig:kdtree_nn}a illustrates this: $c$ is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.6\linewidth}
     \centering
@@ -180,10 +186,9 @@ Figure~\ref{fig:kdtree_nn}a illustrates this: $c$ is ($6,4$) but is located in t
     \includegraphics[page=5,width=\textwidth]{figs/kdtree_nn.pdf}
     \caption{}
   \end{subfigure}
-
-\caption{Several states for the nearest neighbour query based on a $k$d-tree.}
-\label{fig:kdtree_nn}
-\end{figure}
+\caption{Several states for the nearest neighbour query based on a $k$d-tree.}%
+\labfig{fig:kdtree_nn}
+\end{figure*}
 
 
 %
@@ -198,19 +203,19 @@ The algorithm starts at the root, stores the current closest point $c_{temp}$ as
 This order is the one that is \emph{most promising}, because we expect $c$ to be close to the insertion location (albeit this is not always the case).
 At each node $n_i$ it updates $c_{temp}$ if it is closer.
 For this, the Euclidean distance is used.
-For the example in Figure~\ref{fig:kdtree_nn}b, point ($5,6$) is the first $c_{temp}$, and then although ($2,7$) and ($1,3$) are visited, neither is closer and thus after that step $c_{temp} = (5,6)$.
+For the example in \reffig{fig:kdtree_nn}b, point ($5,6$) is the first $c_{temp}$, and then although ($2,7$) and ($1,3$) are visited, neither is closer and thus after that step $c_{temp} = (5,6)$.
 
 The algorithm then recursively visits the other subtrees, and checks whether there could be any points, on the other side of the splitting hyperplane, that are closer to $q$ than $c_{temp}$.
 The idea behind this step is that most of the subtrees can be eliminated by verifying whether the region of the bounding box of the subtree is closer than the current $dist(q, c_{temp})$, $dist()$ being the Euclidean distance between 2 points.
 If that distance is shorter, then it is possible that one point in the subtree is closer than $c_{temp}$, and thus that subtree must be visited. 
 If not, then the whole subtree can be skipped, and the algorithm continues.
 
-Figure~\ref{fig:kdtree_nn}c shows this idea after ($1,3$) has been visited.
+\reffig{fig:kdtree_nn}c shows this idea after ($1,3$) has been visited.
 $c_{temp}$ is ($5,6$), and we must decide whether the subtree right of ($2,7$) must be visited.
 In this case it must not be visited because the bounding box (light blue region) is 3.0unit from $q$, and $dist(q,c_{temp})$ is around 2.07; it is thus impossible that one point inside the subtree be closer than ($5,6$).
 
 The next step is verifying whether the subtree right of the root could contain a point closer than $c_{temp}$.
-In the Figure~\ref{fig:kdtree_nn}d, this is possible since the bounding box is only 0.5unit from $q$, and thus the subtree must be visited.
+In the \reffig{fig:kdtree_nn}d, this is possible since the bounding box is only 0.5unit from $q$, and thus the subtree must be visited.
 
 The algorithm continues until all subtrees have either been visited or eliminated.
 At the end, $c$ is ($6,4$).
@@ -230,7 +235,7 @@ A branch is only eliminated when $m$ points have been found and the branch canno
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Streaming paradigm to construct massive TINs and grids}
+\section[Streaming paradigm]{Streaming paradigm to construct massive TINs and grids}
 \label{sec:streaming}
 
 The incremental construction algorithm for the Delaunay triangulation, presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
@@ -255,21 +260,20 @@ They also demonstrate that real-world point cloud datasets often have natural sp
 
 The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
 
-
-\begin{link-box}
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch?]
   This video explains how the streaming concepts can be applied to constructing the Delaunay triangulation of massive datasets.
   You do \underline{not} need to read the full paper, which is \citet{Isenburg06}.
   \\ \\
   \url{https://youtu.be/DRCGTF2y_tM}
-\end{link-box}
+\end{kaobox}
 
-\begin{link-box}
-  This paper summarises \citet{Isenburg06} and shows how large rasters can be constructed with spatial interpolation.
-  \\ \\
-  \bibentry{Isenburg06-1}
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch?]
+  \fullcite{Isenburg06-1}
   \\ \\
   PDF: \url{http://dx.doi.org/10.1007/11863939_13}
-\end{link-box}
+  \\ \\
+  The article summarises \citet{Isenburg06} (you do not need to read it), and shows how large rasters can be constructed with spatial interpolation.
+\end{kaobox}
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -278,7 +282,7 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
 
 The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (\url{https://en.wikipedia.org/wiki/K-d_tree}) and the lecture notes entitled ``kd-Trees---CMSC 420'' from Carl Kingsford (available at \url{https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf}).
 
-\citep{Vitter01} provides an overview of external algorithms..
+\citet{Vitter01} provides an overview of external algorithms..
 
 
 %%%%%%%%%%%%%%%%%%%%
