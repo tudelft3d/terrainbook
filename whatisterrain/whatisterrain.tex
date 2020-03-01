@@ -1,5 +1,10 @@
 %!TEX root = ../terrainbook.tex
 
+\setchapterpreamble[u]{\margintoc}
+\chapter{What is a terrain?}%
+\label{chap:whatisterrain}
+\labch{whatisterrain}
+
 \graphicspath{{whatisterrain/}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,13 +19,12 @@
 %   - discussion data model vs data structure?
 
 
-\chapter{What is a terrain?}%
-\label{chap:whatisterrain}
 
 
-\begin{center}
-  \includegraphics[width=0.95\linewidth]{figs/header.jpg}
-\end{center}
+% \begin{center}
+%   \includegraphics[width=0.95\linewidth]{figs/header.jpg}
+% \end{center}
+
 
 Defining what a terrain, also called a \emph{digital terrain model} (DTM), is not simple because there is no universal agreement, neither among practitioners nor in the scientific literature.
 Different terms are used, often interchangeably.
@@ -34,13 +38,12 @@ It gives us the \emph{elevation}, which is the height above/below a certain refe
 
 However, the ``Earth's surface'' is also not a clear concept, since several objects on it can be present, \eg\ man-made structures like buildings, roads, power lines, and bridges, and other objects like trees.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.95\linewidth]{figs/dtmdsm}
-  \caption{\textbf{Left}: a terrain with a mountain, a tree, and a building. \textbf{Right}: its DSM and DTM.}
-\label{fig:dtmdsm}
-\end{figure}
-We use the following definitions in this course (see Figure~\ref{fig:dtmdsm}):
+\begin{marginfigure}
+  \includegraphics{figs/dtmdsm}
+  \caption{\textbf{Top}: a terrain with a mountain, a tree, and a building. \textbf{Bottom}: its DSM and DTM.}%
+\labfig{fig:dtmdsm}
+\end{marginfigure}
+We use the following definitions in this course (see \reffig{fig:dtmdsm}):
 \begin{description}
   \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@. 
   \item[DTM] (\textbf{D}igital \textbf{T}errain \textbf{M}odel). The surface of the Earth is the \emph{bare-earth}, that is no man-made objects or vegetation is present. 
@@ -54,38 +57,41 @@ It should be noticed that in some countries a DEM is often synonymous with a gri
 %
 \section{Dimensionality of DTMs}
 
-The term `3D' is misleading in a DTM context, as it is in a GIS context, because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
+The term ``3D'' is misleading in a DTM context, as it is in a GIS context, because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see \reffig{fig:dimgis}).
 \begin{figure}[b]
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=1,width=\linewidth]{figs/dimgis}
-    \caption{A terrain}\label{fig:dimgis:1}
+    \caption{A terrain}\labfig{fig:dimgis:1}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=6,width=\linewidth]{figs/dimgis}
-    \caption{2.5D modelling}\label{fig:dimgis:25}
+    \caption{2.5D modelling}\labfig{fig:dimgis:25}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=5,width=\linewidth]{figs/dimgis}
-    \caption{2.75D modelling}\label{fig:dimgis:275}
+    \caption{2.75D modelling}\labfig{fig:dimgis:275}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
-    \caption{Volumetric modelling, or full 3D}\label{fig:dimgis:3}
+    \caption{Volumetric modelling, or full 3D}\labfig{fig:dimgis:3}
   \end{subfigure}%
   \caption{Different meanings for `3D GIS' in the context of terrains.}
-\label{fig:dimgis}
+\labfig{fig:dimgis}
 \end{figure}
 
+
 \subsection{2.5D} 
+\labsec{ddd}
 What is usually used for modelling terrains: a surface (which is a topologically a 2D object; also called a 2-manifold) is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
+% \marginnote{Text of the note}
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
 When we refer to terrains in this course, this is what is usually mean, unlike explicitly stated otherwise.
 This is often what is used in GIS software, and both the well-known raster/grid  is such a case.
@@ -125,6 +131,7 @@ The function can theoretically have any number of independent variables, but in 
 The representation of a field in a computer faces many problems. 
 First, fields are continuous functions, and, by contrast, computers are discrete machines. 
 Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.
+\index{discretisation}
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
 The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{chap:acquisition}).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
@@ -154,6 +161,8 @@ It is therefore less used in practice than the next strategy, which allows us to
 %%%
 \subsection{Strategy \#2: piecewise spatial models}
 This means that the spatial interpolation function used is \emph{piecewise} (instead of being global).
+\marginnote{piecewise function}
+\index{piecewise function}
 That is, the two-dimensional domain of the terrain (the $xy$-plane) is tessellated, or partitioned, into several pieces, and for each of these we assign an interpolation function describing the spatial variation in its interior.
 This function is usually a simple mathematical function:
 \begin{itemize}
@@ -165,12 +174,12 @@ This function is usually a simple mathematical function:
 %
 
 In general, we  classify the tessellations of space into three categories (as shown in \reffig{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.
-\begin{figure}
+\begin{marginfigure}
   \centering
   \includegraphics[width=0.7\textwidth]{figs/tesstype}
-  \caption{Type of tessellations.} 
-\label{fig:tesstypes}
-\end{figure}
+  \caption{Type of tessellations.}% 
+\labfig{fig:tesstypes}
+\end{marginfigure}
 
 %
 
@@ -181,7 +190,7 @@ Some of these tessellations partition arbitrarily the space, while some are base
 
 %%%
 %
-\section{Data models for representing terrains in a computer}
+\section[Data models for terrains]{Data models for representing terrains in a computer}
 
 \subsection{Spatial data models $\neq$ data structures}
 
@@ -197,7 +206,7 @@ The same spatial data model can therefore be implemented with different data str
 %%%
 \subsection{Regular Tessellations} 
 
-As shown in Figure~\ref{fig:tesstypes}a, all the cells have the same shape and size.
+As shown in \reffig{fig:tesstypes}a, all the cells have the same shape and size.
 The most common regular tessellation in GIS and in terrain modelling is by far the grid (or raster representation), in which the cells are squares in 2D (usually called \emph{pixels}, a portmanteau of `picture' and `element', as an analogy to digital images).
 However, while they are not common in practice, other regular shapes are possible, such as hexagons or triangles.
 
@@ -244,24 +253,26 @@ The subdivision is potentially better than that obtained with regular tessellati
 %
 
 The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.
-As shown in \reffig{fig:tin},
-\begin{figure}
-  \centering
-  \includegraphics[width=0.55\linewidth]{figs/tin}
-  \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}
-\label{fig:tin}
-\end{figure}
-a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
+\marginnote{Bacon ipsum dolour sit amet porchetta beef turkey, bacon turducken boudin hamburger venison ball tip. Brisket pork loin bresaola short loin ground round leberkas pastrami tongue jerky cow turducken beef ribs. Pork ribeye landjaeger prosciutto pig venison tenderloin. Swine beef ribs kielbasa, porchetta tenderloin salami venison pork belly tail.}
+\index{TIN}
+
+
+As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
+\begin{marginfigure}
+  \includegraphics{figs/tin}
+  \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}%
+\labfig{fig:tin}
+\end{marginfigure}
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
 While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Chapter~\ref{chap:dtvd}).
 The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
-As can be seen in Figure~\ref{fig:whydt},
+As can be seen in~\reffig{fig:whydt},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/whydt}
-  \caption{Two TINs (left is a DT, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}
-\label{fig:whydt}
+  \caption{Two TINs (left is a DT, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}%
+\labfig{fig:whydt}
 \end{figure}
 the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of 95m is not used).
 
@@ -305,6 +316,13 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
 %%%
 \subsection{Other common terrain representations used in GIS}
 
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=0.75\linewidth]{figs/reps}
+  \caption{Four most common data models for terrains.}%
+\labfig{fig:reps}
+\end{marginfigure}
+
 In the GIS literature, besides the ones above, different representations for terrains are often listed, the two most relevant being:
 \begin{enumerate}
   \item irregularly spaced sample points, such a point cloud; 
@@ -313,22 +331,24 @@ In the GIS literature, besides the ones above, different representations for ter
 It should be noticed that these two are however \emph{incomplete}: the set of rules to reconstruct the surface at unsampled locations is not explicitly given, they are not continuous surfaces.
 Conceptually speaking, these should therefore not be considered valid representations of a terrain.
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
-We will nevertheless consider these in the course; the four representations we will use are shown in Figure~\ref{fig:reps}: 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.95\linewidth]{figs/reps}
-  \caption{Four most common data models for terrains.}
-\label{fig:reps}
-\end{figure}
+
+We will nevertheless consider these in the course; the four representations we will use are shown in \reffig{fig:reps}.
 
 %
 
-\paragraph{Contour lines}
+\paragraph{Contour lines.}
 
 Given a bivariate field $f(x,y) = z$, an \emph{isoline} (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, where $z_0$ is a constant. 
 Isolines have been traditionally used to represent the elevation in topographic maps and the depth in bathymetric maps for navigation at sea. 
 
 %
+
+% TODO : change the nicked contour example jpg?
+\begin{marginfigure}
+  \includegraphics{figs/contours.jpg}
+  \caption{A few examples of terrain features and their contour lines. (Figure from \url{https://linguagemgeografica.blogspot.com/})}%
+\labfig{fig:contours}
+\end{marginfigure}
 
 One particular property of an isoline is that its direction is always perpendicular to the direction of the steepest slope of the terrain. 
 Another property that follows from the $2.5D$ property of the field is that contours neither intersect themselves nor each other.
@@ -336,13 +356,7 @@ Another property that follows from the $2.5D$ property of the field is that cont
 %
 
 The purpose of isolines on a map is to reveal the shape of the underlying terrain. 
-By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see Figure~\ref{fig:contours} for a few examples.
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\linewidth]{figs/contours.jpg}
-  \caption{A few examples of terrain features and their contour lines. (Figure from \url{https://linguagemgeografica.blogspot.com/})}
-\label{fig:contours}
-\end{figure}
+By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see~\reffig{fig:contours} for a few examples.
 It should be noticed that data between contours is absent in the contour map. 
 Yet, in case of good contours the reader will still be able to deduct the general morphology of the field. 
 It is even so that the use of contours will speed up the map reading process, as it conveys just that relevant bit of data to the map reader rather than `flooding' the reader with information which essentially makes the user do his own cartographic selection. 
@@ -356,12 +370,12 @@ But, depending on the relation between the spacing between contours (the \emph{c
 
 In practice, isolines are only approximated from the computer representation of a field.
 They are usually extracted directly from a TIN or a regular grid. 
-As shown in Figure~\ref{fig:isoline},
+As shown in~\reffig{fig:isoline},
 \begin{figure}
   \centering
-  \includegraphics[width=0.75\textwidth]{figs/isoline}
+  \includegraphics[width=0.95\textwidth]{figs/isoline}
   \caption{Cross-section of a terrain (left), and the 200m isoline extracted from a TIN (right).} 
-\label{fig:isoline}
+\labfig{fig:isoline}
 \end{figure}
 the idea is to compute the intersection between the level value (\eg\ 200m) and the terrain, represented for instance with a TIN\@. 
 Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
@@ -369,7 +383,7 @@ Each triangle is scanned and segment lines are extracted to form an approximatio
 
 %%%
 %
-\section{TIN versus raster for modelling terrains}
+\section[TIN versus raster]{TIN versus raster for modelling terrains}
 
 There is an ongoing debate about whether TINs or rasters are the better data model to model terrains.
 Practitioners and scientists are probably split 50/50 on the issue.
@@ -403,8 +417,8 @@ While more an academic exercise then something used in practice, multi-resolutio
 % In other words, if elevation is the attribute modelled, the slope of the terrain will be `good', which is important for several applications, for example flood modelling.
 
 
-% \citet{Dakowicz03} demonstrate that using simple rules (nearest-neighbour for instance) yields fields that are not realistic and have bad slope, which is in practice problematic for several applications.
-% Obtaining good slope from contour lines is possible, but is in practice a complex process.
+\citet{Dakowicz03} demonstrate that using simple rules (nearest-neighbour for instance) yields fields that are not realistic and have bad slope, which is in practice problematic for several applications.
+Obtaining good slope from contour lines is possible, but is in practice a complex process.
 
 
 %%%
