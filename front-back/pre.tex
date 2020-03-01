@@ -1,40 +1,55 @@
-%!TEX root = ../terrainbook.tex
-
-% Copyright page
-\clearpage
-\thispagestyle{empty}
-\null%
-\vfill
+%!TEX root = ../terrainnbook.tex
 
 
+\makeatletter
+% \uppertitleback{\@titlehead} % Header
+
+\lowertitleback{
+  
 \textcopyright\ 2019 \, Hugo Ledoux, Ken Arroyo Ohori, and Ravi Peters
-\\ \\
-\ccLogo\ \ccAttribution\ This work is available under a Creative Commons Attribution 4.0 International License.
-\\For license details, see \url{http://creativecommons.org/licenses/by/4.0/}
-\\
 
+\medskip
+
+\ccLogo\ \ccAttribution\ This work is available under a Creative Commons Attribution 4.0 International License.
+For license details, see \url{http://creativecommons.org/licenses/by/4.0/}
+
+\medskip
 
 % v0.7---202-??-??
 % \\
 v0.6---2019-11-11
 
+\medskip
+\medskip
 
 \textbf{Download latest version} \\
 The latest version of this book can be downloaded in PDF at\\ 
 \url{https://github.com/tudelft3d/terrainbook/releases}
 
+\medskip
 
 \textbf{Source code} \\
 The source code, in \LaTeX, is openly available at\\
 \url{https://github.com/tudelft3d/terrainbook}
 
+\medskip
 
 \textbf{Errors? Feedback?} \\
 Please report errors at\\
 \url{https://github.com/tudelft3d/terrainbook/issues}
 
+\medskip
+
 \textbf{Colophon} \\
-This book was typeset with \LaTeX\ using the Palatino font.
+This book was typeset with \LaTeX\ using the \texttt{kaobook} class (\url{https://github.com/fmarotta/kaobook}).
 % \mbox{{\fanciestfont{}Feijoa}}, \texttt{GT Pressura} and $\mathrm{Asana\ Math}$ typefaces.
 The figures were created using Ipe, OmniGraffle, Affinity Designer, or Blender.
 The cover image is the SRTM dataset around Québec City in Canada, rendered with the R package \emph{rayshader}.
+
+  
+
+}
+\makeatother
+
+
+
