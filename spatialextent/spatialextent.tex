@@ -77,7 +77,7 @@ As \reffig{fig:ideas} shows, there are several potential regions for a rather si
     \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
     \caption{An $\alpha$-shape}
   \end{subfigure}
-\caption{Different methods to obtain the spatial extent of a given set of points in the plane.}
+\caption{Different methods to obtain the spatial extent of a given set of points in the plane.}%
 \labfig{fig:ideas}  
 \end{figure}
 
@@ -128,7 +128,7 @@ In this chapter we present methods that are used in practice to define the spati
     \caption{}
     \labfig{fig:properties:d}
   \end{subfigure}
-\caption{Different properties for the spatial extent}
+\caption{Different properties for the spatial extent}%
 \labfig{fig:properties}  
 \end{figure*}
 
@@ -173,7 +173,7 @@ For example, using the well-known \emph{gift wrapping algorithm}, shown in \reff
     \includegraphics[page=2,width=\textwidth]{figs/giftwrapping.pdf}
     \caption{}
   \end{subfigure}
-  \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}
+  \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}%
 \labfig{fig:giftwrapping}
 \end{marginfigure}
 It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
@@ -255,7 +255,7 @@ Both versions of the algorithm will work in most cases, but there is no guarante
     \includegraphics[page=5,width=\textwidth]{figs/movingarm.pdf}
     \caption{}
   \end{subfigure}
-\caption{Moving arm with \emph{kdd} when $k=4$. \textbf{(a)} When the point $e$ is being processed, $f$ is the next one chosen. \textbf{(b)} From $f$, no other points can be chosen since the resulting region would be self-intersecting.}
+\caption{Moving arm with \emph{kdd} when $k=4$. \textbf{(a)} When the point $e$ is being processed, $f$ is the next one chosen. \textbf{(b)} From $f$, no other points can be chosen since the resulting region would be self-intersecting.}%
 \labfig{fig:movingarm_kdd}
 \end{marginfigure}
 In this case, a solution to this problem would be to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
@@ -267,7 +267,7 @@ One drawback of the moving arm method is that only one polygon is obtained as a 
 If $S$ forms different clusters (see for instance \reffig{fig:clusters}, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
 \begin{marginfigure}
   \includegraphics[page=2,width=.9\textwidth]{figs/clusters.pdf}
-  \caption{$S$ has two distinct clusters. In green the typical output if $S$ processed as a single cluster with a moving arm algorithm.}
+  \caption{$S$ has two distinct clusters. In green the typical output if $S$ processed as a single cluster with a moving arm algorithm.}%
 \labfig{fig:clusters}
 \end{marginfigure}
 Notice that this can also be useful to discard unwanted outliers (unless the lowest point is an outlier).
@@ -390,7 +390,7 @@ See \reffig{fig:alphashape} for an example.
     \includegraphics[page=5,width=\textwidth]{figs/alphashape.pdf}
     % \caption{}\labfig{fig:aplhashape:e}
   \end{subfigure}
-\caption{Five $\alpha$-shape for the same set of points, with decreasing $\alpha$ values from left to right.}
+\caption{Five $\alpha$-shape for the same set of points, with decreasing $\alpha$ values from left to right.}%
 \labfig{fig:alphashape}
 \end{figure*}
 
