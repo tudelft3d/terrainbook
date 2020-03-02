@@ -1,31 +1,47 @@
 %!TEX root = ../terrainbook.tex
 
+\setchapterpreamble[u]{\margintoc}
+\labch{spatialextent}
 \graphicspath{{spatialextent/}}
 
 \chapter{Spatial extent of a point cloud}
 \label{chap:spatialextent}
 
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.57\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/ahn3-water.png}
-    \caption{}
-  \end{subfigure}%
-  \qquad
-  \begin{subfigure}[b]{0.37\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
-    \caption{}
-  \end{subfigure}
-\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
-\label{fig:examples}  
-\end{figure}
 
 
 Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
 That is, they need to define the shape of the region that best abstracts or represents the set of points.
-As seen in Figure~\ref{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+As seen in \reffig{fig:examples1} and \reffig{fig:examples1}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/ahn3-water.png}
+  \caption{An aerial point cloud with several canals (dark colour).}%
+\labfig{fig:examples1}
+\end{marginfigure} 
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/facade.jpg}
+  \caption{A laserscan of a façade containing several windows.}%
+\labfig{fig:examples2}
+\end{marginfigure} 
+
+% \begin{figure}
+%   \centering
+%   \begin{subfigure}[b]{0.51\linewidth}
+%     \centering
+%     \includegraphics[width=\textwidth]{figs/ahn3-water.png}
+%     \caption{}
+%   \end{subfigure}%
+%   \qquad
+%   \begin{subfigure}[b]{0.33\linewidth}
+%     \centering
+%     \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
+%     \caption{}
+%   \end{subfigure}
+% \caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
+% \labfig{fig:examples}  
+% \end{figure}
 
 %
 
@@ -35,38 +51,34 @@ Calculating the spatial extent is useful to calculate the area covered by a data
 
 The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
 It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
-As Figure~\ref{fig:ideas} shows, there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
+As \reffig{fig:ideas} shows, there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.21\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/idea.pdf}
     \caption{A set of points in $\mathbb{R}^2$}
-    \label{fig:ideas:a}
-  \end{subfigure}%
+  \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.21\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/idea.pdf}
     \caption{Its convex hull}
-    \label{fig:ideas:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.21\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/idea.pdf}
     \caption{A $\chi$-shape}
-    \label{fig:ideas:c}
   \end{subfigure}%
   \qquad
-  \begin{subfigure}[b]{0.21\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/idea.pdf}
     \caption{An $\alpha$-shape}
-    \label{fig:ideas:d}
   \end{subfigure}
 \caption{Different methods to obtain the spatial extent of a given set of points in the plane.}
-\label{fig:ideas}  
+\labfig{fig:ideas}  
 \end{figure}
 
 %
@@ -80,58 +92,60 @@ In this chapter we present methods that are used in practice to define the spati
 \section{Properties of the region}
 \label{sec:properties}
 
-Let $S$ be a set of points in $\mathbb{R}^2$, and $R(S)$ the region that characterise the spatial extent of $S$.
-The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance), and in practice most algorithms will compute a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
-
-To evaluate the different algorithms to create R($S$), we list here different properties that one must consider when defining the spatial extent of a set of points.
-\begin{description}
-  \item[P1.] \textbf{\emph{Regular} polygons?} Are polygons allowed to have dangling parts (lines), such as the one in Figure~\ref{fig:properties:b}
-  % \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in Figure~\ref{fig:properties} (except d) have points on the boundary of $R(S)$.
-  \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In Figure~\ref{fig:properties:a}/\subref{fig:properties:b} they are all part of the region, in Figure~\ref{fig:properties:c}/\subref{fig:properties:d} one outlier is not.
-%   (if we consider that $S$ represents the letter ``b'').
-  \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In Figure~\ref{fig:properties:a}--\subref{fig:properties:c} there is one component, but Figure~\ref{fig:properties:d} has two.
-  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in Figure~\ref{fig:properties:a}--\subref{fig:properties:c} have only an exterior boundary, while in Figure~\ref{fig:properties:d} one polygon has an interior boundary too (a hole).
-  \item[P5.] \textbf{Computational efficiency} What is the time complexity of the algorithm, and does it require large and complex auxiliary data structures?
-\end{description}
-\begin{figure}
+\begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.15\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/properties.pdf}
     \caption{}
-    \label{fig:properties:a}
+    \labfig{fig:properties:a}
   \end{subfigure}%
   \qquad
-  \begin{subfigure}[b]{0.15\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/properties.pdf}
     \caption{}
-    \label{fig:properties:b}
+    \labfig{fig:properties:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.15\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[page=5,width=\textwidth]{figs/properties.pdf}
     \caption{}
-    \label{fig:properties:c}
+    \labfig{fig:properties:c}
   \end{subfigure}%
   % \qquad
-  % \begin{subfigure}[b]{0.15\linewidth}
+  % \begin{subfigure}[b]{0.2\linewidth}
   %   \centering
   %   \includegraphics[page=6,width=\textwidth]{figs/properties.pdf}
   %   \caption{}
   %  \label{g:properties:a}
   % \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.15\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/properties.pdf}
     \caption{}
-    \label{fig:properties:d}
+    \labfig{fig:properties:d}
   \end{subfigure}
 \caption{Different properties for the spatial extent}
-\label{fig:properties}  
-\end{figure}
+\labfig{fig:properties}  
+\end{figure*}
+
+Let $S$ be a set of points in $\mathbb{R}^2$, and $R(S)$ the region that characterise the spatial extent of $S$.
+The region is potentially formed by a set of polygons (if $S$ forms two distinct clusters for instance), and in practice most algorithms will compute a linear approximation of $R(S)$, so the polygons will have straight edges as boundaries.
+
+To evaluate the different algorithms to create R($S$), we list here different properties that one must consider when defining the spatial extent of a set of points.
+\begin{description}
+  \item[P1.] \textbf{\emph{Regular} polygons?} Are polygons allowed to have dangling parts (lines), such as the one in \reffig{fig:properties:b}
+  % \item[P2.] \textbf{Are points allowed to be on the boundary of the region?} All of the regions in \reffig{fig:properties} (except d) have points on the boundary of $R(S)$.
+  \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In \reffig{fig:properties:a} and \reffig{fig:properties:b} they are all part of the region, in \reffig{fig:properties:c} and \reffig{fig:properties:d} one outlier is not.
+%   (if we consider that $S$ represents the letter ``b'').
+  \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In \reffig{fig:properties:a}--\reffig{fig:properties:c} there is one component, but \reffig{fig:properties:d} has two.
+  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in \reffig{fig:properties:a}--\subref{fig:properties:c} have only an exterior boundary, while in \reffig{fig:properties:d} one polygon has an interior boundary too (a hole).
+  \item[P5.] \textbf{Computational efficiency} What is the time complexity of the algorithm, and does it require large and complex auxiliary data structures?
+\end{description}
+
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -139,31 +153,30 @@ To evaluate the different algorithms to create R($S$), we list here different pr
 \section{Convex hull}
 
 As explained in Section~\ref{sec:convexhull}, given $S$, a set of points in $\mathbb{R}^2$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
-Two examples of convex hulls are in Figures~\ref{fig:ideas:b} and~\ref{fig:properties:a}.
+Two examples of convex hulls are in Figures~\ref{fig:ideas}b and~\ref{fig:properties}a.
 
 %
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
 It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or compute directly using a specialised algorithm.
-For example, using the well-known \emph{gift wrapping algorithm}, shown in Figure~\ref{fig:giftwrapping}.
-\begin{figure}
+For example, using the well-known \emph{gift wrapping algorithm}, shown in \reffig{fig:giftwrapping}.
+\begin{marginfigure}
   \centering
-  \centering
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/giftwrapping.pdf}
     \caption{}
-  \end{subfigure}%
+  \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/giftwrapping.pdf}
     \caption{}
   \end{subfigure}
   \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}
-\label{fig:giftwrapping}
-\end{figure}
-It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in Figure~\ref{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
+\labfig{fig:giftwrapping}
+\end{marginfigure}
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
 Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
 
 If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
@@ -189,89 +202,76 @@ Properties convex hull:
 %
 \section{Moving arm}
 
+\begin{marginfigure}
+  \centering
+  \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
+  \caption{First four steps of the \emph{moving arm algorithm} (with a lenght $l$) to compute the spatial extent.}%
+\labfig{fig:movingarm:1}
+\end{marginfigure}
+
+\begin{marginfigure}
+  \centering
+  \includegraphics[page=2,width=\textwidth]{figs/movingarm.pdf}
+  \caption{First four steps of the \emph{moving arm algorithm} (with a \emph{knn} where $k=3$) to compute the spatial extent.}%
+\labfig{fig:movingarm:2}
+\end{marginfigure}
+
+\begin{marginfigure}
+  \centering
+  \includegraphics[page=3,width=.9\textwidth]{figs/movingarm.pdf}
+  \caption{The resulting region for the moving arm, it is concave. Observe that 1 point from $S$ (highlighted in red) is not part of the region.}%
+\labfig{fig:movingarm:3}
+\end{marginfigure}
+
 \paragraph{Arm of length $l$.} 
 The moving arm is a generalisation of the gift wrapping algorithm where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
 This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
 This also means that potentially the result is a polygon that is non-convex.
-Figure~\ref{fig:movingarm}a shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
+\reffig{fig:movingarm:1} shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
 Observe also that if $l$ had been larger then conv($S$) could have been obtained.
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.3\linewidth}
-    \centering
-    \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
-    \caption{}
-  \end{subfigure}%
-  \qquad 
-  \begin{subfigure}[b]{0.3\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/movingarm.pdf}
-    \caption{}
-  \end{subfigure}
-  \qquad 
-  \begin{subfigure}[b]{0.3\linewidth}
-    \centering
-    \includegraphics[page=3,width=\textwidth]{figs/movingarm.pdf}
-    \caption{}
-  \end{subfigure}
-  \caption{\textbf{(a)} First four steps of the \emph{moving arm algorithm} (with a lenght $l$) to compute the spatial extent. \textbf{(b)} First four steps of the \emph{moving arm algorithm} (with a \emph{knn} where $k=3$) to compute the spatial extent. \textbf{(c)} The resulting region is the same for both, and it is concave. Observe that 1 point from $S$ (highlighted in red) is not part of the concave region.}
-\label{fig:movingarm}
-\end{figure}
+
 
 %
 
 \paragraph{Adaptative arm with \emph{knn}.} 
 There exists a variation of this algorithm where the length of the moving arm is adaptive at each step; the $k$ nearest neighbours (knn) of a given point $p$ are used to determine it (see Section~\ref{sec:kdtree}).
-As can be seen in Figure~\ref{fig:movingarm}b, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
+As can be seen in \reffig{fig:movingarm:2}, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
 
 %
 
 \paragraph{No guarantee that it will work.} 
 Both versions of the algorithm will work in most cases, but there is no guarantee that they will for all inputs.
-Figure~\ref{fig:movingarm_kdd} shows a concrete example.
-\begin{figure}
+\reffig{fig:movingarm_kdd} shows a concrete example.
+\begin{marginfigure}
   \centering
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{.9\linewidth}
     \centering
     \includegraphics[page=4,width=\textwidth]{figs/movingarm.pdf}
     \caption{}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{.9\linewidth}
     \centering
     \includegraphics[page=5,width=\textwidth]{figs/movingarm.pdf}
     \caption{}
   \end{subfigure}
 \caption{Moving arm with \emph{kdd} when $k=4$. \textbf{(a)} When the point $e$ is being processed, $f$ is the next one chosen. \textbf{(b)} From $f$, no other points can be chosen since the resulting region would be self-intersecting.}
-\label{fig:movingarm_kdd}
-\end{figure}
+\labfig{fig:movingarm_kdd}
+\end{marginfigure}
 In this case, a solution to this problem would be to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
 
 
 %
 \paragraph{Different clusters?} 
 One drawback of the moving arm method is that only one polygon is obtained as a region.
-If $S$ forms different clusters (see for instance Figure~\ref{fig:clusters}a, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.35\linewidth}
-    \centering
-    \includegraphics[page=1,width=\textwidth]{figs/clusters.pdf}
-    \caption{}
-    \label{fig:clusters:a}
-  \end{subfigure}
-  \qquad \qquad
-  \begin{subfigure}[b]{0.35\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/clusters.pdf}
-    \caption{}
-    \label{fig:clusters:b}
-  \end{subfigure}
-\caption{\textbf{(a)} $S$ has two distinct clusters. {(b)} Typical output if $S$ processed as a single cluster with a moving arm algorithm.}
-\label{fig:clusters}
-\end{figure}
+If $S$ forms different clusters (see for instance \reffig{fig:clusters}, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
+\begin{marginfigure}
+  \includegraphics[page=2,width=.9\textwidth]{figs/clusters.pdf}
+  \caption{$S$ has two distinct clusters. In green the typical output if $S$ processed as a single cluster with a moving arm algorithm.}
+\labfig{fig:clusters}
+\end{marginfigure}
 Notice that this can also be useful to discard unwanted outliers (unless the lowest point is an outlier).
-In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of Figure~\ref{fig:clusters:a} two clusters should be detected) and then each cluster is processed separately.
+In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of \reffig{fig:clusters} two clusters should be detected) and then each cluster is processed separately.
 
 %
 
@@ -292,39 +292,37 @@ Properties moving arm:
 \end{tabular}
 
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{$\chi$-shape}
 
-The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
-The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
-Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see Figure~\ref{fig:chishape:c}, the dangling edge is there twice, once in each direction). 
-\begin{figure}
+\begin{marginfigure}
   \centering
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[page=1,width=\textwidth]{figs/chishape.pdf}
     \caption{}
-    \label{fig:chishape:a}
   \end{subfigure}
   \qquad 
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/chishape.pdf}
     \caption{}
-    \label{fig:chishape:b}
   \end{subfigure}
   \qquad 
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[page=3,width=\textwidth]{figs/chishape.pdf}
     \caption{}
-    \label{fig:chishape:c}
   \end{subfigure}
-\caption{$\chi$-shape examples. \textbf{(a)} $S$, its DT, and its envelope (cons($S$)). \textbf{(b)} After some edges have been removed. \textbf{(c)} The final result for a given threshold.}
-\label{fig:chishape}
-\end{figure}
+\caption{$\chi$-shape examples. \textbf{(a)} $S$, its DT, and its envelope (cons($S$)). \textbf{(b)} After some edges have been removed. \textbf{(c)} The final result for a given threshold. Observe that neither of the red edges can be removed because a self-intersection would be created}%
+\labfig{fig:chishape}
+\end{marginfigure}
+
+The $\chi$-shape is based on first constructing the Delaunay triangulation (DT) of $S$, and then removing iteratively the longest edge forming the envelop (at first this envelop is conv($S$)) until no edge is longer than a given threshold $l$.
+The idea is to construct one polygon that is potentially non-convex, and that contains all the points in $S$.
+Before removing an edge, we must verify that it will not introduce a topological issue in the envelop, that is that the envelop will not contain a self-intersection (see \reffig{fig:chishape}c, the dangling edge is there twice, once in each direction). 
 
 %
 
@@ -360,8 +358,42 @@ First imagine that $\mathbb{R}^2$ is filled with Styrofoam and that the points i
 Now imagine that you have a carving tool which is a circle of radius $\alpha$, and that this tool can be used anywhere from any direction (it is `omnipresent'), and that it is only stopped by the points.
 The result after carving, called the $\alpha$-hull, is one or more pieces of Styrofoam.
 If we straighten the circular edges, then we obtain the $\alpha$-shape.
-See Figure~\ref{fig:alphashape} for an example.
-% TODO: I like the ice-cream analogy better
+See \reffig{fig:alphashape} for an example.
+\begin{figure*}
+  \centering
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/alphashape.pdf}
+    % \caption{}\labfig{fig:aplhashape:a}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/alphashape.pdf}
+    % \caption{}\labfig{fig:aplhashape:b}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/alphashape.pdf}
+    % \caption{}\labfig{fig:aplhashape:c}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=4,width=\textwidth]{figs/alphashape.pdf}
+    % \caption{}\labfig{fig:aplhashape:d}
+  \end{subfigure}
+  \qquad 
+  \begin{subfigure}[b]{0.15\linewidth}
+    \centering
+    \includegraphics[page=5,width=\textwidth]{figs/alphashape.pdf}
+    % \caption{}\labfig{fig:aplhashape:e}
+  \end{subfigure}
+\caption{Five $\alpha$-shape for the same set of points, with decreasing $\alpha$ values from left to right.}
+\labfig{fig:alphashape}
+\end{figure*}
+
 
 %
 
@@ -379,41 +411,6 @@ That is, the easiest method to construct an $\alpha$-shape is by first construct
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
 Implementations of the $\alpha$-shape will often offer to compute automatically an $\alpha$ such that the complex obtained is for instance connected and contains only one polygon.
-\begin{figure}
-  \centering
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=1,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}\label{fig:aplhashape:a}
-  \end{subfigure}
-  \qquad 
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}\label{fig:aplhashape:b}
-  \end{subfigure}
-  \qquad 
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=3,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}\label{fig:aplhashape:c}
-  \end{subfigure}
-  \qquad 
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=4,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}\label{fig:aplhashape:d}
-  \end{subfigure}
-  \qquad 
-  \begin{subfigure}[b]{0.15\linewidth}
-    \centering
-    \includegraphics[page=5,width=\textwidth]{figs/alphashape.pdf}
-    \caption{}\label{fig:aplhashape:e}
-  \end{subfigure}
-  \qquad 
-\caption{$\alpha$-shape for decreasing $\alpha$ values.}
-\label{fig:alphashape}
-\end{figure}
 
 %
 
@@ -451,7 +448,7 @@ In both papers, the authors describe different strategies to make the algorithm 
 
 The $\chi$-shape was introduced in \citet{Duckham08}.
 
-The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from the CGAL documentation\footnote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
+The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from the CGAL documentation\sidenote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
 
 % TODO: add that stuff?
 % https://en.wikipedia.org/wiki/DBSCAN
@@ -466,7 +463,7 @@ The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and f
   \item What are the disadvantages of the $\chi$-shape compared with the $\alpha$-shape?
   \item If the parameter $l$ for the $\chi$-shape is equal to the $\alpha$ parameter for an $\alpha$-shape, will the resulting shapes be the same?
   \item Given an $\alpha$-shape of $S$, how to calculate how many components are part of it? 
-  \item Draw what would happen if one of the 2 edges was removed in Figure~\ref{fig:chishape}c.
+  \item Draw what would happen if one of the 2 edges was removed in \reffig{fig:chishape}c.
   \item What is the influence of $k$ for the moving arm algorithm (with a \emph{kdd})? Will a higher $k$ create a larger or smaller region in general?
 \end{enumerate}
 
