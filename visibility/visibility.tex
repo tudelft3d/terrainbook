@@ -1,16 +1,15 @@
 %!TEX root = ../terrainbook.tex
 
-\graphicspath{{visibility/}}
+\setchapterpreamble[u]{\margintoc}
+\labch{visibility}
 
 \chapter{Visibility queries on terrains}
 \label{chap:visibility}
 
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=\linewidth]{figs/overview_los_viewshed.pdf}
-  \caption{\textbf{(a)} Line-of-sight between $v$ and $q$; $q$ is not visible. \textbf{(b)} The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to 15km).}
-\label{fig:overview_los_viewshed}
-\end{figure}
+\graphicspath{{visibility/}}
+
+
+
 
 Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which part(s) of the surrounding terrain are visible.
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.
@@ -22,7 +21,19 @@ Shadows are important to accurately measure the photovoltaic potential, for dete
 
 When referring to visibility problems, we address the following two fundamental problems:
 \begin{description}
-  \item[line-of-sight (LoS):] given a viewpoint $v$ and another point $q$, does $v$ sees $q$ (and vice-versa)?; or, in other words, does the segment $vq$ intersects the terrain? The result is either True or False.
+  \begin{marginfigure}
+    \centering
+    \includegraphics[width=\linewidth]{figs/overview_los}
+    \caption{Line-of-sight between $v$ and $q$; $q$ is not visible.}%
+    \labfig{fig:overview_los}
+  \end{marginfigure} 
+  \item[line-of-sight (LoS):] given a viewpoint $v$ and another point $q$, does $v$ sees $q$ (and vice-versa)? Or, in other words, does the segment $vq$ intersects the terrain? The result is either True or False.
+  \begin{marginfigure}
+    \centering
+    \includegraphics[width=\linewidth]{figs/overview_viewshed}
+    \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to 15km).}%
+  \labfig{fig:overview_viewshed}
+  \end{marginfigure} 
   \item[viewshed:] given a viewpoint $v$, which part(s) of the surrounding terrain are visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
 Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation 0m) or at a given height (2m for a human, or 30m for a telecommunication tower).
@@ -34,20 +45,18 @@ We discuss how to solve these problems for both TINs and grids.
 % , and then we briefly explain how point clouds can be directly used for such queries.
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Rendering + ray casting}
 
 Rendering is the process of generating images from 2D or 3D scenes.
-Without going into details, as shown in Figure~\ref{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800x800 pixels) and assigning one colour to each pixel.
-\begin{figure}
+Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800x800 pixels) and assigning one colour to each pixel.
+\begin{marginfigure}
   \centering
-  \includegraphics[width=0.6\linewidth]{figs/Ray_trace_diagram.pdf}
-  \caption{Ray tracing builds the image pixel by pixel by extending rays into the scene. Figure from \url{https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg}.}
-\label{fig:Ray_trace_diagram}
-\end{figure}
+  \includegraphics[width=\linewidth]{figs/Ray_trace_diagram.pdf}
+  \caption{Ray tracing builds the image pixel by pixel by extending rays into the scene. (Figure from \url{https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg})}%
+\labfig{fig:Ray_trace_diagram}
+\end{marginfigure}
 The colour of a pixel is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (this goes beyond the scope of this course!).
 
 Ray casting is used for each pixel: a ray is defined between the viewpoint $p$ and the centre of the pixel, and the closest object in the scene must be found.
@@ -55,19 +64,20 @@ The main issue involves finding that closest object, and especially discard the 
 
 
 %%
-\begin{link-box}
-\textbf{Parts of the following chapter.} It summarises different methods to determine which surfaces are visible, for the generic cases of objects in 3D space.
-Read only the following sections: 18.0, 18.1, 18.2, and 18.4.
-\\
-\bibentry{Salomon11}\\
-\textbf{PDF:} \url{https://doi.org/10.1007/978-0-85729-886-7_18}
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+  \textbf{Parts of the following chapter.} It summarises different methods to determine which surfaces are visible, for the generic cases of objects in 3D space.
+  Read only the following sections: 18.0, 18.1, 18.2, and 18.4.
+  \\ \\
+  \fullcite{Salomon11} \\ \\
+  \textbf{PDF:} \url{https://doi.org/10.1007/978-0-85729-886-7_18}
+\end{kaobox}
 
-\end{link-box}
+
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{For 2.5D terrains, the problem is simpler}
+\section[2.5D terrains are simple]{For 2.5D terrains, the problem is simpler}
 
 % Simplifying the problem by sorting the triangles
 The problem is simplified for terrains because a terrain is a 2.5D surface, and we can convert the problem to a 2D one.
@@ -77,14 +87,15 @@ Furthermore, we can exploit the connectivity and adjacency between the 2D cells 
 %%%
 %
 \subsection{Visibility in TINs}
+% TODO : write my own part perhaps? Would be better IMO
 
-\begin{link-box}
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 \textbf{Parts of the following chapter.} 
 Read from Section 1 to Section 3.1; it covers the simplest case for a LoS between 2 points on the surface.
-\\
-\bibentry{deBerg97}\\
+\\ \\
+\fullcite{deBerg97} \\ \\
 \textbf{PDF:} \url{https://doi.org/10.1007/3-540-63818-0_4}
-\end{link-box}
+\end{kaobox}
 
 
 %%%
@@ -103,16 +114,16 @@ We describe here how both LoS and viewshed queries can be implemented for grids;
 \paragraph{Line-of-sight.}
 A LoS query, between a viewpoint $v$ and another point $q$, implies reconstructing the profile of the terrain along the vertical projection of $vq$ (let us call it $vq_{xy}$).
 It then suffices to follow $vq$ and verify whether the elevation at any ($x,y$) location along the profile is higher than that of $vq$.
-As shown in Figure~\ref{fig:los}, 
+As shown in \reffig{fig:los}, 
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/los}
-  \caption{Line-of-sight for between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.}
-\label{fig:los}
+  \caption{Line-of-sight for between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.}%
+\labfig{fig:los}
 \end{figure}
 since the terrain is discretised into grid cells, there are 2 options to reconstruct the profile between $v$ and $q$:
 \begin{enumerate}
-  \item identify all the cells intersected by $vq_{xy}$, and assign the centre of each cell by projecting it to the terrain profile. This is what is done in Figure~\ref{fig:los}.
+  \item identify all the cells intersected by $vq_{xy}$, and assign the centre of each cell by projecting it to the terrain profile. This is what is done in \reffig{fig:los}.
   \item consider the edges of the cells, collect all the edges that are intersected by $vq_{xy}$, and linearly interpolate the elevations. This is far more expensive to compute, and therefore less used in practice.
 \end{enumerate}
 
@@ -124,15 +135,15 @@ If the pixel containing $q$ is reached without detecting an intersection, then t
 
 %%%
 \paragraph{Viewshed.}
-As shown in Figure~\ref{fig:viewshed},
+As shown in \reffig{fig:viewshed},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/viewshed}
-  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (5000km in this case).}
-\label{fig:viewshed}
+  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (5000km in this case).}%
+\labfig{fig:viewshed}
 \end{figure}
 computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
-The result of a viewshed is a binary grid; in Figure~\ref{fig:overview_los_viewshed}b True/visible pixels are green, and False/invisible ones are dark grey.
+The result of a viewshed is a binary grid; in \reffig{fig:overview_viewshed}, True/visible pixels are green, and False/invisible ones are dark grey.
 
 %
 
@@ -142,8 +153,8 @@ As an example, with the AHN3 gridded version (50cm resolution), this means rough
 
 %
 
-One alternative solution is shown in Figure~\ref{fig:viewshed}b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $vq_i$ as we `walk' from $v$.
-Observe that, along $vq_i$, it is possible that a point far from $v$ is visible, while several closer points are not; Figure~\ref{fig:viewshed}c gives an example.
+One alternative solution is shown in \reffig{fig:viewshed}b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $vq_i$ as we `walk' from $v$.
+Observe that, along $vq_i$, it is possible that a point far from $v$ is visible, while several closer points are not; \reffig{fig:viewshed}c gives an example.
 
 One solution involves using so-called \emph{tangents}.
 The current tangent $t_{cur}$ is first initialised as a vector pointing downwards.
