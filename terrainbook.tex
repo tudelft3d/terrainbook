@@ -102,6 +102,37 @@
 
 \setcounter{secnumdepth}{3}
 
+
+%----------------------------------------------------------------------------------------
+\newcommand{\margintocvideo}[1]{
+  \begingroup
+    % Set the style for section entries
+    \etocsetstyle{section}
+    {\parindent -5pt \parskip 0pt}
+    {\leftskip 0pt}
+    {\makebox[.5cm]{\etocnumber\autodot}
+    \etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\nobreak
+    \etocpage\par}
+    {}
+    % Set the style for subsection entries
+    \etocsetstyle{subsection}
+    {\parindent -5pt \parskip 0pt}
+    {\leftskip 0pt}
+    {\makebox[.5cm]{}
+    \etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\nobreak
+    \etocpage\par}
+    {}
+    % Set the global style of the toc
+    %\etocsettocstyle{}{}
+    %\etocsettocstyle{\normalfont\sffamily\normalsize}{}
+    \etocsettocstyle{\usekomafont{section}\small}{}
+    \etocsetnexttocdepth{\themargintocdepth}
+    % Print the table of contents in the margin
+    \marginnote{\localtableofcontents {\parindent -2pt \faVideoCamera\ \url{#1}}}
+  \endgroup
+}
+
+
 %----------------------------------------------------------------------------------------
 
 \begin{document}
