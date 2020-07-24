@@ -1,10 +1,12 @@
 %!TEX root = ../terrainbook.tex
 
+\setchapterpreamble[u]{\margintoc}
+\labch{topofeatures}
 \graphicspath{{topofeatures/}}
 
 
-\chapter{Topographic features}
-
+\chapter{Topographic features}%
+\label{chap:topofeatures}
 
 While a DTM is a (2.5D) surface, it can also be conceptualised as an aggregation of many \emph{topographic features} that are inter-related.
 Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but one can think of application-specific ones such as the navigational channels in bathymetry, buildings in city modelling, or dikes for flood modelling.
@@ -23,7 +25,7 @@ Since these differ from the data model used (TINs vs grids), we give examples fo
 \begin{figure}
   \centering
   \includegraphics[width=0.7\linewidth]{figs/slope_concept}
-  \caption{The slope at a given location $p_i$ is defined by the tangent plane $H_i$ to the surface. Here are 3 examples for a profile view of a terrain.}
+  \caption{The slope at a given location $p_i$ is defined by the tangent plane $H_i$ to the surface. Here are 3 examples for a profile view of a terrain.}%
 \label{fig:slope_concept}
 \end{figure}
 
@@ -32,7 +34,7 @@ What we casually refer to as ``slope'' has actually two components: (1) gradient
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/slope_aspect}
-  \caption{One DTM with contour lines, and the gradient and aspects concepts for a given location (blue cross).}
+  \caption{One DTM with contour lines, and the gradient and aspects concepts for a given location (blue cross).}%
 \label{fig:slope_aspect}
 \end{figure}
 
@@ -79,12 +81,12 @@ The same is applied if $p$ is directly on a vertex $v$ of the TIN: the average o
 If the terrain is represented as a regular grid (say of resolution $r$), then there exist several algorithm to obtain the slope at a given cell $c_{i,j}$.
 We list here a few common ones.
 It should be noticed that most algorithms use a 3$\times$3 kernel, \ie\ the value for the gradient/aspect at cell $c_{i,j}$ is computed by using (a subset of) the 8 neighbours.
-\begin{figure}
+\begin{marginfigure}
   \centering
-  \includegraphics[width=0.7\linewidth]{figs/slope_grid}
-  \caption{Left: Given a cell $c_{i,j}$, the 3$\times$3 nes its 8 neighbours. Right: a hypothetical case with some elevations; orange = aspect for method \#2 below, purple = aspect for method \#3 below.}
+  \includegraphics[width=\linewidth]{figs/slope_grid}
+  \caption{Top: Given a cell $c_{i,j}$, the 3$\times$3 nes its 8 neighbours. Bottom: a hypothetical case with some elevations; orange = aspect for method \#2 below, purple = aspect for method \#3 below.}%
 \label{fig:slope_grid}
-\end{figure}
+\end{marginfigure}
 
 
 %%%
@@ -142,8 +144,7 @@ A quadratic polynomial could for instance be defined:
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial f}{\partial x} = d$ and $\frac{\partial f}{\partial y} = e$.
 
 
-\begin{myfloat}
-  \begin{practice-box}
+\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
   The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
   After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
@@ -153,19 +154,18 @@ and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$
   This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
 
   The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
-  \end{practice-box}
-\end{myfloat}
+\end{kaobox}
 
 %%%
 \subsection{Hillshading}
 
 Hillshading is a technique used to help visualise the relief of a DTM (see Figure~\ref{fig:hillshade} for an example).
-\begin{figure}
+\begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/hillshade}
-  \caption{Left: a DTM visualised with height as a shade of blue. Right: when hillshading is applied.}
+  \caption{\textbf{Top}: a DTM visualised with height as a shade of blue. \textbf{Bottom}: when hillshading is applied.}%
 \label{fig:hillshade}
-\end{figure}
+\end{marginfigure}
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position.
 
@@ -181,7 +181,7 @@ As above and in Figure~\ref{fig:hillshade-params},
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/hillshade-params}
-  \caption{The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).}
+  \caption{The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).}%
 \label{fig:hillshade-params}
 \end{figure}
 for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{i,j}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rand is the horizon, $\pi$ rand is the zenith).
@@ -203,7 +203,7 @@ for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/feature_points}
-  \caption{\textbf{(a)} Peaks and pits. \textbf{(b)} A saddle point (Figure from \url{https://www.armystudyguide.com})}
+  \caption{\textbf{(a)} Peaks and pits. \textbf{(b)} A saddle point (Figure from \url{https://www.armystudyguide.com})}%
 \label{fig:feature_points}
 \end{figure}
 
@@ -234,22 +234,12 @@ From a mathematics point-of-view, it is a point for which the derivatives in ort
 If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most point in a terrain this will be 2, except for peaks/pits where this is 0.
 Figure~\ref{fig:saddle_contour}
 % TODO: hm, the red lines don't really look like contours to me. as far as i know countours shoulnd't intersect and these are intersecting at 10
-\begin{figure}
+\begin{marginfigure}
   \centering
-  \begin{subfigure}[b]{0.4\linewidth}
-    \centering
-    \includegraphics[page=1,width=\textwidth]{figs/saddle_contour}
-    \caption{}
-  \end{subfigure}
-  \qquad
-  \begin{subfigure}[b]{0.4\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
-    \caption{}
-  \end{subfigure}
-\caption{\textbf{(a)} A saddle point at elevation 10m, and its surrounding points. \textbf{(b)} the triangulation of the area is created and used to extract the contour line segments at 10m (red lines).}
+  \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
+  \caption{A saddle point at elevation 10m, and its surrounding points. The triangulation of the area is created and used to extract the contour line segments at 10m (red lines).}%
 \label{fig:saddle_contour}
-\end{figure}
+\end{marginfigure}
 shows an example for a point with an elevation of 10m, the contour lines at 10m is drawn by linearly interpolating along the edges of the TIN of the surrounding.
 
 
@@ -260,7 +250,7 @@ shows an example for a point with an elevation of 10m, the contour lines at 10m 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\linewidth]{figs/valley_ridge}
-  \caption{Edges in a TIN can be classified as valley, ridge, or neither}
+  \caption{Edges in a TIN can be classified as valley, ridge, or neither}%
 \label{fig:valley_ridge}
 \end{figure}
 Valleys and ridges are 1-dimensional features.
@@ -287,7 +277,7 @@ Because there are 2 types of curvatures and each have 3 potential values, there 
 \begin{figure}
   \centering
   \includegraphics[width=0.6\linewidth]{figs/curvatures}
-  \caption{Nine curvatures (Figure adapted from \citet{vanKreveld97}).}
+  \caption{Nine curvatures (Figure adapted from \citet{vanKreveld97}).}%
 \label{fig:curvatures}
 \end{figure}
 
@@ -319,28 +309,14 @@ If there are $>2$ segments, then $v$ is a saddle point and thus no curvatures ca
 
 % TODO B: why would we do this? what is its application?
 When each point has been assigned a curvature---a pair $(profile,plan)$---we can use for instance the Voronoi diagram, as shown in Figure~\ref{fig:vd}.
-\begin{figure}
+\begin{marginfigure}
   \centering
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[page=1,width=\textwidth]{figs/vd}
-    \caption{}
-  \end{subfigure}%
-  \qquad
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[page=2,width=\textwidth]{figs/vd}
-    \caption{}
-  \end{subfigure}
-  \qquad
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[page=3,width=\textwidth]{figs/vd}
-    \caption{}
-  \end{subfigure}%
-\caption{\textbf{(a)} Points from a TIN classified according to their curvatures (con\textbf{v}ex, con\textbf{c}ave, \textbf{f}lat). \textbf{(b)} The VD of the points. \textbf{(c)} The Voronoi edges between the cells having the same label are removed, to create polygons.}
+  \includegraphics[page=1,width=\linewidth]{figs/vd}
+  \includegraphics[page=2,width=\linewidth]{figs/vd}
+  \includegraphics[page=3,width=\linewidth]{figs/vd}
+  \caption{\textbf{Top:} Points from a TIN classified according to their curvatures (con\textbf{v}ex, con\textbf{c}ave, \textbf{f}lat). \textbf{Middle:} The VD of the points. \textbf{Bottom:} The Voronoi edges between the cells having the same label are removed, to create polygons.}%
 \label{fig:vd}
-\end{figure}
+\end{marginfigure}
 It suffices to remove the Voronoi edges incident to cells having the same label, and polygonal zones are obtained.
 
 
@@ -359,7 +335,6 @@ The formula to calculate the hillshade for one cell in a gridded DTM is from \ci
 Some algorithms have been developed to identify the features forming a DTM: \citet{Kweon94} and \citet{Schneider05} can identify simple features in DEMs (if they are pre-processed into bilinear patches); and \citet{Magillo09} and \citet{Edelsbrunner01-1} describe algorithms to perform the same, but directly on TINs.
 
 The algorithm to extract profile and plan curvatures from a TIN is taken from \citet{vanKreveld97}.
-
 
 % A DTM is formed by an aggregation of many features that are inter-related~\citep{Pfalz76,Kweon94,DoD99,Wood96}.
 
