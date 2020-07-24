@@ -4,44 +4,30 @@
 \labch{spatialextent}
 \graphicspath{{spatialextent/}}
 
-\chapter{Spatial extent of a point cloud}
+\chapter{Spatial extent of a point cloud}%
 \label{chap:spatialextent}
-
 
 
 Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
 That is, they need to define the shape of the region that best abstracts or represents the set of points.
 As seen in \reffig{fig:examples1} and \reffig{fig:examples1}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
 
-\begin{marginfigure}
+\begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{figs/ahn3-water.png}
-  \caption{An aerial point cloud with several canals (dark colour).}%
-\labfig{fig:examples1}
-\end{marginfigure} 
-\begin{marginfigure}
-  \centering
-  \includegraphics[width=\linewidth]{figs/facade.jpg}
-  \caption{A laserscan of a façade containing several windows.}%
-\labfig{fig:examples2}
-\end{marginfigure} 
-
-% \begin{figure}
-%   \centering
-%   \begin{subfigure}[b]{0.51\linewidth}
-%     \centering
-%     \includegraphics[width=\textwidth]{figs/ahn3-water.png}
-%     \caption{}
-%   \end{subfigure}%
-%   \qquad
-%   \begin{subfigure}[b]{0.33\linewidth}
-%     \centering
-%     \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
-%     \caption{}
-%   \end{subfigure}
-% \caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
-% \labfig{fig:examples}  
-% \end{figure}
+  \begin{subfigure}[b]{0.51\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/ahn3-water.png}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.33\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
+    \caption{}
+  \end{subfigure}
+\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
+\labfig{fig:examples}  
+\end{figure}
 
 %
 

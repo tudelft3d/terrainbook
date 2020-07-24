@@ -91,8 +91,8 @@ The term ``3D'' is misleading in a DTM context, as it is in a GIS context, becau
 \end{figure}
 
 
-\subsection{2.5D} 
-\labsec{ddd}
+\subsection{2.5D}%
+\index{2.5D} 
 What is usually used for modelling terrains: a surface (which is a topologically a 2D object; also called a 2-manifold) is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
 % \marginnote{Text of the note}
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
@@ -101,7 +101,8 @@ This is often what is used in GIS software, and both the well-known raster/grid 
 Observe that this restricts the real-world cases that can be modelled because, as shown in \reffig{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overfolds (\eg\ the balcony of a house) and caves are impossible to represent.
 As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of building could deviate by for instance 1 degree from the vertical. 
 
-\subsection{2.75D} 
+\subsection{2.75D}%
+\index{2.75D} 
 This also refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see \reffig{fig:dimgis}c).
 Thus, more than one $z$ value is allowed for a given location ($x,y$).
 The term '2.75D' was coined because: it is more than 2.5D, but less than 3D.
@@ -120,9 +121,9 @@ Such a representation is usually done with a 2.5D terrain (although a 2.75D coul
 %%%
 %
 \section{2.5D terrain == field}
-\index{field}
 
 In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a \emph{field}.
+\index{field}\marginnote{field}
 A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.
 It is modelled by a function mapping one point $p$ in $\mathbb{R}^2$ to the value of $a$, thus 
 \[
@@ -135,7 +136,7 @@ The function can theoretically have any number of independent variables, but in 
 The representation of a field in a computer faces many problems. 
 First, fields are continuous functions, and, by contrast, computers are discrete machines. 
 Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.
-\index{discretisation}
+\index{discretisation}\marginnote{discretisation}
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
 The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{chap:acquisition}).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
@@ -165,8 +166,7 @@ It is therefore less used in practice than the next strategy, which allows us to
 %%%
 \subsection{Strategy \#2: piecewise spatial models}
 This means that the spatial interpolation function used is \emph{piecewise} (instead of being global).
-\marginnote{piecewise function}
-\index{piecewise function}
+\marginnote{piecewise function}\index{piecewise function}
 That is, the two-dimensional domain of the terrain (the $xy$-plane) is tessellated, or partitioned, into several pieces, and for each of these we assign an interpolation function describing the spatial variation in its interior.
 This function is usually a simple mathematical function:
 \begin{itemize}
@@ -257,7 +257,7 @@ The subdivision is potentially better than that obtained with regular tessellati
 %
 
 The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.
-\index{TIN}
+\index{TIN}\marginnote{TIN: triangulated irregular network}
 
 As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
 \begin{marginfigure}
@@ -304,6 +304,7 @@ While both regular and irregular tessellations can be hierarchical, in the conte
 %
 
 A commonly used hierarchical structure in two dimensions is the \emph{quadtree}, which is a generic term for a family of tessellations that recursively subdivide the plane into four quadrants.
+\index{quadtree}\marginnote{quadtree}
 As is the case for grids, quadtrees are relatively easily implemented in a computer because they are trees in which each node has exactly four children, if any.
 
 %
