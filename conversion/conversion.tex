@@ -1,15 +1,18 @@
 %!TEX root = ../terrainbook.tex
 
-\graphicspath{{conversion/}}
 
-\chapter{Conversions between terrain representations}
+\setchapterpreamble[u]{\margintoc}
+\graphicspath{{conversion/}}
+\labch{conversion}
+
+\chapter{Conversions between terrain representations}%
 \label{chap:conversion}
 
 We consider in this chapter the following four terrain representations and discuss the conversions between them:
-\vspace{5mm}
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{figs/reps}
+\end{figure}
 
-\includegraphics[width=\linewidth]{figs/reps}
-\vspace{10mm}
 
 \begin{tabular}{>{\columncolor[gray]{0.9}}l|p{3.0cm}|p{3.0cm}|p{3.0cm}|p{3.0cm}}
 \toprule
@@ -24,16 +27,13 @@ isolines &  keep only vertices --- \emph{warning: `wedding cake' effect} (\texts
 % \newpage
 
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Conversion of PC/TIN to raster}%
+\section[PC/TIN $\rightarrow$ raster]{Conversion of PC/TIN to raster}%
 \label{sec:r-interpol}
 
 As shown in Figure~\ref{fig:r-interpolation},
-\begin{figure}[b]
+\begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/r-interpolation}
   \caption{\textbf{(a)} input sample points. \textbf{(b)} size/location of output raster. \textbf{(c)} 9 interpolations must be performed (at locations marked with $\circ$): at the middle of each cell. \textbf{(d)} the convex hull of the sample points show that 2 estimations are outside, thus no interpolation. \textbf{(e)} the resulting raster.}%
@@ -49,7 +49,7 @@ The interpolation method can be any of the ones described in Chapters~\ref{chap:
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Conversion to isolines}%
+\section[$\rightarrow$ isolines]{Conversion to isolines}%
 \label{sec:iso}
 
 Reading a contour map requires some skill, however it is considerably easier to learn to interpret a contour map than to manually draw one from a limited set of sample points.
@@ -176,7 +176,7 @@ For most other applications this can be problematic, for instance:
 
 To obtain structured segments, the simplest solution is to merge, as post-processing, the line segments based on their start and end vertices.
 Observe that the line segments will not be consistently oriented to form one polygon (see Figure~\ref{fig:isoline2}a), that is the orientation of the segments might need to be swapped.
-This can be done by simply starting with a segment $ab$, and searching for the other segment having $b$ as either start or end vertex, and continue until a component is formed (a polygon is formed), or until no segment can be found (the border of the dataset is reached, as shown in Figure~\ref{fig:isoline2}a).
+This can be done by simply starting with a segment \(ab\), and searching for the other segment having \(b\) as either start or end vertex, and continue until a component is formed (a polygon is formed), or until no segment can be found (the border of the dataset is reached, as shown in Figure~\ref{fig:isoline2}a).
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/isoline2}
@@ -186,8 +186,8 @@ This can be done by simply starting with a segment $ab$, and searching for the o
 
 %
 
-As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell $\tau_0$ intersecting the isoline at a given elevation, `tracing' the isoline by navigating from $\tau_0$ to the adjacent cell, and continuing until $\tau_0$ is visited again (or the border of the dataset is reached).
-To navigate to the adjacent cell, it suffices to identify the edge $\epsilon$ intersecting the isoline, and then navigating to the triangle/cell that is incident to $\epsilon$.
+As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell \(\tau_0\)intersecting the isoline at a given elevation, `tracing' the isoline by navigating from \(\tau_0\)to the adjacent cell, and continuing until \(\tau_0\)is visited again (or the border of the dataset is reached).
+To navigate to the adjacent cell, it suffices to identify the edge \(\epsilon\)intersecting the isoline, and then navigating to the triangle/cell that is incident to \(\epsilon\).
 It is possible that there is no adjacent cell, if the boundary of the convex hull is reached in a TIN for instance.
 This requires that the TIN be stored in a topological data structure in which the adjacency between the triangles is available (for a grid this is implied).
 
@@ -201,20 +201,20 @@ Simply visit triangle sequentially and mark them as `visited', when one triangle
 \subsection{Smoothness of the contours}
 \label{sec:smoothness-contours}
 
-The mathematical concept of the \emph{Implicit Function Theorem} states that a contour line extracted from a field $f$ will be no less smooth than $f$ itself.
+The mathematical concept of the \emph{Implicit Function Theorem} states that a contour line extracted from a field \(f\)will be no less smooth than \(f\) itself.
 In other words, obtaining smooth contour lines can be achieved by smoothing the field itself.
-Robin Sibson\footnote{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.63} goes further in stating that:
+Robin Sibson\sidenote{\url{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.63}} goes further in stating that:
 \begin{quote}
   \emph{`The eye is very good at detecting gaps and corners, but very bad at detecting discontinuities in derivatives higher than the first. 
   For contour lines to be accepted by the eye as a description of a function however smooth, they need to have continuously turning tangents, but higher order continuity of the supposed contours is not needed for them to be visually convincing.'}
 \end{quote}
-In brief, in practice we should use interpolant functions whose first derivative is continuous (\ie\ C$^1$) if we want to obtain smooth contours. 
-C$^0$ interpolants are not enough, and C$^2$ ones are not necessary.
+In brief, in practice we should use interpolant functions whose first derivative is continuous (\ie\ C\(^1\)) if we want to obtain smooth contours. 
+C\(^0\) interpolants are not enough, and C\(^2\) ones are not necessary.
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Simplification of a TIN}
+\section{Simplification of a TIN}%
 \label{sec:tin-simpl}
 
 The TIN simplification problem is:
@@ -352,7 +352,7 @@ However, decimation could be more efficient when you already have a detailed TIN
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Conversion isolines to TIN/raster creates the `wedding cake effect'}%
+\section[Wedding cake effect]{Conversion isolines to TIN/raster creates the `wedding cake effect'}%
 \label{sec:weddingcake}
 
 If the input is a set of isolines, then the simplest solution is, as shown in Figure~\ref{fig:wedding}a, to convert these to points and then use any of the interpolation methods previously discussed.
