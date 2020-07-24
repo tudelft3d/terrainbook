@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % kaobook
 % LaTeX Template
-% Version 1.0 (5/6/19)
+% Version 1.3 (18/2/20)
 %
 % This template originates from:
 % https://www.LaTeXTemplates.com
@@ -11,6 +11,7 @@
 %
 % Authors:
 % Federico Marotta (federicomarotta@mail.com)
+% Giuseppe Silano (g.silano89@gmail.com)
 % Based on the doctoral thesis of Ken Arroyo Ohori (https://3d.bk.tudelft.nl/ken/en)
 % and on the Tufte-LaTeX class.
 % Modified for LaTeX Templates by Vel (vel@latextemplates.com)
@@ -28,6 +29,7 @@
   fontsize=10pt, % Base font size
   twoside=true, % Use different layouts for even and odd pages (in particular, if twoside=true, the margin column will be always on the outside)
   %open=any, % If twoside=true, uncomment this to force new chapters to start on any page, not only on right (odd) pages
+  secnumdepth=1, % How deep to number headings. Defaults to 1 (sections)
   %chapterprefix=true, % Uncomment to use the word "Chapter" before chapter numbers everywhere they appear
   %chapterentrydots=true, % Uncomment to output dots from the chapter name to the page number in the table of contents
   numbers=noenddot, % Comment to output dots after chapter numbers; the most common values for this option are: enddot, noenddot and auto (see the KOMAScript documentation for an in-depth explanation)
@@ -44,6 +46,30 @@
 %\usepackage{showframe} % Uncomment to show boxes around the text area, margin, header and footer
 %\usepackage{showlabels} % Uncomment to output the content of \label commands to the document where they are used
 
+% Load the bibliography package
+% \usepackage{styles/kaobiblio}
+% \addbibresource{book-template.bib} % Bibliography file
+
+% Load the package for hyperreferences
+\usepackage{styles/kaorefs}
+
+% Load mathematical packages for theorems and related environments. NOTE: choose only one between 'mdftheorems' and 'plaintheorems'.
+\usepackage{styles/mdftheorems}
+%\usepackage{styles/plaintheorems}
+
+% \graphicspath{{images/}{./}} % Paths in which to look for images
+
+\makeindex[columns=3, title=Alphabetical Index, intoc] % Make LaTeX produce the files required to compile the index
+
+\makeglossaries % Make LaTeX produce the files required to compile the glossary
+
+\makenomenclature % Make LaTeX produce the files required to compile the nomenclature
+
+
+
+%----------------------------------------
+% HL
+%----------------------------------------
 
 % \usepackage[backend=biber,natbib=true,maxcitenames=2,maxbibnames=10,giveninits=true,isbn=false,doi=false,url=false,defernumbers=true,style=numeric,sorting=ydnt]{biblatex} 
 \usepackage[backend=bibtex,natbib=true,style=authoryear,citestyle=authoryear,maxcitenames=2,maxbibnames=10,giveninits=true,isbn=false,doi=false]{biblatex}
@@ -68,26 +94,6 @@
   %Create a marginnote for each item
 }
 
-
-% Load mathematical packages for theorems and related environments. NOTE: choose only one between 'mdftheorems' and 'plaintheorems'.
-\usepackage{styles/mdftheorems}
-%\usepackage{styles/plaintheorems}
-
-\graphicspath{{figs/}} % Paths in which to look for images
-
-\makeindex[columns=3, title=Alphabetical Index, intoc] % Make LaTeX produce the files required to compile the index
-
-\makeglossaries % Make LaTeX produce the files required to compile the glossary
-
-\makenomenclature % Make LaTeX produce the files required to compile the nomenclature
-
-% Reset sidenote counter at chapters
-%\counterwithin*{sidenote}{chapter}
-
-
-%----------------------------------------
-% HL
-%----------------------------------------
 \renewcommand{\ie}{ie}
 \renewcommand{\eg}{eg}
 % \newcommand{\reffig}[1]{Figure~\ref{#1}}
@@ -104,36 +110,6 @@
 
 
 %----------------------------------------------------------------------------------------
-\newcommand{\margintocvideo}[1]{
-  \begingroup
-    % Set the style for section entries
-    \etocsetstyle{section}
-    {\parindent -5pt \parskip 0pt}
-    {\leftskip 0pt}
-    {\makebox[.5cm]{\etocnumber\autodot}
-    \etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\nobreak
-    \etocpage\par}
-    {}
-    % Set the style for subsection entries
-    \etocsetstyle{subsection}
-    {\parindent -5pt \parskip 0pt}
-    {\leftskip 0pt}
-    {\makebox[.5cm]{}
-    \etocname\nobreak\leaders\hbox{\hbox to 1.5ex {\hss.\hss}}\hfill\nobreak
-    \etocpage\par}
-    {}
-    % Set the global style of the toc
-    %\etocsettocstyle{}{}
-    %\etocsettocstyle{\normalfont\sffamily\normalsize}{}
-    \etocsettocstyle{\usekomafont{section}\small}{}
-    \etocsetnexttocdepth{\themargintocdepth}
-    % Print the table of contents in the margin
-    \marginnote{\localtableofcontents {\parindent -2pt \faVideoCamera\ \url{#1}}}
-  \endgroup
-}
-
-
-%----------------------------------------------------------------------------------------
 
 \begin{document}
 
@@ -143,7 +119,7 @@
 
 
 \title{Computational modelling of terrains}
-\author{Hugo Ledoux \and Ken Arroyo Ohori \and Ravi Peters}
+\author{Hugo Ledoux \hspace{7mm} Ken Arroyo Ohori \hspace{7mm} Ravi Peters}
 \date{v0.7.0-beta1}
 
 \publishers{\includegraphics[width=\linewidth]{front-back/quebec.jpg}}

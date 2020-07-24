@@ -1,5 +1,5 @@
 %% environments.sty
-%% Copyright 2019 Federico Marotta
+%% Copyright 2020 Federico Marotta
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -21,7 +21,6 @@
 %	ITEMS
 %----------------------------------------------------------------------------------------
 
-\RequirePackage{amssymb}
 \renewcommand{\labelitemi}{\small$\blacktriangleright$}
 \renewcommand{\labelitemii}{\textbullet}
 \RequirePackage{enumitem}
@@ -55,7 +54,7 @@
 	%roundcorner=0pt,
 	%font={},
 	%frametitlefont={},
-	% frametitlerule=true,
+	frametitlerule=true,
 	linecolor=black,
 	%backgroundcolor=LightBlue,
 	fontcolor=black,
@@ -64,8 +63,8 @@
 
 \newmdenv[
 	style=kaoboxstyle,
-	backgroundcolor=RoyalBlue!15!White,
-	frametitlebackgroundcolor=RoyalBlue!15!White,
+	backgroundcolor=RoyalBlue!25!White,
+	frametitlebackgroundcolor=RoyalBlue!25!White,
 ]{kaobox}
 
 %----------------------------------------------------------------------------------------
@@ -80,7 +79,7 @@
 }
 
 \newcounter{kaocounter}
-\numberwithin{kaocounter}{section}
+\counterwithin{kaocounter}{section}
 \newcommand*{\kaocounterformat}{% Format for the caption
 	Comment~\thekaocounter\csname autodot\endcsname}
 \newcommand*{\fnum@kaocounter}{\kaocounterformat}

@@ -1,5 +1,5 @@
 %% packages.sty
-%% Copyright 2019 Federico Marotta
+%% Copyright 2020 Federico Marotta
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -25,18 +25,6 @@
 % Listings code
 \RequirePackage{listings} % Code
 %\RequirePackage{minted}
-\RequirePackage{morewrites}
-
-\newsavebox\mycap
-\DeclareCaptionFormat{llap}{%
-	\begin{lrbox}{\mycap}%
-	\begin{minipage}{\marginparwidth}%
-	\@margin@par #1:#2#3%
-	\end{minipage}%
-	\end{lrbox}%
-	\marginnote[0.2cm]{\usebox\mycap}%
-}
-\captionsetup[lstlisting]{format=llap,labelsep=space,singlelinecheck=no,belowskip=-0.6cm}
 
 \definecolor{listingkeywords}{rgb}{0.0, 0.5, 0.0}
 \definecolor{listingidentifiers}{rgb}{0, 0, 0}
