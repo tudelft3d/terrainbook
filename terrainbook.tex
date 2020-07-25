@@ -1,40 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% kaobook
-% LaTeX Template
-% Version 1.3 (18/2/20)
-%
-% This template originates from:
-% https://www.LaTeXTemplates.com
-%
-% For the latest template development version and to make contributions:
-% https://github.com/fmarotta/kaobook
-%
-% Authors:
-% Federico Marotta (federicomarotta@mail.com)
-% Giuseppe Silano (g.silano89@gmail.com)
-% Based on the doctoral thesis of Ken Arroyo Ohori (https://3d.bk.tudelft.nl/ken/en)
-% and on the Tufte-LaTeX class.
-% Modified for LaTeX Templates by Vel (vel@latextemplates.com)
-%
-% License:
-% CC0 1.0 Universal (see included MANIFEST.md file)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
 
 \documentclass[
   fontsize=10pt, % Base font size
   twoside=true, % Use different layouts for even and odd pages (in particular, if twoside=true, the margin column will be always on the outside)
-  %open=any, % If twoside=true, uncomment this to force new chapters to start on any page, not only on right (odd) pages
+  % open=any, % If twoside=true, uncomment this to force new chapters to start on any page, not only on right (odd) pages
   secnumdepth=1, % How deep to number headings. Defaults to 1 (sections)
   %chapterprefix=true, % Uncomment to use the word "Chapter" before chapter numbers everywhere they appear
   %chapterentrydots=true, % Uncomment to output dots from the chapter name to the page number in the table of contents
   numbers=noenddot, % Comment to output dots after chapter numbers; the most common values for this option are: enddot, noenddot and auto (see the KOMAScript documentation for an in-depth explanation)
-  %draft=true, % If uncommented, rulers will be added in the header and footer
-  %overfullrule=true, % If uncommented, overly long lines will be marked by a black box; useful for correcting spacing problems
+  % draft=true, % If uncommented, rulers will be added in the header and footer
+  % overfullrule=true, % If uncommented, overly long lines will be marked by a black box; useful for correcting spacing problems
 ]{kaobook}
 
 % Choose the language
@@ -205,17 +179,17 @@
 \mainmatter 
 \setchapterstyle{kao} % Choose the default chapter heading style
 
-% \include{whatisterrain/whatisterrain} %- 01
+\include{whatisterrain/whatisterrain} %- 01
   % \include{acquisition/acquisition} %- 02
   % \include{dtvd/dtvd} %- 03
-% \include{interpol/interpol} %- 04
+\include{interpol/interpol} %- 04
   % \include{kriging/kriging} %- 05
 \include{topofeatures/topofeatures} %- 06
   % \include{runoff/runoff} %- 07
-% \include{conversion/conversion} %- 08
-% \include{spatialextent/spatialextent} %- 09
-% \include{massive/massive} %- 10
-% \include{visibility/visibility} %- 11
+\include{conversion/conversion} %- 08
+\include{spatialextent/spatialextent} %- 09
+\include{massive/massive} %- 10
+\include{visibility/visibility} %- 11
   % \include{pcprocessing/pcprocessing} %- 12
   % \include{bathymetry/bathymetry} %- 13
 %----------------------------------------------------------------------------------------
