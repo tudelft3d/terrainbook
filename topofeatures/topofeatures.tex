@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
 \labch{topofeatures}
@@ -24,7 +25,7 @@ Since these differ from the data model used (TINs vs grids), we give examples fo
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\linewidth]{figs/slope_concept}
+  \includegraphics[width=\linewidth]{figs/slope_concept}
   \caption{The slope at a given location $p_i$ is defined by the tangent plane $H_i$ to the surface. Here are 3 examples for a profile view of a terrain.}%
 \label{fig:slope_concept}
 \end{figure}
@@ -84,7 +85,7 @@ It should be noticed that most algorithms use a 3$\times$3 kernel, \ie\ the valu
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/slope_grid}
-  \caption{Top: Given a cell $c_{i,j}$, the 3$\times$3 nes its 8 neighbours. Bottom: a hypothetical case with some elevations; orange = aspect for method \#2 below, purple = aspect for method \#3 below.}%
+  \caption{\textbf{(top)} Given a cell $c_{i,j}$, the 3$\times$3 kernel and its 8 neighbours. \textbf{(bottom)} A hypothetical case with some elevations; orange = aspect for method \#2 below, purple = aspect for method \#3 below.}%
 \label{fig:slope_grid}
 \end{marginfigure}
 
@@ -125,7 +126,7 @@ For the case in Figure~\ref{fig:slope_grid}, the aspect would be 194.0\degree\ a
 
 
 %%%
-\paragraph{4. Local polynomial fitting.}
+\paragraph{4. Local polynomial fitting.}%
 \label{sec:polynomial}
 
 Based on the 9 elevation points, it is possible to fit a polynomial (as explained in \refchap{chap:interpol}) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
@@ -213,7 +214,7 @@ for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{
 A point $p$ whose surrounding is formed only of points that are of lower elevation is a peak.
 The size and shape of the surrounding is dependent on the application and on the data model used to represent the terrain.
 If a grid is used, this surrounding could be the 8 neighbours; if a TIN is used they could be the vertices that of the triangles incident to $p$.
-Observe that a peak can be local, that is one point that happens to be a few cm higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
+Observe that a peak can be local, that is one point that happens to be a few centimetres higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
 A peak is therefore on the scale of the data.
 
 The contour line through the $p$ does not exist.
@@ -249,7 +250,7 @@ shows an example for a point with an elevation of 10m, the contour lines at 10m 
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\linewidth]{figs/valley_ridge}
+  \includegraphics[width=\linewidth]{figs/valley_ridge}
   \caption{Edges in a TIN can be classified as valley, ridge, or neither}%
 \label{fig:valley_ridge}
 \end{figure}
@@ -276,7 +277,7 @@ The curvature at a point $p$ is often decomposed into types:
 Because there are 2 types of curvatures and each have 3 potential values, there are 9 possible options (as Figure~\ref{fig:curvatures} shows).
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\linewidth]{figs/curvatures}
+  \includegraphics[width=0.9\linewidth]{figs/curvatures}
   \caption{Nine curvatures (Figure adapted from \citet{vanKreveld97}).}%
 \label{fig:curvatures}
 \end{figure}
@@ -314,7 +315,7 @@ When each point has been assigned a curvature---a pair $(profile,plan)$---we can
   \includegraphics[page=1,width=\linewidth]{figs/vd}
   \includegraphics[page=2,width=\linewidth]{figs/vd}
   \includegraphics[page=3,width=\linewidth]{figs/vd}
-  \caption{\textbf{Top:} Points from a TIN classified according to their curvatures (con\textbf{v}ex, con\textbf{c}ave, \textbf{f}lat). \textbf{Middle:} The VD of the points. \textbf{Bottom:} The Voronoi edges between the cells having the same label are removed, to create polygons.}%
+  \caption{\textbf{(top)} Points from a TIN classified according to their curvatures (con\textbf{v}ex, con\textbf{c}ave, \textbf{f}lat). \textbf{(middle)} The VD of the points. \textbf{(bottom)} The Voronoi edges between the cells having the same label are removed, to create polygons.}%
 \label{fig:vd}
 \end{marginfigure}
 It suffices to remove the Voronoi edges incident to cells having the same label, and polygonal zones are obtained.
