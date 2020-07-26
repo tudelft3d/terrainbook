@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 
 \setchapterpreamble[u]{\margintoc}
@@ -93,19 +94,19 @@ The basic algorithm for extracting one isoline is shown in Algorithm~\ref{algo:i
       add $\chi$ to $segmentList$\;
     }
   }
-  \caption{Simple extraction of one isoline}
+  \caption{Simple extraction of one isoline}%
 \label{algo:iso}
 \end{algorithm} 
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-square}
-\caption{Different cases when extracting an isoline at elevation 10m for a regular grid. The grey values are the elevation of the vertices forming one regular cell, and the blue lines and vertices are the ones extracted for that cell.}
+\caption{Different cases when extracting an isoline at elevation 10m for a regular grid. The grey values are the elevation of the vertices forming one regular cell, and the blue lines and vertices are the ones extracted for that cell.}%
 \label{fig:rasterconfs}
 \end{figure}
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-tr}
-\caption{Different cases when extracting an isoline at elevation 10m for a TIN. The grey values are the elevation of the vertices forming one triangle, and the blue lines and vertices are the ones extracted for that triangle.}
+\caption{Different cases when extracting an isoline at elevation 10m for a TIN\@. The grey values are the elevation of the vertices forming one triangle, and the blue lines and vertices are the ones extracted for that triangle.}%
 \label{fig:isoline-tr}
 \end{figure}
 Note that since the algorithm contours every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
@@ -135,7 +136,7 @@ This can be resolved by simply picking a random option or consistently choose on
 
 
 %%%
-\subsection{Conversion TIN to isolines}
+\subsection{Conversion TIN to isolines}%
 \label{sec:tin-iso}
 
 Since a triangle has one fewer vertex/edge than a square grid cell, there are less possible intersection cases (Figure~\ref{fig:isoline-tr}) and, more importantly, there is no ambiguous case. 
@@ -187,7 +188,7 @@ This can be done by simply starting with a segment \(ab\), and searching for the
 %
 
 As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell \(\tau_0\)intersecting the isoline at a given elevation, `tracing' the isoline by navigating from \(\tau_0\)to the adjacent cell, and continuing until \(\tau_0\)is visited again (or the border of the dataset is reached).
-To navigate to the adjacent cell, it suffices to identify the edge \(\epsilon\)intersecting the isoline, and then navigating to the triangle/cell that is incident to \(\epsilon\).
+To navigate to the adjacent cell, it suffices to identify the edge \(\epsilon\) intersecting the isoline, and then navigating to the triangle/cell that is incident to \(\epsilon\).
 It is possible that there is no adjacent cell, if the boundary of the convex hull is reached in a TIN for instance.
 This requires that the TIN be stored in a topological data structure in which the adjacency between the triangles is available (for a grid this is implied).
 
@@ -198,7 +199,7 @@ Simply visit triangle sequentially and mark them as `visited', when one triangle
 
 
 %%%
-\subsection{Smoothness of the contours}
+\subsection{Smoothness of the contours}%
 \label{sec:smoothness-contours}
 
 The mathematical concept of the \emph{Implicit Function Theorem} states that a contour line extracted from a field \(f\)will be no less smooth than \(f\) itself.
@@ -243,8 +244,8 @@ Notice that $\mathcal{T}$ does not contain $p$ as a vertex.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.85\linewidth]{figs/mesh_simplification}
-	\caption{The importance measure of a point can be expressed by its vertical error. When this error is greater than a given threshold $\epsilon_{max}$, the point is kept ($p_1$), else it is discarded ($p_2$).}
-	\label{fig:meshsimplification}
+	\caption{The importance measure of a point can be expressed by its vertical error. When this error is greater than a given threshold $\epsilon_{\max}$, the point is kept ($p_1$), else it is discarded ($p_2$).}%
+\label{fig:meshsimplification}
 \end{figure}
 
 
@@ -259,16 +260,16 @@ In a refinement algorithm, we do the opposite: we start with a very simple TIN, 
 Here we describe an iterative refinement algorithm based on greedy insertion\footnote{A greedy algorithm is one that divides a complex problem into a series of easier steps, then solves it by making the locally optimal choice at each step, and never goes back on this choice.
 In our case the heuristic is the importance measure, \ie\ the vertical error. See \url{https://en.wikipedia.org/wiki/Greedy_algorithm}.}. 
 It begins with a simple triangulation of the spatial extent and, at each iteration, finds the input point with highest importance---the highest vertical error---in the current TIN and inserts it as a new vertex in the triangulation. 
-The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $\epsilon_{max}$. Algorithm~\ref{algo:tin-simp:ref} shows the pseudo-code.
+The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $\epsilon_{\max}$. Algorithm~\ref{algo:tin-simp:ref} shows the pseudo-code.
 It is also possible to insert only a certain percentage of the number of input points, \eg\ we might want to keep only 10\% of them.
 
 \begin{algorithm}[tb] 
-	\KwIn{A set of input points $S$, and the simplification threshold $\epsilon_{max}$}
-	\KwOut{A triangulation $\mathcal{T}$ that consists of a subset of $S$ and that satisfies $\epsilon_{max}$}
+	\KwIn{A set of input points $S$, and the simplification threshold $\epsilon_{\max}$}
+	\KwOut{A triangulation $\mathcal{T}$ that consists of a subset of $S$ and that satisfies $\epsilon_{\max}$}
 	Construct an initial triangulation $\mathcal{T}$ that covers the 2D bounding box of $S$ \;
 	$\epsilon \leftarrow \infty$ \;
 	% \tcc{keep iterating as long as the maximum vertical error $\epsilon$ is greater than our threshold $\epsilon_{max}$:}
-	\While{$\epsilon > \epsilon_{max}$}
+	\While{$\epsilon > \epsilon_{\max}$}
 	{
 		% \tcc{recompute all errors and find the current maximum error $\epsilon$ and the corresponding point $q$:}
 		$\epsilon \leftarrow$ 0 \;
@@ -286,8 +287,8 @@ It is also possible to insert only a certain percentage of the number of input p
 		insert into $\mathcal{T}$ the point $q$ \;
 		remove $q$ from $S$ \;
 	}
-	\caption{TIN simplification by refinement}
-	\label{algo:tin-simp:ref}
+	\caption{TIN simplification by refinement}%
+\label{algo:tin-simp:ref}
 \end{algorithm}
 
 \subsubsection{TIN simplification by decimation}
@@ -300,12 +301,12 @@ The implementation of the decimation algorithm is similar to the refinement algo
 
 Algorithm~\ref{algo:tin-simp:dec} shows the pseudo-code for the TIN decimation algorithm.
 \begin{algorithm}[tb] 
-	\KwIn{A set of input points $S$, and the simplification threshold $\epsilon_{max}$}
-	\KwOut{A triangulation $\mathcal{T}$ that consists of a subset of $S$ and satisfies $\epsilon_{max}$}
+	\KwIn{A set of input points $S$, and the simplification threshold $\epsilon_{\max}$}
+	\KwOut{A triangulation $\mathcal{T}$ that consists of a subset of $S$ and satisfies $\epsilon_{\max}$}
 	$\mathcal{T} \leftarrow$ a triangulation of $S$ \;
 	$\epsilon \leftarrow 0$ \;
 	% \tcc{keep iterating as long as the maximum vertical error $\epsilon$ is smaller than our threshold $\epsilon_{max}$:}
-	\While{$\epsilon < \epsilon_{max}$}
+	\While{$\epsilon < \epsilon_{\max}$}
 	{
 		% \tcc{recompute all errors and find the current minimum error $\epsilon$ and the corresponding point $q$:}
 		$\epsilon \leftarrow \infty$  \;
@@ -324,8 +325,8 @@ Algorithm~\ref{algo:tin-simp:dec} shows the pseudo-code for the TIN decimation a
 		\tcc{remove the point $q$ that has the smallest error:}
 		remove from $\mathcal{T}$ the point $q$ \;
 	}
-	\caption{TIN simplification by decimation}
-	\label{algo:tin-simp:dec}
+	\caption{TIN simplification by decimation}%
+\label{algo:tin-simp:dec}
 \end{algorithm}
 It should be noticed that the implementation of this algorithm requires a method to delete/remove a vertex from a (Delaunay) triangulation, and that many libraries do not have one\footnote{The implementation in SciPy does not allow to remove one vertex, but CGAL does (\url{www.cgal.org})}.
 
@@ -340,10 +341,10 @@ As can be seen in \refchap{chap:dtvd}, the insertion/deletion of a single point/
 %
 
 While both methods will allow us to obtain similar results, the properties of the resulting terrain are different.
-Consider the threshold $\epsilon_{max}$ that is used to stop the simplification process.
-If the refinement method is used, then it is guaranteed that the final surface of the terrain will be at a maximum of $\epsilon_{max}$ (vertical distance) to the `real surface' because all the points of the input are considered.
-However, with the decimation method, after a vertex is deleted from the TIN, it is never considered again when assessing whether a given vertex has an error larger than $\epsilon_{max}$. 
-It is thus possible that the final surface does not lie within $\epsilon_{max}$, although for normal distribution of points, it should not deviate too much from it.
+Consider the threshold $\epsilon_{\max}$ that is used to stop the simplification process.
+If the refinement method is used, then it is guaranteed that the final surface of the terrain will be at a maximum of $\epsilon_{\max}$ (vertical distance) to the `real surface' because all the points of the input are considered.
+However, with the decimation method, after a vertex is deleted from the TIN, it is never considered again when assessing whether a given vertex has an error larger than $\epsilon_{\max}$. 
+It is thus possible that the final surface does not lie within $\epsilon_{\max}$, although for normal distribution of points, it should not deviate too much from it.
 
 %
 
