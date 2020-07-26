@@ -1,5 +1,8 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 36
+% chktex-file 46
 
+\setchapterpreamble[u]{\margintoc}
 \graphicspath{{dtvd/}}
 
 
@@ -7,7 +10,7 @@
 \newcommand{\walk}{W\textsc{alk}\xspace}
 \newcommand{\Incircle}{I\textsc{n}C\textsc{ircle}\xspace}
 
-\chapter{Triangulations \& Voronoi diagrams}%
+\chapter{Triangulations \& \\Voronoi diagrams}%
 \label{chap:dtvd}
 
 Delaunay triangulations (DT) and Voronoi diagrams (VD) are fundamental data structures for terrains, both for their representation and for their processing (\eg\ interpolation and several operations on terrains and point clouds are based on one of these structures).
@@ -15,9 +18,10 @@ Delaunay triangulations (DT) and Voronoi diagrams (VD) are fundamental data stru
 %
 
 This chapter formally defines the VD and DT in two dimensions, and introduces several concepts in computational geometry and combinatorial topology that are needed to understand, construct, and manipulate them in practice. 
+Delaunay triangulations with constraints are also discussed.
 
 
-\section{The Voronoi Diagram}
+\section{Voronoi diagram}
 
 Let $S$ be a set of points in $\mathbb{R}^2$ (the two-dimensional Euclidean space). 
 The Voronoi cell of a point $p \in S$, defined $\mathcal{V}_{p}$, is the set of points $x \in \mathbb{R}^2$ that are closer to $p$ than to any other point in $S$; that is:
@@ -28,26 +32,31 @@ The union of the Voronoi cells of all generating points $p \in S$ form the Voron
 If $S$ contains only two points $p$ and $q$, then VD($S$) is formed by a single line defined by all the points $x \in \mathbb{R}^2$ that are equidistant from $p$ and $q$. 
 This line is the perpendicular bisector of the line segment from $p$ to $q$, and splits the plane into two half-planes. 
 $\mathcal{V}_p$ is formed by the half-plane containing $p$, and $\mathcal{V}_q$ by the one containing $q$. 
-As shown in Figure~\ref{fig:halfspaces}a,
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\textwidth]{figs/halfspaces}
-  \caption{\textbf{(a)} The Voronoi cell $\mathcal{V}_p$ is formed by the intersection of all the half-planes between $p$ and the other points. \textbf{(b)} The VD for a set $S$ of points in the plane (the black points). The Voronoi vertices (white points) are located at the centre of the circle passing through three points in $S$, provided that this circle contains no other points in $S$ in its interior.} 
+As shown in Figure~\ref{fig:halfspaces},
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/halfspaces}
+  \caption{The Voronoi cell $\mathcal{V}_p$ is formed by the intersection of all the half-planes between $p$ and the other points. }% 
 \label{fig:halfspaces}
-\end{figure}
+\end{marginfigure}
 when $S$ contains more than two points (let us say it contains $n$ points), the Voronoi cell of a given point $p \in S$ is obtained by the intersection of $n-1$ half-planes defined by $p$ and the other points $q \in S$. 
 That means that $\mathcal{V}_{p}$ is always convex. 
 Notice also that every point $x \in \mathbb{R}^2$ has at least one nearest point in $S$, which means that VD($S$) covers the entire space.
 
 %
 
-As shown in Figure~\ref{fig:halfspaces}b, the VD of a set $S$ of points in $\mathbb{R}^2$ is a planar graph. 
+As shown in Figure~\ref{fig:vd_circle}, 
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/vd_circle}
+  \caption{The VD for a set $S$ of points in the plane (the black points). The Voronoi vertices (white points) are located at the centre of the circle passing through three points in $S$, provided that this circle contains no other points in $S$ in its interior.}% 
+\label{fig:vd_circle}
+\end{marginfigure}
+the VD of a set $S$ of points in $\mathbb{R}^2$ is a planar graph. 
 Its edges are the perpendicular bisectors of the line segments of pairs of points in $S$, and its vertices are located at the centres of the circles passing through three points in $S$. 
 The VD in $\mathbb{R}^2$ can also be seen as a two-dimensional cell complex where each 2-cell is a (convex) polygon (see Figure~\ref{fig:vd2d}). 
 \begin{figure}
   \centering
-  \includegraphics[page=3,width=0.6\textwidth]{figs/vd2d}
-  \caption{VD of a set of points in the plane (clipped by a box). The point $p$ (whose Voronoi cell is dark grey) has seven neighbouring cells (light grey).} 
+  \includegraphics[page=3,width=\textwidth]{figs/vd2d}
+  \caption{VD of a set of points in the plane (clipped by a box). The point $p$ (whose Voronoi cell is dark grey) has seven neighbouring cells (light grey).}% 
 \label{fig:vd2d}
 \end{figure}
 Two Voronoi cells, $\mathcal{V}_{p}$ and $\mathcal{V}_{q}$, lie on the opposite sides of the perpendicular bisector separating the points $p$ and $q$. 
@@ -57,15 +66,15 @@ Two Voronoi cells, $\mathcal{V}_{p}$ and $\mathcal{V}_{q}$, lie on the opposite 
 The VD has many interesting properties, what follows is a list of the most relevant properties in the context of this course.
 \begin{description}
   \item[Size:] if $S$ has $n$ points, then VD($S$) has exactly $n$ Voronoi cells since there is a one-to-one mapping between the points and the cells.
-  \item[Voronoi vertices:] a Voronoi vertex is equidistant from 3 data points. Observe for instance in Figure~\ref{fig:halfspaces}b that the Voronoi vertices are at the centre of circles.
+  \item[Voronoi vertices:] a Voronoi vertex is equidistant from 3 data points. Observe for instance in Figure~\ref{fig:vd_circle} that the Voronoi vertices are at the centre of circles.
   \item[Voronoi edges:] a Voronoi edge is equidistant from 2 points.
-  \item[Convex hull:] let $S$ be a set of points in $\mathbb{R}^2$, and $p$ one of its points. $\mathcal{V}_{p}$ is unbounded if $p$ bounds conv($S$). Otherwise, $\mathcal{V}_{p}$ is the convex hull of its Voronoi vertices. Observe that in Figure~\ref{fig:halfspaces}b, only the point in the middle has a bounded Voronoi cell.
+  \item[Convex hull:] let $S$ be a set of points in $\mathbb{R}^2$, and $p$ one of its points. $\mathcal{V}_{p}$ is unbounded if $p$ bounds conv($S$). Otherwise, $\mathcal{V}_{p}$ is the convex hull of its Voronoi vertices. Observe that in Figure~\ref{fig:vd_circle}, only the point in the middle has a bounded Voronoi cell.
 \end{description}
   
 
 %%%
 %
-\section{The Delaunay Triangulation}
+\section{Delaunay triangulation}%
 \label{sec:dt_definition}
 
 Let $\mathcal{D}$ be the VD of a set $S$ of points in $\mathbb{R}^2$. 
@@ -74,23 +83,15 @@ Because the vertices in $\mathcal{D}$ are of degree 3 (3 edges connected to it),
 $\mathcal{T}$ is actually called the Delaunay triangulation (DT) of $S$, and, as shown in Figure~\ref{fig:dt2da}, 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.45\linewidth}
-    \includegraphics[width=\textwidth]{figs/dt2d_2}
-    \caption{}\label{fig:dt2da}
-  \end{subfigure}%
-  \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
-    \includegraphics[width=\textwidth]{figs/duality_2d}
-    \caption{}\label{fig:dt2db}
-  \end{subfigure}%
-  \caption{\textbf{(a)} The DT of a set of points in the plane (same point set as Figure~\ref{fig:vd2d}). \textbf{(b)} Both the DT (black lines) and the VD (dashed lines) of a set of points in the plane.}
-\label{fig:dt2d}
+   \includegraphics[page=4,width=\textwidth]{figs/vd2d}
+  \caption{The DT of a set of points in the plane (same point set as Figure~\ref{fig:vd2d}). The green circles show 2 examples of empty circumcircles.}%
+\label{fig:dt2da}
 \end{figure}
 partitions the plane into triangles---where the vertices of the triangles are the points in $S$ generating each Voronoi cell---that satisfy the \emph{empty circumcircle} test (a circle is said to be \emph{empty} when no points are in its interior). 
 If $S$ is in general position, then DT($S$) is unique.
 
 %
-\subsection{Convex Hull}
+\subsection{Convex hull}%
 \label{sec:convexhull}
 
 The DT of a set $S$ of points subdivides completely conv($S$), \ie\ the union of all the triangles in DT($S$) is conv($S$).
@@ -100,7 +101,7 @@ It is best understood with the elastic band analogy: imagine each point in $\mat
 \begin{figure}
   \centering
   \includegraphics[width=0.4\textwidth]{figs/convex_hull}
-  \caption{The convex hull of a set of points in $\mathbb{R}^2$.} 
+  \caption{The convex hull of a set of points in $\mathbb{R}^2$.}% 
 \label{fig:convex_hull}
 \end{figure}
 When released, the rubber band will assume the shape of the convex hull of the nails. 
@@ -108,7 +109,7 @@ Notice that conv($S$) is not only formed by the edges connecting the points (the
 
 
 %
-\subsection{Local Optimality}
+\subsection{Local optimality}
 Let $\mathcal{T}$ be a triangulation of $S$ in $\mathbb{R}^2$. 
 An edge $\sigma$ is said to be \emph{locally} Delaunay if it either:
 \begin{description}
@@ -127,8 +128,8 @@ Figure~\ref{fig:local:b} gives an example that violates the second criteria: bot
 		\includegraphics[width=\textwidth,page=2]{figs/local}
 		\caption{$\sigma$ is not locally Delaunay}\label{fig:local:b}
 	\end{subfigure}%
-	\caption{A quadrilateral that can be triangulated in two different ways. Only \subref{fig:local:a} is Delaunay.}
-	\label{fig:local}
+	\caption{A quadrilateral that can be triangulated in two different ways. Only \subref{fig:local:a} is Delaunay.}%
+\label{fig:local}
 \end{figure}
 In an arbitrary triangulation, not every edge that is locally Delaunay is necessarily an edge of DT($S$), but local optimality implies globally optimality in the case of the DT:
 \begin{quote}
@@ -139,14 +140,14 @@ This has serious implications as the DT---and its dual---are locally modifiable,
 
 %%%
 %
-\subsection{Angle Optimality}
+\subsection{Angle optimality}
 The DT in two dimensions has a very important property that is useful in applications such as finite element meshing or interpolation: the \emph{max-min angle optimality}. Among all the possible triangulations of a set $S$ of points in $\mathbb{R}^2$, DT($S$) maximises the minimum angle (max-min property), and also minimises the maximum circumradii. 
 In other words, it creates triangles that are as equilateral as possible. 
 Notice here that maximising the minimum angle is not the same as minimising the maximum, and the DT only guarantees the former.
 
 
 %%%
-\subsection{Lifting on the paraboloid}
+\subsection{Lifting on the paraboloid}%
 \label{sec:parabolic_lifting}
 
 There exists a close relationship between DTs in $\mathbb{R}^{2}$ and convex polyhedra in $\mathbb{R}^{3}$. 
@@ -158,31 +159,26 @@ Observe that the paraboloid in three dimensions defines a surface whose vertical
 
 %
 
-The relationship is the following: every triangle of the lower envelope of conv($S^{+}$) projects to a triangle of the Delaunay triangulation of $S$; this is illustrated in Figure~\ref{fig:paraboloid} for a simple DT. 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.4\textwidth]{figs/paraboloid}
-  \caption{The parabolic lifting map for a set $S$ of points $\mathbb{R}^2$.}
+The relationship is the following: every triangle of the lower envelope of conv($S^{+}$) projects to a triangle of the Delaunay triangulation of $S$; this is illustrated in Figure~\ref{fig:paraboloid} for a simple DT\@. 
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/paraboloid}
+  \caption{The parabolic lifting map for a set $S$ of points $\mathbb{R}^2$.}%
 \label{fig:paraboloid}
-\end{figure}
+\end{marginfigure}
 
 %
 
  Construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
 
-\begin{myfloat}
-  \begin{practice-box}
+\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
   Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
-  \end{practice-box}
-\end{myfloat}
-
-
+\end{kaobox}
 
 
 
 %%%
 %
-\subsection{Degeneracies}
+\subsection{Degeneracies}%
 \label{sec:degeneracies}
 
 The previous definitions of the VD and the DT assumed that the set $S$ of points is in general position, \ie\ the distribution of points does not create any ambiguity in the two structures. 
@@ -192,7 +188,7 @@ As shown in Figure~\ref{fig:degeneracies},
 \begin{figure}
   \centering
   \includegraphics[width=0.4\textwidth]{figs/degeneracies}
-  \caption{The DT for four cocircular points in two dimensions is not unique (but the VD is).}
+  \caption{The DT for four cocircular points in two dimensions is not unique (but the VD is).}%
 \label{fig:degeneracies}
 \end{figure}
 the quadrilateral can be triangulated with two different diagonals, and an arbitrary choice must be made since both respect the Delaunay criterion (points should not be on the interior of a circumcircle, but more than three can lie directly on the circumcircle).
@@ -205,18 +201,17 @@ When three or more points are collinear, DT($S$) and VD($S$) are unique, but pro
 
 %%%
 %
-\section{Duality between the DT and the VD}
+\section[Duality DT/VD]{Duality between the DT and the VD}%
 \label{sec:duality}
 
 Duality can have many different meanings in mathematics, but it always refers to the translation or mapping in a one-to-one fashion of concepts or structures. 
 We use it in this course in the sense of the dual graph of a given graph. 
 Let $G$ be a planar graph, as illustrated in Figure~\ref{fig:dual_graph} (black edges).
-\begin{figure}
-  \centering
-  \includegraphics[width=0.45\textwidth]{figs/dual_graph}
-  \caption{A graph $G$ (black lines), and its dual graph $G^\star$ (dashed lines).}
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/dual_graph}
+  \caption{A graph $G$ (black lines), and its dual graph $G^\star$ (dashed lines).}%
 \label{fig:dual_graph}
-\end{figure}
+\end{marginfigure}
 Observe that $G$ can also be seen as a cell complex in $\mathbb{R}^{2}$. 
 The duality mapping is as follows (also shown in details in Figure~\ref{fig:dualdetailtab})
 The dual graph $G^{\star}$ has a vertex for each face (polygon) in $G$, and the vertices in $G^{\star}$ are linked by an edge if and only if the two corresponding dual faces in $G$ are adjacent (in Figure~\ref{fig:dual_graph}, $G^{\star}$ is represented with dashed lines). 
@@ -251,7 +246,7 @@ The VD and the DT are the best example of the duality between plane graphs.
 
 %%%
 %
-\section{Incremental construction of the DT}
+\section[DT incremental construction]{Incremental construction of the DT}%
 \label{sec:dtconstruction}
 
 Since the VD and the DT are dual structures, the knowledge of one implies the knowledge of the other one. 
@@ -280,13 +275,13 @@ The incremental insertion algorithm, and the other well-known algorithm, can all
 
 \begin{figure}
   \centering
-  \includegraphics[width=1.0\textwidth]{figs/insertion_steps}
-  \caption{Step-by-step insertion, with flips, of a single point in a DT in two dimensions.}
+  \includegraphics[width=\textwidth]{figs/insertion_steps}
+  \caption{Step-by-step insertion, with flips, of a single point in a DT in two dimensions.}%
 \label{fig:insertion_steps}
 \end{figure}
 \begin{algorithm}[tb] 
-  \DontPrintSemicolon
-  \KwIn{A DT($S$) $\mathcal{T}$ , and a new point $p$ to insert}
+  \DontPrintSemicolon\
+  \KwIn{A DT($S$) $\mathcal{T}$, and a new point $p$ to insert}
   \KwOut{$\mathcal{T}^{p} = \mathcal{T} \cup \{p\}$ // the DT with point $p$}
   find triangle $\tau$ containing $p$\;
   insert $p$ in $\tau$ by splitting it in to 3 new triangles\;
@@ -301,7 +296,7 @@ The incremental insertion algorithm, and the other well-known algorithm, can all
       push 2 new triangles on stack\;
     }
   }
-  \caption{Algorithm to insert one point in a DT}
+  \caption{Algorithm to insert one point in a DT}%
 \label{algo:insert1pt}
 \end{algorithm} 
 
@@ -312,16 +307,15 @@ This process stops when every triangle having $p$ as one of its vertices respect
 
 
 %%%
-\paragraph{Initialisation: the big triangle.}
+\paragraph{Initialisation: the big triangle.}%
 \label{sec:big_tr}
 Most of the incremental DT/VD algorithms assume that the set $S$ of points is entirely contained in a \emph{big triangle} ($\tau_{big}$) several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
 Figure~\ref{fig:big_tr} illustrates this.
-\begin{figure}
-  \centering
-  \includegraphics[width=0.45\textwidth]{figs/big_tr}
-  \caption[The big triangle containing all the dataset.]{The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.} 
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/big_tr}
+  \caption[The big triangle containing all the dataset.]{The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.}% 
 \label{fig:big_tr}
-\end{figure}
+\end{marginfigure}
 The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
 
 %
@@ -340,17 +334,15 @@ The main disadvantage is that more triangles than needed are constructed.
 For example in Figure~\ref{fig:big_tr} only the shaded triangles would be part of DT($S$). 
 The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the three points forming $\tau_{big}$. 
 
-\begin{myfloat}
-\begin{practice-box}
+\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
 Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
 It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
 There is also a variation on the big triangle: when an extra point is ``at the infinity''.
-\end{practice-box}
-\end{myfloat}
+\end{kaobox}
 
 
 %%%
-\paragraph{Walk/Point location.} 
+\paragraph{Point location with walking.}% 
 \label{sec:dtwalk}
 
 To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ since each triangle must be checked).
@@ -359,20 +351,20 @@ A better alternative is to use the adjacency relationships between the triangles
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{figs/walk}
-  \caption{The Walk algorithm for a DT in two dimensions. The query point is $p$.}
+  \includegraphics[width=0.65\textwidth]{figs/walk}
+  \caption{The Walk algorithm for a DT in two dimensions. The query point is $p$.}%
 \label{fig:walk}
 \end{figure}
 \begin{algorithm}[t]
-  \DontPrintSemicolon
+  \DontPrintSemicolon\
   \KwIn{A DT($S$) $\mathcal{T}$, a starting triangle $\tau$, and a query point $p$}
   \KwOut{$\tau_r$: the triangle in $\mathcal{T}$ containing $p$}
-  \BlankLine  
+  \BlankLine\ 
   $\tau_r$ = None\;
   \While{$\tau_r$ == None}
   {
     visitededges = 0\;
-    \For{$i \leftarrow 0$ \KwTo 2}
+    \For{$i \leftarrow 0$ \KwTo\ 2}
     {
       $\sigma_i \leftarrow$ get edge opposite to vertex $i$ in $\tau$\;
       \If{\Orient($\sigma_i, p$) $< 0$\nllabel{l:walk}} 
@@ -389,7 +381,7 @@ The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are 
     }
   }
   Return($\tau_r$)
-  \caption{W\textsc{alk}($\mathcal{T}$, $\tau$, $p$)}
+  \caption{W\textsc{alk}($\mathcal{T}$, $\tau$, $p$)}%
 \label{algo:walk}
 \end{algorithm}
 The idea is as follows: in a DT($S$), starting from a triangle $\tau$ (it can be any), we move to one of the adjacent triangle of $\tau$ ($\tau$ has three neighbours, we choose one neighbour $\tau_i$ such that the query point $p$ and $\tau$ are on each side of the edge shared by $\tau$ and $\tau_i$) until there is no such neighbour, then the simplex containing $p$ is the current triangle $\tau$.
@@ -401,12 +393,11 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 \paragraph{Flips.}The \emph{flip} operation we use to modify the triangulation is a simple \emph{local} topological operation that modifies the configuration of two adjacent triangles. 
 It is performed in constant time $\mathcal{O}(1)$.
 Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.65\textwidth]{figs/flip22}
-  \caption{A flip22}
+\begin{marginfigure}
+  \includegraphics[width=\textwidth]{figs/flip22}
+  \caption{A flip22}%
 \label{p:flip22}
-\end{figure}
+\end{marginfigure}
 There exist exactly two ways to triangulate $S$: the first one contains the triangles $abc$ and $bcd$; and the second one contains the triangles $abd$ and $acd$. 
 Only the first triangulation of $S$ is Delaunay because $d$ is outside the circumcircle of $abc$. 
 A \emph{flip} is the operation that transforms the first triangulation into the second, or vice-versa.
@@ -441,14 +432,14 @@ Both tests can be reduced to the computation of the determinant of a matrix:
     c_{x} & c_{y} & c^{2}_{x} + c^{2}_{y} & 1 \\
     p_{x} & p_{y} & p^{2}_{x} + p^{2}_{y} & 1 
   \end{array} 
-  \right|
+  \right|%
 \label{eq:insphere}
 \end{equation}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Data structures for storing a DT}
+\section[DT data structures]{Data structures for storing a DT}
 
 A triangulation is simply a subdivision of the plane into polygons, and thus any data structure used in GIS can be used to store a triangulation.
 
@@ -465,7 +456,7 @@ The simplest data structure, as shown in Figure~\ref{fig:tr_ds},
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/tr_ds}
-  \caption{The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).}
+  \caption{The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).}%
 \label{fig:tr_ds}
 \end{figure}
 considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles. 
@@ -483,7 +474,7 @@ We are mostly interested in the \emph{constrained Delaunay triangulation} (ConsD
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/cdt_example}
-  \caption{\textbf{(a)} A a set $S$ of points and straight-line segments. \textbf{(b)} Constrained DT of $S$. \textbf{(c)} Conforming DT of $S$; the Steiner points added are in red.}
+  \caption{\textbf{(a)} A a set $S$ of points and straight-line segments. \textbf{(b)} Constrained DT of $S$. \textbf{(c)} Conforming DT of $S$; the Steiner points added are in red.}%
 \label{fig:cdt_example}
 \end{figure}
 
@@ -498,17 +489,17 @@ Figure~\ref{fig:cdt_buildings} shows one example.
 \begin{figure}
   \centering
   \includegraphics[width=0.95\textwidth]{figs/cdtbuildings}
-  \caption{The ConsDT of a set of segments. On the right, the triangle whose circumcircle is green is a Delaunay (no other points in its interior) and so is the triangle whose circumcircle is in purple (there is one point in its interior, but it cannot be seen because of the constrained segment).}
+  \caption{The ConsDT of a set of segments. On the right, the triangle whose circumcircle is green is a Delaunay (no other points in its interior) and so is the triangle whose circumcircle is in purple (there is one point in its interior, but it cannot be seen because of the constrained segment).}%
 \label{fig:cdt_buildings}
 \end{figure}
 
 %
 
-Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see Figure~\ref{fig:cdt_steps}:
+Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see Figure~\ref{fig:cdt_steps}):
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/cdt_steps}
-  \caption{Steps to construct a ConsDT.}
+  \caption{Steps to construct a ConsDT.}%
 \label{fig:cdt_steps}
 \end{figure}
 \begin{enumerate}
@@ -520,11 +511,11 @@ Without going into details about one potential algorithm, one way to construct a
 
 %
 
-Observe that the ConsDT can be used to triangulate polygons with holes (see Figure~\ref{fig:cdt_dog}, it suffices to remove the triangle outside the exterior boundary, but inside the convex hull.
+Observe that the ConsDT can be used to triangulate polygons with holes (see Figure~\ref{fig:cdt_dog}), it suffices to remove the triangle outside the exterior boundary, but inside the convex hull.
 \begin{figure}
   \centering
   \includegraphics[width=0.6\linewidth]{figs/cdt_dog}
-  \caption{\textbf{Left}: One polygon with 4 holes (interior rings). \textbf{Right}: its ConsDT.}
+  \caption{\textbf{Left}: One polygon with 4 holes (interior rings). \textbf{Right}: its ConsDT.}%
 \label{fig:cdt_dog}
 \end{figure}
 
@@ -533,7 +524,7 @@ Observe that the ConsDT can be used to triangulate polygons with holes (see Figu
 %
 \paragraph*{Conforming DT (ConfDT).}
 A ConfDT adds new points to the input $S$ (called \emph{Steiner} points) to ensure that the input segments are present in the triangulation. 
-As Figures~\ref{fig:ccdt} and ~\ref{fig:cdt_example}c show, the input straight-line segments will be split into several collinear segments. 
+As Figures~\ref{fig:ccdt} and~\ref{fig:cdt_example}c show, the input straight-line segments will be split into several collinear segments. 
 The Steiner points have to be carefully chosen (where to put them is beyond the scope of this course).
 \begin{figure}
   \centering
@@ -551,7 +542,7 @@ The Steiner points have to be carefully chosen (where to put them is beyond the 
     \includegraphics[width=\textwidth]{figs/cdt_conf.pdf}
     \caption{}
   \end{subfigure}%
-  \caption{\textbf{(a)} Input polygon (or set of segments). \textbf{(b)} ConsDT of the input. \textbf{(c)} ConfDT of the input.}
+  \caption{\textbf{(a)} Input polygon (or set of segments). \textbf{(b)} ConsDT of the input. \textbf{(c)} ConfDT of the input.}%
 \label{fig:ccdt}
 \end{figure}
 Observe that each triangle in a ConfDT respect the Delaunay criterion, but that more triangles are present. 
@@ -560,7 +551,7 @@ If 2 segments are nearly parallel, many points could be necessary (for $m$ segme
 
 %%%
 %
-\section{Notes and comments}
+\section{Notes and comments}%
 \label{sec:notes}
 
 The DT and the VD have been discovered, rediscovered and studied many times and in many different fields, see \citet{Okabe00} for a complete history.
