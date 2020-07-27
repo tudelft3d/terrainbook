@@ -18,7 +18,8 @@
 \end{figure*}
 
 An hydrographic chart is a map of the underwater world specifically intended for the safe navigation of ships, see below for an example.
-In its digital form, it is often called an electronic navigational chart, or ENC\@.
+In its digital form, it is often called an electronic navigational chart, or ENC\@.%
+\index{electronic navigational chart (ENC)}
 The information appearing on an ENC are standardised, and there are open formats.
 
 %
@@ -37,7 +38,9 @@ They used a sparse set of scattered surveyed depth measurements to deduct and de
 
 %
 
-Nowadays, with technologies such as multibeam echosounders (MBES) offering an almost full coverage of the seafloor (see Section~\ref{sec:mbes}), one would expect the contouring process to be fully automatic.
+Nowadays, with technologies such as multibeam echosounders (MBES)%
+\index{multibeam echosounders (MBES)}
+offering an almost full coverage of the seafloor (see Section~\ref{sec:mbes}), one would expect the contouring process to be fully automatic.
 It is however in practice still a (semi-)manual process since the new technologies have ironically brought new problems: computers have problems processing the massive amount of data, especially in choosing which data is relevant and which is not.
 %It also turns out to be challenging to guarantee that the contours are both pleasing to read and safe.
 
@@ -202,7 +205,7 @@ Again, the severity of these problems depends on the chosen cellsize.
 
 %
 \paragraph{Interpolation to a raster.}
-For hydrographic charts, the raster surface is often constructed with spatial interpolation, particularly with the method of \emph{inverse distance weighting} (IDW).
+For hydrographic charts, the raster surface is often constructed with spatial interpolation, particularly with the method of inverse distance weighting (IDW).
 Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place, extrema are disregarded and subsequently the safety constraint is also violated. 
 
 %
@@ -421,7 +424,6 @@ shows an example of these ideas.
 Figure~\ref{fig:interpol_smooth}a and Figure~\ref{fig:interpol_smooth}b show the original dataset, which is a very simple pyramid having its base at elevation 0, and its summit at 10. 
 Figure~\ref{fig:interpol_smooth}d--f shows the results when a densification operator based on the Laplace interpolant is used. 
 It should be noticed that the ``top'' of the pyramid was densified, and not so much the bottom, therefore the contour lines near the bottom should be ignored (the fact that they are close to the border of the dataset also creates artefacts).
-
 
 %
 
