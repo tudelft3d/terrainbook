@@ -1,19 +1,24 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
+\setchapterpreamble[u]{\margintoc}
 \graphicspath{{bathymetry/}}
 
-\chapter{Processing bathymetric data to produce hydrographic charts}
+
+\chapter{Processing bathymetric data to produce hydrographic charts}%
 \label{chap:bathymetry}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\linewidth]{figs/enc_denhelder.jpeg}
-  \caption{An example of an ENC (electronic navigational chart) in the Netherlands. [photo of a paper map from the \emph{Hydrografische Dienst}]}
-\label{fig:enc.jpg}
-\end{figure}
+\marginnote{\faVideoCamera\ \url{https://youtu.be/ysLCuqcyJZA}}
 
-An hydrographic chart is a map of the underwater world specifically intended for the safe navigation of ships.
-In its digital form, it is often called an electronic navigational chart, or ENC.
+\begin{figure*}[b]
+  \centering
+  \includegraphics[width=0.85\linewidth]{figs/enc_denhelder.jpeg}
+  \caption{An example of an ENC (electronic navigational chart) in the Netherlands. [photo of a paper map from the \emph{Hydrografische Dienst}]}%
+\label{fig:enc}
+\end{figure*}
+
+An hydrographic chart is a map of the underwater world specifically intended for the safe navigation of ships, see below for an example.
+In its digital form, it is often called an electronic navigational chart, or ENC\@.
 The information appearing on an ENC are standardised, and there are open formats.
 
 %
@@ -25,7 +30,7 @@ The creation of these depth-contours from an input point cloud of depth measurem
 
 %%%
 %
-\section{How are depth-contours produced in practice?}
+\section[Depth-contours in practice]{How are depth-contours produced in practice?}
 
 Traditionally, depth-contours were drawn by hand by skilled hydrographers.
 They used a sparse set of scattered surveyed depth measurements to deduct and depict the morphology of the seafloor with smooth-looking curves.
@@ -39,7 +44,7 @@ It is however in practice still a (semi-)manual process since the new technologi
 %
 
 The raw contours constructed directly from MBES datasets are often not satisfactory for navigational purposes since, as Figure~\ref{fig:raw} shows,
-\begin{figure}
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
@@ -61,9 +66,9 @@ The raw contours constructed directly from MBES datasets are often not satisfact
     \includegraphics[width=\textwidth]{figs/aggregation.png}
     \caption{}\label{fig:aggregation}
   \end{subfigure}
-\caption{Comparison of \textbf{(a)} depth-contours obtained automatically from the raw MBES data and \textbf{(b)} the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. \textbf{(c)} Pits are removed, while peaks are preserved or integrated with another contour. \textbf{(d)} Groups of nearby contour lines are aggregated}
+\caption{Comparison of \textbf{(a)} depth-contours obtained automatically from the raw MBES data and \textbf{(b)} the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. \textbf{(c)} Pits are removed, while peaks are preserved or integrated with another contour. \textbf{(d)} Groups of nearby contour lines are aggregated}%
 \label{fig:contouringaspects}
-\end{figure}
+\end{figure*}
 they are zigzagging (the representation of the seafloor thus contains ``waves'', \ie\ the slope changes abruptly) and they contain many ``island'' contours (seafloor has several local minima and maxima). 
 These artefacts are the result of measurement noise that is present in MBES datasets, \ie\ the variation in depth between two close samples can be larger than in reality, even after the dataset has been (statistically) cleaned.
 Figure~\ref{fig:ideal} illustrates what is expected by hydrographers.
@@ -71,7 +76,7 @@ Figure~\ref{fig:ideal} illustrates what is expected by hydrographers.
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\subsection{Generalisation is required to obtain good depth contours}
+\subsection{Generalisation is required to obtain good depth contours}%
 \label{sec:good-depth-contours}
 
 Creating good depth-contours requires \emph{generalisation}, \ie\ the process of meaningfully reducing information.
@@ -100,15 +105,15 @@ For instance, the morphology constraint tells us to stay close to the measured s
 Also, because of the safety constraint, depth-contours can only be modified such that the safety is respected at all times: contours can only be pushed towards the deeper side during generalisation, as illustrated in Fig~\ref{fig:genvalidornot}. 
 \begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{figs/genvalidornot}
-  \caption{During generalisation, depth-contours can only be moved towards greater depth (indicated by a ``--'' in the figure).}
+  \includegraphics[width=0.8\textwidth]{figs/genvalidornot}
+  \caption{During generalisation, depth-contours can only be moved towards greater depth (indicated by a ``--'' in the figure).}%
 \label{fig:genvalidornot}
 \end{figure}
 It is therefore obvious that the end result must be a reasonable compromise between the four constraints, although the hard constraints must not be broken.
 
 
 %%%
-\section{Common methods used in practice are not satisfactory}
+\section[Practical methods not satisfactory]{Common methods used in practice are not satisfactory}
 
 The generation of depth contours, and their generalisation, can be done by several methods.
 We present here the most frequently used methodologies to generate depth-contours from an MBES point cloud.
@@ -143,43 +148,42 @@ The selected points can either be used to construct a raster or TIN surface, see
 While different functions can be used to select the point (\eg\ deepest, shallowest, average, or median), because of the safety constraint the shallowest point is often chosen by practitioners, see Figure~\ref{fig:fr:vg:a} for a one-dimensional equivalent.
 \begin{figure}
 \centering
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/virtualgridding.pdf}
     \caption{Virtual gridding}\label{fig:fr:vg:a}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/maxgridding.pdf}
     \caption{Max rasterisation}\label{fig:fr:mg:a}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=4]{figs/1Didw.pdf}
     \caption{IDW rasterisation}\label{fig:fr:idw:a}
   \end{subfigure}
   \qquad
-  \quad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/virtualgridding.pdf}
     \caption{Virtual gridding and TIN-based contour values}\label{fig:fr:vg:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/maxgridding.pdf}
     \caption{Max rasterisation and contours}\label{fig:fr:mg:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.3\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=5]{figs/1Didw.pdf}
     \caption{IDW rasterisation and contours}\label{fig:fr:idw:b}
   \end{subfigure}
-\caption{On the top: profile views of different filtering and rasterisation methods. On the bottom: the corresponding contours. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}
+\caption{On the top: profile views of different filtering and rasterisation methods. On the bottom: the corresponding contours. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}%
 \label{fig:filterraster}
 \end{figure}
 It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
@@ -214,37 +218,37 @@ Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW 
 \subsection{TIN simplification}
   
 One could use TIN simplification as explained in Chapter~\ref{chap:conversion} to simplify the riverbed.
-This would also simplify the depth-contours that are generated from the TIN. 
+This would also simplify the depth-contours that are generated from the TIN\@. 
 However, as Figure~\ref{fig:simpfail} shows, 
-\begin{figure}
+\begin{figure*}
 \centering
-  \begin{subfigure}[b]{0.2\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=1]{figs/simpfail.pdf}
     \caption{Initial configuration}\label{fig:simpfail:a}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.2\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/simpfail.pdf}
     \caption{1st vertex removal}\label{fig:simpfail:b}
   \end{subfigure}
   \qquad
-  \begin{subfigure}[b]{0.2\linewidth}
+  \begin{subfigure}[b]{0.22\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/simpfail.pdf}
     \caption{2nd vertex removal}\label{fig:simpfail:c}
   \end{subfigure}
-\caption{Due to the re-triangulation after a removal, violations of the safety constraint may occur after a series of points are removed. The first vertex is removed (locally the resulting surface will be shallower). However, the second removal changes the configuration of triangles and at that location the surface is now deeper. A lower number means a shallower point.}
+\caption{Due to the re-triangulation after a removal, violations of the safety constraint may occur after a series of points are removed. The first vertex is removed (locally the resulting surface will be shallower). However, the second removal changes the configuration of triangles and at that location the surface is now deeper. A lower number means a shallower point.}%
 \label{fig:simpfail}
-\end{figure}
-the safety constraint is not guaranteed to be respected when vertices are removed from a TIN.
+\end{figure*}
+the safety constraint is not guaranteed to be respected when vertices are removed from a TIN\@.
 This is due to the fact that the triangulation must be updated (with flips, see Chapter~\ref{chap:dtvd}) and the shapes of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
 
 
 %%%
 %
-\section{A Voronoi-based surface approach}
+\section[Voronoi-based approach]{A Voronoi-based surface approach}
 
 Part of the problems with existing approaches to generate depth-contours is the fact that the different processes, such as spatial interpolation, generalisation and contouring, are treated as independent processes.
 These are in fact interrelated, and we introduce in the following a method where the different processes are integrated.
@@ -260,12 +264,12 @@ Instead of performing generalisation by moving lines or using a subset of the or
 Figure~\ref{fig:surfapproach} gives a schematic overview of the different components of our Voronoi-based surface concept. 
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/surfaceapproach_V2.pdf}
-  \caption{Overview of the Voronoi- and surface-based approach.}
+  \includegraphics[width=\textwidth]{figs/surfaceapproach_V2.pdf}
+  \caption{Overview of the Voronoi- and surface-based approach.}%
 \label{fig:surfapproach}
 \end{figure}
 
-Firstly, all the input points of a given area are used to construct a Delaunay TIN.
+Firstly, all the input points of a given area are used to construct a Delaunay TIN\@.
 Secondly, a number of generalisation operators are used that alter the TIN using Laplace interpolation, which is based on the Voronoi diagram.
 These operators aim at improving the slope of the surface, and permit us to generalise the surface.
 Finally, contour lines are derived from the altered TIN using linear interpolation.
@@ -283,7 +287,7 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 
 %%%
 %
-\subsubsection{The smoothing operator}
+\subsubsection{The smoothing operator}%
 \label{chap:myapproach:smoothing}
 
 The smoothing operator basically estimates, with the Laplace interpolant (see Section~\ref{sec:laplace} on page~\pageref{sec:laplace}), the depth of each vertex in a dataset by considering its natural neighbour (see Figure~\ref{fig:1Dsmoothop}).
@@ -314,7 +318,7 @@ Thus, the smoothing operator does not change the planimetric coordinates of vert
     \includegraphics[width=\textwidth,page=4]{figs/1Dsmoothop.pdf}
     \caption{Resulting TIN}\label{fig:1Dsmoothop:d}
   \end{subfigure}
-  \caption{Cross-section view of the smoothing of a single vertex in a TIN.}
+  \caption{Cross-section view of the smoothing of a single vertex in a TIN.}%
 \label{fig:1Dsmoothop}
 \end{figure}
 
@@ -332,36 +336,36 @@ Furthermore this operator can be applied any number of times, delivering more ge
 
 %%%
 %
-\subsubsection{The densification operator}
+\subsubsection{The densification operator}%
 \label{sec:densification}
 
 Its objective is primarily to minimise the discretisation error between the Laplace interpolated field and the contours that are extracted from the DT, this is illustrated in Figure~\ref{fig:1Ddensop}.
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.35\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=1]{figs/1Ddensop.pdf}
     \caption{Initial TIN}\label{fig:1Ddensop:a}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.35\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=2]{figs/1Ddensop.pdf}
     \caption{Interpolated field (dashed)}\label{fig:1Ddensop:b}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.35\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=3]{figs/1Ddensop.pdf}
     \caption{Addition of intermediate points (orange)}\label{fig:1Ddensop:c}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.35\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth,page=4]{figs/1Ddensop.pdf}
     \caption{Resulting TIN}\label{fig:1Ddensop:d}
   \end{subfigure}
-  \caption{Cross-section view of the densification operator in a TIN.}
+  \caption{Cross-section view of the densification operator in a TIN.}%
 \label{fig:1Ddensop}
 \end{figure}
 
@@ -373,7 +377,7 @@ The circumcentre is chosen here because that location is equidistant to its thre
 %
 
 Figure~\ref{fig:interpol_smooth}
-\begin{figure}
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
@@ -410,9 +414,9 @@ Figure~\ref{fig:interpol_smooth}
     \includegraphics[width=\textwidth]{figs/pyramid_v_cl}
     \caption{Contour lines from densified surface}
   \end{subfigure}  
-  \caption{Original data are shown in \textbf{(a)} and \textbf{(b)}, and the resulting contour lines in \textbf{(c)}. The three figures below represent the same area densified with the Laplace interpolant.}
+  \caption{Original data are shown in \textbf{(a)} and \textbf{(b)}, and the resulting contour lines in \textbf{(c)}. The three figures below represent the same area densified with the Laplace interpolant.}%
 \label{fig:interpol_smooth}
-\end{figure}
+\end{figure*}
 shows an example of these ideas. 
 Figure~\ref{fig:interpol_smooth}a and Figure~\ref{fig:interpol_smooth}b show the original dataset, which is a very simple pyramid having its base at elevation 0, and its summit at 10. 
 Figure~\ref{fig:interpol_smooth}d--f shows the results when a densification operator based on the Laplace interpolant is used. 
@@ -436,26 +440,26 @@ However, because of the maximum area threshold, that worst case scenario will ne
 
 %%%
 %
-\section{Some examples of results with real-world datasets}
+\section[Real-world examples]{Some examples of results with real-world datasets}
 
 
 Figure~\ref{fig:zl1845fieldview} shows the results obtained with the implementation of the method described in this chapter.
 This was tested with an MBES dataset from Zeeland, in the Netherlands.
-\begin{figure}
+\begin{figure*}
 \centering
-  \begin{subfigure}[b]{0.55\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_o.pdf}
     \caption{}\label{fig:zl1845fieldview_o}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.55\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_s.pdf}
     \caption{}\label{fig:zl1845fieldview_s}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{0.55\linewidth}
+  \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/zl1845fieldview_raster_d.pdf}
     \caption{}\label{fig:zl1845fieldview_raster_d}
@@ -466,9 +470,9 @@ This was tested with an MBES dataset from Zeeland, in the Netherlands.
     % \includegraphics[width=\textwidth]{figs/zl1845rmsdiffplot.pdf}
     % \caption{}\label{fig:zl1845rmsdiffplot}
   % \end{subfigure}
-  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixelsize 50 cm).}
+  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixelsize 50 cm).}%
 \label{fig:zl1845fieldview}
-\end{figure}
+\end{figure*}
 As can be observed from Figure~\ref{fig:zl1845fieldview_o}, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 
 However, the smoothed contours (100 smoothing passes) from Figure~\ref{fig:zl1845fieldview_s} have a much cleaner and less cluttered appearance. 
 Clearly, the number of contour lines has diminished. 
@@ -494,12 +498,12 @@ The result is a much smoother contour line that still respects the sample points
 
 Naturally, the smoothing operator also smoothes and simplifies the resulting contour lines. 
 This is demonstrated in Figure~\ref{fig:zl1845lineview} illustrates the effect of the smoothing operator on a single contour over 30 smoothing passes. 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/zl1845detailcontours0-30.pdf}
-  \caption{From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.}
-\label{fig:zl1845lineview}
-\end{figure}
+  \caption{From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.}%
+\label{fig:zl1845lineview}%
+\end{figure*}
 It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 
 What can also be seen is that the line is simplified (the details on the outer rim disappear, note however that the point count stays the same) and smoothed. 
 % That is further supported by Figures~\ref{fig:zl1845lineview_o} and \ref{fig:zl1845lineview_s} that shows the point angularity before and after smoothing. It is evident that the number of points with a medium to high angularity are significantly reduced, which also corresponds to a smoother and more simplified contour line.
