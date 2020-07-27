@@ -79,12 +79,12 @@ However, it will not be local (which is problematic for terrains), and finding t
 
 The biggest concern polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the the set $S$.
 This is known as the Runge's phenomenon in numerical analysis, and is shown in \reffig{fig:polynomial}.
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/polynomial}
   \caption{A few of the interpolation methods shown for a 1D dataset. \textbf{(a)} Input sample points. \textbf{(b)} Polynomial fitting, and the Runge's effect shown. \textbf{(c)} Natural neighbour. \textbf{(d)} Linear interpolation in TIN.}%
 \labfig{fig:polynomial}
-\end{figure}
+\end{figure*}
 
 
 
@@ -492,6 +492,7 @@ The differences in the lower areas (which is water) are smaller since these area
 
 \reffig{fig:results_interpol} shows the result of 8 different interpolants for the same (real-world) sample points.
 You can better visualise these datasets, and download them, at \url{https://3d.bk.tudelft.nl/courses/geo1015/extra/interpol/}.
+
 
 \begin{tabular}{@{}lccccccl@{}}
 \toprule

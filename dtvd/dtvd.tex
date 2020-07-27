@@ -273,12 +273,12 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
 %
 
 Figure~\ref{fig:insertion_steps} illustrates the steps of the algorithm, and Algorithm~\ref{algo:insert1pt} its pseudo-code. 
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=\textwidth]{figs/insertion_steps}
   \caption{Step-by-step insertion, with flips, of a single point in a DT in two dimensions.}%
 \label{fig:insertion_steps}
-\end{figure}
+\end{figure*}
 \begin{algorithm}[tb] 
   \DontPrintSemicolon\
   \KwIn{A DT($S$) $\mathcal{T}$, and a new point $p$ to insert}
@@ -501,12 +501,12 @@ Figure~\ref{fig:cdt_buildings} shows one example.
 %
 
 Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see Figure~\ref{fig:cdt_steps}):
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/cdt_steps}
   \caption{Steps to construct a ConsDT.}%
 \label{fig:cdt_steps}
-\end{figure}
+\end{figure*}
 \begin{enumerate}
   \item construct DT($S^p$), where $S^p$ is the set containing all the points in $S$ and the end points of the line segments (Figure~\ref{fig:cdt_steps}b)
   \item insert each line segment, each insertion will remove edges from DT($S^p$). In Figure~\ref{fig:cdt_steps}c 3 edges are removed.
