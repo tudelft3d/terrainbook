@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 % \setchapterpreamble[u]{\marginnote[12pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}\margintoc[18pt]}
 \setchapterpreamble[u]{\margintoc}
@@ -9,7 +10,7 @@
 
 \graphicspath{{whatisterrain/}}
 
-\marginnote{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DTM == representation of the Earth's surface
@@ -48,9 +49,9 @@ However, the ``Earth's surface'' is also not a clear concept, since several obje
 \end{marginfigure}
 We use the following definitions in this course (see \reffig{fig:dtmdsm}):
 \begin{description}
-  \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@. 
+  \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\marginnote{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}\index{DEM} 
   \item[DTM] (\textbf{D}igital \textbf{T}errain \textbf{M}odel). The surface of the Earth is the \emph{bare-earth}, that is no man-made objects or vegetation is present. 
-  \item[DSM] (\textbf{D}igital \textbf{S}urface \textbf{M}odel). The surface includes all objects and structures on the terrain.
+  \item[DSM] (\textbf{D}igital \textbf{S}urface \textbf{M}odel). The surface includes all objects and structures on the terrain.\index{DSM}
 \end{description}
 
 It should be noticed that in some countries a DEM is often synonymous with a grid of elevation (see below).
@@ -122,7 +123,7 @@ Such a representation is usually done with a 2.5D terrain (although a 2.75D coul
 %
 \section{2.5D terrain == field}
 
-In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a \emph{field}.
+In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a \emph{field}.%
 \index{field}\marginnote{field}
 A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.
 It is modelled by a function mapping one point $p$ in $\mathbb{R}^2$ to the value of $a$, thus 
@@ -177,7 +178,8 @@ This function is usually a simple mathematical function:
 
 %
 
-In general, we  classify the tessellations of space into three categories (as shown in \reffig{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.
+In general, we  classify the tessellations of space into three categories (as shown in \reffig{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.%
+\index{tesselllation}
 \begin{marginfigure}
   \centering
   \includegraphics[width=0.7\textwidth]{figs/tesstype}
@@ -256,7 +258,7 @@ The subdivision is potentially better than that obtained with regular tessellati
 
 %
 
-The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.
+The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.%
 \index{TIN}\marginnote{TIN: triangulated irregular network}
 
 As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
@@ -288,6 +290,7 @@ TINs are the most popular alternatives to 2D grids for modelling elevation; both
  
 A TIN in which a linear interpolation function is used yields a $C^0$ piecewise representation, \ie\ it is a continuous function but at the edges of the triangles the first derivative is not possible.
 It is possible to use higher-order functions in each triangle of a TIN, to construct a $C^1$ or $C^2$ field, \ie\ where the first and second derivative of the surface can be obtained. 
+Chapter~\ref{chap:interpol} gives more details.
 
 
 
@@ -303,7 +306,7 @@ While both regular and irregular tessellations can be hierarchical, in the conte
 
 %
 
-A commonly used hierarchical structure in two dimensions is the \emph{quadtree}, which is a generic term for a family of tessellations that recursively subdivide the plane into four quadrants.
+A commonly used hierarchical structure in two dimensions is the \emph{quadtree}, which is a generic term for a family of tessellations that recursively subdivide the plane into four quadrants.%
 \index{quadtree}\marginnote{quadtree}
 As is the case for grids, quadtrees are relatively easily implemented in a computer because they are trees in which each node has exactly four children, if any.
 
@@ -339,7 +342,8 @@ We will nevertheless consider these in the course; the four representations we w
 
 %
 
-\paragraph{Contour lines.}
+\paragraph{Contour lines.}%
+\index{isolines}\index{contour lines}
 
 Given a bivariate field $f(x,y) = z$, an \emph{isoline} (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, where $z_0$ is a constant. 
 Isolines have been traditionally used to represent the elevation in topographic maps and the depth in bathymetric maps for navigation at sea. 

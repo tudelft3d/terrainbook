@@ -19,7 +19,7 @@ In this chapter we discuss three methods to deal with massive terrains (or input
 
 ``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 10 years ago a point cloud dataset containing 5 million points was considered massive, while in 2018 it is not.
 There are some massive datasets even in small areas, \eg\ a Lidar one of Dublin\sidenote{\url{https://bit.ly/32GXiFq}}, containing around 1.4 billion points with a density of 300pts/m$^2$, which was collected with airborne laser scanners.
-The Lidar dataset of the Netherlands, AHN\sidenote{\emph{Actueel Hoogtebestand Nederland}: \url{http://www.ahn.nl}}, has about 10pts/m$^2$ covering the whole country, thus comprising more than 700 billion points which can be freely downloaded.
+The lidar dataset of the Netherlands, AHN\sidenote{\emph{Actueel Hoogtebestand Nederland} (in Dutch): \url{http://www.ahn.nl}}, has about 10pts/m$^2$ covering the whole country, thus comprising more than 700 billion points which can be freely downloaded.
 % TODO : other massive dataset examples? SRTM? Rotterdam?
 
 %
@@ -38,8 +38,8 @@ Indeed, the traditional GISs and terrain modelling tools are limited by the main
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Raster Pyramids}
-
+\section{Raster Pyramids}%
+\index{raster pyramid}
 
 Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large grids.
 They are also used for images (and called `tiled pyramidal images' or `overview images') and many software support them since they optimise visualisation and thus the speed of a software dealing with large images.
@@ -47,24 +47,25 @@ They are also used for images (and called `tiled pyramidal images' or `overview 
 As shown in \reffig{fig:pyramids}, 
 \begin{figure}
   \centering
-  \begin{subfigure}[b]{0.6\linewidth}
+  \begin{subfigure}[b]{0.65\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/pyramids.pdf}
     \caption{}
   \end{subfigure}
   \qquad%
-  \begin{subfigure}[b]{0.15\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/pyramids2.pdf}
     \caption{}
   \end{subfigure}
-\caption{\textbf{(a)} The pyramid for a given raster file. \textbf{(b)} One 4x4 raster downsampled twice with average-method.}%
+\caption{\textbf{(a)} The pyramid for a given raster file. \textbf{(b)} One $4\times4$ raster downsampled twice with average-method.}%
 \labfig{fig:pyramids}
 \end{figure}
 a pyramid means creating recursively copies at lower-resolutions of an original raster (having $x$ columns and $y$ rows), the first copy having a size ($\frac{x}{2}$, $\frac{y}{2}$), the second ($\frac{x}{4}$, $\frac{y}{4}$), and so on (the number of images is arbitrary and defined by the user).
 Notice that the extra storage will be maximum $\frac{1}{3}$ of the original raster: the first pyramid is $\frac{1}{4}$, the second $\frac{1}{16}$, the third $\frac{1}{64}$, etc.
 
 Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
+\index{downsampling}\marginnote{downsampling}
 The most common method is based on averaging the 4 pixels that are merged into one (as shown in \reffig{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
 
@@ -75,7 +76,6 @@ The most common method is based on averaging the 4 pixels that are merged into o
 
   The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
   The downsampling method can be chosen.
-
   % In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
 \end{kaobox}
 
@@ -91,7 +91,7 @@ The most common method is based on averaging the 4 pixels that are merged into o
 %%%%%%%%%%%%%%%%%%%%
 %
 \section[3D kd-tree]{Indexing points in 3D space with the kd-tree}%
-\label{sec:kdtree}
+\label{sec:kdtree}\index{kd-tree}
 
 A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
 In the context of terrains, $k$ is in most cases either 2 or 3.
@@ -128,7 +128,9 @@ The first dimension splits the data into 2 halfplanes along the line $x=5$, then
 %%%
 \paragraph{Construction of a kd-tree.}
 In theory, any point could be used to divide the space according to each dimension, and that would yield a valid $k$d-tree.
-However, selecting the \emph{median} point creates a \emph{balanced} binary tree, which is desirable because it will improve searching and visiting the tree (see below).
+However, selecting the \emph{median} point creates a \emph{balanced} binary tree,%
+\marginnote{binary tree} 
+which is desirable because it will improve searching and visiting the tree (see below).
 The tree in \reffig{fig:kdtree2} is balanced, but if for instance ($1,3$) had been selected as the root, then there would be no children on the left, and all of them would be on the right.
 
 The median point is the one whose value for the splitting dimension is the median of all the points involved in the operation.
@@ -236,7 +238,7 @@ A branch is only eliminated when $m$ points have been found and the branch canno
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section[Streaming paradigm]{Streaming paradigm to construct massive TINs and grids}
+\section[Streaming paradigm]{Streaming paradigm to construct massive TINs and grids}%
 \label{sec:streaming}
 
 The incremental construction algorithm for the Delaunay triangulation, presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
@@ -251,12 +253,16 @@ The main drawbacks of this approach are that the design of such algorithms is ra
 
 %
 
-An alternative approach to dealing with massive datasets is \emph{spatial streaming}, which mixes ideas from external memory algorithms with different ways to keep the memory footprint very low. 
+An alternative approach to dealing with massive datasets is \emph{spatial streaming},%
+\index{spatial streaming}\marginnote{spatial streaming} 
+which mixes ideas from external memory algorithms with different ways to keep the memory footprint very low. 
 The basic idea of this paradigm is that of a \emph{streaming mesh}: a format for representing triangulations (or meshes) as a set of interleaved vertices, triangles and \emph{vertex finalization tags} that indicate when a vertex will not be used anymore.
 Standard mesh formats do not use finalization and can therefore suffer if the mesh is larger than memory.
 These tags allows us to keep in memory only a small part of a large dataset.
 
-A streaming mesh basically documents the \emph{spatial coherence} of a dataset, which \citet{Isenburg06} defines as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
+A streaming mesh basically documents the \emph{spatial coherence}%
+\index{spatial coherence}\marginnote{spatial coherence} 
+of a dataset, which \citet{Isenburg06} defines as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
 They also demonstrate that real-world point cloud datasets often have natural spatial coherence and they exploit this coherence to compute Delaunay triangulations of massive datasets (instead of reordering the points, which is expensive); this coherence is expected since LiDAR samples are often stored in the order they were collected.
 
 The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
@@ -294,5 +300,5 @@ The description of the $k$d-tree and the nearest neighbour query is adapted from
   \item \citet{Isenburg06-1} argues that real-world point cloud datasets often have natural spatial coherence. Explain why that is for lidar datasets.
   \item Given a simple point clouds stored in a CSV file (one $x,y,z$ per line), how many passes over the file the triangulator of \citet{Isenburg06-1} make? What does each do?
   \item How to construct a $k$d-tree that is as balanced as possible?
-  \item ``The ideas behind streaming are very useful for certain \emph{local} problems, but unfortunately they cannot be used directly for \emph{global} problems such as visibility or flow modelling'' Explain why that is with a concrete example.
+  \item ``The ideas behind streaming are very useful for certain \emph{local} problems, but unfortunately they cannot be used directly for \emph{global} problems such as visibility or flow modelling''. Explain why that is with a concrete example.
 \end{enumerate}
