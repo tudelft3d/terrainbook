@@ -1,4 +1,6 @@
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3992108.svg)](https://doi.org/10.5281/zenodo.3992108)
+
 # Computational modelling of terrains
 
 The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct, manipulate, and extract information from terrains.
