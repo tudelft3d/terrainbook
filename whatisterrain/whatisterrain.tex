@@ -61,7 +61,9 @@ It should be noticed that in some countries a DEM is often synonymous with a gri
 %
 \section{Dimensionality of DTMs}
 
-The term ``3D'' is misleading in a DTM context, as it is in a GIS context, because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see \reffig{fig:dimgis}).
+The term ``3D'' is misleading in a DTM context, as it is in a GIS context, 
+\marginnote{3D is misleading}
+because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see \reffig{fig:dimgis}).
 \begin{figure*}[b]
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
@@ -91,10 +93,11 @@ The term ``3D'' is misleading in a DTM context, as it is in a GIS context, becau
 \labfig{fig:dimgis}
 \end{figure*}
 
-
 \subsection{2.5D}%
 \index{2.5D} 
-What is usually used for modelling terrains: a surface (which is a topologically a 2D object; also called a 2-manifold) is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
+What is usually used for modelling terrains: a surface (which is a topologically a 2D object; also called a 2-manifold) 
+\marginnote{2-manifold}\index{2-manifold}
+is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
 % \marginnote{Text of the note}
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
 When we refer to terrains in this course, this is what is usually mean, unlike explicitly stated otherwise.
@@ -104,15 +107,17 @@ As shown in the figure, these are modelled as nearly vertical surfaces; in pract
 
 \subsection{2.75D}%
 \index{2.75D} 
-This also refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see \reffig{fig:dimgis}c).
+The term ``2.75D'' refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see \reffig{fig:dimgis}c).
 Thus, more than one $z$ value is allowed for a given location ($x,y$).
 The term '2.75D' was coined because: it is more than 2.5D, but less than 3D.
+\marginnote{2.75D}\index{2.75D}
 The surface represents the exterior of all objects/features together, and vertical walls are allowed.
 Surface modelling is popular in CAD, but in the GIS it is rather rare.
 We are not aware of any popular GIS software that allows us to model a terrain as a 2.75D and perform operations on it.
 
 \subsection[3D]{Full 3D, or volumetric modelling} 
 This refers to the modelling of not only the boundaries of objects, but also of the interior of these.
+\marginnote{volumetric modelling}\index{volumetric modelling}
 Notice for instance in \reffig{fig:dimgis}d that each building is represented with a solid.
 The volume of buildings can therefore be calculated (since the ground floor of buildings would be modelled for instance), while with the other variations it is not possible. 
 Such a representation is usually done with a 2.5D terrain (although a 2.75D could also be used) and a set of buildings/objects that are connected to the terrain.
@@ -214,6 +219,7 @@ The same spatial data model can therefore be implemented with different data str
 
 As shown in \reffig{fig:tesstypes}a, all the cells have the same shape and size.
 The most common regular tessellation in GIS and in terrain modelling is by far the grid (or raster representation), in which the cells are squares in 2D (usually called \emph{pixels}, a portmanteau of `picture' and `element', as an analogy to digital images).
+\marginnote{pixel}\index{pixel}
 However, while they are not common in practice, other regular shapes are possible, such as hexagons or triangles.
 
 %
@@ -270,6 +276,7 @@ As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
 While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Chapter~\ref{chap:dtvd}).
+\index{Delaunay triangulation}
 The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
 As can be seen in~\reffig{fig:whydt},
 \begin{figure}
@@ -434,5 +441,5 @@ Obtaining good slope from contour lines is possible, but is in practice a comple
 \begin{enumerate}
   \item Explain in our own words why a point cloud (\eg\ collected with airborne lidar) is not considered a complete representation of a terrain.
   \item What is a bivariate function? 
-  \item Assume you have 2.75D terrain of an area. Is it possible to extract the isolines from it? What properties will these have? Will they intersect?
+  \item Assume you have a 2.75D terrain of an area. Is it possible to extract the isolines from it? What properties will these have? Will they intersect?
 \end{enumerate}
