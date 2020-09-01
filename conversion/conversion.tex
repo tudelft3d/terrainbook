@@ -358,26 +358,26 @@ However, decimation could be more efficient when you already have a detailed TIN
 
 If the input is a set of isolines, then the simplest solution is, as shown in Figure~\ref{fig:wedding}a, to convert these to points and then use any of the interpolation methods previously discussed.
 This conversion can be done by either keeping only the vertices of the polylines, or by sampling points at regular intervals along the lines (say every 10m).
-\begin{figure}
+\begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.2\linewidth}
+  \begin{subfigure}[b]{0.25\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/wedding0.png}
     \caption{}
   \end{subfigure}%
-  \begin{subfigure}[b]{0.38\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/wedding-tin.png}
     \caption{}
   \end{subfigure}
-  \begin{subfigure}[b]{0.38\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/wedding-nn.png}
     \caption{}
   \end{subfigure}  
 \caption{The `wedding cake' effect. \textbf{(a)} The input isolines have been discretised into sample points. \textbf{(b)} The TIN of the samples creates several horizontal triangles. \textbf{(c)} The surface obtained with nearest-neighbour interpolation.}%
 \label{fig:wedding}
-\end{figure}
+\end{figure*}
 However, one should be aware that doing so will create terrains having the so-called \emph{wedding cake effect}.
 Indeed, the TIN obtained with a Delaunay triangulation, as shown in Figure~\ref{fig:wedding}b, contains several horizontal triangles; these triangles are formed by 3 vertices from the same isoline.
 If another interpolation method is used, \eg\ nearest neighbour (Figure~\ref{fig:wedding}c), then the results are catastrophic.
