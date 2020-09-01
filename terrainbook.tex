@@ -48,6 +48,12 @@
 % \usepackage[backend=biber,natbib=true,maxcitenames=2,maxbibnames=10,giveninits=true,isbn=false,doi=false,url=false,defernumbers=true,style=numeric,sorting=ydnt]{biblatex} 
 \usepackage[backend=bibtex,natbib=true,style=authoryear,citestyle=authoryear,maxcitenames=2,maxbibnames=10,giveninits=true,isbn=false,doi=false,dashed=false]{biblatex}
 \bibliography{refs/tb} % Bibliography file
+%-- remove the In:
+\renewbibmacro{in:}{}
+%-- remove the "" before/after the title of the paper
+\DeclareFieldFormat[article, inbook, incollection, inproceedings, misc, thesis, unpublished]{title}{#1}
+
+
 
 % Command to print a citation in the margins
 \newcommand{\sidecitet}[1]{% The optional parameter is the 
