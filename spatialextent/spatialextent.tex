@@ -10,9 +10,17 @@
 
 Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
 That is, they need to define the shape of the region that best abstracts or represents the set of points.
-As seen in \reffig{fig:examples1} and \reffig{fig:examples1}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+As seen in \reffig{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
 
-\begin{figure*}[b]
+%
+
+Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), or to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
+
+%
+
+The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
+It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
     \centering
@@ -28,15 +36,6 @@ As seen in \reffig{fig:examples1} and \reffig{fig:examples1}, this region is oft
 \caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
 \labfig{fig:examples}  
 \end{figure*}
-
-%
-
-Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), or to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
-
-%
-
-The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
-It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
 As \reffig{fig:ideas} shows, there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
 \begin{figure}
   \centering
