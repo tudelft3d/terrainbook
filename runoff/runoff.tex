@@ -1,12 +1,14 @@
 %!TEX root = ../terrainbook.tex
 
+
+\setchapterpreamble[u]{\margintoc}
+\labch{runoff}
+
 \graphicspath{{runoff/}}
 
 
-\nobibliography*
-
-
-\chapter{Runoff modelling}
+\chapter{Runoff modelling}%
+\label{chap:runoff}
 
 Many interesting DTM operations are based on runoff modelling, \ie\ the computation of the flow and accumulation of water on a terrain.
 Examples include: knowing where streams will form in the case of heavy rainfall, finding the areas that will be affected by a waterborne pollutant, tracing the areas that could become submerged by floodwater, or calculating the rate of erosion or sedimentation in a given area.
@@ -15,9 +17,9 @@ In hydrology, runoff modelling can be very complex (Figure~\ref{fig:hydrology}).
 Hydrological models usually consider different precipitation scenarios, model various types of overland and subsurface flows, and take into account many location- and time-dependent factors, such as the depth of the water table and the permeability of the soil.
 Such models can be quite accurate, but they require high-resolution data that is often not available, they are difficult to create without specialised knowledge, and they involve substantial manual work.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
-\includegraphics[width=0.75\linewidth]{figs/hydrology.pdf}
+\includegraphics[width=0.95\linewidth]{figs/hydrology.pdf}
 \caption{Different types of water flows as modelled in hydrology. Based on \citet{Beven12}.}%
 \label{fig:hydrology}
 \end{figure}
@@ -54,8 +56,11 @@ There are two broad approaches that can be followed to do this: computing a sing
 % Perpendicular to contours in a 2D map
 
 The earliest and simplest method to compute the flow direction of a cell is to compute the slope between the centre of the cell and the centre of all its neighbouring cells (using the distance between the centres and the difference in elevation), then assign the flow direction towards the neighbour with the steepest descent.
-The method is known as the \emph{single flow direction (SFD)} approach, and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals).
+The method is known as the \emph{single flow direction (SFD)} approach, 
+\marginnote{single flow direction (SFD)}
+and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals).
 For this reason, it is also known as the \emph{eight flow directions (D8)} approach.
+\marginnote{D8 flow direction}\index{D8 flow direction}
 
 On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
@@ -67,9 +72,9 @@ However, it produces non-deterministic results, which is often a sufficient reas
 
 Despite its age and limitations, the SFD method is still widely used and available in many GIS tools\@.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
-\includegraphics[width=0.75\linewidth]{figs/d8.pdf}
+\includegraphics[width=0.95\linewidth]{figs/d8.pdf}
 \caption{The D8 method creates artefacts when water is draining from a circular cone. From \citet{Tarborton97}.}%
 \label{fig:d8}
 \end{figure}
@@ -77,7 +82,9 @@ Despite its age and limitations, the SFD method is still widely used and availab
 \subsection{Multiple flow directions}
 
 In an attempt to overcome the limitations of the SFD method, a variety of methods assign the flow direction of a DTM cell fractionally to some or all of its lower neighbouring cells according to some criteria.
-These methods are collectively known as multiple flow directions (MFD), and they usually use a variation of this equation:
+These methods are collectively known as multiple flow directions (MFD), 
+\marginnote{multiple flow directions (MFD)}
+and they usually use a variation of this equation:
 
 \begin{equation}
 F_i = \frac{\left(L_i \tan{\alpha_i}\right)^x}{\sum_{j=1}^{n}\left(L_j \tan{\alpha_j}\right)^x}
@@ -85,24 +92,26 @@ F_i = \frac{\left(L_i \tan{\alpha_i}\right)^x}{\sum_{j=1}^{n}\left(L_j \tan{\alp
 
 where \(F_i\) is the flow towards the i-th neighbouring cell, \(L_i\) is the flow width (Figure~\ref{fig:quinn}), \(\alpha_i\) is the gradient towards the i-th neighbouring cell (and so \(\tan(\alpha_i)\) is the slope), \(x\) is an exponent that controls the dispersion, and \(n\) is the number of neighbours of the cell.
 
-\begin{figure}[htbp]
+\begin{marginfigure}
 \centering
-\includegraphics[width=0.5\linewidth]{figs/quinn.pdf}
+\includegraphics[width=\linewidth]{figs/quinn.pdf}
 \caption{The flow width \(L\) can be computed using the geometry of the DTM cells.
 In the case of a square grid with spacing \(d\), it is \(\frac{\sqrt{2}}{4}d\) for the diagonals (\(L_2\)) and \(\frac{1}{2}d\) for the adjacencies (\(L_1\)), where \(d\) is the grid spacing. Based on \citet{Quinn91}.}%
 \label{fig:quinn}
-\end{figure}
+\end{marginfigure}
 
-\begin{link-box}
+
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 \paragraph{Look at Figures~4--9 in the following paper.} These show the results of using a few flow direction computation methods in different terrains.
 Pay attention to how these differ from the theoretical values (if given), how some methods tend to create artefacts (\eg\ D8 in Figure~4), and how dispersion affects some others (\eg\ \citet{Quinn91} in Figure~7).
 \\
 \\
-\bibentry{Tarborton97}\\
+\fullcite{Tarborton97}\\
 \textbf{PDF:} \url{https://doi.org/10.1029/96WR03137}
-\end{link-box}
+\end{kaobox}
 
-\section{Computing the flow accumulation}%
+
+\section[Computing flow accumulation]{Computing the flow accumulation}%
 \label{se:accumulation}
 
 After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in all of them.
@@ -131,33 +140,36 @@ We will look at two common options to solve this problem: modifying a DTM by fil
 The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (or possibly to a set of cells that are known to be valid outlets, \eg\ lakes and oceans)\@.
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
 
-\begin{link-box}
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 \textbf{Section~3 in the following paper.} It explains the priority-flood algorithm, which is an efficient method to fill in sinks.
 In short, it keeps a sorted list of DTM cells that are known to drain to the boundary (and possibly other cells that are known to drain), which is initialised with the cells on the boundary of the DTM (and possibly other cells)\@.
 Then, it iteratively: (i) removes the lowest cell from this list, (ii) increases the elevation of its neighbours that are not yet known to drain to the level of the cell, (iii) adds the neighbours that are not yet known to drain to the list.
 \\
 \\
-\bibentry{Barnes14a}\\
+\fullcite{Barnes14a}\\
 \textbf{PDF:} \url{https://doi.org/10.1016/j.cageo.2013.04.024}
-\end{link-box}
+\end{kaobox}
 
 \subsection{Least-cost (drainage) paths}
 
 An alternative to modifying a DTM to eliminate sinks is to implement a more complex water routing algorithm that allows water to flow out of sinks.
 For this, the usual approach is to implement a variation of the \(A^{*}\) search algorithm, which in this context is known as the least-cost paths (LCP) algorithm.
 
-\begin{link-box}
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 \textbf{Section~2.1 in the following paper.} It explains the LCP algorithm and how it is implemented in GRASS\@.
 In short, it keeps a sorted list of DTM cells that are known to drain to the boundary (and possibly other cells that are known to drain), which is initialised with the cells on the boundary of the DTM (and possibly other cells)\@.
 Then, it iteratively: (i) removes the lowest cell from this list, (ii) sets the drainage direction of its neighbours that are not yet known to drain towards itself, (iii) adds the neighbours that are not yet known to drain to the list.
 Note the similarity with the algorithm in \citet{Barnes14a}.
 \\
 \\
-\bibentry{Metz11}\\
+\fullcite{Metz11}\\
 \textbf{PDF:} \url{https://doi.org/10.5194/hess-15-667-2011}
-\end{link-box}
+\end{kaobox}
 
-\section{Assigning flow direction in flats}
+
+\section[Flow direction in flats]{Assigning flow direction in flats}
 
 Flats are areas in a DTM that have the same elevation.
 They therefore do not have a well-defined flow direction, which causes problems for many water routing algorithms.
@@ -165,14 +177,15 @@ Flats can sometimes occur naturally, but they are more often the result of preci
 
 It is thus often necessary to apply a method that assigns a flow direction to flats, either by: (i) modifying the DTM to eliminate them, and then assigning them a flow direction in the usual way, or (ii) assigning them a flow direction directly.
 
-\begin{link-box}
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 \textbf{Section~2 in the following paper.} 
 It describes an algorithm to directly assign a flow direction to flats using a combination of: (i) a gradient away from higher terrain (\ie\ terrain goes down as we move away from higher terrain), and (ii) a gradient towards lower terrain (\ie\ terrain goes down as we move closer to lower terrain).
 \\
 \\
-\bibentry{Barnes14}\\
+\fullcite{Barnes14}\\
 \textbf{PDF:} \url{https://doi.org/10.1016/j.cageo.2013.01.009}
-\end{link-box}
+\end{kaobox}
 
 \section{Drainage networks and basins}
 
@@ -184,7 +197,7 @@ Based on a computed drainage network, it is then possible to extract the \emph{d
 This operation can be performed in many different places, such as the end node of a river (yielding its river basin), the nodes just before junctions in the network (yielding the drainage basins of the tributaries of a river), or the end nodes of a selected part of the network (yielding the drainage basin of a sea or ocean).
 The lines that separate adjacent drainage basins are \emph{drainage divides}, which form topographical ridges.
 
-\begin{figure}[htbp]
+\begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figs/Ocean_drainage}
 \caption{The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them.
