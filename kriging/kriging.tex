@@ -1,9 +1,11 @@
-
 %!TEX root = ../terrainbook.tex
+
+\setchapterpreamble[u]{\margintoc}
+\labch{kriging}
 
 \graphicspath{{kriging/}}
 
-\chapter{Spatial interpolation: kriging}
+\chapter{Spatial interpolation: kriging}%
 \label{chap:kriging}
 
 
@@ -69,7 +71,7 @@ While not used further in this lesson, it is also good to know that the variance
 
 Note that this is essentially just a normalised form of the covariance.
 
-\section{The standard geostatistical model}
+\section[Geostatistical model]{The standard geostatistical model}
 
 Geostatistics considers that a random variable \(Z\), which represents a spatially correlated property at a given location, can be decomposed into two related variables: (i) a non-random spatial trend that can be modelled by the \emph{expectation} \(E[Z]\) (\eg\ using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of error or residual term and is here denoted as \(R\).
 In the case of elevation, the former would represent the general shape of the terrain, whereas the latter would represent local differences from it.
@@ -139,10 +141,11 @@ E\left[ \hat{Z}_0 - Z_0 \right] = 0 \hspace{1cm}\text{or}\hspace{1cm}E\left[Z_0\
 
 In order to check this for simple kriging, we can put the weighted average from Equation~\ref{eq:wask} in this equation, which results in the following:
 
+% TODO : why is latex complaining at \end{align} I removed \cancelto{} and it's solved
 \begin{align}
-E\left[ Z_0 \right] &= E\left[ E[Z_0] + \sum_{i=1}^n w_i R_i \right] \nonumber \\
-&= E[Z_0] + \sum_{i=1}^n w_i \cancelto{0}{E[R_i]} \nonumber \\
-&= E[Z_0]. \nonumber
+  E\left[ Z_0 \right] &= E\left[ E[Z_0] + \sum_{i=1}^n w_i R_i \right] \nonumber \\
+  &= E[Z_0] + \sum_{i=1}^n w_i 0{E[R_i]} \nonumber \\
+  &= E[Z_0].  \nonumber
 \end{align}
 
 The second property of kriging is that it \emph{minimises the variance of the estimation error}, which in this case is given by \(\mathrm{var}\left(\hat{R}_0 - R_0\right)\).
@@ -234,7 +237,7 @@ where \(x\) is a sample point, \(h\) is a vector from \(x\) to another sample po
 When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, \(|h|\) (\ie\ the magnitude of the vector \(h\)) and \(\gamma(h)\) can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
 The result of such a plot is what is known as a \emph{variogram cloud} (Figure~\ref{fig:variogram_cloud}).
 
-\begin{figure}[htbp]
+\begin{figure*}
 \begin{subfigure}{0.5\linewidth}
 \centering
 \includegraphics[width=\linewidth]{figs/data}
@@ -248,7 +251,7 @@ The result of such a plot is what is known as a \emph{variogram cloud} (Figure~\
 \caption{Starting from (a) a sample dataset, (b) the variogram cloud can be computed.
 In this case, only 1\% randomly selected point pairs were used.}%
 \label{fig:variogram_cloud}
-\end{figure}
+\end{figure*}
 
 In this figure, it is possible to see some typical characteristics of a variogram cloud.
 Since nearby sample points tend to have similar values, the dissimilarity tends to increase as the distance between sample points increases.
@@ -273,7 +276,7 @@ Experimental variograms are based on a few parameters (Figure~\ref{fig:experimen
 \end{itemize}
 Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to half of the size of the region covered by the dataset.
 
-\begin{figure}[htbp]
+\begin{figure*}
 \begin{subfigure}{0.5\linewidth}
 \centering
 \includegraphics[width=\linewidth]{figs/experimental_variogram}
@@ -286,7 +289,7 @@ Note that in order to avoid the unreliable dissimilarities that are common at la
 \end{subfigure}%
 \caption{(a) The experimental variogram is usually described in terms of (b) its parameters.}%
 \label{fig:experimental_variogram}
-\end{figure}
+\end{figure*}
 
 Finally, the last step is to replace the experimental variogram with a \emph{theoretical variogram} function that approximates it and which can be more easily evaluated for further calculations.
 Depending on the shape of the variogram, there are various functions that can be used.
@@ -307,7 +310,7 @@ Note how the gaussian function appears to be a better fit in this case.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.5\linewidth]{figs/theoretical_variogram}
+\includegraphics[width=0.9\linewidth]{figs/theoretical_variogram}
 \caption{Three possible theoretical variogram functions}%
 \label{fig:theoretical_variogram}
 \end{figure}
@@ -408,7 +411,7 @@ It can extrapolate (often with negative weights), but that does not mean that th
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.5\linewidth]{figs/interpolation}
+\includegraphics[width=\linewidth]{figs/interpolation}
 \caption{The result of using ordinary kriging to interpolate on a grid of points using the sample dataset using only the sample points within 15 units of each interpolated point.}%
 \label{fig:interpolation}
 \end{figure}
