@@ -1,8 +1,13 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
+
+\setchapterpreamble[u]{\margintoc}
+\labch{pcprocessing}
+
 
 \graphicspath{{pcprocessing/}}
 
-\chapter{Point cloud processing}
+\chapter{Point cloud processing}%
 \label{chap:pcprocessing}
 
 In this chapter we discuss algorithms for reading, transforming, processing, cleaning and extracting information from point clouds, and we also briefly present the main storage formats used in practice.
@@ -69,7 +74,7 @@ However, in practice it is also used for other types of point cloud, \eg\ those 
 It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
 
 Table~\ref{tab:las-record} shows the composition of the simplest record type that is available for LAS files.
-\begin{table}
+\begin{table*}
   \centering
   \small
   \begin{tabular}{l|l|l|p{7cm}}
@@ -92,7 +97,7 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
   \end{tabular}
 \caption{LAS Point Data Record Format 0}
 \label{tab:las-record}
-\end{table}
+\end{table*}
 Other record types are available that also include fields to store for instance  RGB colour information or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
 While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format. 
 Notice that unused fields will still take up storage space in each record.
@@ -136,11 +141,11 @@ To be exact, the code $0$ is used for points that never subject to a classificat
 It is possible to define your own classes using code ranges that are reserved for that purpose.
 
 \paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
-\begin{figure}
+\begin{figure*}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
-  \caption{Classification codes used in the AHN3 dataset.}
-  \label{fig:ahn3}
-\end{figure}
+  \caption{Classification codes used in the AHN3 dataset.}%
+\label{fig:ahn3}
+\end{figure*}
 
 
 % The standard technically allows for additional user-defined attributes
@@ -247,7 +252,7 @@ These are not isolated points since each outlier will have plenty of other point
 A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
 This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers. 
 Figure~\ref{fig:mbes} gives an example.
-\begin{figure}
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.4\linewidth}
     \centering
@@ -260,9 +265,9 @@ Figure~\ref{fig:mbes} gives an example.
     \includegraphics[width=\textwidth]{figs/mbes_cleaning_after.png}
     \caption{after outlier detection}
   \end{subfigure}
-\caption{Outlier detection in a multi-beam echo sounding dataset using a TIN \citep{Arge10}.}
+\caption{Outlier detection in a multi-beam echo sounding dataset using a TIN \citep{Arge10}.}%
 \label{fig:mbes}
-\end{figure}
+\end{figure*}
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -346,7 +351,7 @@ Of course, if the triangles in the TIN change, the properties of the overlapping
 However, the algorithm is greedy, which means that it never ``goes back'' on operations that were previously performed, and thus  when a point $p$ is inserted as the ground, it is never removed.
 When all remaining points fail the ground test, the algorithm terminates.
 Figure~\ref{fig:axelsson} gives an example result.
-\begin{figure}
+\begin{figure*}
   \centering
   \begin{subfigure}[b]{0.48\linewidth}
     \centering
@@ -359,23 +364,23 @@ Figure~\ref{fig:axelsson} gives an example result.
     \includegraphics[width=\textwidth]{figs/axelsson-after.png}
     \caption{After}
   \end{subfigure}
-\caption{Ground filtering \citep{axelsson2000generation}}
+\caption{Ground filtering \citep{axelsson2000generation}}%
 \label{fig:axelsson}
-\end{figure}
+\end{figure*}
 
 \paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need to recompute the geometric properties of at most $n$ points.
 
 %%%
 %
-\section{Shape detection}
+\section{Shape detection}%
 \label{sec:shape-detection}
 
-\begin{figure}[h]
+\begin{figure*}
 	\centering
-	\includegraphics[width=0.95\textwidth]{figs/bk-planes.png}
-	\caption{Planar regions in the AHN3 point cloud. Each region was assigned a random colour.}
-	\label{fig:bk-planes}
-\end{figure}
+	\includegraphics[width=\linewidth]{figs/bk-planes.png}
+	\caption{Planar regions in the AHN3 point cloud. Each region was assigned a random colour.}%
+\label{fig:bk-planes}
+\end{figure*}
 
 Using shape detection we are able to automatically detect simple shapes such as planes in a point cloud.
 See for example Figure~\ref{fig:bk-planes}, where the points are randomly coloured according to the corresponding planar surfaces.
@@ -416,7 +421,7 @@ RANSAC is short for RANdom SAmpling Consensus and as its name implies it works b
 In fact it starts by picking a random set of points $M \subset P$. 
 This set $M$ is called the \emph{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
 From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and \ref{fig:ransac:c}).
-\begin{figure}[htb]
+\begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
