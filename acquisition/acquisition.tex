@@ -1,8 +1,12 @@
 %!TEX root = ../terrainbook.tex
 
+\setchapterpreamble[u]{\margintoc}
+\labch{acquisition}
+
 \graphicspath{{acquisition/}}
 
-\chapter{Acquisition of elevation measurements}
+
+\chapter{Acquisition of elevation measurements}%
 \label{chap:acquisition}
 
 The very first step in the process of terrain modelling is the acquisition of elevation measurements. 
@@ -15,8 +19,9 @@ It is important that you are aware of these artefacts while working with elevati
 %Section~\ref{sec:artefacts} gives an overview of common problems in elevation data.
 
 
-\section{Acquisition techniques}
+\section{Acquisition techniques}%
 \label{sec:acquisistion-techniques}
+
 There are a number of remote sensing techniques that are used to measure elevation on Earth or other planets. 
 Typically, these techniques measure 1) the distance to the target surface and 2) their own position and orientation with respect to some global reference system. 
 By combining these, we can compute the 3D coordinates of the measured location on the target surface. 
@@ -61,11 +66,11 @@ This gives lidar the unique ability to sense a ground surface from the air, even
 On Earth, for DTM generation, only airborne lidar is used, attached to either planes or helicopters.
 However for celestial bodies that do not have an atmosphere (such as the Moon), lidar can also be used from space\footnote{NASA has used lidar on the Moon (\url{https://lola.gsfc.nasa.gov}) and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}.
 
-\begin{link-box}
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 This YouTube video explains the principles of an aerial LiDAR system:
 \\
 \url{https://youtu.be/EYbhNSUnIdU}
-\end{link-box}
+\end{kaobox}
 
 
 % TODO : put a side-by-side with vegetation and without lidar to show DTM and DSM
@@ -102,13 +107,14 @@ However, by using a comprehensive chain of processing operations based on the me
 With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\footnote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of 30 meters.
 
-\begin{link-box}
-The principles of InSAR\@.
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
 
-\url{https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar}
-\end{link-box}
+	\href{https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar}{Wikipedia page about \emph{Interferometric synthetic-aperture radar}}.
 
-\subsection{Echo sounding}
+\end{kaobox}
+
+\subsection{Echo sounding}%
 \label{sec:mbes}
 Echo sounding is a form of sonar that can be used for bathymetry, \ie\ mapping underwater terrains from a boat. 
 Similar to lidar, it uses the time-of-flight principle to compute distance, but sound is used instead of light. 
@@ -116,17 +122,19 @@ Similar to lidar, it uses the time-of-flight principle to compute distance, but 
 Single-beam and multi-beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately. 
 For bathymetry usually a multi-beam echo sounder is used.
 
-\begin{link-box}
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
   The principles of echo sounding.
   \\
   \url{https://en.wikipedia.org/wiki/Echo_sounding}
-\end{link-box}
+\end{kaobox}
 
 
 
 
-\section{Artefacts}
+\section{Artefacts}%
 \label{sec:artefacts}
+
 In the acquisition process, there are many aspects---both under our control and not under our control--- that affect the quality and usability of the resulting elevation data for a given application. 
 Some examples are
 \begin{itemize}
@@ -229,7 +237,7 @@ However, regardless of what flight parameters are chosen for a survey both effec
 % oblique vs nadir for occlusion
 %Especially occlusion can be a problem for (2.5D) DTM generation because it causes no-data areas that may be problematic.
 
-\begin{figure}
+\begin{figure*}
 	\centering
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ahn1_d.png}
@@ -254,9 +262,9 @@ However, regardless of what flight parameters are chosen for a survey both effec
 		\subcaption{City of Rotterdam (2016)}
 		\label{fig:pcd:rdam16}
 	\end{subfigure}
-	\caption{Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.}
-  \label{fig:pcd}
-\end{figure}
+	\caption{Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.}%
+\label{fig:pcd}
+\end{figure*}
 
 \subsubsection{Material properties}
 Depending on material properties of a target surface, signals may be reflected in a way that makes it impossible to compute the correct distance. 
@@ -307,11 +315,13 @@ For example, an outlier detection algorithm may remove `good' points if they loo
 And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\footnote{Chapters~\ref{chap:interpol} and~\ref{chap:kriging} explore the topic of spatial interpolation in detail.}.
 
 
-\begin{link-box}
-This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM\@. It shows that even when artefacts seem to be under control, both techniques may measure different elevations \citep{Ressl16}. 
+%%
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM\@. It shows that even when artefacts seem to be under control, both techniques may measure different elevations 
 
-PDF: \url{https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf}
-\end{link-box}
+\fullcite{Ressl16}
+\textbf{PDF:} \url{https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf}
+\end{kaobox}
 
 %For instance, an outlier filter 
 %misclassified points, smoothing effects in DIM
