@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
 \labch{spatialextent}
@@ -10,16 +11,7 @@
 
 Given a point cloud, one operation that practitioners often need to perform is to define the spatial extent of the dataset.
 That is, they need to define the shape of the region that best abstracts or represents the set of points.
-As seen in \reffig{fig:examples}, this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
-
-%
-
-Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), or to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
-
-%
-
-The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
-It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
+As seen in \reffig{fig:examples}, 
 \begin{figure*}
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -36,6 +28,16 @@ It is important to notice that the spatial extent is not uniquely defined and th
 \caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
 \labfig{fig:examples}  
 \end{figure*}
+this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+
+%
+
+Calculating the spatial extent is useful to calculate the area covered by a dataset, to convert it to other formats (\eg\ raster), or to get an overview of several datasets it is faster to load a few polygons instead of billions of points, etc.
+
+%
+
+The spatial extent is often called by different names, for instance: envelope, hull, concave hull, or footprints.
+It is important to notice that the spatial extent is not uniquely defined and that it is a vague concept.
 As \reffig{fig:ideas} shows, there are several potential regions for a rather simple set of points, and most of these could be considered `correct' by a human.
 \begin{figure}
   \centering
@@ -257,6 +259,7 @@ If $S$ forms different clusters (see for instance \reffig{fig:clusters}, then on
 \end{marginfigure}
 Notice that this can also be useful to discard unwanted outliers (unless the lowest point is an outlier).
 In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of \reffig{fig:clusters} two clusters should be detected) and then each cluster is processed separately.
+See Section~\ref{sec:clustering} for an overview.
 
 %
 
@@ -311,7 +314,7 @@ Before removing an edge, we must verify that it will not introduce a topological
 
 %
 
-A DT can be constructed in $\mathcal{O}(n log n)$.
+A DT can be constructed in $\mathcal{O}(n \log n)$.
 The number of edges in a DT of $n$ points is roughly $3n$ (thus $\mathcal{O}(n)$), and since verifying the topological constraint can be done locally (previous and next edge) the overall time complexity is $\mathcal{O}(n \log n)$
 
 Properties $\chi$-shape:
@@ -323,7 +326,7 @@ Properties $\chi$-shape:
   P2. & All points are part of the region \\ 
   P3. & One component.  \\ 
   P4. & No holes in the region.  \\  
-  P5. & $\mathcal{O}(n log n)$  \\  
+  P5. & $\mathcal{O}(n \log n)$  \\  
 \bottomrule
 \end{tabular}
 
@@ -399,7 +402,7 @@ Implementations of the $\alpha$-shape will often offer to compute automatically 
 
 %
 
-A DT can be constructed in $\mathcal{O}(n log n)$ time, and the algorithm only requires to visit once each of the $\mathcal{O}(n)$ triangles, thus the time complexity is $\mathcal{O}(n log n)$.
+A DT can be constructed in $\mathcal{O}(n \log n)$ time, and the algorithm only requires to visit once each of the $\mathcal{O}(n)$ triangles, thus the time complexity is $\mathcal{O}(n \log n)$.
 
 %
 
@@ -412,9 +415,71 @@ Properties $\alpha$-shape:
   P2. & Some points can be omitted. \\ 
   P3. & Several components possible.  \\ 
   P4. & Regions can contain holes.  \\  
-  P5. & $\mathcal{O}(n log n)$  \\ 
+  P5. & $\mathcal{O}(n \log n)$  \\ 
 \bottomrule
 \end{tabular}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section{Clustering algorithms}%
+\label{sec:clustering}
+
+Clustering algorithms are used widely for statistical data analysis, they allow us to group points (often in higher dimensions) that are close to each others in one group.
+Different notions to create clusters can be used, \eg\ distance between the points, density, intervals or particular statistical distributions.
+As \reffig{fig:clustering} shows, the result of a clustering algorithm is that each input point is assigned to a cluster (here a colour), and potentially some outliers are identified.
+\begin{marginfigure}
+  \centering
+  \begin{subfigure}[b]{0.6\linewidth}
+    \centering
+    \includegraphics[page=1,width=\textwidth]{figs/clustering.pdf}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.6\linewidth}
+    \centering
+    \includegraphics[page=2,width=\textwidth]{figs/clustering.pdf}
+    \caption{}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.6\linewidth}
+    \centering
+    \includegraphics[page=3,width=\textwidth]{figs/clustering.pdf}
+    \caption{}
+  \end{subfigure}  
+\caption{Clustering points. \textbf{(a)} A set of points $S$. \textbf{(b)} The result of a clustering algorithm: points are assigned to a group (based on colours, here 2 groups) or labelled as outliers (grey points). \textbf{(c)} DBSCAN core points (dark red), border points (orange), and outliers (grey); the orange circle is the $\epsilon$ and the $n_{min} = 2$.}%
+\labfig{fig:clustering}  
+\end{marginfigure}
+
+%
+
+\paragraph{k-mean clustering.} 
+It is a centroid-based clustering, where clusters are represented by their centroid.
+The parameter $k$ is the number of clusters, given as input.
+A point belongs to a given cluster if its distance to the centroid is less than for any other cluster centroid.
+The algorithm can be seen as an optimisation problem, since we want the distances from each point to their centroids to be minimised.
+In practice, we often seek approximate solutions, for instance the location of the $k$ centroids are randomised (and thus the algorithm will yield different outputs).
+The algorithm is iterative: at each iteration the points are assigned to the closest centroid, and new centroid locations are updated.
+The algorithm stops when the centroids have converged and their locations do not change.
+
+%
+
+\paragraph{DBSCAN: density-based clustering.} 
+A density-based cluster is defined as an area of higher density then other points, the density being the number of points per area.
+It aims at grouping points having many close neighbours.
+
+%
+
+The most used algorithm is DBSCAN (density-based spatial clustering of applications with noise), and works as follows.
+First the density is defined with 2 parameters: (1) $\epsilon$ is a distance defining the radius of the neighbourhood around a given point; (2) $n_{min}$ is the minimum number of points that a neighbourhood can contain to be considered a cluster.
+Points are categorised either as: (1) \emph{core points} if they have more than $n_{min}$ neighbours within $\epsilon$; (2) \emph{border points} if they have less than $n_{min}$ neighbours within $\epsilon$, but are closer than $\epsilon$ to a core point; (3) \emph{outliers}.
+In \reffig{fig:clustering}c, if $n_{min} = 2$ and the orange circle represents $\epsilon$, notice that a few points are border points since they have only one point in their neighbourhood, and that 3 points are outliers (1 is clear, the other 2 are very close to being border points).
+A cluster is formed by recursively finding all the neighbouring points of a given core point, adding them to the cluster.
+
+%
+
+
 
 
 
@@ -435,8 +500,9 @@ The $\chi$-shape was introduced in \citet{Duckham08}.
 
 The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and from the CGAL documentation\sidenote{\url{https://doc.cgal.org/latest/Alpha_shapes_2/index.html}}.
 
+The DBSCAN algorithm was introduced in \citet{Ester96}.
+
 % TODO: add that stuff?
-% https://en.wikipedia.org/wiki/DBSCAN
 % https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#/media/File:Animation_depicting_the_gift_wrapping_algorithm.gif
 
 %%%%%%%%%%%%%%%%%%%%
