@@ -448,18 +448,18 @@ As \reffig{fig:clustering} shows, the result of a clustering algorithm is that e
     \includegraphics[page=3,width=\textwidth]{figs/clustering.pdf}
     \caption{}
   \end{subfigure}  
-\caption{Clustering points. \textbf{(a)} A set of points $S$. \textbf{(b)} The result of a clustering algorithm: points are assigned to a group (based on colours, here 2 groups) or labelled as outliers (grey points). \textbf{(c)} DBSCAN core points (dark red), border points (orange), and outliers (grey); the orange circle is the $\epsilon$ and the $n_{min} = 2$.}%
+\caption{Clustering points. \textbf{(a)} A set of points $S$. \textbf{(b)} The result of a clustering algorithm (DBSCAN): points are assigned to a group (based on colours, here 2 groups) or labelled as outliers (grey points). \textbf{(c)} DBSCAN has 3 types of points: core points (dark red), border points (orange), and outliers (grey); the orange circle is the $\epsilon$ and the $n_{min} = 2$.}%
 \labfig{fig:clustering}  
 \end{marginfigure}
 
 %
 
 \paragraph{k-mean clustering.} 
-It is a centroid-based clustering, where clusters are represented by their centroid.
-The parameter $k$ is the number of clusters, given as input.
-A point belongs to a given cluster if its distance to the centroid is less than for any other cluster centroid.
-The algorithm can be seen as an optimisation problem, since we want the distances from each point to their centroids to be minimised.
-In practice, we often seek approximate solutions, for instance the location of the $k$ centroids are randomised (and thus the algorithm will yield different outputs).
+It is a centroid-based clustering, where a cluster is represented by its centroid.
+The parameter $k$ is the number of clusters, usually given as input.
+A point belongs to a given cluster if its distance to the centroid is less than for any other cluster centroids.
+The algorithm can be seen as an optimisation problem, since we want the total distances from each point to its assigned centroid to be minimised.
+In practice, we often seek approximate solutions, for instance the location of the $k$ centroids are first randomised, and thus the algorithm will yield different outputs.
 The algorithm is iterative: at each iteration the points are assigned to the closest centroid, and new centroid locations are updated.
 The algorithm stops when the centroids have converged and their locations do not change.
 
@@ -467,14 +467,14 @@ The algorithm stops when the centroids have converged and their locations do not
 
 \paragraph{DBSCAN: density-based clustering.} 
 A density-based cluster is defined as an area of higher density then other points, the density being the number of points per area.
-It aims at grouping points having many close neighbours.
+The aim is to group points having many close neighbours.
 
 %
 
 The most used algorithm is DBSCAN (density-based spatial clustering of applications with noise), and works as follows.
-First the density is defined with 2 parameters: (1) $\epsilon$ is a distance defining the radius of the neighbourhood around a given point; (2) $n_{min}$ is the minimum number of points that a neighbourhood can contain to be considered a cluster.
-Points are categorised either as: (1) \emph{core points} if they have more than $n_{min}$ neighbours within $\epsilon$; (2) \emph{border points} if they have less than $n_{min}$ neighbours within $\epsilon$, but are closer than $\epsilon$ to a core point; (3) \emph{outliers}.
-In \reffig{fig:clustering}c, if $n_{min} = 2$ and the orange circle represents $\epsilon$, notice that a few points are border points since they have only one point in their neighbourhood, and that 3 points are outliers (1 is clear, the other 2 are very close to being border points).
+First the density is defined with 2 parameters: (1) $\epsilon$ is a distance defining the radius of the neighbourhood around a given point; (2) $n_{\min}$ is the minimum number of points that a neighbourhood can contain to be considered a cluster.
+Points are categorised either as: (1) \emph{core points} if they have more than $n_{\min}$ neighbours within $\epsilon$; (2) \emph{border points} if they have less than $n_{\min}$ neighbours within $\epsilon$, but are closer than $\epsilon$ to a core point; (3) \emph{outliers}.
+In \reffig{fig:clustering}c, if $n_{\min} = 2$ and the orange circle represents $\epsilon$, notice that a few points are border points since they have only one point in their neighbourhood, and that 3 points are outliers (1 is clear, the other 2 are very close to being border points).
 A cluster is formed by recursively finding all the neighbouring points of a given core point, adding them to the cluster.
 
 %
