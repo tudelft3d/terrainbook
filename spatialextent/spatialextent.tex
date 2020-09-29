@@ -76,7 +76,7 @@ In this chapter we present methods that are used in practice to define the spati
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Properties of the region}
+\section{Properties of the region}%
 \label{sec:properties}
 
 \begin{figure*}
@@ -251,7 +251,7 @@ In this case, a solution to this problem would be to either choose another $k$, 
 %
 \paragraph{Different clusters?} 
 One drawback of the moving arm method is that only one polygon is obtained as a region.
-If $S$ forms different clusters (see for instance \reffig{fig:clusters}, then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
+If $S$ forms different clusters (see for instance \reffig{fig:clusters}), then only the cluster that is the `lowest' will be output for the region (since the lowest point is picked as a starting point).
 \begin{marginfigure}
   \includegraphics[page=2,width=.9\textwidth]{figs/clusters.pdf}
   \caption{$S$ has two distinct clusters. In green the typical output if $S$ processed as a single cluster with a moving arm algorithm.}%
@@ -448,7 +448,7 @@ As \reffig{fig:clustering} shows, the result of a clustering algorithm is that e
     \includegraphics[page=3,width=\textwidth]{figs/clustering.pdf}
     \caption{}
   \end{subfigure}  
-\caption{Clustering points. \textbf{(a)} A set of points $S$. \textbf{(b)} The result of a clustering algorithm (DBSCAN): points are assigned to a group (based on colours, here 2 groups) or labelled as outliers (grey points). \textbf{(c)} DBSCAN has 3 types of points: core points (dark red), border points (orange), and outliers (grey); the orange circle is the $\epsilon$ and the $n_{min} = 2$.}%
+\caption{Clustering points. \textbf{(a)} A set of points $S$. \textbf{(b)} The result of a clustering algorithm (DBSCAN): points are assigned to a group (based on colours, here 2 groups) or labelled as outliers (grey points). \textbf{(c)} DBSCAN has 3 types of points: core points (dark red), border points (orange), and outliers (grey); the orange circle is the $\epsilon$ and the $n_{\min} = 2$.}%
 \labfig{fig:clustering}  
 \end{marginfigure}
 
@@ -502,8 +502,6 @@ The explanation of the $\alpha$-shape is taken from \citet{Edelsbrunner94} and f
 
 The DBSCAN algorithm was introduced in \citet{Ester96}.
 
-% TODO: add that stuff?
-% https://en.wikipedia.org/wiki/Gift_wrapping_algorithm#/media/File:Animation_depicting_the_gift_wrapping_algorithm.gif
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -517,5 +515,3 @@ The DBSCAN algorithm was introduced in \citet{Ester96}.
   \item Draw what would happen if one of the 2 edges was removed in \reffig{fig:chishape}c.
   \item What is the influence of $k$ for the moving arm algorithm (with a \emph{kdd})? Will a higher $k$ create a larger or smaller region in general?
 \end{enumerate}
-
-
