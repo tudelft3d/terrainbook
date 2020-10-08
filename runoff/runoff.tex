@@ -24,7 +24,7 @@ Such models can be quite accurate, but they require high-resolution data that is
 \label{fig:hydrology}
 \end{figure}
 
-By contrast, the simpler GIS models of runoff can be performed automatically in large areas with only a DTM\@.
+By contrast, the simpler \emph{GIS models of runoff} can be performed automatically in large areas with only a DTM\@.
 These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter, but the methods described here mostly work just as well with other representations (\eg\ a TIN).
 In order for the GIS models of runoff to achieve their results, two big assumptions are usually made:
 
@@ -38,8 +38,10 @@ Based on these assumptions, runoff modelling is simplified by considering only t
 \begin{description}
 \item[Flow direction]
 Given a DTM cell, towards which nearby cells and in which proportions does water flow from it?
+\marginnote{flow direction}\index{flow direction}
 \item[Flow accumulation]
 Given a DTM cell, what is the total water flow that passes through it?
+\marginnote{flow accumulation}\index{flow accumulation}
 \end{description}
 
 We look at a few different methods to compute these values in the next two sections.
@@ -57,10 +59,10 @@ There are two broad approaches that can be followed to do this: computing a sing
 
 The earliest and simplest method to compute the flow direction of a cell is to compute the slope between the centre of the cell and the centre of all its neighbouring cells (using the distance between the centres and the difference in elevation), then assign the flow direction towards the neighbour with the steepest descent.
 The method is known as the \emph{single flow direction (SFD)} approach, 
-\marginnote{single flow direction (SFD)}
+\marginnote{single flow direction (SFD)}\index{single flow direction}\index{SFD}
 and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals).
 For this reason, it is also known as the \emph{eight flow directions (D8)} approach.
-\marginnote{D8 flow direction}\index{D8 flow direction}
+\marginnote{D8 flow direction}\index{D8 flow direction}\index{eight flow directions}
 
 On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
@@ -68,6 +70,7 @@ For instance, in a square grid, the errors can be of up to \(22.5^\circ{}\) (bec
 This method can therefore easily create artefacts in certain geometric configurations (Figure~\ref{fig:d8}).
 
 Many of these artefacts can be eliminated by using the rho8 (\(\rho8\)) method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
+\marginnote{rho8 (\(\rho8\))}\index{\(\rho8\)}\index{rho8}
 However, it produces non-deterministic results, which is often a sufficient reason not to use it.
 
 Despite its age and limitations, the SFD method is still widely used and available in many GIS tools\@.
@@ -83,7 +86,7 @@ Despite its age and limitations, the SFD method is still widely used and availab
 
 In an attempt to overcome the limitations of the SFD method, a variety of methods assign the flow direction of a DTM cell fractionally to some or all of its lower neighbouring cells according to some criteria.
 These methods are collectively known as multiple flow directions (MFD), 
-\marginnote{multiple flow directions (MFD)}
+\marginnote{multiple flow directions (MFD)}\index{multiple flow directions}\index{MFD}
 and they usually use a variation of this equation:
 
 \begin{equation}
@@ -129,13 +132,15 @@ Note that this calculation can be sped up substantially by: (i) storing the accu
 
 \section{Solving issues with sinks}
 
-Sinks, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
+\emph{Sinks}, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
+\marginnote{sink}\index{sink}
 Some of these are natural features that are present in the terrain (\eg\ lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
 However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that easily flooded, after which water would flow out of them.
 In the latter case, we need to implement a mechanism to route water flows out of these depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
 
 \subsection{Filling in sinks}
+\index{sink filling}
 
 The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (or possibly to a set of cells that are known to be valid outlets, \eg\ lakes and oceans)\@.
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
@@ -155,6 +160,7 @@ Then, it iteratively: (i) removes the lowest cell from this list, (ii) increases
 
 An alternative to modifying a DTM to eliminate sinks is to implement a more complex water routing algorithm that allows water to flow out of sinks.
 For this, the usual approach is to implement a variation of the \(A^{*}\) search algorithm, which in this context is known as the least-cost paths (LCP) algorithm.
+\marginnote{least-cost paths (LCP)}\index{least-cost paths}\index{LCP}
 
 %%
 \begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
@@ -171,7 +177,8 @@ Note the similarity with the algorithm in \citet{Barnes14a}.
 
 \section[Flow direction in flats]{Assigning flow direction in flats}
 
-Flats are areas in a DTM that have the same elevation.
+\emph{Flats} are areas in a DTM that have the same elevation.
+\marginnote{flat}\index{flat}
 They therefore do not have a well-defined flow direction, which causes problems for many water routing algorithms.
 Flats can sometimes occur naturally, but they are more often the result of precision limits, noise removal, or sink filling algorithms.
 
@@ -190,12 +197,15 @@ It describes an algorithm to directly assign a flow direction to flats using a c
 \section{Drainage networks and basins}
 
 Interpreting DTM cells as nodes and the flow direction as directed edges connecting them yields the \emph{drainage network} of a DTM\@.
+\marginnote{drainage network}\index{drainage network}
 However, it is usually best to filter out the least important parts of the network using a flow accumulation threshold.
 A good rule of thumb for this threshold is the mean flow accumulation in the DTM, but an exact value is usually set by trial and error until the desired parts of the network are kept.
 
 Based on a computed drainage network, it is then possible to extract the \emph{drainage basins} of a DTM by considering the areas that are drained by one or more nodes of the network (Figure~\ref{fig:oceans}).
+\marginnote{drainage basin}\index{drainage basin}\index{basin}
 This operation can be performed in many different places, such as the end node of a river (yielding its river basin), the nodes just before junctions in the network (yielding the drainage basins of the tributaries of a river), or the end nodes of a selected part of the network (yielding the drainage basin of a sea or ocean).
 The lines that separate adjacent drainage basins are \emph{drainage divides}, which form topographical ridges.
+\marginnote{drainage divide}\index{drainage divide}
 
 \begin{figure}
 \centering
