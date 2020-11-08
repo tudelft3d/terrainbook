@@ -13,24 +13,109 @@ The very first step in the process of terrain modelling is the acquisition of el
 Nowadays, these measurements are usually collected in large quantities using some form of remote sensing, \ie\ sensors that measure---in our case---the distance to the Earth's surface from an airborne or even a spaceborne platform. 
 In raw form elevation measurements are typically stored as a point cloud, \ie\ a collection of georeferenced 3D points with each point representing one elevation measurement on the Earth's surface.
 
-As with any kind of real-world measurement, there are various uncertainties and restrictions that lead to distortions---called \emph{artefacts}---in the acquired data. 
-This often makes further processing of the data more difficult, because these artefacts often violate assumption that are made in the DTM algorithms used to further process and analyse the point cloud, leading to erroneous results. 
-It is important that you are aware of these artefacts while working with elevation data, because only then you will be able to make the right modelling decisions. 
-%Section~\ref{sec:artefacts} gives an overview of common problems in elevation data.
-
-
-\section{Acquisition techniques}%
-\label{sec:acquisistion-techniques}
-
 There are a number of remote sensing techniques that are used to measure elevation on Earth or other planets. 
 Typically, these techniques measure 1) the distance to the target surface and 2) their own position and orientation with respect to some global reference system. 
 By combining these, we can compute the 3D coordinates of the measured location on the target surface. 
 
-The position and orientation of the sensor is usually measured respectively using a global navigation satellite system (GNSS) such as GPS and an inertial measurement unit (IMU).
-Only in case of spaceborne sensors GNSS is not available, and instead a star tracker is used.
+In this chapter we will focus primarily on lidar; the most commonplace acquisition technique for large scale terrain models with centimeter level accuracy. But we we also briefly discuss other acquisition techniques, \ie\ photogrammetry, inSAR and sonar. And to conclude we will look at typical artefacts that you might encounter while working with elevation data. Because, as with any kind of real-world measurement, there are various uncertainties and restrictions in the acquisition process that lead to distortions---the \emph{artefacts}---in the acquired data. These artefacts need to be taken into account when further processing and using the elevation data. 
+%This often makes further processing of the data more difficult, because these artefacts often violate assumption that are made in the DTM algorithms used to further process and analyse the point cloud, leading to erroneous results. 
+% It is important that you are aware of these artefacts while working with elevation data, because only then you will be able to make the right modelling decisions. 
+%Section~\ref{sec:artefacts} gives an overview of common problems in elevation data.
 
-How distance is measured depends on the sensor technique. 
-What follows is a brief description of the four main techniques used in practice. 
+\section{Principles of lidar}%
+\label{sec:lidar-principles}
+
+A lidar system\footnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures distance to a target by illuminating it with pulsed laser light and measuring the reflected or \emph{backscattered}\footnote{Backscattering is the natural phenomenon of  the reflection of (electromagnetic) waves or signals back to the direction they came from.} signal with a sensor (see Figure~\ref{fig:acqLidar}). 
+By measuring the time-of-flight, \ie\ the difference in time between emitting a pulse and detecting its return or \emph{echo}, the distance to the target that reflected the pulse can be found using a simple formula. To be exact, the time of flight $T$ is equal to
+\begin{equation}
+	\label{eq:tof}
+	T= 2 \frac{R}{c}
+\end{equation}
+where $c$ is the speed of  light (approximately 300 000 km/s), and $R$ is the distance or \emph{range} between the lidar scanner and the target object that reflects the laser pulse. Therefore the range $R$ can be found from the measured time of flight $T$ using
+\begin{equation*}
+	R = \frac{1}{2} Tc.
+\end{equation*}
+A typical lidar systems performs hundreds of thousands of such range measurements per second. 
+
+Lidar scanners exist in various forms. It can be mounted on a static tripod (terrestrial lidar) for accurate local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also handheld lidar systems exist, and even some of the latest smartphones  have a lidar sensor. Furthermore, lidar can also be used from a satellite in space\footnote{NASA has used space lidar on earth (\url{https://en.wikipedia.org/wiki/ICESat-2}), on the Moon (\url{https://lola.gsfc.nasa.gov}), and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}. 
+However, in the remainder of this text we will focus on airborne lidar.
+
+
+\subsection{Georeferencing the range measurements}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/lidar-gnss-imu.png}
+	\caption{An airborne lidar system \citep{Dowman04}.}
+	\label{fig:airborne-lidar}
+\end{figure}
+Apart from the  laser scanner itself, a lidar  system uses a GPS receiver  and an inertial navigation system (INS). See Figure~\ref{fig:airborne-lidar}. These devices, which respectively provide the global position and orientation of the laser scanner, are needed to for georeferencing, \ie\ to convert the range measurements of the laser scanner to 3D point measurements  in a global coordinate system such  as WGS84. 
+
+To  obtain an accurate global position, Differential GPS (DGPS) is employed. DGPS is a technique to enhance the accuracy of GPS  by using GPS stations on the ground (one is visible in Figure~\ref{fig:airborne-lidar}). These DGPS stations have a known position and they broadcast the difference between that  known position and the position at the station as indicated by GPS. This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from a nearby DGPS station and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
+
+To obtain the accurate orientation of the laser scanner the INS of the aircraft is used. The INS accurately measures the orientation, \ie the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU) \footnote{\url{https://en.wikipedia.org/wiki/Inertial_measurement_unit}}. Only when we accurately know the orientation of  the laser scanner, we can know the direction (in a global coordinate system) in which a laser pulse is emitted from the aircraft.
+
+By combining global position and the global orientation of the laser scanner with the range measurement from the laser scanner, the georeferenced 3D position of  the point  on the target object that reflected the lase pulse can be computed.
+
+\subsection{Echo detection}
+A lidar system performs ranging measurements using the the time of flight principle that allows us to compute range from a time measurement using the known speed of light in air. The time measurement starts when the laser pulse is emitted and is completed when a backscattered echo of that signal is detected. In practice one emitted pulse can even lead to multiple echoes  in the case when an object reflects part of the laser pulse, but also allows part of the pulse to continue past the object. Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pules at ground level is several centimeters in diameter which increases the likelihood of multiple echoes.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/lidar-multipulse.pdf}
+	\caption{The emitted laser pulse, the returned signal (a) and the recorded echoes (b). Adapted from \citet{Bailly12}.}
+	\label{fig:lidar-multipulse}
+\end{figure}
+Figure~\ref{fig:lidar-multipulse} illustrates what the backscattered signal looks like when it hits a target object in the shape of a tree. A tree is a particularly interesting, because it often causes multiple echoes (one or more on its branches and one on the ground below).  The lidar sensor observes a waveform that represents the received signal power (P) as a function of time (t). In  direct detection lidar systems that we focus on in this text, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
+
+Multiple echoes are also referred to as multiple returns. For each return the return count is recorded, \eg~the first return is first echo received from an emitted laser pules and the last return is the last received echo (see Figure ~\ref{fig:airborne-lidar}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
+
+\subsection{Anatomy of a lidar system}
+\label{lidar:anatomy}
+A lidar system consists of an optical and an electronic part. Each part consists of several components as shown in Figure~\ref{fig:lidar-components}.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/lidar-components.png}
+	\caption{Conventional architecture of a direct detection lidar system \citep{Chazette16}.}
+	\label{fig:lidar-components}
+\end{figure}
+
+In the optical part a pulse of a particular wavelength (typically near-infrared) is generated by the laser source for each lidar measurement. It then passes through a set of  optics (lenses and mirrors) so that it leaves the scanner in an appropriate direction. After the pulse interacts with the scattering medium, it is reflected back into the scanning optics which then  direct the signal into a telescope. The telescope converges the signal through a field diaphragm (essentially a tiny hole around the point of convergence). The field diaphragm blocks any stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline. Next, the light signal is recollimated so that it again consists only of parallel light rays. The final step of the optical part is the inference filter which block all wavelengths except for the wavelength of the laser source. This is again needed to block any stray light rays from distorting the measurement.
+
+The electronic part consists of a photodetector which transforms the light signal into an electrical current which is then converted to a digital signal using the analog-to-digital converter. Once the digital signal is available, further electronics can be used to interpret and record the signal.
+
+
+\subsection{Laser wavelength}
+Choosing the optimal laser wavelength is a compromise of several different factors. One needs to consider atmospheric scattering, \ie\ how much of the signal is lost simply by travelling through the atmosphere, and the absorption capacity of vegetation, \ie\ how much of  the signal is lost because it is absorbed by vegetation. In addition, there is the stray signal due to direct and scattered contributions of sunlight. While it is possible to filter such stray signals in the lidar system to some degree, it remains wise to choose a wavelength that is only minimally affected by it. Finally there are regulations that limit the laser radiance values permissible to the eye. This means that the power of emitted signal needs to be carefully controlled, and/or a wavelength must be chosen that  is not absorbed by the eye so much.
+
+As a result, most lidar systems use a wavelength in the near-infrared spectrum, usually between 600 and 1000 nm. A notable exception is made for bathymetric purposes, in which case a green (532 nm) laser is used because that has a greater penetration ability in water.
+
+\subsection{Scanning patterns}
+In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these rotating mirrors or prisms the emitted laser pulse is guided in a cross-track direction (\ie\ perpendicular to the along-track direction in which  the aircraft moves),  thereby greatly increasing the scanned ground area  per travelled meter of the aircraft.
+Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of rotating optics and shows the resulting scanning patterns. It is clear that density of points on the ground is affected by the scanning pattern. The top example for example, yields much higher densities on edges of the scanned area. In practice more uniform patterns, such  as the bottom two examples are often preferred.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/lidar-patterns.pdf}
+	\caption{Different configurations of rotating mirrors and the associated scanning patterns from a moving platform. Arrows indicate the direction of the emitted laser signal \citep{Chazette16}.}
+	\label{fig:lidar-patterns}
+\end{figure}
+
+
+
+\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+	This YouTube video explains the principles of an aerial LiDAR system:
+	\\
+	\url{https://youtu.be/EYbhNSUnIdU}
+\end{kaobox}
+
+
+% TODO : put a side-by-side with vegetation and without lidar to show DTM and DSM
+
+
+\section{Other acquisition techniques}%
+\label{sec:acquisistion-techniques}
+
+Apart from lidar there are also other sensor techniques that can be used to acquire elevation data. Some of these are  active sensors just like lidar (a signal is generated and emitted from the sensor), whereas others are passive (using the sun as light source). And like lidar, these sensors themselves only do range measurements, and need additional hardware such as a GPS receiver and an IMU to georeference the measurements. What follows is a brief description of the three other important acquisition techniques used in practice. 
 
 \begin{figure}
 	\centering
@@ -49,32 +134,6 @@ What follows is a brief description of the four main techniques used in practice
 	\label{fig:sensors}
 \end{figure}
 % FIXME image with flight parameters and strips
-
-\subsection{Lidar}
-A lidar system\footnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures distance to a target by illuminating it with pulsed laser light and measuring the reflected pulses with a sensor (see Figure~\ref{fig:acqLidar}). 
-It is generally considered to be the most accurate acquisition technique.
-By measuring the time-of-flight, \ie\ the difference in time between sending a pulse and sensing its return, the distance to the target that reflected the pulse can be found by multiplying half of the time-of-flight with the speed of light, which is a known constant.
-Lidar thus makes use of the natural phenomenon of \emph{backscattering}, \ie\ the reflection of (electromagnetic) waves or signals back to the direction they came from. 
-%The strength of the return signal, \ie~its intensity, is also recorded for each point.
-%Most often an infra-red laser is used, but sometimes another wavelengths is used. 
-When equipped with a green laser, lidar is also suitable for bathymetry because that wavelength has the special ability to penetrate water and detect the sea floor. For above water terrain usually a near-infrared laser is employed.
-
-For a given laser pulse, a lidar system can record multiple returns. 
-For instance, when a pulse hits a leaf on a tree, part of the signal is immediately reflected (the first return) while another part of the signal penetrates the leaf and travels further until it hits the ground and reflects back to the sensor (the second and in this case last return).  
-This gives lidar the unique ability to sense a ground surface from the air, even when it is covered with a forest, making it particularly suitable for highly vegetated areas.
-
-On Earth, for DTM generation, only airborne lidar is used, attached to either planes or helicopters.
-However for celestial bodies that do not have an atmosphere (such as the Moon), lidar can also be used from space\footnote{NASA has used lidar on the Moon (\url{https://lola.gsfc.nasa.gov}) and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}.
-
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
-This YouTube video explains the principles of an aerial LiDAR system:
-\\
-\url{https://youtu.be/EYbhNSUnIdU}
-\end{kaobox}
-
-
-% TODO : put a side-by-side with vegetation and without lidar to show DTM and DSM
-
 
 \subsection{Photogrammetry}
 Photogrammetry allows us to measure the distance from overlapping photographs taken from different positions. 
@@ -102,8 +161,8 @@ Both airborne and spaceborne photogrammetry are possible.
 Interferometric synthetic aperture radar (InSAR) is a radar-based technique that is used from space in the context of DTM generation. 
 It is quite different from airborne lidar or photo\-gramme\-try-based DTM acquisition because of the extremely high altitude of the satellite carrying the sensor. 
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions. 
-As a result the speed of the radar signal is not known and the time-of-flight principle can not be used. 
-However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, elevation can still be measured. 
+As a result the speed of the radar signal is not known and the time-of-flight principle can not be used to get detailed measurements. 
+However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, accurate elevation can still be measured. 
 With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\footnote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of 30 meters.
 
@@ -157,7 +216,7 @@ We distinguish three types of artefacts, 1) those that occur due to problems in 
 % different sensor specs (resolution, speed) and operation specs (flight height etc)
 % different cost, update cycles
 
-\subsection{Sensor}
+\subsection{Sensor orientation}
 The sensor position and orientation are continuously monitored during acquisition, \eg\  by means of GNSS and an IMU for airborne and seaborne systems, and used to determine the 3D coordinates of the measured points. 
 Consequently, any errors in the position and orientation of the sensor platform affect the elevation measurements. 
 For this reason adjacent flight strips (see Figure~\ref{fig:lidarStrips}) often need to be adjusted to match with each other using ground control points. 
@@ -353,7 +412,7 @@ This is a paper that compares lidar and photogrammetry derived point clouds for 
 %%%
 %
 \section{Notes and comments}
-If you would like to learn more about how a lidar scanner works, the article from \citet{Wehr99} is recommended.
+If you would like to learn more about how a lidar scanner works, the chapter from \citep{Chazette16} is recommended.
 More details on InSAR can be found in the manual from \citet{ESA07}.
 
 \citet{Reuter09} give an elaborate overview of the processing that needs to be done to derive a high quality (raster) DTM from raw elevation measurements.
