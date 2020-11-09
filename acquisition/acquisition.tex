@@ -31,9 +31,15 @@ This is because, as with any kind of real-world measurements, there are various 
 \label{sec:lidar-principles}
 
 A lidar system\footnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. Source \url{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}} measures the distance to a target by illuminating it with pulsed laser light and measuring the reflected or \emph{backscattered}\footnote{Backscattering is the natural phenomenon of  the reflection of (electromagnetic) waves or signals back to the direction they came from.} signal with a sensor (see Figure~\ref{fig:acqLidar}). 
-By measuring the time-of-flight, 
 \marginnote{time-of-flight}\index{time-of-flight}
-\ie\ the difference in time between emitting a pulse and detecting its return or \emph{echo}, the distance to the target that reflected the pulse can be found using a simple formula. To be exact, the time-of-flight $T$ is equal to
+\index{acqLidar}
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/lidar.png}
+	\caption{Lidar range measurment}%
+	\label{fig:acqLidar}
+\end{marginfigure}
+By measuring the time-of-flight, \ie\ the difference in time between emitting a pulse and detecting its return or \emph{echo}, the distance to the target that reflected the pulse can be found using a simple formula. To be exact, the time-of-flight $T$ is equal to
 \begin{equation}
 	\label{eq:tof}
 	T= 2 \frac{R}{c}
@@ -45,7 +51,7 @@ where $c$ is the speed of  light (approximately 300,000 km/s), and $R$ is the di
 A typical lidar systems performs hundreds of thousands of such range measurements per second. 
 
 Lidar scanners exist in various forms. 
-They can be mounted on a static tripod (terrestrial lidar) for accurate local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also hand-held lidar systems exist, and even some of the latest smartphones  have a lidar sensor. Furthermore, lidar can also be used from a satellite in space\footnote{NASA has used space lidar on earth (\url{https://en.wikipedia.org/wiki/ICESat-2}), on the Moon (\url{https://lola.gsfc.nasa.gov}), and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}. 
+They can be mounted on a static tripod (terrestrial lidar) for detailed local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also hand-held lidar systems exist, and even some of the latest smartphones  have a lidar sensor. Furthermore, lidar can also be used from a satellite in space\footnote{NASA has used space lidar on earth (\url{https://en.wikipedia.org/wiki/ICESat-2}), on the Moon (\url{https://lola.gsfc.nasa.gov}), and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}. 
 
 However, in the remainder of this text we will focus on airborne lidar.
 
@@ -56,7 +62,7 @@ However, in the remainder of this text we will focus on airborne lidar.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.65\textwidth]{figs/lidar-gnss-imu.png}
+	\includegraphics[width=0.7\textwidth]{figs/lidar-gnss-imu.png}
 	\caption{An airborne lidar system. Figure from \citet{Dowman04}.}%
 \label{fig:airborne-lidar}
 \end{figure}
@@ -68,7 +74,7 @@ To  obtain an accurate global position, \emph{differential GPS} (DGPS) is employ
 \marginnote{differential GPS}\index{differential GPS}
 DGPS is a technique to enhance the accuracy of GPS  by using GPS stations on the ground (one is visible in Figure~\ref{fig:airborne-lidar}). 
 These DGPS stations have a known position and they broadcast the difference between that  known position and the position at the station as indicated by GPS\@. 
-This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from a nearby DGPS station and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
+This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from nearby DGPS stations and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
 
 To obtain the accurate orientation of the laser scanner, the INS of the aircraft is used. 
 The INS accurately measures the orientation, \ie\ the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU)\footnote{\url{https://en.wikipedia.org/wiki/Inertial_measurement_unit}}. 
@@ -88,16 +94,16 @@ Notice that lidar pulses are typically emitted in a slightly divergent manner. A
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\textwidth]{figs/lidar-multipulse.pdf}
+	\includegraphics[width=0.8\textwidth]{figs/lidar-multipulse.pdf}
 	\caption{The emitted laser pulse, \textbf{(a)} the returned signal, and \textbf{(b)} the recorded echoes. Figure adapted from \citet{Bailly12}.}%
 \label{fig:lidar-multipulse}
 \end{figure}
 Figure~\ref{fig:lidar-multipulse} illustrates what the backscattered signal looks like when it hits a target object in the shape of a tree. 
 A tree is particularly interesting because it often causes multiple echoes (one or more on its branches and one on the ground below).  The lidar sensor observes a waveform that represents the received signal power ($P$) as a function of time ($t$). 
-Wit the direct detection lidar systems that we focus on in this book, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
+With the direct detection lidar systems that we focus on in this book, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
 
-Multiple echoes are also referred to as multiple returns. 
-\marginnote{multiple returns}\index{multiple returns}
+An echo can  also  be referred to as a \emph{return}. 
+\marginnote{return}\index{return}
 For each return the return count is recorded, \eg\ the first return is the first echo received from an emitted laser pules and the last return is the last received echo (see Figure~\ref{fig:lidar-multipulse}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
 
 
@@ -118,10 +124,10 @@ In the optical part, a pulse of a particular wavelength (typically near-infrared
 It then passes through a set of  optics (lenses and mirrors) so that it leaves the scanner in an appropriate direction. 
 After the pulse interacts with the scattering medium, it is reflected back into the scanning optics which then directs the signal into a telescope. 
 The telescope converges the signal through a field diaphragm (essentially a tiny hole around the point of convergence). 
-The field diaphragm blocks any stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline. 
+The field diaphragm blocks stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline. 
 Next, the light signal is recollimated so that it again consists only of parallel light rays. 
 The final step of the optical part is the inference filter which blocks all wavelengths except for the wavelength of the laser source. 
-This is again needed to block any stray light rays from distorting the measurement.
+This is again needed to block stray light rays from distorting the measurement.
 
 The electronic part consists of a photodetector, which first transforms the light signal into an electrical current, which is then converted to a digital signal using the analogue-to-digital converter. 
 Once the digital signal is available, further electronics can be used to interpret and record the signal.
@@ -138,7 +144,7 @@ One needs to consider atmospheric scattering,
 As a result, most lidar systems use a wavelength in the near-infrared spectrum, usually between 600 and 1000 nm. A notable exception is made for bathymetric purposes, in which case a green (532 nm) laser is used because that has a greater penetration ability in water.
 
 \subsection{Scanning patterns}
-In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these rotating mirrors or prisms the emitted laser pulse is guided in a cross-track direction (\ie\ perpendicular to the along-track direction in which  the aircraft moves),  thereby greatly increasing the scanned ground area  per travelled meter of the aircraft.
+In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these optical elements, \ie\  mirrors or prisms, the emitted laser pulse is guided in a cross-track direction (\ie\ perpendicular to the along-track direction in which  the aircraft moves, see Figure~\ref{fig:acqLidar}),  thereby greatly increasing the scanned ground area  per travelled meter of the aircraft.
 Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of rotating optics and shows the resulting scanning patterns. It is clear that density of points on the ground is affected by the scanning pattern. The top example for example, yields much higher densities on edges of the scanned area. In practice more uniform patterns, such  as the bottom two examples are often preferred.
 
 \begin{figure}
@@ -165,23 +171,15 @@ Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of r
 
 Apart from lidar there are also other sensor techniques that can be used to acquire elevation data. Some of these are  active sensors just like lidar (a signal is generated and emitted from the sensor), whereas others are passive (using the sun as light source). And like lidar, these sensors themselves only do range measurements, and need additional hardware such as a GPS receiver and an IMU to georeference the measurements. What follows is a brief description of the three other important acquisition techniques used in practice. 
 
-\begin{figure}
-	\centering
-	\begin{subfigure}{0.4\linewidth}
-		\includegraphics[width=\textwidth]{figs/lidar.png}
-		\subcaption{Lidar}\label{fig:acqLidar}
-	\end{subfigure}
-	\quad
-	\begin{subfigure}{0.4\linewidth}
-		\includegraphics[width=\textwidth]{figs/photogrammetry.png}
-		\subcaption{Photogrammetry}\label{fig:acqPhoto}
-	\end{subfigure}
-	\caption{Two sensors techniques for DTM acquisition}%
-\label{fig:sensors}
-\end{figure}
 % FIXME image with flight parameters and strips
 
 \subsection{Photogrammetry}
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=\textwidth]{figs/photogrammetry.png}
+	\caption{Photogrammetry}%
+	\label{fig:acqPhoto}
+\end{marginfigure}
 Photogrammetry allows us to measure the distance from overlapping photographs taken from different positions. 
 If a ground point, called a \emph{feature}, is identifiable in two or more images, its 3D coordinates can be computed in two steps. 
 First, a viewing ray for that feature must be reconstructed for each image. 
@@ -190,11 +188,11 @@ Second, considering that we know the orientation and position of the camera, the
 
 % interior orientation (camera parameters such as focal length) and the exterior orientation (camera position and orientation)
 
-The number of 3D point measurements resulting from photogrammetry thus depends on the number of features that are visible in multiple images, \ie\ the so-called \emph{matches}.
+The number of 3D point measurements resulting from photogrammetry thus depends on the number of features that are visible in multiple images, \ie\ the so-called matches.
 With \emph{dense image matching} 
 \marginnote{dense image matching}\index{dense image matching}
 it is attempted to find a match for every pixel in an image. 
-If the \emph{ground sampling distance}, \ie\ the pixel size on ground level, is small (around 5cm for state-of-the-art systems), point densities of hundreds of points per square meter can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square meter). 
+If the ground sampling distance, \ie\ the pixel size on ground level, is small (around 5cm for state-of-the-art systems), point densities of hundreds of points per square meter can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square meter). 
 
 In photogrammetry we distinguish between \emph{nadir} images, 
 \marginnote{nadir images}\index{nadir images}
@@ -322,25 +320,17 @@ Photogrammetry knows a similar process called aerial triangulation, in which cam
 Many commonly occurring  artefacts  happen due to properties of the target surface. We distinguish three classes.
 
 \subsubsection{Geometry} 
-The shape of the target surfaces in relation to the sensor position has a great effect on 1) local point densities and 2) occlusion. 
-As you can see from Figure~\ref{fig:lidarAcquisitionConditions:a}, which illustrates this for lidar, surfaces that are closest to the scanner and orthogonal to the laser beams will yield the highest point densities (see the rooftop of the middle house). 
-\begin{figure}
+The shape of the target surfaces in relation to the sensor position has a great effect on 1) local point densities and 2) occlusion. As you can see from Figure~\ref{fig:lidarAcquisitionConditions:a},
+\begin{marginfigure}
 	\centering
-	\begin{subfigure}{0.4\linewidth}
-		\includegraphics[width=\textwidth,page=2]{figs/lidarAcq.pdf}
-		\subcaption{Point distribution and occlusion}\label{fig:lidarAcquisitionConditions:a}
-	\end{subfigure}
-	\quad
-	\begin{subfigure}{0.3\linewidth}
-		\includegraphics[width=\textwidth,page=1]{figs/lidarAcq.pdf}
-		\subcaption{Reflection and multi-path}\label{fig:lidarAcquisitionConditions:b}
-	\end{subfigure}
-	\caption{Sources of artefacts in lidar point clouds}%
-\label{fig:lidarAcquisitionConditions}
-\end{figure}
-Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
+	\includegraphics[width=\textwidth,page=2]{figs/lidarAcq.pdf}
+	\caption{Point distribution and occlusion}%
+	\label{fig:lidarAcquisitionConditions:a}
+\end{marginfigure}
+which illustrates this for lidar, surfaces that are closest to the scanner and orthogonal to the laser beams will yield the highest point densities (see the rooftop of the middle house). Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
 
-Occlusion happens when a surface is not visible from the scanner position. 
+\index{occlusion}
+\emph{Occlusion} happens when a surface is not visible from the scanner position. 
 As a result there will be gaps in the point coverage, also visible in Figure~\ref{fig:lidarAcquisitionConditions:a}. 
 Notice how some steep surfaces and some of the adjacent ground are not registered at all by the scanner because it simply could not `see' these parts.
 
@@ -378,6 +368,12 @@ However, regardless of what flight parameters are chosen for a survey both effec
 \subsubsection{Material properties}
 Depending on material properties of a target surface, signals may be reflected in a way that makes it impossible to compute the correct distance. 
 Surfaces that act like a mirror are especially problematic, Figure~\ref{fig:lidarAcquisitionConditions:b} illustrates this. 
+\begin{marginfigure}
+	\centering
+	\includegraphics[width=\textwidth,page=1]{figs/lidarAcq.pdf}
+	\caption{Reflection and multi-path}%
+	\label{fig:lidarAcquisitionConditions:b}
+\end{marginfigure}
 First, it may happen that a pulse is reflected away from the sensor, \eg\ from a water surface, resulting in no distance measurement for that pulse. 
 Or, in the case of photogrammetry, we will observe a different reflection in each image which heavily distorts the matching process, sometimes resulting in extreme outliers for water surfaces.  
 In some cases, and only for active sensors, the reflected pulse does make its way back to the sensor, see for example the right half of Figure~\ref{fig:lidarAcquisitionConditions:b}. 
