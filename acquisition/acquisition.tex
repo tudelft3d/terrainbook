@@ -17,7 +17,7 @@ There are a number of remote sensing techniques that are used to measure elevati
 Typically, these techniques measure 1) the distance to the target surface and 2) their own position and orientation with respect to some global reference system. 
 By combining these, we can compute the 3D coordinates of the measured location on the target surface. 
 
-In this chapter we will focus primarily on lidar; the most commonplace acquisition technique for large scale terrain models with centimeter level accuracy. But we we also briefly discuss other acquisition techniques, \ie\ photogrammetry, inSAR and sonar. And to conclude we will look at typical artefacts that you might encounter while working with elevation data. Because, as with any kind of real-world measurement, there are various uncertainties and restrictions in the acquisition process that lead to distortions---the \emph{artefacts}---in the acquired data. These artefacts need to be taken into account when further processing and using the elevation data. 
+In this chapter we will focus primarily on lidar; the most commonplace acquisition technique for large scale terrain models with centimetre level accuracy. But we we also briefly discuss other acquisition techniques, \ie\ photogrammetry, inSAR and sonar. And to conclude we will look at typical artefacts that you might encounter while working with elevation data. Because, as with any kind of real-world measurement, there are various uncertainties and restrictions in the acquisition process that lead to distortions---the \emph{artefacts}---in the acquired data. These artefacts need to be taken into account when further processing and using the elevation data. 
 %This often makes further processing of the data more difficult, because these artefacts often violate assumption that are made in the DTM algorithms used to further process and analyse the point cloud, leading to erroneous results. 
 % It is important that you are aware of these artefacts while working with elevation data, because only then you will be able to make the right modelling decisions. 
 %Section~\ref{sec:artefacts} gives an overview of common problems in elevation data.
@@ -37,7 +37,7 @@ where $c$ is the speed of  light (approximately 300 000 km/s), and $R$ is the di
 \end{equation*}
 A typical lidar systems performs hundreds of thousands of such range measurements per second. 
 
-Lidar scanners exist in various forms. It can be mounted on a static tripod (terrestrial lidar) for accurate local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also handheld lidar systems exist, and even some of the latest smartphones  have a lidar sensor. Furthermore, lidar can also be used from a satellite in space\footnote{NASA has used space lidar on earth (\url{https://en.wikipedia.org/wiki/ICESat-2}), on the Moon (\url{https://lola.gsfc.nasa.gov}), and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}. 
+Lidar scanners exist in various forms. It can be mounted on a static tripod (terrestrial lidar) for accurate local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also hand-held lidar systems exist, and even some of the latest smartphones  have a lidar sensor. Furthermore, lidar can also be used from a satellite in space\footnote{NASA has used space lidar on earth (\url{https://en.wikipedia.org/wiki/ICESat-2}), on the Moon (\url{https://lola.gsfc.nasa.gov}), and on Mars (\url{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}).}. 
 However, in the remainder of this text we will focus on airborne lidar.
 
 
@@ -52,12 +52,12 @@ Apart from the  laser scanner itself, a lidar  system uses a GPS receiver  and a
 
 To  obtain an accurate global position, Differential GPS (DGPS) is employed. DGPS is a technique to enhance the accuracy of GPS  by using GPS stations on the ground (one is visible in Figure~\ref{fig:airborne-lidar}). These DGPS stations have a known position and they broadcast the difference between that  known position and the position at the station as indicated by GPS. This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from a nearby DGPS station and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
 
-To obtain the accurate orientation of the laser scanner the INS of the aircraft is used. The INS accurately measures the orientation, \ie the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU) \footnote{\url{https://en.wikipedia.org/wiki/Inertial_measurement_unit}}. Only when we accurately know the orientation of  the laser scanner, we can know the direction (in a global coordinate system) in which a laser pulse is emitted from the aircraft.
+To obtain the accurate orientation of the laser scanner the INS of the aircraft is used. The INS accurately measures the orientation, \ie\ the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU)\footnote{\url{https://en.wikipedia.org/wiki/Inertial_measurement_unit}}. Only when we accurately know the orientation of  the laser scanner, we can know the direction (in a global coordinate system) in which a laser pulse is emitted from the aircraft.
 
 By combining global position and the global orientation of the laser scanner with the range measurement from the laser scanner, the georeferenced 3D position of  the point  on the target object that reflected the lase pulse can be computed.
 
 \subsection{Echo detection}
-A lidar system performs ranging measurements using the the time of flight principle that allows us to compute range from a time measurement using the known speed of light in air. The time measurement starts when the laser pulse is emitted and is completed when a backscattered echo of that signal is detected. In practice one emitted pulse can even lead to multiple echoes  in the case when an object reflects part of the laser pulse, but also allows part of the pulse to continue past the object. Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pules at ground level is several centimeters in diameter which increases the likelihood of multiple echoes.
+A lidar system performs ranging measurements using the the time of flight principle that allows us to compute range from a time measurement using the known speed of light in air. The time measurement starts when the laser pulse is emitted and is completed when a backscattered echo of that signal is detected. In practice one emitted pulse can even lead to multiple echoes  in the case when an object reflects part of the laser pulse, but also allows part of the pulse to continue past the object. Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pules at ground level is several centimetres in diameter which increases the likelihood of multiple echoes.
 
 \begin{figure}
 	\centering
@@ -67,16 +67,16 @@ A lidar system performs ranging measurements using the the time of flight princi
 \end{figure}
 Figure~\ref{fig:lidar-multipulse} illustrates what the backscattered signal looks like when it hits a target object in the shape of a tree. A tree is a particularly interesting, because it often causes multiple echoes (one or more on its branches and one on the ground below).  The lidar sensor observes a waveform that represents the received signal power (P) as a function of time (t). In  direct detection lidar systems that we focus on in this text, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
 
-Multiple echoes are also referred to as multiple returns. For each return the return count is recorded, \eg~the first return is first echo received from an emitted laser pules and the last return is the last received echo (see Figure ~\ref{fig:airborne-lidar}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
+Multiple echoes are also referred to as multiple returns. For each return the return count is recorded, \eg\ the first return is first echo received from an emitted laser pules and the last return is the last received echo (see Figure~\ref{fig:airborne-lidar}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
 
-\subsection{Anatomy of a lidar system}
+\subsection{Anatomy of a lidar system}%
 \label{lidar:anatomy}
 A lidar system consists of an optical and an electronic part. Each part consists of several components as shown in Figure~\ref{fig:lidar-components}.
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/lidar-components.png}
-	\caption{Conventional architecture of a direct detection lidar system \citep{Chazette16}.}
-	\label{fig:lidar-components}
+	\caption{Conventional architecture of a direct detection lidar system \citep{Chazette16}.}%
+\label{fig:lidar-components}
 \end{figure}
 
 In the optical part a pulse of a particular wavelength (typically near-infrared) is generated by the laser source for each lidar measurement. It then passes through a set of  optics (lenses and mirrors) so that it leaves the scanner in an appropriate direction. After the pulse interacts with the scattering medium, it is reflected back into the scanning optics which then  direct the signal into a telescope. The telescope converges the signal through a field diaphragm (essentially a tiny hole around the point of convergence). The field diaphragm blocks any stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline. Next, the light signal is recollimated so that it again consists only of parallel light rays. The final step of the optical part is the inference filter which block all wavelengths except for the wavelength of the laser source. This is again needed to block any stray light rays from distorting the measurement.
@@ -121,17 +121,15 @@ Apart from lidar there are also other sensor techniques that can be used to acqu
 	\centering
 	\begin{subfigure}{0.4\linewidth}
 		\includegraphics[width=\textwidth]{figs/lidar.png}
-		\subcaption{Lidar}
-		\label{fig:acqLidar}
+		\subcaption{Lidar}\label{fig:acqLidar}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.4\linewidth}
 		\includegraphics[width=\textwidth]{figs/photogrammetry.png}
-		\subcaption{Photogrammetry}
-		\label{fig:acqPhoto}
+		\subcaption{Photogrammetry}\label{fig:acqPhoto}
 	\end{subfigure}
-	\caption{Two sensors techniques for DTM acquisition}
-	\label{fig:sensors}
+	\caption{Two sensors techniques for DTM acquisition}%
+\label{fig:sensors}
 \end{figure}
 % FIXME image with flight parameters and strips
 
@@ -149,8 +147,8 @@ With \emph{dense image matching} it is attempted to find a match for every pixel
 If the \emph{ground sampling distance}, \ie\ the pixel size on ground level, is small (around 5cm for state-of-the-art systems), point densities of hundreds of points per square meter can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square meter). 
 
 In photogrammetry we distinguish between \emph{nadir} images, that are taken in a direction straight down from the camera, and \emph{oblique} images that are taken at an angle with respect to the nadir direction.
-Vertical features such as building facades are only visible on oblique images.
-Therefore, oblique images are needed if one wants to see building facades in a dense image matching point cloud.
+Vertical features such as building façades are only visible on oblique images.
+Therefore, oblique images are needed if one wants to see building façades in a dense image matching point cloud.
 
 Because photography is used, photogrammetry gives us also the colour of the target surface, in addition to the elevation.
 This could be considered an advantage over lidar which captures several attributes for each point (\eg\ the intensity of measured laser pulse and the exact GPS time of measurement), but colour is not among them.
@@ -168,9 +166,7 @@ Compared to dense image matching and lidar, InSAR-derived DTMs usually have a mu
 
 %%
 \begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
-
 	\href{https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar}{Wikipedia page about \emph{Interferometric synthetic-aperture radar}}.
-
 \end{kaobox}
 
 \subsection{Echo sounding}%
@@ -207,7 +203,12 @@ Some examples are
 An artefact is any error in the perception or representation of information that is introduced by the involved equipment or techniques. 
 Artefacts can result in areas without any measurements (\eg\ the \emph{no-data} values in a raster), or in so-called \emph{outliers}, \ie\ sample points with large errors in their coordinates. 
 
-We distinguish three types of artefacts, 1) those that occur due to problems in the sensor, 2) those that occur due to the geometry and material properties of the target surface, and 3) those that occur due to post-processing steps.
+We distinguish three types of artefacts, 
+\begin{enumerate}
+	\item those that occur due to problems in the sensor, 
+	\item those that occur due to the geometry and material properties of the target surface, 
+	\item those that occur due to post-processing steps.
+\end{enumerate}
 
 % Active/passive sensors
 % different platforms ground/airborne/space
@@ -224,17 +225,15 @@ For this reason adjacent flight strips (see Figure~\ref{fig:lidarStrips}) often 
 	\centering
 	\begin{subfigure}{0.4\linewidth}
 		\includegraphics[width=\textwidth]{figs/lidar_strips.png}
-		\subcaption{Plan view of the different strips of a lidar survey \citep{Kornus03}}
-		\label{fig:lidarStrips}
+		\subcaption{Plan view of the different strips of a lidar survey \citep{Kornus03}}\label{fig:lidarStrips}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.4\linewidth}
 		\includegraphics[width=\textwidth]{figs/strip_adjustment.png}
-		\subcaption{Cross-section of gable roof before (top) and after (bottom) strip adjustment \citep{Vosselman02}}
-		\label{fig:lidarGableRoof}
+		\subcaption{Cross-section of gable roof before (top) and after (bottom) strip adjustment \citep{Vosselman02}}\label{fig:lidarGableRoof}
 	\end{subfigure}
-	\caption{Strip adjustment for lidar point clouds}
-	\label{fig:lidarStripAdj}
+	\caption{Strip adjustment for lidar point clouds}%
+\label{fig:lidarStripAdj}
 \end{figure}
 If the strip adjustments process fails or is omitted, a `ghosting' effect can occur as illustrated in Figure~\ref{fig:lidarGableRoof} (top). 
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in Figure~\ref{fig:dim}.
@@ -242,23 +241,19 @@ Photogrammetry knows a similar process called aerial triangulation, in which cam
 	\centering
 	\begin{subfigure}{0.95\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_OP_NA_10cm.jpg}
-		\subcaption{Nadir image}
-		\label{fig:dim:a}
+		\subcaption{Nadir image}\label{fig:dim:a}
 	\end{subfigure}
 	
 	\begin{subfigure}{0.95\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_DSM_NA_10cm.jpg}
-		\subcaption{DSM with good aerial triangulation}
-		\label{fig:dim:b}
+		\subcaption{DSM with good aerial triangulation}\label{fig:dim:b}
 	\end{subfigure}
-	
 	\begin{subfigure}{0.95\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_DSM_NA+OBL_10cm.jpg}
-		\subcaption{DSM with poor aerial triangulation}
-		\label{fig:dim:c}
+		\subcaption{DSM with poor aerial triangulation}\label{fig:dim:c}
 	\end{subfigure}
-	\caption{Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.}
-	\label{fig:dim}
+	\caption{Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.}%
+\label{fig:dim}
 \end{figure}
 
 
@@ -272,17 +267,15 @@ As you can see from Figure~\ref{fig:lidarAcquisitionConditions:a}, which illustr
 	\centering
 	\begin{subfigure}{0.4\linewidth}
 		\includegraphics[width=\textwidth,page=2]{figs/lidarAcq.pdf}
-		\subcaption{Point distribution and occlusion}
-		\label{fig:lidarAcquisitionConditions:a}
+		\subcaption{Point distribution and occlusion}\label{fig:lidarAcquisitionConditions:a}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.3\linewidth}
 		\includegraphics[width=\textwidth,page=1]{figs/lidarAcq.pdf}
-		\subcaption{Reflection and multi-path}
-		\label{fig:lidarAcquisitionConditions:b}
+		\subcaption{Reflection and multi-path}\label{fig:lidarAcquisitionConditions:b}
 	\end{subfigure}
-	\caption{Sources of artefacts in lidar point clouds}
-	\label{fig:lidarAcquisitionConditions}
+	\caption{Sources of artefacts in lidar point clouds}%
+\label{fig:lidarAcquisitionConditions}
 \end{figure}
 Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
 
@@ -300,26 +293,22 @@ However, regardless of what flight parameters are chosen for a survey both effec
 	\centering
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ahn1_d.png}
-		\subcaption{AHN1 (1996-2003)}
-		\label{fig:pcd:ahn1}
+		\subcaption{AHN1 (1996-2003)}\label{fig:pcd:ahn1}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ahn2_d.png}
-		\subcaption{AHN2 (2008)}
-		\label{fig:pcd:ahn2}
+		\subcaption{AHN2 (2008)}\label{fig:pcd:ahn2}
 	\end{subfigure}
 	
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ahn3_d.png}
-		\subcaption{AHN3 (2014)}
-		\label{fig:pcd:ahn3}
+		\subcaption{AHN3 (2014)}\label{fig:pcd:ahn3}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/rdam16_d.png}
-		\subcaption{City of Rotterdam (2016)}
-		\label{fig:pcd:rdam16}
+		\subcaption{City of Rotterdam (2016)}\label{fig:pcd:rdam16}
 	\end{subfigure}
 	\caption{Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.}%
 \label{fig:pcd}
@@ -336,8 +325,8 @@ This effect is called \emph{multi-path} and the result is that points are measur
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/outliers.png}
-	\caption{Outliers, below and above the ground, in a lidar point cloud dataset.}
-	\label{fig:outliers}
+	\caption{Outliers, below and above the ground, in a lidar point cloud dataset.}%
+\label{fig:outliers}
 \end{figure}
 
 Photogrammetry suffers from a few other problems as well, such as surfaces that have a homogeneous texture that make it impossible to find distinguishing features that can be used for matching. 
@@ -356,19 +345,16 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 	\centering
 	\begin{subfigure}{0.9\linewidth}
 		\includegraphics[width=\textwidth]{figs/srtm_trento_voidfill.png}
-		\subcaption{Void-filling through interpolation in SRTM data}
-		\label{fig:voidfill}
+		\subcaption{Void-filling through interpolation in SRTM data}\label{fig:voidfill}
 	\end{subfigure}
-	
 	\begin{subfigure}{0.9\linewidth}
 		\includegraphics[width=\textwidth]{figs/ourlier-detection-wrong.png}
-		\subcaption{Good points, \ie\ those on the power line, may be removed during outlier detection}
-		\label{fig:outlier-wrong}
+		\subcaption{Good points, \ie\ those on the power line, may be removed during outlier detection}		\label{fig:outlier-wrong}
 	\end{subfigure}
-	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}
+	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}%
 	\label{fig:processing}
 \end{figure}
-Or, one can attempt to detect and remove outliers caused \eg\  by multi-path effects or flocks of birds\footnote{This is a topic of lesson 12}. 
+Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds\footnote{This is a topic of lesson 12}. 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).
 And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\footnote{Chapters~\ref{chap:interpol} and~\ref{chap:kriging} explore the topic of spatial interpolation in detail.}.
@@ -412,7 +398,7 @@ This is a paper that compares lidar and photogrammetry derived point clouds for 
 %%%
 %
 \section{Notes and comments}
-If you would like to learn more about how a lidar scanner works, the chapter from \citep{Chazette16} is recommended.
+If you would like to learn more about how a lidar scanner works, the chapter from \citet{Chazette16} is recommended.
 More details on InSAR can be found in the manual from \citet{ESA07}.
 
 \citet{Reuter09} give an elaborate overview of the processing that needs to be done to derive a high quality (raster) DTM from raw elevation measurements.
