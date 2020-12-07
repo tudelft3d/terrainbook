@@ -3,7 +3,7 @@
 \setchapterpreamble[u]{\margintoc}
 \chapter{Spatial interpolation: deterministic methods}%
 \label{chap:interpol}
-\labch{whatisterrain}
+
 
 
 \graphicspath{{interpol/}}
@@ -282,7 +282,7 @@ The insertion of $x$ modifies \emph{locally} a VD($S$): the Voronoi cell $\mathc
 \labfig{fig:nn-b}
 \end{marginfigure}
 
-This idea forms the basis of natural neighbour coordinates, which define quantitatively the amount $\mathcal{V}_{x}$ steals from each of its natural neighbours (\reffig{fig:nn-c}). 
+This idea forms the basis of natural neighbour coordinates, which define quantitatively the amount $\mathcal{V}_{x}$ steals from each of its natural neighbours (\reffig{fig:nn-b}). 
 Let $\mathcal{D}$ be the VD($S$), and $\mathcal{D}^{+} = \mathcal{D} \cup \{x\}$. 
 The Voronoi cell of a point $p$ in $\mathcal{D}$ is defined by $\mathcal{V}_{p}$, and $\mathcal{V}^{+}_{p}$ is its cell in $\mathcal{D}^{+}$. 
 The natural neighbour coordinate of $x$ with respect to a point $p_{i}$ is
@@ -580,7 +580,7 @@ The description of the barycentric coordinates is mostly taken from \citet{Eberl
 
 The natural neighbour interpolation method is also called Sibson's interpolation, after the name of the inventor~\citep{Sibson81}. 
 
-An excellent summary of the methods to modify Equation~\ref{eq:nni} to obtain a continuous function is found in \citet{Flototto03}. 
+An excellent summary of the methods to modify Equation~\ref{eq:nnc} to obtain a continuous function is found in \citet{Flototto03}. 
 
 The construction of a polynomial inside each triangle of a TIN can be done with several methods. 
 The simplest method is the Clough-Tocher method~\citep{Clough65,Farin85}.

@@ -198,7 +198,7 @@ See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and gri
 \label{fig:randvsgrid}
 \end{figure}
 
-From \refsec{sec:tin-simpl} you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
+From Section~\ref{sec:tin-simpl} you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
 However, for a given number of resulting points, TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
 Thinning methods on the other hand do not consider the `importance' of a point in any way, and might discard a lot of potentially meaningful details.
 So why bother with thinning? The answer is that thinning methods are a lot faster since they do not require something like a computationally expensive triangulation.
@@ -246,7 +246,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding\footnote{See \refsec{sec:acquisistion-techniques}.} a common issue is the occurrence of (shoals of) fish. 
+For example in case of a point cloud derived from multi-beam echo sounding\footnote{See Section~\ref{sec:acquisistion-techniques}.} a common issue is the occurrence of (shoals of) fish. 
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
@@ -299,7 +299,7 @@ If needed, these holes can be filled in a subsequent processing step involving s
 %%%
 \subsection{Ground filtering with TIN refinement}
 We will now discuss an effective ground filtering method that is based on the \emph{greedy} insertion of ground points into a TIN\@.
-Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in \refsec{sec:tin-simpl} is used.
+Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in Section~\ref{sec:tin-simpl} is used.
 The algorithm consists of three main steps:
 \begin{enumerate}
   \item construction of a rudimentary initial TIN (usually a Delaunay TIN);
