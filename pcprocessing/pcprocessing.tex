@@ -30,7 +30,7 @@ Notice that, in additions to the widely used formats mentioned here, there are a
 \subsection{ASCII formats}
 ASCII formats are plain text files. 
 The point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
-In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated values (CSV) files~\footnote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
+In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated values (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
 The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes varies and also the used coordinate reference system (CRS) are usually not documented in the file.
 \begin{figure}[h]
@@ -45,24 +45,24 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
     84499.839 446612.808 0.493
   \end{lstlisting}
   % \end{footnotesize}
-  \caption{An example of a CSV file used to store the $xyz$ coordinates of a point cloud.}
+  \caption{An example of a CSV file used to store the $xyz$ coordinates of a point cloud.}%
 \label{fig:csv}
 \end{figure}
 
 
 \subsection{The PLY format}
 The PLY format can be considered a standardised ASCII format.
-A PLY file contains a header\footnote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names and their data types.
+A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names and their data types.
 This makes it a very flexible standard, since the user can decide on the composition of the point record.
 Figure~\ref{fig:ply} shows an example PLY file.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ply_header.pdf}
-  \caption{A simple PLY file with 1 additional user-defined attribute of type integer (``int''). It contains 7 points.}
+  \caption{A simple PLY file with 1 additional user-defined attribute of type integer (``int''). It contains 7 points.}%
 \label{fig:ply}
 \end{figure}
 
 
-PLY files are readable by many software packages and can also be stored in a binary encoding\footnote{\url{https://en.wikipedia.org/wiki/PLY_(file_format)\#ASCII_or_binary_format}}.
+PLY files are readable by many software packages and can also be stored in a binary encoding\sidenote{\url{https://en.wikipedia.org/wiki/PLY_(file_format)\#ASCII_or_binary_format}}.
 Compared to the ASCII encoding, the binary encoding results in a smaller file size and quicker reading and writing from and to the file.
 There is no standardised way to specify the CRS in a PLY file, although one could add a comment in the header stating the CRS\@.
 
@@ -94,7 +94,7 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
     Point Source ID & unsigned int & 8 & Indicates the file from which this point originated. Non-zero if this point was copied from another file.
     % \bottomrule
   \end{tabular}
-\caption{LAS Point Data Record Format 0}
+\caption{LAS Point Data Record Format 0}%
 \label{tab:las-record}
 \end{table*}
 Other record types are available that also include fields to store for instance  RGB colour information or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
@@ -130,7 +130,7 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
   9 & water \\
   % \bottomrule
 \end{tabular}
-\caption{The first 10 LAS classification code numbers. More codes exist, but they are not listed here.}
+\caption{The first 10 LAS classification code numbers. More codes exist, but they are not listed here.}%
 \label{tab:las-classes}
 \end{table}
 These codes are to be used as values for the classification field of a point record, and are intended to indicate the type of object a point belongs to.
@@ -139,7 +139,7 @@ The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
 To be exact, the code $0$ is used for points that never subject to a classification algorithm, whereas the code $1$ is used for points that have been processed by a classification algorithm, but could not successfully be assigned to a class.
 It is possible to define your own classes using code ranges that are reserved for that purpose.
 
-\paragraph{AHN3 classification} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
+\paragraph{AHN3 classification.} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
 \begin{figure*}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
   \caption{Classification codes used in the AHN3 dataset.}%
@@ -149,7 +149,7 @@ It is possible to define your own classes using code ranges that are reserved fo
 
 % The standard technically allows for additional user-defined attributes
 
-\paragraph{The LAZ format}
+\paragraph{The LAZ format.}
 Finally, a compressed variant of the LAS format, dubbed the LAZ format, exists.
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
@@ -193,7 +193,7 @@ See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and gri
     \includegraphics[width=\textwidth]{figs/voxel08m.png}
     \caption{3D grid thinning}
   \end{subfigure}
-\caption{Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.}
+\caption{Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.}%
 \label{fig:randvsgrid}
 \end{figure}
 
@@ -233,7 +233,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
     \includegraphics[width=\textwidth]{figs/knn-distance.pdf}
     \caption{knn distance ($k=3$)}
   \end{subfigure}
-\caption{Three outlier detection methods based on local point density. The red point is an outlier, whereas the blue point is an inlier.}
+\caption{Three outlier detection methods based on local point density. The red point is an outlier, whereas the blue point is an inlier.}%
 \label{fig:outlier-detection}
 \end{figure}
 
@@ -245,7 +245,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding\footnote{See Section~\ref{sec:acquisistion-techniques}.} a common issue is the occurrence of (shoals of) fish. 
+For example in case of a point cloud derived from multi-beam echo sounding\sidenote{See Section~\ref{sec:acquisistion-techniques}.} a common issue is the occurrence of (shoals of) fish. 
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
@@ -288,7 +288,7 @@ This is reasonable because non-ground points are typically measurements from obj
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figs/axelsson-profiles.png}
-  \caption{Cross-section of a terrain with lamp posts and trees before (top) and after (bottom) ground filtering \citep{axelsson2000generation}.}
+  \caption{Cross-section of a terrain with lamp posts and trees before (top) and after (bottom) ground filtering \citep{axelsson2000generation}.}%
 \label{fig:axelsson:profiles}
 \end{figure}
 
@@ -310,7 +310,7 @@ The latter two steps are repeated until all remaining points fail the ground tes
 In the first step a rudimentary initial TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
 These points are found by superimposing a 2D grid over the data extent and by selecting the lowest point for each grid cell (similar to grid thinning).
 The cell-size of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
-Thus, if the largest building has a footprint of 100x100m, the cellsize should be a bit larger, \eg\ 110m, so that it is guaranteed that each grid-cell has at least a few ground points.
+Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ 110m, so that it is guaranteed that each grid-cell has at least a few ground points.
 Each point that is inserted into the TIN is considered to be a ground point.
 
 In the second step two geometric properties are computed for each unclassified point.
@@ -321,29 +321,26 @@ The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/groundfilter-symbols.pdf}
-    \caption{}
-    \label{fig:ground-filtering:symbols}
+    \caption{}\label{fig:ground-filtering:symbols}
   \end{subfigure}
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/groundfilter-ground.pdf}
-    \caption{example ground point}
-    \label{fig:ground-filtering:ground}
+    \caption{example ground point}\label{fig:ground-filtering:ground}
   \end{subfigure}
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/groundfilter-nonground.pdf}
-    \caption{example non-ground point}
-    \label{fig:ground-filtering:nonground}
+    \caption{example non-ground point}\label{fig:ground-filtering:nonground}
   \end{subfigure}
-\caption{Geometric properties for a point $p$ in the method for ground filtering based on TIN refinement.}
+  \caption{Geometric properties for a point $p$ in the method for ground filtering based on TIN refinement.}%
 \label{fig:ground-filtering}
 \end{figure}
 The first property, denoted $d$, is the perpendicular distance between the $p$ and the plane spanned by the triangle.
 The second property, denoted $\alpha$, is the largest angle of the angles between the triangle and the three vectors that connect each vertex with $p$. 
 
-In the ground test of the final step, it is simply checked for each point if its $d$ is below a given threshold $d_{max}$ and if its $\alpha$ is below a given threshold $\alpha_{max}$.
-If this is indeed the case, the point is labelled as a ground point and inserted into the TIN.
+In the ground test of the final step, it is simply checked for each point if its $d$ is below a given threshold $d_{\max}$ and if its $\alpha$ is below a given threshold $\alpha_{\max}$.
+If this is indeed the case, the point is labelled as a ground point and inserted into the TIN\@.
 Compare Figures~\ref{fig:ground-filtering:ground} and~\ref{fig:ground-filtering:nonground}.
 
 Of course, if the triangles in the TIN change, the properties of the overlapping unclassified points need to be recomputed. 
@@ -419,36 +416,31 @@ Only for illustrative purposes specific shapes such as a line or a plane are use
 RANSAC is short for RANdom SAmpling Consensus and as its name implies it works by randomly sampling the input points.
 In fact it starts by picking a random set of points $M \subset P$. 
 This set $M$ is called the \emph{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
-From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and \ref{fig:ransac:c}).
+From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and~\ref{fig:ransac:c}).
 \begin{figure}
 	\centering
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=1]{figs/ransac.pdf}
-		\caption{Input points}
-		\label{fig:ransac:a}
+		\caption{Input points}\label{fig:ransac:a}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=2]{figs/ransac.pdf}
-		\caption{First minimal set}
-		\label{fig:ransac:b}
+		\caption{First minimal set}\label{fig:ransac:b}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=3]{figs/ransac.pdf}
-		\caption{Second minimal set}
-		\label{fig:ransac:c}
+		\caption{Second minimal set}\label{fig:ransac:c}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=4]{figs/ransac.pdf}
-		\caption{Detected line instance}
-		\label{fig:ransac:d}
+		\caption{Detected line instance}\label{fig:ransac:d}
 	\end{subfigure}
-	
-	\caption{RANSAC for line detection ($k=2$ iterations)}
-	\label{fig:ransac}
+	\caption{RANSAC for line detection ($k=2$ iterations)}%
+\label{fig:ransac}
 \end{figure}
 The algorithm then checks for each point $p \in \{P \setminus M\}$ if it fits with $\mathcal{I}$. 
 This is usually done by computing the distance $d$ from $p$ to $\mathcal{I}$ and comparing $d$ against a user-defined threshold $\epsilon$.
@@ -462,7 +454,7 @@ The whole process from picking a minimal set to computing the consensus set and 
 	$s_{best} \leftarrow 0$\;
 	$\mathcal{I}_{best} \leftarrow$ nil\;
 
-	\For{$i \leftarrow 0...k$}
+	\For{$i \leftarrow 0 \ldots k$}
 	{
 		$M \leftarrow n$ randomly selected points from $P$\;
 		$\mathcal{I} \leftarrow$ shape instance constructed from $M$\;
@@ -480,8 +472,8 @@ The whole process from picking a minimal set to computing the consensus set and 
 			$\mathcal{I}_{best} \leftarrow \mathcal{I}$\;
 		}
 	}
-	\caption{The RANSAC algorithm}
-	\label{algo:ransac}
+	\caption{The RANSAC algorithm}%
+\label{algo:ransac}
 \end{algorithm}
 
 
@@ -518,13 +510,14 @@ This could be a disadvantage.
 %- can detect shapes in wrong places, eg. single lidar scanline is perfectly planar.  Eg if there is a set of seemingly arbitrarily coplanar points that is larger than the  set of points corresponding to the smallest plane you want  to detect, than it is more likely to detect the false plane.
 
 
-\subsection{Region growing}
+\subsection{Region growing}%
 \label{sec:regiongrowing}
+
 Region growing works by gradually growing sets of points called \emph{regions} that fit a particular shape instance.
 A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
 To check if a candidate point $c$ should be added to $R$, a test is performed.
-In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\footnote{The normal vector for a point $p\in P$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
+In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\sidenote{The normal vector for a point $p\in P$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
 If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
 Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 \begin{figure}[htb]
@@ -532,40 +525,33 @@ Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=1]{figs/region-growing.pdf}
-		\caption{Input points with normals and three seed points}
-		\label{fig:region-growing:a}
+		\caption{Input points with normals and three seed points}\label{fig:region-growing:a}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=2]{figs/region-growing.pdf}
-		\caption{Start growing. Add neighbours if the normal angle is small.}
-		\label{fig:region-growing:b}
+		\caption{Start growing. Add neighbours if the normal angle is small.}\label{fig:region-growing:b}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=3]{figs/region-growing.pdf}
-		\caption{Continue growing from new region point}
-		\label{fig:region-growing:c}
+		\caption{Continue growing from new region point}\label{fig:region-growing:c}
 	\end{subfigure}
-	
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=4]{figs/region-growing.pdf}
-		\caption{Stop growing where the normal angle is too great}
-		\label{fig:region-growing:d}
+		\caption{Stop growing where the normal angle is too great}\label{fig:region-growing:d}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=5]{figs/region-growing.pdf}
-		\caption{Final regions from all three seed points}
-		\label{fig:region-growing:e}
+		\caption{Final regions from all three seed points}\label{fig:region-growing:e}
 	\end{subfigure}
-	
-	\caption{Region growing for plane detection based on the angle between neighbouring point normals}
-	\label{fig:region-growing}
+	\caption{Region growing for plane detection based on the angle between neighbouring point normals}%
+\label{fig:region-growing}
 \end{figure}
 This process of growing $R$ continues until no more candidates can be found that are compatible with $R$.
 When this happens, the algorithm proceeds to the next seed point to grow a new region.
@@ -596,8 +582,8 @@ Also notice that candidate points that are already assigned to a region are skip
 		}
 		append $R$ to $L_R$\;
 	}
-	\caption{The Region growing algorithm}
-	\label{algo:region-growing}
+	\caption{The Region growing algorithm}%
+\label{algo:region-growing}
 \end{algorithm}
 
 The seed points can be generated by assessing the local neighbourhood of each input point. 
@@ -652,24 +638,20 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=1]{figs/hough-transform.pdf}
-		\caption{Line parametrisation}
-		\label{fig:hough-transform:a}
+		\caption{Line parametrisation}\label{fig:hough-transform:a}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=2]{figs/hough-transform.pdf}
-		\caption{Input points}
-		\label{fig:hough-transform:b}
+		\caption{Input points}\label{fig:hough-transform:b}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=3]{figs/hough-transform.pdf}
-		\caption{Line instances for each point}
-		\label{fig:hough-transform:c}
+		\caption{Line instances for each point}\label{fig:hough-transform:c}
 	\end{subfigure}
-	
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\begin{minipage}[c]{0.45\textwidth}
@@ -693,18 +675,16 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 			\end{tabular}
 			\hspace{1cm}
 		\end{minipage}
-		\caption{Accumulator. Most occurring line instances are highlighted.}
-		\label{fig:hough-transform:d}
+		\caption{Accumulator. Most occurring line instances are highlighted.}\label{fig:hough-transform:d}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=4]{figs/hough-transform.pdf}
-		\caption{Detected line instances}
-		\label{fig:hough-transform:e}
+		\caption{Detected line instances}\label{fig:hough-transform:e}
 	\end{subfigure}
-	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}
-	\label{fig:hough-transform}
+	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}%
+\label{fig:hough-transform}
 \end{figure}
 \begin{algorithm} 
 	\KwIn{An input point cloud $P$, an accumulator matrix $A$, a detection threshold $\alpha$}
@@ -717,8 +697,8 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 		}
 	}
 	$L_I \leftarrow$ all shape instances from $A$ with a more than $\alpha$ votes\;
-	\caption{The Hough transform algorithm}
-	\label{algo:hough-transform}
+	\caption{The Hough transform algorithm}%
+\label{algo:hough-transform}
 \end{algorithm}
 The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
 Notice that each element in the accumulator represents one possible shape instance.
@@ -754,7 +734,7 @@ Notice that the PLY format can also be used to store a 3D mesh.
 
 The full LAS specification, currently at version 1.4, is described in \citet{LAS13}, and \citet{Isenburg13} describes the details of the compressed LAZ format.
 
-\citet{Arge10} introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN.
+\citet{Arge10} introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN\@.
 
 \citet{axelsson2000generation} originally proposed the greedy TIN insertion algorithm for ground filtering.
 He also describes how to handle discontinuities in the terrain such as cliffs.
@@ -763,7 +743,7 @@ It should be said that his paper is a bit scarce on details, and if you are inte
 A comparison with several other ground filtering methods can be found in the work of \citet{Meng10}.
 
 %RANSAC
-\citet{Fischler81} originally introduced the RANSAC algorithm and applied to cartography in that same paper. On wikipedia you can read how you can compute the required number of RANSAC iterations to achieve a certain probability of success given that you know how many outliers there are in your dataset\footnote{\url{https://en.wikipedia.org/wiki/Random_sample_consensus\#Parameters}}.
+\citet{Fischler81} originally introduced the RANSAC algorithm and applied to cartography in that same paper. On wikipedia you can read how you can compute the required number of RANSAC iterations to achieve a certain probability of success given that you know how many outliers there are in your dataset\sidenote{\url{https://en.wikipedia.org/wiki/Random_sample_consensus\#Parameters}}.
 
 \citet{Limberger15} describes how to efficiently do plane detection in large point clouds using a variant of the Hough transform.
 
