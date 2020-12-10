@@ -107,19 +107,21 @@ For the case in Figure~\ref{fig:slope_grid}, the aspect would be facing south (1
 With this method, the height differences in the $x$-direction (west-east) and in the $y$-direction (south-north) are calculated separately, and then the 2 differences are combined to obtain the slope.
 This means that only the direct 4-neighbours of $c_{i,j}$ are used.
 
-\[
-  \frac{\partial z}{\partial x} = \frac{z_{i+1,j} - z_{i-1,j}}{2\,r}
+\begin{equation}
+  \frac{\partial z}{\partial x} = \frac{z_{i-1,j} - z_{i+1,j}}{2\,r}
 \, , 
-  \frac{\partial z}{\partial y} = \frac{z_{i,j+1} - z_{i,j-1}}{2\,r}
-\]
+  \frac{\partial z}{\partial y} = \frac{z_{i,j-1} - z_{i,j+1}}{2\,r}
+\end{equation}
+
 The gradient is defined as:
-\[
+\begin{equation}
   \tan \alpha = \sqrt{(\frac{\partial z}{\partial x})^2 + (\frac{\partial z}{\partial y})^2}
-\]
+\end{equation}
+
 and the aspect as:
-\[
+\begin{equation}
   \tan \theta = \frac{\frac{\partial z}{\partial y}}{\frac{\partial z}{\partial x}}
-\]
+\end{equation}
 
 The value of $\theta$ should be resolved for the correct trigonometric quadrant, and if $\frac{\partial z}{\partial x} = 0$ then it means the aspect should be handled differently (considering only the variation in the south-north direction). 
 
@@ -133,16 +135,16 @@ For the case in Figure~\ref{fig:slope_grid}, the gradient would be 39.5\degree\ 
 Based on the 9 elevation points, it is possible to fit a polynomial (as explained in \refchap{chap:interpol}) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
 
 A quadratic polynomial could for instance be defined:
-\[
+\begin{equation}
   f(x,y) = ax^2 + by^2 + cxy + dx + ey +d
-\]
+\end{equation}
 , and thus:
-\[
+\begin{equation}
   \frac{\partial f}{\partial x} = 2ax + cy + d
-\]
-\[
+\end{equation}
+\begin{equation}
   \frac{\partial f}{\partial y} = 2by + cx + e
-\]
+\end{equation}
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial f}{\partial x} = d$ and $\frac{\partial f}{\partial y} = e$.
 
 
