@@ -123,6 +123,9 @@ The same idea can be used to extract all the isolines: for each triangle/cell an
 \label{sec:r-iso}
 
 % In the case of contouring a raster  the dotted lines in Figure~\ref{fig:rastercontscheme}. 
+
+Observe that, for a raster, the dual of the raster must be constructed (see Section~\ref{sec:duality}), that is we consider the centre each pixel as a sample point, and we join with an edge the centres of two adjacent pixels (in Figure~\ref{fig:rasterconfs}, the four values are centres of 4 adjacent raster cells).
+
 Intersections are computed by linearly interpolating the elevations of the vertex pairs along the edges of this grid.
 Figure~\ref{fig:rasterconfs} illustrates the different possible configurations. 
 The top-left case indicates the case for which there are no intersections: all vertices are either higher or lower than $z_0$. 
