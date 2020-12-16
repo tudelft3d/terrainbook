@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.7.1] - 2020-12-16
+### Modified
+- fix typos, bad links, and clarified some sentences.
+
+
 ## [0.7.0] - 2020-11-09
 ### Modified
 - new and improved template (https://github.com/fmarotta/kaobook)
@@ -31,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First release of the book (beta version)
 
 
+[0.7.1]: https://github.com/tudelft3d/terrainbook/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/tudelft3d/terrainbook/compare/0.6.4...0.7.0
 [0.6.4]: https://github.com/tudelft3d/terrainbook/compare/0.6.2...0.6.4
 [0.6.2]: https://github.com/tudelft3d/terrainbook/compare/0.6.1...0.6.2
