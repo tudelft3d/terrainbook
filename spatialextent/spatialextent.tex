@@ -136,7 +136,8 @@ To evaluate the different algorithms to create R($S$), we list here different pr
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Convex hull}
+\section{Convex hull}%
+\label{sec:se_ch}
 
 As explained in Section~\ref{sec:convexhull}, given $S$, a set of points in $\mathbb{R}^2$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
 Two examples of convex hulls are in Figures~\reffig{fig:ideas}b and~\reffig{fig:properties}a.
@@ -144,8 +145,8 @@ Two examples of convex hulls are in Figures~\reffig{fig:ideas}b and~\reffig{fig:
 %
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
-It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or compute directly using a specialised algorithm.
-For example, using the well-known \emph{gift wrapping algorithm}, shown in \reffig{fig:giftwrapping}.
+It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or computed directly using a specific algorithm.
+An example of the latter is the well-known \emph{gift wrapping algorithm}, shown in \reffig{fig:giftwrapping}.
 \begin{marginfigure}
   \centering
   \begin{subfigure}[b]{\linewidth}
@@ -162,8 +163,9 @@ For example, using the well-known \emph{gift wrapping algorithm}, shown in \reff
   \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}%
 \labfig{fig:giftwrapping}
 \end{marginfigure}
-It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
-Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping}, because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point ($a$ at this step) is the largest ($b$ in this case), and adds it to conv($S$).
+Then for $b$, the polar angle is calculated from the line $ab$ and the $c$ is chosen since it forms the largest angle.
+The algorithm continues this way until $a$ is visited again.
 
 If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
 However, there exist more efficient algorithm that have a time complexity of $\mathcal{O}(n \log n)$.
@@ -191,7 +193,7 @@ Properties convex hull:
 \begin{marginfigure}
   \centering
   \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
-  \caption{First four steps of the \emph{moving arm algorithm} (with a lenght $l$) to compute the spatial extent.}%
+  \caption{First four steps of the \emph{moving arm algorithm} (with a length $l$) to compute the spatial extent.}%
 \labfig{fig:movingarm:1}
 \end{marginfigure}
 
@@ -210,7 +212,7 @@ Properties convex hull:
 \end{marginfigure}
 
 \paragraph{Arm of length $l$.} 
-The moving arm is a generalisation of the gift wrapping algorithm where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
+The moving arm is a generalisation of the gift wrapping algorithm (see Section~\ref{sec:se_ch}) where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
 This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
 This also means that potentially the result is a polygon that is non-convex.
 \reffig{fig:movingarm:1} shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
