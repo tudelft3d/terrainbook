@@ -4,7 +4,7 @@
 \setchapterpreamble[u]{\margintoc}
 \graphicspath{{spatialextent/}}
 
-\chapter{Spatial extent of a point cloud}%
+\chapter{Spatial extent of a set of points}%
 \label{chap:spatialextent}
 
 
@@ -27,7 +27,8 @@ As seen in \reffig{fig:examples},
 \caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
 \labfig{fig:examples}  
 \end{figure*}
-this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+this region is often in two dimensions, for example in the case of an aerial lidar datasets we may want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+Another example is if we consider a subset of a point cloud that represents the points for a given building, we can interested in creating the polygon that represents its footprint.
 
 %
 
