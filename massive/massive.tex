@@ -24,7 +24,7 @@ The lidar dataset of the Netherlands, AHN\sidenote{\emph{Actueel Hoogtebestand N
 
 %
 
-For the purposes of this course, we define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 16GB\@.
+For the purpose of this course, we define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 16GB\@.
 This definition makes practical sense because working with data outside of the main memory of a computer is substantially slower (about 2 orders of magnitude for solid state drives and 5 for hard drives), causing many standard data processing algorithms to become impractical with massive datasets.
 Keep in mind that not only the ($xyz$) coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones).
 Also, in the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
@@ -298,7 +298,7 @@ The description of the $k$d-tree and the nearest neighbour query is adapted from
 
 \begin{enumerate}
   \item \citet{Isenburg06-1} argues that real-world point cloud datasets often have natural spatial coherence. Explain why that is for lidar datasets.
-  \item Given a simple point clouds stored in a CSV file (one $x,y,z$ per line), how many passes over the file the triangulator of \citet{Isenburg06-1} make? What does each do?
+  \item Given a simple point cloud stored in a CSV file (one $x,y,z$ per line), how many passes over the file does the triangulator of \citet{Isenburg06-1} make? What does each do?
   \item How to construct a $k$d-tree that is as balanced as possible?
   \item ``The ideas behind streaming are very useful for certain \emph{local} problems, but unfortunately they cannot be used directly for \emph{global} problems such as visibility or flow modelling''. Explain why that is with a concrete example.
 \end{enumerate}
