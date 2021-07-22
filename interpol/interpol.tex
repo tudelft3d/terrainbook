@@ -114,7 +114,7 @@ The five interpolation methods discussed in this section are \emph{weighted-aver
 These are methods that use a subset of the sample points, to which a weight (importance) are assigned, to estimate the value of the dependent variable. 
 The interpolation function $f$ of such methods, with which we obtain an estimation $\hat{a}$ of the dependent variable $a_i$, have the following form:
 \begin{equation}
-  f(x) = \hat{a_i} = \frac{\sum_{i=1}^n w_{i}(x) \, a_{i}}{\sum_{i=1}^{n} w_{i}(x)}
+  f(x) = \hat{a} = \frac{\sum_{i=1}^n w_{i}(x) \, a_{i}}{\sum_{i=1}^{n} w_{i}(x)}
   \label{eq:wai}
 \end{equation}
 where $w_{i}(x)$ is the weight of each neighbouring data point $p_i$ (with respect to the interpolation location $x$) used in the interpolation process. 
