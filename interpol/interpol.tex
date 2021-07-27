@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
 \chapter{Spatial interpolation: deterministic methods}%
@@ -13,9 +14,11 @@
 % \chaptertoc
 
 Given a set $S$ of points $p_i$ in $\mathbb{R}^2$ (also called samples or data points in the following) to which an attribute $a_i$ is attached, spatial interpolation is the procedure used to estimate the value of the attribute at an unsampled location $x$. 
-Its goal is to find a function $f(x,y)$ that fits (pass through, or close to, all the points in $S$) as well as possible. 
+Its goal is to find a function $f(x,y)$ that fits (passes through, or close to, all the points in $S$) as well as possible. 
 There is an infinity of such functions, some are global and some are piecewise, the aim is to find one that is best suited for the kind of datasets used as input.
-Interpolation is based on \emph{spatial autocorrelation}, that is the attribute of two points close together in space is more likely to be similar than that of two points far from each other.
+Interpolation is based on \emph{spatial autocorrelation},% 
+\index{spatial autocorrelation}
+that is the attribute of two points close together in space is more likely to be similar than that of two points far from each other.
 
 %
 
@@ -25,7 +28,7 @@ Interpolation is based on \emph{spatial autocorrelation}, that is the attribute 
   \caption{Spatial interpolation and extrapolation.}%
 \labfig{fig:extrapolation}
 \end{marginfigure}
-It should be noticed that the natural spatial extent of a set of sample is its \emph{convex hull}, and that an estimation outside this convex hull is \emph{extrapolation} (\reffig{fig:extrapolation}).
+It should be noticed that the natural spatial extent of a set of sample is its \emph{convex hull}, and that an estimation outside this convex hull is \emph{extrapolation} (\reffig{fig:extrapolation}).\index{extrapolation}
 Extrapolating implies that more uncertainty is attached to the estimated value.
 
 %
@@ -34,7 +37,7 @@ Spatial interpolation methods are crucial in the visualisation process (\eg\ gen
 The result of interpolation---usually a surface that represents the terrain---must be as accurate as possible because it often forms the basis for spatial analysis, for example runoff modelling or visibility analysis. 
 Although interpolation helps in creating three-dimensional surfaces, in the case of terrains it is intrinsically a two-dimensional operation because only the ($x,y$) coordinates of each sample are used, and the elevation is the dependent attribute.
 Notice that the attribute used need not be only elevation, for other GIS applications one could use the spatial interpolation methods below for for instance rainfall amounts, percentage of humidity in the soil, maximum temperature, etc. 
-Spatial interpolation in 3D is also possible (but out of scope for this course), in that case there are 3 independent variables ($x,y,z$) and one dependent variable, for instance the temperature of the sea at different depth, or the concentration of a certain chemical in the ground.
+Spatial interpolation in 3D is also possible (but out of scope for this book), in that case there are 3 independent variables ($x,y,z$) and one dependent variable, for instance the temperature of the sea at different depth, or the concentration of a certain chemical in the ground.
 
 
 %
@@ -44,10 +47,10 @@ Spatial interpolation in 3D is also possible (but out of scope for this course),
 %%%
 \section{What is a good interpolation method for terrains?}
 
-The essential properties of an `ideal' interpolation method for bivariate geoscientific datasets are as follows:
+The essential properties of an `ideal' interpolation method for bivariate\index{bivariate function} geoscientific datasets are as follows:
 \begin{enumerate}
   \item \textbf{exact}: the interpolant must `honour' the data points, or `pass through' them.
-  \item \textbf{continuous}: a single and unique value must be obtained at each location. This is called a $C^0$ interpolant in mathematics (see \reffig{fig:continuity}).
+  \item \textbf{continuous}: a single and unique value must be obtained at each location. This is called a $C^0$ interpolant\index{$C^n$ interpolants} in mathematics (see \reffig{fig:continuity}).
   \item \textbf{smooth}: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^1$ and $C^2$ interpolants.
   \item \textbf{local}: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
   \item \textbf{adaptability}: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
@@ -72,13 +75,15 @@ The essential properties of an `ideal' interpolation method for bivariate geosci
 %
 \subsection{One global function}
 
-We know that if we have $n$ points in $S$ (in $\mathbb{R}^3$ since the samples are lifted to their elevation), there is one polynomial of degree at most $n-1$.
+We know that if we have $n$ points in $S$ (in $\mathbb{R}^3$ since the samples are lifted to their elevation), there exists at least one polynomial of degree at most $n-1$.
 
 This interpolant will be exact, continuous and smooth (at least $C^2$).
 However, it will not be local (which is problematic for terrains), and finding the polynomial of a high degree for large datasets might be impossible (or take a lot of time).
 
 The biggest concern polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the the set $S$.
-This is known as the Runge's phenomenon in numerical analysis, and is shown in \reffig{fig:polynomial}.
+This is known as the Runge's phenomenon in numerical analysis,%
+\index{Runge's phenomenon }\marginnote{Runge's phenomenon}
+and is shown in \reffig{fig:polynomial}.
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/polynomial}
@@ -90,7 +95,8 @@ This is known as the Runge's phenomenon in numerical analysis, and is shown in \
 
 %%%
 %
-\subsection{Splines: piecewise polynomials}
+\subsection{Splines: piecewise polynomials}%
+\index{splines}
 
 Splines are piecewise polynomials, each piece is connected to its neighbouring piece in a \emph{smooth} manner: along the edges and at the data points the function is usually still $C^1$ or $C^2$ (in other words, where 2 or more polynomials connect, they have the same values for their tangents).
 
@@ -100,9 +106,9 @@ The polynomials used in each piece of the subdivision is usually of low degree (
 %
 
 There are several types of splines (and variation of them, such as Bézier), and most of them are not suited for terrains.
-The most used spline in practice seems to be the \emph{regularised spline with tension} (RST), where the dataset is decomposed into square pieces of a certain size.
+The most used spline in practice seems to be the \emph{regularised spline with tension} (RST)\marginnote{regularised spline with tension is available in the open-source GIS GRASS}, where the dataset is decomposed into square pieces of a certain size.
 The Runge's effect (also called \emph{overshoots}) are eliminated (since the degree is low), and the tension parameter can be tuned to obtain an interpolant that is smooth.
-The method is available in the GRASS GIS\@.
+
 
 
 
@@ -112,29 +118,31 @@ The method is available in the GRASS GIS\@.
 
 The five interpolation methods discussed in this section are \emph{weighted-average methods}.
 These are methods that use a subset of the sample points, to which a weight (importance) are assigned, to estimate the value of the dependent variable. 
-The interpolation function $f$ of such methods, with which we obtain an estimation $\hat{a}$ of the dependent variable $a_i$, have the following form:
+The interpolation function $f$ of such methods, with which we obtain an estimation $\hat{a}$ of the dependent variable $a$, have the following form:
 \begin{equation}
   f(x) = \hat{a} = \frac{\sum_{i=1}^n w_{i}(x) \, a_{i}}{\sum_{i=1}^{n} w_{i}(x)}
   \label{eq:wai}
 \end{equation}
-where $w_{i}(x)$ is the weight of each neighbouring data point $p_i$ (with respect to the interpolation location $x$) used in the interpolation process. 
+where $a_i$ is the attributes of each data point $p_i$ (with respect to the interpolation location $x$), and $w_{i}(x)$ is the weight of each $p_i$. 
+
 A neighbour $p_i$ here is a sample point that is used to estimate the value of location $x$.
-In the context of terrain modelling, the attribute $a$ is the elevation.
+In the context of terrain modelling, the attribute $a$ is the elevation above/under a given vertical datum.
 
 
 %-------------------------------------------
 %-
-\subsection{Nearest neighbour interpolation (\textbf{nn})}
+\subsection{Nearest neighbour interpolation (\textbf{nn})}%
+\index{nearest neighbour interpolation}
 
 Nearest neighbour, or closest neighbour, is a simple interpolation method: the value of an attribute at location $x$ is simply assumed to be equal to the attribute of the nearest data point. 
-This data point gets a weight of \emph{1.0}.
+This data point gets a weight of exactly 1.0.
 \begin{marginfigure}
   \centering
   \includegraphics[width=0.8\linewidth]{figs/cn}
   \caption{\textbf{(a)} Nearest neighbour: the estimated value at $x$ is that of the closest data point. \textbf{(b)} the Voronoi diagram can be used. \textbf{(c)} Ambiguity because $p_1$, $p_2$, and $p_3$ are equidistant from $x$; this causes discontinuities in the resulting surface.}%
 \labfig{fig:nn}
 \end{marginfigure}
-Given a set $S$ of data points, if interpolation is performed with this method at many locations close to each other, the result is the Voronoi diagram (VD) of $S$, where all the points inside a Voronoi cell have the same value.
+Given a set $S$ of data points, if interpolation is performed with this method at many locations close to each other, the result is the Voronoi diagram (VD) of $S$ (see Section~\ref{sec:vd}), where all the points inside a Voronoi cell have the same value.
 
 Although the method possesses many of the desirable properties (it is exact, local and can handle anisotropic data distributions), the reconstruction of continuous fields can not realistically be done using it since it fails lamentably properties 2 and 3. 
 The interpolation function is indeed discontinuous at the border of cells; if the location $x$ is directly on an edge or vertex of the VD($S$), then which value should be returned?
@@ -149,9 +157,10 @@ This would speed up each query to $\mathcal{O}(\log n)$.
 
 %-------------------------------------------
 %-
-\subsection{Inverse distance weighting (\textbf{IDW})}
+\subsection{Inverse distance weighting (\textbf{IDW})}%
+\index{IDW interpolation}
 
-Inverse distance weighting (IDW)---also called inverse distance to a power, or distance-based methods---is a family of interpolation methods using distance to identify the neighbours used, and to assign them weights.
+Inverse distance weighting (IDW)---also called inverse distance to a power, or distance-based methods---is a family of interpolation methods using distance(s) to identify the neighbours used, and to assign them weights.
 IDW is probably the most known interpolation method and it is widely used in many disciplines.
 As shown in \reffig{fig:idw}a,
 \begin{figure}
@@ -181,6 +190,7 @@ The major problem with the method comes from the fact that the criterion, for bo
 IDW is exact, local, and can be implemented in an efficient manner.
 However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see Section~\ref{sec:kdtree}) otherwise each interpolation requires $\mathcal{O}(n)$ operations.
 Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
+
 If the closest data points in each quadrant are used, then the method can be made automatic and continuous.
 
 
