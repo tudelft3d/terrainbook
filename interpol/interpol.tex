@@ -177,7 +177,9 @@ The weight $w_i(x)$ assigned to each $p_i$ for a location $x$ is:
 w_i(x) = |xp_i|^{-h}
 \end{equation}
 where $h$ defines the power to be used, and $|ab|$ is the distance between two points $a$ and $b$.
-The power $h$ is typically 2, but other weights, such as 3, can also be used.
+The power $h$ is typically 2,% 
+\marginnote{IDW power is usually set at 2}
+but other weights, such as 3, can also be used.
 A very high power, say 5, will assign very little importance to points that are far away.
 
 It should be emphasised that the size of the radius of the searching circle influences greatly the result of the interpolation: a very big radius means that the resulting surface will be smooth or `flattened'; on the other hand, a radius that is too small might have dramatic consequences if for example no data points are inside the circle (\reffig{fig:idw}c shows one example).
