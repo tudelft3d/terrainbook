@@ -193,7 +193,27 @@ IDW is exact, local, and can be implemented in an efficient manner.
 However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see Section~\ref{sec:kdtree}) otherwise each interpolation requires $\mathcal{O}(n)$ operations.
 Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
 
-If the closest data points in each quadrant are used, then the method can be made automatic and continuous.
+
+%%%
+\paragraph{IDW variations.}
+
+IDW is a \emph{family} of spatial interpolation methods using distance(s) to identify the neighbours and the weights.
+The simplest form is as described above: with a searching circle.
+However, other variations exist (see \reffig{fig:idwvar}):
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=0.6\linewidth,page=1]{figs/idwvar}%
+  \caption{IDW variations for \textbf{(a)} a set of points and an interpolation location (middle point). (green=neighbours used; red=not). \textbf{(b)} 4-nearest neighbours. \textbf{(c)} search ellipse. \textbf{(d)} 2-nearest per quadrant.}%
+\labfig{fig:idwvar}
+\end{marginfigure}
+
+\begin{description}
+  \item[k-nearest neighbours:] the $k$-nearest neighbours (say being 10 for instance) can be used, irrespective of how far they are. This ensures that IDW will yield a continuous surface. (\reffig{fig:idwvar}b)
+  \item[search ellipse:] instead of a circle (define by its radius), one can use an oriented ellipse, with $r_1$ and $r_2$ used to define the size of the ellipse, and $\theta$ its orientation. (\reffig{fig:idwvar}c)
+  \item[$k$-per-quadrant:] to ensure that the neighbours used in the interpolation process are not all in one direction (\eg\ the location on the left of \reffig{fig:idw}c), one can use \emph{quadrants} and take the $k$-nearest per quadrant. This makes IDW automatic and continuous. (\reffig{fig:idwvar}d)
+  \item[combination of above:] it would be possible to use quadrants, but restrict the search to a given circle for instance.
+\end{description}
+
 
 
 %-------------------------------------------
