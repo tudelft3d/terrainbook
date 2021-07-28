@@ -130,7 +130,8 @@ Such a representation is usually done with a 2.5D terrain (although a 2.75D coul
 
 In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a \emph{field}.%
 \index{field}\marginnote{field}
-A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.
+A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.%
+\index{Euclidean space}\marginnote{Euclidean space}
 It is modelled by a function mapping one point $p$ in $\mathbb{R}^2$ to the value of $a$, thus 
 \[
   a = f(p)
@@ -160,9 +161,9 @@ To represent a terrain in a computer, and be able to manipulate it (\ie\ edit th
 
 
 %%%
-\subsection{Strategy \#1: points + global interpolation function.}
+\subsection{Strategy \#1: points + global interpolation function}
 This means storing the original sample points with the parameters of the \emph{global} spatial interpolation method that is best suited to the distribution of the samples and their accuracy.
-Global methods are for instance inverse-distance to a power, natural neighbours, or Kriging.
+Global methods are for instance inverse-distance to a power, natural neighbours, or kriging.
 This strategy is used because one can compactly represent a field (only the samples and a few parameters need to be stored).
 
 Notice that this strategy permits us to reconstruct the continuity of a terrain from the samples by calculating the value of the elevation, but that this value is \emph{not} persistently stored in memory.
@@ -234,17 +235,19 @@ There is a loss of information, since the exact location of the meaningful point
 
 %
 
-\paragraph{Concrete example: a 2D grid.}
-A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
-The value assigned to each cell is an estimation previously obtained by spatial interpolation.
-However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
-Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
+\begin{kaobox}[frametitle=\faCog\ Concrete example: a 2D grid]
+  A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
+  The value assigned to each cell is an estimation previously obtained by spatial interpolation.
+  However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
+  Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
+\end{kaobox}
 
 %
 
 The wide popularity of regular tessellations in terrain modelling is probably due to simplicity and to the fact that they permit us to easily integrate 2D remote sensing images and terrains.
 Indeed, a grid is naturally stored in a computer as an array (each cell is addressed by its position in the array, and only the value of the cell is stored), and thus the spatial relationships between cells are implicit. 
-This is true for any dimensions, thus, contrary to other tessellations, grids are very easy to generalise to higher dimensions.
+This is true for any dimensions, thus, contrary to other tessellations, grids are very easy to generalise to higher dimensions (in 3D a pixel is a \emph{voxel}).%
+\index{higher-dimensional grids}
 The algorithms to analyse and manipulate (Boolean operations such as intersection or union) are also straightforwardly implemented in a computer. 
 
 On the other hand, grids also suffer problems.
@@ -297,7 +300,7 @@ TINs are the most popular alternatives to 2D grids for modelling elevation; both
  
 A TIN in which a linear interpolation function is used yields a $C^0$ piecewise representation, \ie\ it is a continuous function but at the edges of the triangles the first derivative is not possible.
 It is possible to use higher-order functions in each triangle of a TIN, to construct a $C^1$ or $C^2$ field, \ie\ where the first and second derivative of the surface can be obtained. 
-Chapter~\ref{chap:interpol} gives more details.
+Chapter~\ref{chap:interpol} gives more details about spatial interpolation and continuity.
 
 
 
