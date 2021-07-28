@@ -45,7 +45,8 @@ Spatial interpolation in 3D is also possible (but out of scope for this book), i
 
 %-------------------------------------------------
 %%%
-\section{What is a good interpolation method for terrains?}
+\section{What is a good interpolation method for terrains?}%
+\label{sec:interpol_properties}
 
 The essential properties of an `ideal' interpolation method for bivariate\index{bivariate function} geoscientific datasets are as follows:
 \begin{enumerate}
@@ -106,7 +107,7 @@ The polynomials used in each piece of the subdivision is usually of low degree (
 %
 
 There are several types of splines (and variation of them, such as Bézier), and most of them are not suited for terrains.
-The most used spline in practice seems to be the \emph{regularised spline with tension} (RST)\marginnote{regularised spline with tension is available in the open-source GIS GRASS}, where the dataset is decomposed into square pieces of a certain size.
+The most used spline in practice seems to be the \emph{regularised spline with tension} (RST), where the dataset is decomposed into square pieces of a certain size.
 The Runge's effect (also called \emph{overshoots}) are eliminated (since the degree is low), and the tension parameter can be tuned to obtain an interpolant that is smooth.
 
 
@@ -197,8 +198,7 @@ Also, as mentioned above, there are cases where IDW might not yield a continuous
 %%%
 \paragraph{IDW variations.}
 
-IDW is a \emph{family} of spatial interpolation methods using distance(s) to identify the neighbours and the weights.
-The simplest form is as described above: with a searching circle.
+IDW is a \emph{family} of spatial interpolation methods, and its simplest form to select the neighbours is as described above: with a searching circle.
 However, other variations exist (see \reffig{fig:idwvar}):
 \begin{marginfigure}
   \centering
@@ -218,10 +218,16 @@ However, other variations exist (see \reffig{fig:idwvar}):
 
 %-------------------------------------------
 %-
-\subsection{Linear interpolation in triangulation (\textbf{TIN})}
+\subsection{Linear interpolation in triangulation (\textbf{TIN})}%
+\index{TIN interpolation}
 
 This method is popular for terrain modelling applications and is based on a triangulation of the data points. 
 As is the case for the VD, a triangulation is a piecewise subdivision (tessellation) of the plane, and in the context of interpolation a linear function is assigned to each piece (each triangle). 
+\begin{marginfigure}
+  \includegraphics{../whatisterrain/figs/tin}
+  \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}%
+\labfig{fig:tin}
+\end{marginfigure}
 Interpolating at location $x$ means first finding inside which triangle $x$ lies, and then the height is estimated by linear interpolation on the 3D plane defined by the three vertices forming the triangle (the samples are lifted to their elevation value). 
 The number of samples used in the interpolation is therefore always 3, and their weight is based on the barycentric value (see below).
 To obtain satisfactory results, this method is usually used in 2D with a Delaunay triangulation because, among all the possible triangulations of a set of points in the plane, it maximizes the minimum angle of each triangle. 
@@ -229,14 +235,14 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
-If the point location strategy is used to identify the triangle containing $x$ (Section~\ref{sec:dtwalk}), then $\mathcal{O}(n^{1/3}$) on average is used.
+If the point location strategy is used to identify the triangle containing $x$ (\refsec{dtwalk}), then $\mathcal{O}(n^{1/3}$) on average is used.
 The interpolation itself is performed in constant time.
 
 
 %%%
 \paragraph{Data-dependent triangulations.}
 It was shown in Chapter~\ref{chap:dtvd} and in \reffig{fig:whydt} that, for terrain modelling, the Delaunay triangulation is preferred over other triangulations because it favours triangles that are as equilateral as possible.
-However, it should be noticed that the elevation of the vertices are not taken into account to obtain the DT, \ie\ if we changed the elevation of the samples we would always get the same triangulation.
+However, it should be noticed that the elevation of the vertices are \emph{not} taken into account to obtain the DT, \ie\ if we changed the elevation of the samples we would always get the same triangulation.
 One might therefore wonder whether the DT best approximates the morphology of a terrain.
 
 A triangulation that considers the elevation (or any $z$ coordinate) is called a \emph{data-dependent triangulation}.
@@ -258,19 +264,19 @@ In practice, one would need to first compute the DT, and then take each edge (an
 \end{marginfigure}
 The linear interpolation in a triangle can be efficiently implemented by using barycentric coordinates, which are local coordinates defined within a triangle.
 Referring to \reffig{fig:li}, any point $x$ inside a triangle $p_1p_2p_3$ can be represented as a linear combination of the 3 vertices:
-\[
+\begin{equation}
   x = w_0p_0 + w_1p_1 + w_2p_2
-\]
+\end{equation}
 and 
-\[
+\begin{equation}
   w_0 + w_1 + w_2 = 1   
-\]
+\end{equation}
 The coefficients $w_i$ are the barycentric coordinates of the point $x$ with respect to the triangle $p_1p_2p_3$.
 Finding the coefficients $w_0$, $w_1$, and $w_2$ can be done by solving a system of linear equations.
 If we subtract $p_2$ from $x$, and we use $w_2 = 1 - w_0 - w_1$, we obtain
-\[
+\begin{equation}
   x - p_2 = w_0(p_0-p_2) + w_1(p_1 - p_2)
-\]
+\end{equation}
 We obtain 2 vectors ($p_0-p_2$ and $p_1-p_2$), which represent 2 edges of the triangle.
 This equation can be solved and we find that the 3 coefficients are equal of the area of the 3 triangle subdividing the original triangle (as shown in \reffig{fig:li}).
 
@@ -295,9 +301,11 @@ To achieve this the normals of each vertex is calculated by averaging the normal
 
 %-------------------------------------------
 %-
-\subsection{Natural Neighbour Interpolation (\textbf{NNI})}
+\subsection{Natural Neighbour Interpolation (\textbf{NNI})}%
+\index{natural neighbour interpolation}\index{Sibson interpolation}
 
 This is a method based on the Voronoi diagram for both selecting the data points involved in the process, and assigning them a weight.  
+It is also called Sibson's interpolation, after the name of its inventor.
 It uses two VDs: one for the set $S$ of data points (\reffig{fig:nn-a}), and another one where a point $x$ is inserted at the estimation location (\reffig{fig:nn-b}). 
 The insertion of $x$ modifies \emph{locally} a VD($S$): the Voronoi cell $\mathcal{V}_{x}$ of $x$ `steals' some parts of some Voronoi cells of VD($S$).
 
@@ -354,10 +362,10 @@ The NNI method can be thought of performing linear interpolation, in the 1D case
 
 %
 
-It has been modified so that the first derivative is possible everywhere, including at the data points.
-This was achieved by modifying the weights so that they are not linear anymore.
-The gradient of the surface at each sample point is taken into account, \ie\ for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this course.
-The resulting interpolant is $C^1$, and \reffig{fig:comp_nni}
+It can be modified so that the first derivative is possible everywhere, including at the data points.
+This is achieved by modifying the weights so that they are not linear anymore.
+The gradient of the surface at each sample point is taken into account, \ie\ for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this book.
+The resulting interpolant is $C^1$, and \reffig{fig:comp_nni} shows an example.
 \begin{figure}
   \centering
   \begin{subfigure}[b]{0.5\linewidth}
@@ -378,8 +386,8 @@ The resulting interpolant is $C^1$, and \reffig{fig:comp_nni}
 
 %-------------------------------------------
 %-
-\subsection{Laplace interpolant}
-\label{sec:laplace}
+\subsection{Laplace interpolant}%
+\label{sec:laplace}\index{Laplace interpolation}
 
 The Laplace interpolant, or non-Sibsonian interpolation, is a computationally faster variant of the natural neighbour interpolation method.
 It is faster because no (stolen) areas need to be computed, instead the lengths of the Delaunay and the Voronoi edges are used.
@@ -425,19 +433,20 @@ Unlike other methods such as IDW interpolation, the Laplace interpolant requires
 
 %-------------------------------------------
 %-
-\subsection{Bilinear Interpolation}
+\subsection{Bilinear Interpolation}%
+\index{bilinear interpolation}
 
 When one wants to know the value of the elevation at a location $p$, she can simply look at the value of the pixel (which is equivalent to using nearest neighbour interpolation), but this method has many drawbacks, for example when one needs to \emph{resample} a grid. 
 Resampling means transforming an input grid so that the resolution and/or the orientation are different, see \reffig{fig:resampling}.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{figs/resampling}
-  \caption{Resampling of an input grid, the output grid has different orientation.} %
+  \caption{Resampling of an input grid, the output grid has a different orientation and a different resolution.} %
 \labfig{fig:resampling}
 \end{marginfigure}
 
-Bilinear interpolation has been shown to give better results. 
-The method, which can be seen as an ``extension' of linear interpolation for raster data, performs linear interpolation in one dimension (say along the $x$ axis), and then in the other dimension ($y$). 
+Bilinear interpolation has been shown to give better results than using the value of the pixel. 
+The method, which can be seen as an `extension' of linear interpolation for raster data, performs linear interpolation in one dimension (say along the $x$ axis), and then in the other dimension ($y$). 
 Here one has to be careful about the meaning of a grid: does the value of a pixel represent the value of the whole pixel? or was the grid constructed by sampling the values at the middle of each pixel? 
 In most cases, unless metadata are available, it is not known. 
 But in the context of terrain modelling, we can assume that the value of a pixel represents the value at the centre of the pixel.
@@ -454,7 +463,7 @@ We need to linearly interpolation the values at locations $q$ and $r$ with linea
 % Observe that while we perform three linear interpolations, the resulting interpolant is not linear but quadratic.
 Also, notice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
 For the case in \reffig{fig:bilinear}, the calculation would go as follows:
-\[
+\begin{equation}
   \begin{array}{l}
     q_z = \frac{p_x - n4_x}{n3_x - n4_x} \times (n3_z - n4_z) + n4_z \\
    \\
@@ -462,7 +471,7 @@ For the case in \reffig{fig:bilinear}, the calculation would go as follows:
     \\
     p_z = \frac{p_y - r_y}{q_y - r_y} * (q_z - r_z) + r_z \\
   \end{array}
-\]
+\end{equation}
 
 
 %%%
@@ -471,14 +480,16 @@ For the case in \reffig{fig:bilinear}, the calculation would go as follows:
 
 Finding the ``best'' interpolation method for a given dataset, and the most suitable parameters (if any are needed), can be a rather tricky task in practice because we most often do not have extra control points.
 
-One simple technique, which is also very easy to implement, is called \emph{jackknife}, or  cross-validation.
+One simple technique, which is also very easy to implement, is called \emph{jackknife}, or  cross-validation.%
+\marginnote{cross-validation}
 It is a simple statistics resampling technique to estimate the bias and the variance of an estimation.
 
 Imagine you have a dataset $S$ consisting of $n$ sample points.
-The main idea is to remove/omit from $S$ one sample point $p$ and calculate the estimation $\hat{a}_p$  obtained for the elevation at the location ($x,y$) of $p$, and to compare this value with the real value of $p$ ($a_p$).
+The main idea is to remove/omit from $S$ one sample point $p$ and calculate the estimation $\hat{a}_p$  obtained for the elevation at the location ($x,y$) of $p$, and to compare this value with the real value $a_p$.
 And then to repeat this for each of the $n$ points in $S$; each estimation is thus obtained with $n-1$ points.
 
-One method (with given parameters) for a given dataset can be characterised by computing the root-mean-square error:
+One method (with given parameters) for a given dataset can be characterised by computing the root-mean-square error:%
+\index{root-mean-square error}\marginnote{root-mean-square error}
 \begin{equation}
   RMSE = \sqrt{\frac{\sum_{i=1}^{n}(\hat{z}_i - z_i)^2}{n}}
 \end{equation}
@@ -522,10 +533,10 @@ The differences in the lower areas (which is water) are smaller since these area
 %
 \section{Overview of all methods}
 
-\reffig{fig:results_interpol} shows the result of 8 different interpolants for the same (real-world) sample points.
+\reffig{fig:results_interpol} shows the result of 8 different interpolants for the same (real-world) sample points, and \reftab{results_interpol} give an overview of their properties.
 You can better visualise these datasets, and download them, at \url{https://3d.bk.tudelft.nl/courses/geo1015/extra/interpol/}.
 
-
+\begin{table*}
 \begin{tabular}{@{}lccccccl@{}}
 \toprule
                          & exact         & continuous & local        & adaptable & efficient & automatic \\ \midrule
@@ -539,6 +550,9 @@ You can better visualise these datasets, and download them, at \url{https://3d.b
 \textbf{Laplace}         & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & +         & $\checkmark$ \\ 
 \textbf{bilinear}        & $\checkmark$  & $C^0$      & $\checkmark$ & ++        & ++        & $\checkmark$ \\ \bottomrule
 \end{tabular}
+\caption{Overview of the interpolation methods discussed in this chapter, with their properties (as described in \refsec{interpol_properties}).}%
+\label{tab:results_interpol}
+\end{table*}
 
 
 \begin{figure*}
@@ -595,11 +609,9 @@ You can better visualise these datasets, and download them, at \url{https://3d.b
 \end{figure*}
 
 
-
 %%%
 %
 \section{Notes and comments}
-
 
 \citet{Watson92}, in his authoritative book, lists the essential properties of an `ideal' interpolation method for bivariate geoscientific datasets; we have added \emph{computationally efficient} and \emph{automatic} to the list.
 
@@ -613,6 +625,8 @@ The description of the barycentric coordinates is mostly taken from \citet{Eberl
 The natural neighbour interpolation method is also called Sibson's interpolation, after the name of the inventor~\citep{Sibson81}. 
 
 An excellent summary of the methods to modify Equation~\ref{eq:nnc} to obtain a continuous function is found in \citet{Flototto03}. 
+
+The regularised spline with tension (RST) is available in the open-source GIS GRASS\@.
 
 The construction of a polynomial inside each triangle of a TIN can be done with several methods. 
 The simplest method is the Clough-Tocher method~\citep{Clough65,Farin85}.
