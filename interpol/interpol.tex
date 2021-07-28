@@ -208,10 +208,10 @@ However, other variations exist (see \reffig{fig:idwvar}):
 \end{marginfigure}
 
 \begin{description}
-  \item[k-nearest neighbours:] the $k$-nearest neighbours (say being 10 for instance) can be used, irrespective of how far they are. This ensures that IDW will yield a continuous surface. (\reffig{fig:idwvar}b)
+  \item[k-nearest neighbours:] the $k$-nearest neighbours can be used (for instance $k=8$), irrespective of how far they are. This ensures that IDW will yield a continuous surface. (\reffig{fig:idwvar}b)
   \item[search ellipse:] instead of a circle (define by its radius), one can use an oriented ellipse, with $r_1$ and $r_2$ used to define the size of the ellipse, and $\theta$ its orientation. (\reffig{fig:idwvar}c)
   \item[$k$-per-quadrant:] to ensure that the neighbours used in the interpolation process are not all in one direction (\eg\ the location on the left of \reffig{fig:idw}c), one can use \emph{quadrants} and take the $k$-nearest per quadrant. This makes IDW automatic and continuous. (\reffig{fig:idwvar}d)
-  \item[combination of above:] it would be possible to use quadrants, but restrict the search to a given circle for instance.
+  \item[combinations of above:] it would for example be possible to use quadrants but restrict the search to a given radius, \ie\ sample points that are farther than the radius are not considered.
 \end{description}
 
 
