@@ -306,7 +306,7 @@ This process stops when every triangle having $p$ as one of its vertices respect
 
 
 %%%
-\paragraph{Initialisation: the big triangle.}%
+\subsection{Initialisation: the big triangle}%
 \label{sec:big_tr}
 Most of the incremental DT/VD algorithms assume that the set $S$ of points is entirely contained in a \emph{big triangle} ($\tau_{big}$) several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
 Figure~\ref{fig:big_tr} illustrates this.
@@ -343,7 +343,7 @@ There is also a variation on the big triangle: when an extra point is ``at the i
 
 
 %%%
-\paragraph{Point location with walking.}% 
+\subsection{Point location with walking}% 
 \label{sec:dtwalk}
 
 To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ since each triangle must be checked).
@@ -391,7 +391,7 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 
 
 %%%
-\paragraph{Flips.}
+\subsection{Flips}
 The \emph{flip22} operation used to modify the triangulation is a simple \emph{local} topological operation that modifies the configuration of two adjacent triangles. 
 It is performed in constant time $\mathcal{O}(1)$.
 Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
@@ -410,13 +410,14 @@ A flip13 refers to the operation of inserting a vertex inside a triangle, and sp
 
 
 %%%
-\paragraph{Controlling the flips.}
+\subsection{Controlling the flips}
 To control which triangles have to be checked and potentially flipped, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
 When the stack is empty, then there are no more triangles to be tested, and we are guaranteed that all the triangles in the triangulation have an empty circumcircle.
 
 
 %%%
-\paragraph{Predicates.}\index{predicates}
+\subsection{Predicates}%
+\index{predicates}
 Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Incircle\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
 Both tests can be reduced to the computation of the determinant of a matrix:
 \begin{equation}
@@ -473,7 +474,7 @@ This is an important property that allows an efficient retrieval of triangles in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Constrained and Conforming Delaunay Triangulations}%
-\index{Constrained DT}\index{CDT}
+\index{Constrained DT}\index{CDT}\index{Conforming DT}
 
 Given as input a set $S$ of points and straight-line segments in the plane, different triangulations of $S$ (so that the segments are respected) can be constructed. 
 We are mostly interested in the \emph{constrained Delaunay triangulation} (ConsDT) and the \emph{conforming Delaunay triangulation} (ConfDT), see Figure~\ref{fig:cdt_example} for one example.
