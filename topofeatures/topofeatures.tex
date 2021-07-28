@@ -8,7 +8,8 @@
 \chapter{Topographic features}%
 \label{chap:topofeatures}
 
-While a DTM is a (2.5D) surface, it can also be conceptualised as an aggregation of many \emph{topographic features} that are inter-related.
+While a terrain is a (2.5D) surface, it can also be conceptualised as an aggregation of many \emph{topographic features} that are inter-related.%
+\index{topographic feature}
 Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but one can think of application-specific ones such as the navigational channels in bathymetry, buildings in city modelling, or dikes for flood modelling.
 
 Identifying the different features forming a terrain enhances our understanding of the raw dataset.
@@ -20,7 +21,8 @@ Since these differ from the data model used (TINs vs grids), we give examples fo
 
 %%%
 %
-\section{Slope}
+\section{Slope}%
+\index{slope}
 
 \begin{figure}
   \centering
@@ -30,7 +32,8 @@ Since these differ from the data model used (TINs vs grids), we give examples fo
 \end{figure}
 
 The slope at a given location $p$ on a terrain is defined by the plane $H$ that is tangent at $p$ to the surface representing the terrain (see Figure~\ref{fig:slope_concept}).
-What we casually refer to as `slope' has actually two components: (1) gradient; (2) aspect (see Figure~\ref{fig:slope_aspect}).
+What we casually refer to as `slope' has actually two components: (1) gradient; (2) aspect (see Figure~\ref{fig:slope_aspect}).%
+\marginnote{slope = gradient + aspect}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/slope_aspect}
@@ -51,7 +54,7 @@ This means in practice that for a given terrain in raster, calculating its gradi
 
 
 %%%
-\paragraph{Aspect}
+\paragraph{Aspect.}
 At a given point $p$ on the terrain the gradient can be in any direction, the aspect is this direction projected to the $xy$-plane. 
 It is basically a 2D vector telling us the direction of the steepest slope at a given point.
 It is usually expressed in degrees from an arbitrary direction (most often the north).
@@ -161,7 +164,8 @@ and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$
 \end{kaobox}
 
 %%%
-\subsection{Hillshading}
+\subsection{Hillshading}%
+\index{hillshading}
 
 Hillshading is a technique used to help visualise the relief of a DTM (see Figure~\ref{fig:hillshade} for an example).
 \begin{marginfigure}
@@ -189,9 +193,9 @@ As above and in Figure~\ref{fig:hillshade-params},
 \label{fig:hillshade-params}
 \end{figure}
 for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{i,j}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rand is the horizon, $\pi$ rand is the zenith).
-\[
+\begin{equation}  
   hillshade_{i,j} = 250 \times ((\cos\gamma \times \cos\theta_{i,j}) + (\sin\gamma \times \sin\theta_{i,j} \times \cos (\psi - \alpha_{i,j}))) 
-\]
+\end{equation}
 (all angles need to be radians)
 
 
