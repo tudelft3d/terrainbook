@@ -13,7 +13,7 @@ While a terrain is a (2.5D) surface, it can also be conceptualised as an aggrega
 Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but one can think of application-specific ones such as the navigational channels in bathymetry, buildings in city modelling, or dikes for flood modelling.
 
 Identifying the different features forming a terrain enhances our understanding of the raw dataset.
-To help us extract and identify features, some operations/characteristics need to be extracted from terrains, \eg\ the slope, the aspect, the curvature, the roughness, etc.
+To help us extract and identify features, some characteristics (or properties) need to be extracted from terrains, \eg\ the slope, the aspect, the curvature, the roughness, etc.
 
 We describe in this chapter a few key features in terrains, and describe how they can be extracted.
 Since these differ from the data model used (TINs vs grids), we give examples for both.
@@ -221,7 +221,9 @@ for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{
 A point $p$ whose surrounding is formed only of points that are of lower elevation is a peak.
 The size and shape of the surrounding is dependent on the application and on the data model used to represent the terrain.
 If a grid is used, this surrounding could be the 8 neighbours; if a TIN is used they could be the vertices that of the triangles incident to $p$.
-Observe that a peak can be local, that is one point that happens to be a few centimetres higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
+Observe that a peak can be local,%
+\marginnote{peaks and pits are local and influenced by the scale of the data}
+that is one point that happens to be a few centimetres higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
 A peak is therefore on the scale of the data.
 
 The contour line through the $p$ does not exist.
@@ -233,7 +235,9 @@ The same remarks as for peak apply here.
 The contour line through the $p$ does not exist.
 
 %%%
-\paragraph{Saddle point.}
+\paragraph{Saddle point.}%
+\index{saddle point}
+
 As shown in Figure~\ref{fig:feature_points}b, a saddle point, also called a pass, is a point whose neighbourhood is composed of higher elevations on two opposite directions, and 2 lower elevations in the other two directions.
 From a mathematics point-of-view, it is a point for which the derivatives in orthogonal directions are 0, but the point is not maximum (peak) or a minimum (pit).
 
@@ -241,15 +245,13 @@ From a mathematics point-of-view, it is a point for which the derivatives in ort
 
 If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most point in a terrain this will be 2, except for peaks/pits where this is 0.
 Figure~\ref{fig:saddle_contour}
-% TODO: hm, the red lines don't really look like contours to me. as far as i know countours shoulnd't intersect and these are intersecting at 10
 \begin{marginfigure}
   \centering
   \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
   \caption{A saddle point at elevation 10m, and its surrounding points. The triangulation of the area is created and used to extract the contour line segments at 10m (red lines).}%
 \label{fig:saddle_contour}
 \end{marginfigure}
-shows an example for a point with an elevation of 10m, the contour lines at 10m is drawn by linearly interpolating along the edges of the TIN of the surrounding.
-
+shows an example for a point with an elevation of 10m, the contour lines at 10m is drawn by linearly interpolating along the edges of the TIN of the surrounding (see Chapter~\ref{chap:conversion}).
 
 
 %%%
@@ -271,16 +273,18 @@ If they point is different directions, then $e$ is neither.
 
 %%%
 %
-\section{Curvature}
+\section{Curvature}%
+\index{curvature}
 
-The curvature is the 2nd derivative of the surface representing the terrain, it represents the rate of change of the gradient.
+The curvature is the 2nd derivative of the surface representing the terrain, it represents the rate of change of the gradient.%
+\marginnote{2nd derivative of the surface}
 We are often not interested in the value of the curvature itself ($\frac{\degree}{m}$) but whether the curvature is: convex, concave, or flat.
 
 The curvature at a point $p$ is often decomposed into types:
-\begin{enumerate}
-  \item \textbf{profile curvature:} the curvature of the vertical cross-section through $p$ perpendicular to the contour line passing through $p$ (or of the vertical plane along the 2D vector of the aspect at $p$)
-  \item \textbf{plan curvature:} the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$)
-\end{enumerate} 
+\begin{itemize}
+  \item \textbf{1. profile curvature:} the curvature of the vertical cross-section through $p$ perpendicular to the contour line passing through $p$ (or of the vertical plane along the 2D vector of the aspect at $p$)
+  \item \textbf{2. plan curvature:} the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$)
+\end{itemize} 
 Because there are 2 types of curvatures and each have 3 potential values, there are 9 possible options (as Figure~\ref{fig:curvatures} shows).
 \begin{figure}
   \centering
