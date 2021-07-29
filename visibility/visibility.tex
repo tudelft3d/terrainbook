@@ -32,12 +32,12 @@ When referring to visibility problems, we address the following two fundamental 
   \begin{marginfigure}
     \centering
     \includegraphics[width=\linewidth]{figs/overview_viewshed}
-    \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to 15km).}%
+    \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to \SI{15}{\km}).}%
   \labfig{fig:overview_viewshed}
   \end{marginfigure} 
   \item[viewshed:] given a viewpoint $v$, which part(s) of the surrounding terrain are visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
-Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation 0m) or at a given height (2m for a human, or 30m for a telecommunication tower).
+Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation \SI{0}{\m}) or at a given height (\SI{2}{\m} for a human, or \SI{30}{\m} for a telecommunication tower).
 
 %
 
@@ -140,7 +140,7 @@ As shown in \reffig{fig:viewshed},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/viewshed}
-  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (5000m in this case).}%
+  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (\SI{5000}{\m} in this case).}%
 \labfig{fig:viewshed}
 \end{figure}
 computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
@@ -149,8 +149,8 @@ The result of a viewshed is a binary grid; in \reffig{fig:overview_viewshed}, Tr
 %
 
 While this brute-force approach will work, several redundant computations will be made, since several of the rays from $v$ will intersect the same grid cells.
-Furthermore, depending on the resolution, the number of cells in a 5km radius (a reasonable value where humans can see) can become \emph{very} large.
-As an example, with the AHN3 gridded version (50cm resolution), this means roughly 400M queries ($(\frac{5000 \times 2}{0.5})^2$).
+Furthermore, depending on the resolution, the number of cells in a \SI{5}{\km} radius (a reasonable value where humans can see) can become \emph{very} large.
+As an example, with the AHN3 gridded version (\SI{50}{\cm} resolution), this means roughly 400 million queries ($(\frac{5000 \times 2}{0.5})^2$).
 
 %
 
@@ -164,7 +164,7 @@ If $z$ is lower, then the cell is invisible.
 If $z$ is higher, then the cell is visible and $t_{cur}$ is updated with a new tangent using the current elevation.
 
 Viewsheds with several viewpoints $v_i$ are also very useful, think for instance of obtaining the viewshed along a road.
-This can be computed by sampling the road at every 50m and computing the viewsheds from each of the points. 
+This can be computed by sampling the road at every \SI{50}{\m} and computing the viewsheds from each of the points. 
 Each viewshed yields a binary grid, and it suffices to use a map algebra operator to combine the results into one grid (if one cell is visible from any viewpoint, then it is visible).
 
 
