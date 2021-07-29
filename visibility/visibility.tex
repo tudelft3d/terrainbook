@@ -1,4 +1,5 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
 
@@ -14,8 +15,8 @@
 Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which part(s) of the surrounding terrain are visible.
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.
 There are also several related problems.
-One example is the estimation of shadows (position of the sun continually varies, also with seasons).
-Shadows are important to accurately measure the photovoltaic potential, for determining solar envelopes, for assessing the value of real estate, and for estimating the thermal comfort, among other applications.
+Two closely related examples are the estimation of shadows (position of the sun continually varies, also with seasons) and the calculation of the solar irradiance (how much sun light will a certain area have per day/week).
+These can be used to estimate the photovoltaic potential (where can we best install solar panels?), for estimating where snow will accumulate in mountains, or for estimating the temperature of the ground (necessary for climate modelling), among other applications.
 
 %
 
@@ -50,7 +51,7 @@ We discuss how to solve these problems for both TINs and grids.
 \section{Rendering + ray casting}
 
 Rendering is the process of generating images from 2D or 3D scenes.
-Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800x800 pixels) and assigning one colour to each pixel.
+Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/Ray_trace_diagram.pdf}
