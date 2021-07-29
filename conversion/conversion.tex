@@ -65,10 +65,10 @@ The basic idea, as shown in Figure~\ref{fig:isolineidea},
 \begin{figure}
   \centering
   \includegraphics[width=0.9\textwidth]{figs/isoline}
-  \caption{Vertical cross-section of a terrain (left), and a 2D projection of the terrain TIN with the extracted 200m isoline (right).}%
+  \caption{Vertical cross-section of a terrain (left), and a 2D projection of the terrain TIN with the extracted \SI{200}{\m} isoline (right).}%
 \label{fig:isolineidea}
 \end{figure}
-is to compute the intersection between a level value (\eg\ 200m) and each cell of the terrain (triangle or grid cell in our case).
+is to compute the intersection between a level value (\eg\ \SI{200}{\m}) and each cell of the terrain (triangle or grid cell in our case).
 Notice that the cells are `lifted' to their elevation.  
 Each cell of the terrain is thus visited, one after the other, and for each cell if there is an intersection (which forms a line segment) then it is extracted.
 The resulting set of segment lines forms an approximation of the isoline.
@@ -101,13 +101,13 @@ The basic algorithm for extracting one isoline is shown in Algorithm~\ref{algo:i
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-square}
-\caption{Different cases when extracting an isoline at elevation 10m for a regular grid. The grey values are the elevation of the vertices forming one regular cell, and the blue lines and vertices are the ones extracted for that cell.}%
+\caption{Different cases when extracting an isoline at elevation \SI{10}{\m} for a regular grid. The grey values are the elevation of the vertices forming one regular cell, and the blue lines and vertices are the ones extracted for that cell.}%
 \label{fig:rasterconfs}
 \end{figure}
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-tr}
-\caption{Different cases when extracting an isoline at elevation 10m for a TIN\@. The grey values are the elevation of the vertices forming one triangle, and the blue lines and vertices are the ones extracted for that triangle.}%
+\caption{Different cases when extracting an isoline at elevation \SI{10}{\m} for a TIN\@. The grey values are the elevation of the vertices forming one triangle, and the blue lines and vertices are the ones extracted for that triangle.}%
 \label{fig:isoline-tr}
 \end{figure}
 Note that since the algorithm contours every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
@@ -172,7 +172,7 @@ Furthermore, the set of line segments can form more than one \emph{component}, a
 Perhaps the only application where having unstructured line segments is fine is for visualisation of the lines.
 For most other applications this can be problematic, for instance:
 \begin{enumerate}
-  \item if one wants to know how many peaks above 1000m there are in a given area;
+  \item if one wants to know how many peaks above \SI{1000}{\m} there are in a given area;
   \item if smoothing of the isolines is necessary, with the Douglas-Peucker algorithm for instance;
   \item if a GIS format requires that the isolines be closed polylines oriented such that the higher terrain is on the left for instance, such as for colouring the area enclosed by an isoline.
 \end{enumerate}
@@ -361,7 +361,7 @@ However, decimation could be more efficient when you already have a detailed TIN
 \label{sec:weddingcake}
 
 If the input is a set of isolines, then the simplest solution is, as shown in Figure~\ref{fig:wedding}a, to convert these to points and then use any of the interpolation methods previously discussed.
-This conversion can be done by either keeping only the vertices of the polylines, or by sampling points at regular intervals along the lines (say every 10m).
+This conversion can be done by either keeping only the vertices of the polylines, or by sampling points at regular intervals along the lines (say every \SI{10}{\m}).
 \begin{figure*}
   \centering
   \begin{subfigure}[b]{0.25\linewidth}
@@ -421,7 +421,7 @@ They also show how Algorithm~\ref{algo:tin-simp:ref} can be made a lot faster by
   \item What would the isocontours of a 2.75D terrain look like?
   \item In Section~\ref{sec:structuring}, it is mentioned that merging the segments will form on polygon. But how to ensure that the orientation of that resulting curve is consistent, that it is for instance having higher terrains on the right?
   \item Given a raster terrain (GeoTiff format) that contains several cells with \texttt{no\_data} values, describe the methodology you would use to extract contour lines from it. As a reminder, contours lines should be closed curves, except at the boundary of the dataset.
-  \item Assume you have the small terrain formed of 3 triangles below, draw the isoline in this TIN for an elevation of 10m.
+  \item Assume you have the small terrain formed of 3 triangles below, draw the isoline in this TIN for an elevation of \SI{10}{\m}.
   \\ \\
   \includegraphics[width=0.5\linewidth]{figs/threetr.pdf}
 \end{enumerate}
