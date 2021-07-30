@@ -69,7 +69,7 @@ Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
 The most common method is based on averaging the 4 pixels that are merged into one (as shown in \reffig{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
 
-\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
+\begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   \textbf{gdaladdo.} 
   For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
   For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
@@ -77,7 +77,7 @@ The most common method is based on averaging the 4 pixels that are merged into o
   The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
   The downsampling method can be chosen.
   % In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
-\end{kaobox}
+\end{kaobox-practice}
 
 % \begin{marginfigure}
 %   \centering
@@ -154,7 +154,7 @@ Methods to balance a $k$d-tree exists but are out of scope for this course.
 
 
 %%%
-\paragraph{Nearest neighbour query in kd-trees.}
+\paragraph{Nearest neighbour query in kd-trees.}%
 \label{sec:knn}
 
 The nearest neighbour query aims to find the point $c$ in a set $S$ that is the nearest (according to the Euclidean distance) to a query point $q$.
@@ -267,20 +267,20 @@ They also demonstrate that real-world point cloud datasets often have natural sp
 
 The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
 
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
   This video explains how the streaming concepts can be applied to constructing the Delaunay triangulation of massive datasets.
   You do \underline{not} need to read the full paper, which is \citet{Isenburg06}.
   \\ \\
   \url{https://youtu.be/DRCGTF2y_tM}
-\end{kaobox}
+\end{kaobox-toread}
 
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
   \fullcite{Isenburg06-1}
   \\ \\
   PDF: \url{http://dx.doi.org/10.1007/11863939_13}
   \\ \\
   The article summarises \citet{Isenburg06} (you do not need to read it), and shows how large rasters can be constructed with spatial interpolation.
-\end{kaobox}
+\end{kaobox-toread}
 
 
 %%%%%%%%%%%%%%%%%%%%

@@ -151,7 +151,7 @@ A quadratic polynomial could for instance be defined:
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial f}{\partial x} = d$ and $\frac{\partial f}{\partial y} = e$.
 
 
-\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
+\begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
   After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
@@ -161,7 +161,7 @@ and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$
   This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
 
   The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
-\end{kaobox}
+\end{kaobox-practice}
 
 %%%
 \subsection{Hillshading}%

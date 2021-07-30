@@ -104,14 +104,14 @@ In the case of a square grid with spacing \(d\), it is \(\frac{\sqrt{2}}{4}d\) f
 \end{marginfigure}
 
 
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
 \paragraph{Look at Figures~4--9 in the following paper.} These show the results of using a few flow direction computation methods in different terrains.
 Pay attention to how these differ from the theoretical values (if given), how some methods tend to create artefacts (\eg\ D8 in Figure~4), and how dispersion affects some others (\eg\ \citet{Quinn91} in Figure~7).
 \\
 \\
 \fullcite{Tarborton97}\\
 \textbf{PDF:} \url{https://doi.org/10.1029/96WR03137}
-\end{kaobox}
+\end{kaobox-toread}
 
 
 \section[Computing flow accumulation]{Computing the flow accumulation}%
@@ -146,7 +146,7 @@ The aim of the algorithms to fill in sinks is to increase the elevation of certa
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
 
 %%
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
 \textbf{Section~3 in the following paper.} It explains the priority-flood algorithm, which is an efficient method to fill in sinks.
 In short, it keeps a sorted list of DTM cells that are known to drain to the boundary (and possibly other cells that are known to drain), which is initialised with the cells on the boundary of the DTM (and possibly other cells)\@.
 Then, it iteratively: (i) removes the lowest cell from this list, (ii) increases the elevation of its neighbours that are not yet known to drain to the level of the cell, (iii) adds the neighbours that are not yet known to drain to the list.
@@ -154,7 +154,7 @@ Then, it iteratively: (i) removes the lowest cell from this list, (ii) increases
 \\
 \fullcite{Barnes14a}\\
 \textbf{PDF:} \url{https://doi.org/10.1016/j.cageo.2013.04.024}
-\end{kaobox}
+\end{kaobox-toread}
 
 \subsection{Least-cost (drainage) paths}
 
@@ -163,7 +163,7 @@ For this, the usual approach is to implement a variation of the \(A^{*}\) search
 \marginnote{least-cost paths (LCP)}\index{least-cost paths}\index{LCP}
 
 %%
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
 \textbf{Section~2.1 in the following paper.} It explains the LCP algorithm and how it is implemented in GRASS\@.
 In short, it keeps a sorted list of DTM cells that are known to drain to the boundary (and possibly other cells that are known to drain), which is initialised with the cells on the boundary of the DTM (and possibly other cells)\@.
 Then, it iteratively: (i) removes the lowest cell from this list, (ii) sets the drainage direction of its neighbours that are not yet known to drain towards itself, (iii) adds the neighbours that are not yet known to drain to the list.
@@ -172,7 +172,7 @@ Note the similarity with the algorithm in \citet{Barnes14a}.
 \\
 \fullcite{Metz11}\\
 \textbf{PDF:} \url{https://doi.org/10.5194/hess-15-667-2011}
-\end{kaobox}
+\end{kaobox-toread}
 
 
 \section[Flow direction in flats]{Assigning flow direction in flats}
@@ -185,14 +185,14 @@ Flats can sometimes occur naturally, but they are more often the result of preci
 It is thus often necessary to apply a method that assigns a flow direction to flats, either by: (i) modifying the DTM to eliminate them, and then assigning them a flow direction in the usual way, or (ii) assigning them a flow direction directly.
 
 %%
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
 \textbf{Section~2 in the following paper.} 
 It describes an algorithm to directly assign a flow direction to flats using a combination of: (i) a gradient away from higher terrain (\ie\ terrain goes down as we move away from higher terrain), and (ii) a gradient towards lower terrain (\ie\ terrain goes down as we move closer to lower terrain).
 \\
 \\
 \fullcite{Barnes14}\\
 \textbf{PDF:} \url{https://doi.org/10.1016/j.cageo.2013.01.009}
-\end{kaobox}
+\end{kaobox-toread}
 
 \section{Drainage networks and basins}
 
