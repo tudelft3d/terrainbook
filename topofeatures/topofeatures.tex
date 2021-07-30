@@ -273,8 +273,27 @@ The terms `roughness' and `ruggedness' are often used interchangeably and have s
 They both refer to how ``undulating'' or ``regular'' a (part of a) terrain is.
 A terrain with a high roughness will have small local deviations, while one with low roughness will be smoother.
 In other words, the normals of the surface of the terrain will deviate from each others greatly for a high roughness, and less for low roughness.
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/roughness}
+  \caption{The green profile of a terrain has a lower roughness than the orange one (normals locally deviate less).}%
+\label{fig:roughness}
+\end{marginfigure}
 
-For gridded terrains, the roughness is most often calculated.
+For gridded terrains, the roughness is most often calculated by simply looking at the differences in elevations for the cells inside a 3$\times$3 filter (or larger filter).
+The roughness value for one location can be one of these variations:
+\begin{itemize}
+  \item the standard deviation of the 9 values (or 25 if a 5$\times$5 filter is used) in the filter;
+  \item the largest difference in elevation between the value in the centre of the filter and one its neighbouring cell in the filter;
+  \item the difference between the elevation of the central pixel and the mean of its surrounding cells;
+\end{itemize}
+
+These methods are highly influenced by the scale, \ie\ the resolution of the grid and the size of the filter will yield potentially very different results.
+
+Notice also that since the differences in the elevations are used, a terrain that would be a constant slope would get get a roughness that is not zero (in comparison to a flat terrain that would have one of 0).
+A solution to this would be to fit a plane with least-square adjustment to all the points involved in a filter, and then compare the differences of the elevations to plane.
+
+
 
 %%%
 %
