@@ -269,9 +269,9 @@ It suffices to remove the Voronoi edges incident to cells having the same label,
 \subsection{Roughness \& ruggedness}%
 \index{roughness}\index{ruggedness}
 
-The terms `roughness' and `ruggedness' are often used interchangeably and have slightly different definitions.
-They both refer to how ``undulating'' or ``regular'' a (part of a) terrain is.
-A terrain with a high roughness will have small local deviations, while one with low roughness will be smoother.
+The terms `roughness' and `ruggedness' are often used interchangeably and have slightly different definitions depending on the software and/or the documentation.
+We can however claim that they both refer to how ``undulating'' or ``regular'' a (part of a) terrain is.
+A terrain with a high roughness will have small local deviations, while one with low roughness will be ``smoother''.
 In other words, the normals of the surface of the terrain will deviate from each others greatly for a high roughness, and less for low roughness.
 \begin{marginfigure}
   \centering
@@ -281,24 +281,30 @@ In other words, the normals of the surface of the terrain will deviate from each
 \end{marginfigure}
 
 For gridded terrains, the roughness is most often calculated by simply looking at the differences in elevations for the cells inside a 3$\times$3 filter (or larger filter).
-The roughness value for one location can be one of these variations:
+The roughness value for one location can be one of these variations (more exist):
 \begin{itemize}
   \item the standard deviation of the 9 values (or 25 if a 5$\times$5 filter is used) in the filter;
   \item the largest difference in elevation between the value in the centre of the filter and one its neighbouring cell in the filter;
   \item the difference between the elevation of the central pixel and the mean of its surrounding cells;
 \end{itemize}
 
-These methods are highly influenced by the scale, \ie\ the resolution of the grid and the size of the filter will yield potentially very different results.
+It should be observed that these methods are highly influenced by the scale, \ie\ the resolution of the grid and the size of the filter will yield potentially very different results.
 
-Notice also that since the differences in the elevations are used, a terrain that would be a constant slope would get get a roughness that is not zero (in comparison to a flat terrain that would have one of 0).
+Notice also that since the differences in the elevations are used, a terrain that would be a constant slope (\eg\ a talus) would get a roughness that is not zero (in comparison to a perfectly flat terrain).
 A solution to this would be to fit a plane with least-square adjustment to all the points involved in a filter, and then compare the differences of the elevations to plane.
+
+%
+
+For TINs, the same three variations above can be used for a single location ($x,y$), if for instance we pick the natural neighbours or if all the points within a certain distance threshold are used.
+However, as mentioned above, how to create a new field of roughness is not as trivial as for a grid.
+One could recreate a TIN with the values of the vertices having the roughness, or create a grid.
+
 
 
 
 %%%
 %
 \section{Topographic features}
-
 
 \begin{figure*}
   \centering
@@ -370,6 +376,26 @@ If they point is different directions, then $e$ is neither.
 %
 \section[Properties used in practice]{Properties and features used in practice}
 
+
+%%%
+\subsection{Slope}%
+
+The slope (gradient + aspect) are a cornerstone of runoff modelling (see Chapter~\ref{chap:runoff}), the prediction of the flow and accumulation of water on a terrain.
+The slope is used to calculate the flow direction at a given location, which is the direction with the steepest descent at that location.
+
+%
+
+The slope can also be used to predict the irradiation (from the sun) that a given location at a given day/time would receive.
+This is often the input of (local) meteorological models, can be used to optimise the location of solar panels, to predict land surface temperature, etc.
+
+
+%%%
+\subsection{Roughness}%
+
+
+
+
+
 %%%
 \subsection{Hillshading}%
 \index{hillshading}
@@ -421,6 +447,8 @@ The formula to calculate the hillshade for one cell in a gridded DTM is from \ci
 Some algorithms have been developed to identify the features forming a DTM: \citet{Kweon94} and \citet{Schneider05} can identify simple features in DEMs (if they are pre-processed into bilinear patches); and \citet{Magillo09} and \citet{Edelsbrunner01-1} describe algorithms to perform the same, but directly on TINs.
 
 The algorithm to extract profile and plan curvatures from a TIN is taken from \citet{vanKreveld97}.
+
+\citet{Bohner09} give several concrete examples of the use of terrain properties for climatology applications.
 
 % A DTM is formed by an aggregation of many features that are inter-related~\citep{Pfalz76,Kweon94,DoD99,Wood96}.
 
