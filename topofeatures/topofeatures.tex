@@ -15,8 +15,8 @@ Common examples of features are peaks, ridges, valleys, lakes, cliffs, etc., but
 Identifying the different features forming a terrain enhances our understanding of the raw dataset.
 To help us extract and identify features, some properties (or characteristics) need to be extracted from terrains.
 
-We describe in this chapter the main properties of terrains, explain how they can be extracted, and how they are used in practice.
-% TODO: we then describe the features?
+We describe in this chapter the main properties of terrains, explain how they can be extracted, and how they are used in practice (for specific use-cases in different fields, and to identify features).
+
 
 
 %%%
@@ -46,7 +46,7 @@ The extraction of these properties is more common with grids, and in most cases 
 A filter is conceptually the same as a focal operation in map algebra (in GIS), as as a convolutional filter in computer vision.
 Observe that in Figure~\ref{fig:filter} a 3$\times$3 window is shown, but a 5$\times$5%
 % \marginnote{5$\times$5 filters can be used}
-or larger window could also be used; the size to use dependson the scale at which one wants to extract a property.
+or larger window could also be used; the size to use depends on the scale at which one wants to extract a property.
 The main advantage of grids is that the value of a property can be easily calculated and the output is a new grid having the same resolution and orientation, but the values are the property (\eg\ the gradient at this location) instead of the elevation.
 
 %%%
@@ -195,7 +195,7 @@ and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
-  After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specificially the Horn's method is used~\citep{Horn81}.
+  After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specifically the Horn's method is used~\citep{Horn81}.
   This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
 
   If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
@@ -273,6 +273,7 @@ The terms `roughness' and `ruggedness' are often used interchangeably and have s
 We can however claim that they both refer to how ``undulating'' or ``regular'' a (part of a) terrain is.
 A terrain with a high roughness will have small local deviations, while one with low roughness will be ``smoother''.
 In other words, the normals of the surface of the terrain will deviate from each others greatly for a high roughness, and less for low roughness.
+Another way to measure roughness, is to think of it as the ratio between the surface area and its projection into a plane. 
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/roughness}
@@ -369,9 +370,6 @@ If they point is different directions, then $e$ is neither.
 
 
 
-
-
-
 %%%
 %
 \section[Properties used in practice]{Properties and features used in practice}
@@ -386,14 +384,27 @@ The slope is used to calculate the flow direction at a given location, which is 
 %
 
 The slope can also be used to predict the irradiation (from the sun) that a given location at a given day/time would receive.
-This is often the input of (local) meteorological models, can be used to optimise the location of solar panels, to predict land surface temperature, etc.
+This is often the input of (local) meteorological models, can be used to optimise the location of solar panels, to predict land surface temperature, 
+
+
+%%%
+\subsection{Curvature}%
+
+While curvature is used implicitly to calculate the flow direction in runoff modelling, there are use-cases where the value is useful.
+One of them is for the predicting of where snow covering will be.
+% TODO: maybe a bit more about snow covering?
+
+The values of the curvature can help a practitioners understand and characterise the drainage basins, once extracted from a terrain (see Section~\ref{sec:drainage_basins}).
+
+% TODO: complete this section a bit? still a bit rough
 
 
 %%%
 \subsection{Roughness}%
 
+The roughness can be used directly as a predictor for the habitats of different species.
 
-
+The variations in roughness in a terrain can be used to delineate the terrain into geomorphological and geological areas.
 
 
 %%%
@@ -448,7 +459,7 @@ Some algorithms have been developed to identify the features forming a DTM: \cit
 
 The algorithm to extract profile and plan curvatures from a TIN is taken from \citet{vanKreveld97}.
 
-\citet{Bohner09} give several concrete examples of the use of terrain properties for climatology applications.
+\citet{Bohner09} give several concrete examples of the use of terrain properties for climatology applications, and provide details about one method to identify snow covering.
 
 % A DTM is formed by an aggregation of many features that are inter-related~\citep{Pfalz76,Kweon94,DoD99,Wood96}.
 
