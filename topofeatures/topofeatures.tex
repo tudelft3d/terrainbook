@@ -412,14 +412,22 @@ The variations in roughness in a terrain can be used to delineate the terrain in
 \index{hillshading}
 
 Hillshading is a technique used to help visualise the relief of a gridded terrain (see Figure~\ref{fig:hillshade} for an example).
-\begin{marginfigure}
+\begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/hillshade}
-  \caption{\textbf{Top}: a DTM visualised with height as a shade of blue. \textbf{Bottom}: when hillshading is applied.}%
+  \caption{\textbf{Left}: a DTM visualised with height as a shade of blue. \textbf{Right}: when hillshading is applied.}%
 \label{fig:hillshade}
-\end{marginfigure}
+\end{figure*}
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position (usually North-West).
+
+\begin{kaobox-practice}[frametitle=\faCog\ Why does the sunlight come from the North-West?]
+  The source of the light for hillshading is usually set at the North-West, but in reality the sun is \emph{never} located there (in the northern hemisphere).
+  Why is this a common practice then?
+  The main reason is because the human brain usually assume that the light comes from above when looking at picture
+  This is because when interpreting shadows the human brain tends to assume light comes from above.
+  This \faExternalLink\href{https://ramblemaps.com/why-does-sunlight-come-from-north}{website} gives a clear example where a valley is interpreted as a ridge by many if the sun is coming from the South.
+\end{kaobox-practice}
 
 While it would be possible to use advanced computer graphics methods (see \refchap{chap:visibility}) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
 
