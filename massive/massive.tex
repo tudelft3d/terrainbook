@@ -49,8 +49,8 @@ This chapter discusses one method to visualise massive raster terrains, one to i
 \section{Raster pyramids}%
 \index{raster pyramid}
 
-Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large grids.
-They are also used for images (and called `tiled pyramidal images' or `overview images') and many software support them since they optimise visualisation and thus the speed of a software dealing with large images.
+Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large raster terrains.
+They are also used for standard images in photography and many software support them since they optimise visualisation and thus the speed of a software dealing with large images (they are called ``tiled pyramidal images'' or ``overview images'').
 
 As shown in \reffig{fig:pyramids}, 
 \begin{figure}
@@ -69,36 +69,42 @@ As shown in \reffig{fig:pyramids},
 \caption{\textbf{(a)} The pyramid for a given raster file. \textbf{(b)} One $4\times4$ raster downsampled twice with average-method.}%
 \labfig{fig:pyramids}
 \end{figure}
-a pyramid means creating recursively copies at lower-resolutions of an original raster (having $x$ columns and $y$ rows), the first copy having a size ($\frac{x}{2}$, $\frac{y}{2}$), the second ($\frac{x}{4}$, $\frac{y}{4}$), and so on (the number of images is arbitrary and defined by the user).
+a pyramid means creating recursively copies at lower-resolutions of an original raster.
+Usually we downsample the resolution by a factor 2,% 
+\index{downsampling}\marginnote{downsampling}
+\ie\ if we have $x$ columns and $y$ rows the first copy will have a size ($\frac{x}{2}$, $\frac{y}{2}$), the second ($\frac{x}{4}$, $\frac{y}{4}$), and so on (the number of images is arbitrary and defined by the user).
 Notice that the extra storage will be maximum $\frac{1}{3}$ of the original raster: the first pyramid is $\frac{1}{4}$, the second $\frac{1}{16}$, the third $\frac{1}{64}$, etc.
 
-Each lower-resolution copy of the raster is obtained with \emph{downsampling}.%
-\index{downsampling}\marginnote{downsampling}
-The most common method is based on averaging the 4 pixels that are merged into one (as shown in \reffig{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
+%
+
+For downsampling, the most common method is based on averaging the 4 pixel values that are merged into one (as shown in \reffig{fig:pyramids}b), but other interpolation methods are possible, \eg\ nearest neighbour as seen in \refchap{chap:interpol}.
+
+%
+
+The downsamples grids are used to speed up visualisation (when a user zooms out on a lower-resolution grid is displayed) but the same principle could be applied to for processing (\eg\ the line-of-sight between 2 points in Chapter~\ref{chap:visibility} could be sped up by using this principle).
 
 
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
-  \textbf{gdaladdo.} 
-  For certain formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
-  For other formats in GIS, \eg\ the ASCII format `.asc', the pyramids are stored in an auxiliary file with the extension `.ovr', which is actually in TIFF format.
+  For certain GIS formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
 
-  The GDAL utility \texttt{gdaladdo} (\url{https://www.gdal.org/gdaladdo.html}) allows us to create automatically the pyramids for a few formats.
-  The downsampling method can be chosen.
-  % In QGIS, one can call \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
+  For other formats, if the GDAL library is used (the \emph{de facto} open-source library for GIS images and grids), the pyramids can be stored in an auxiliary file with the extension \texttt{.ovr}, which is actually a TIFF format.
+
+  The GDAL utility \href{https://www.gdal.org/gdaladdo.html}{gdaladdo \faExternalLink} can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
+  In QGIS, one can use \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
 \end{kaobox-practice}
 
-% \begin{marginfigure}
-%   \centering
-%   \includegraphics[width=\linewidth]{figs/qgis}
-%   \caption{QGIS has the option to create the pyramids automatically.}%
-% \labfig{fig:qgis}
-% \end{marginfigure}
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/qgis}
+  \caption{QGIS has the option to create the pyramids automatically.}%
+\labfig{fig:qgis}%
+\end{figure}
 
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section[3D kd-tree]{Indexing points in 3D space with the kd-tree}%
+\section[kd-tree]{Indexing points in 3D space with the kd-tree}%
 \label{sec:kdtree}\index{kd-tree}
 
 A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
