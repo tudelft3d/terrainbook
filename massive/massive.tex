@@ -117,18 +117,22 @@ As shown in \reffig{fig:kdtree},
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/kdtree}
-  \caption{Example of $k$d-tree in 3D, with the dimensions used at each level.}%
+  \caption{Example of $k$d-tree in 3D, with the dimension used at each level.}%
 \labfig{fig:kdtree}
 \end{marginfigure} 
-a $k$d-tree is a binary tree (thus each node has a maximum of 2 children, if any), and the main idea is that each level of the tree compares against one specific dimension.
+a $k$d-tree is a binary tree%
+\index{binary tree}\marginnote{binary tree}
+(thus each node has a maximum of 2 children, if any), and the main idea is that each level of the tree compares against one specific dimension.
 We `cycle through' the dimensions as we walk down the levels of the tree.
 
 %
 
-Let $S$ be a set of points in $\mathbb{R}^k$, and let $\kappa$ be the $k$d-tree of dimension $k$ of $S$.
-Each point $p_i$ in $S$ is a node of $\kappa$.
-A node implies a hyperplane that divides the space into 2 halfspaces according to one dimension; the hyperplane is perpendicular to the dimension of the node (which is linked to the level in the tree).
-Points with a lower coordinate value than the node along that dimension (corresponding to `left' or `under' the hyperplane) are put into the left subtree of the node, and the other ones into the right subtree.
+Let $S$ be a set of points in $\mathbb{R}^k$, and let $\Gamma$ be the $k$d-tree of dimension $k$ of $S$.
+Each point $p_i$ in $S$ is a node of $\Gamma$.
+A node implies a hyperplane% 
+\index{hyperplane}\marginnote{hyperplane}
+that divides the space into 2 halfspaces according to one dimension; the hyperplane is perpendicular to the dimension of the node (which is linked to the level in the tree).
+Points with a lower coordinate value than the node along that dimension (corresponding to `left', in 2D, or `under' the hyperplane) are put into the left subtree of the node, and the other ones into the right subtree.
 
 Consider the $k$d-tree in 2D in \reffig{fig:kdtree2}.
 \begin{figure}[tbp]
@@ -137,18 +141,18 @@ Consider the $k$d-tree in 2D in \reffig{fig:kdtree2}.
   \caption{Example of $k$d-tree for 8 points in the $\mathbb{R}^2$.}%
 \labfig{fig:kdtree2}
 \end{figure}
-The first dimension splits the data into 2 halfplanes along the line $x=5$, then each of these halfplanes is independently split according to the $y$ dimension (with the lines $y=7$ and $y=5$), then the 4 regions are split according to the $x$ dimension, and so on recursively.
+The first dimension splits the data into 2 halfplanes along the line $x=5$, then each of these halfplanes is independently split according to the $y$ dimension (with the lines $y=7$ and $y=5$), then the 4 regions are split according to the $x$ dimension, and so on recursively until all the points in $S$ are inserted in $\Gamma$.
 
 %%%
 \paragraph{Construction of a kd-tree.}
 In theory, any point could be used to divide the space according to each dimension, and that would yield a valid $k$d-tree.
 However, selecting the \emph{median} point creates a \emph{balanced} binary tree,%
-\marginnote{binary tree} 
+\marginnote{selecting the median creates a balanced tree} 
 which is desirable because it will improve searching and visiting the tree (see below).
 The tree in \reffig{fig:kdtree2} is balanced, but if for instance ($1,3$) had been selected as the root, then there would be no children on the left, and all of them would be on the right.
 
 The median point is the one whose value for the splitting dimension is the median of all the points involved in the operation.
-This implies that to construct the $k$d-tree of a set $S$ of $n$ points, as a first step $n$ values need to be sorted, which is a rather slow operation.
+This implies that to construct the $k$d-tree of a set $S$ of $n$ points, as a first step $n$ values need to be sorted, which is a rather slow operation ($\mathcal{O}(n \log n)$).
 In practice, most software libraries will not sort $n$ values, but rather sample randomly a subset of them (say 1\%), and then use the median of this subset as the splitting node in the graph.
 While this does not guarantee a balanced tree, in practice the tree should be close to balanced.
 
@@ -164,23 +168,26 @@ Each insertion is simple: traverse the tree starting from the root, go left or r
 illustrates this for one point.
 
 Observe that this insertion renders the tree unbalanced.
-Methods to balance a $k$d-tree exists but are out of scope for this course.
+Methods to balance a $k$d-tree exists but are out of scope for this book.
 
 
 %%%
 \paragraph{Nearest neighbour query in kd-trees.}%
 \label{sec:knn}
 
-The nearest neighbour query aims to find the point $c$ in a set $S$ that is the nearest (according to the Euclidean distance) to a query point $q$.
-It can be performed brute-force (comparing distance to all points in $S$), but this is slow.
-An alternative is to construct the Voronoi diagram (actually the Delaunay triangulation), and navigate in the cells; this works but is in practice not as efficient as using a $k$d-tree.
+The nearest neighbour query%
+\index{nearest neighbour query}\marginnote{nearest neighbour query}
+aims to find the point $c$ in a set $S$ that is the nearest (according to the Euclidean distance) to a query point $q$.
+It can be performed brute-force (computing all the distances to all the points in $S$ and choosing the shortest), but this is very slow in practice.
+An alternative is to construct the Voronoi diagram (or the Delaunay triangulation), and navigate in the cells or in the triangles with the method from Section~\ref{sec:dtwalk}.
+While this works, in practice it is not as efficient as using a $k$d-tree.
 
 % We discuss here what a $k$d-tree, how to construct one, and how it can be used to efficiently find the nearest neighbour(s) of a query point $q$.
 
 %
 
-First observe that the obvious method to find the cell in the $k$d-tree containing $q$ does not work because $q$ can be far away in the tree.
-\reffig{fig:kdtree_nn}a illustrates this: $c$ is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
+First observe that the obvious method to find the cell in the $k$d-tree containing $q$---follow the insertion steps as described above and look for the parents---does not work because $q$ can be far away in the tree.
+\reffig{fig:kdtree_nn}a illustrates this: $c$ (the nearest neighbour to $q$) is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
 \begin{figure*}
   \centering
   \begin{subfigure}[b]{0.6\linewidth}
@@ -203,7 +210,7 @@ First observe that the obvious method to find the cell in the $k$d-tree containi
     \includegraphics[page=5,width=\textwidth]{figs/kdtree_nn.pdf}
     \caption{}
   \end{subfigure}
-\caption{Several states for the nearest neighbour query based on a $k$d-tree.}%
+\caption{Several states for the nearest neighbour query based on a $k$d-tree, $q=(4.5, 4.0)$ is the query point and $c=(6,4)$ is the nearest point.}%
 \labfig{fig:kdtree_nn}
 \end{figure*}
 
@@ -212,6 +219,7 @@ First observe that the obvious method to find the cell in the $k$d-tree containi
 
 The idea of the algorithm we are presenting here is to traverse the whole tree (in depth-first order), but use the properties of the tree to quickly eliminate large portions of the tree.
 The eliminated subtrees are based on their bounding boxes.
+\marginnote{subtrees are eliminated based on their bounding boxes}
 As we traverse the tree, we must keep track of the closest point $c_{temp}$ so far visited.
 
 % and the observation that they cannot contain any point closer
@@ -239,7 +247,7 @@ At the end, $c$ is ($6,4$).
 
 
 \paragraph{Time complexity.}
-To insert a new point, and to search for a nearest neighbour, the time complexity on average is $\mathcal{O}(\log n)$.
+To insert a new point, and to search for a nearest neighbour, the time complexity on average is $\mathcal{O}(\log n)$; this is assuming the tree is balanced, if not it could be $\mathcal{O}(n)$ in the worst-case.
 The tree stores one node per point, thus the space complexity is $\mathcal{O}(n)$.
 
 \paragraph{$m$-closest neighbours.}
@@ -247,8 +255,12 @@ The tree stores one node per point, thus the space complexity is $\mathcal{O}(n)
 The algorithm can be extended in several ways by simple modifications. 
 It can provide the $m$ nearest neighbours to a point by maintaining $m$ current closest points instead of just one. 
 A branch is only eliminated when $m$ points have been found and the branch cannot have points closer than any of the $m$ current bests. 
+This can help improve significantly the running time of several operations described in this book: IDW with a fixed number of neighbours (Section~\ref{sec:wam_interpol}), extracting shapes from point clouds (Section~\ref{sec:shape-detection}), calculating the spatial extent (Chapter~\ref{chap:spatialextent}), are only but a few examples.
 
-
+% \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
+% python the easiest is ckdtree from scipy
+% astest I know is this: https://github.com/storpipfugl/pykdtree
+% \end{kaobox-practice}
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -303,7 +315,7 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
 
 The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (\url{https://en.wikipedia.org/wiki/K-d_tree}) and the lecture notes entitled ``kd-Trees---CMSC 420'' from Carl Kingsford (available at \url{https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf}).
 
-\citet{Vitter01} provides an overview of external algorithms..
+\citet{Vitter01} provides an overview of external algorithms.
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -311,8 +323,8 @@ The description of the $k$d-tree and the nearest neighbour query is adapted from
 \section{Exercises}
 
 \begin{enumerate}
-  \item \citet{Isenburg06-1} argues that real-world point cloud datasets often have natural spatial coherence. Explain why that is for lidar datasets.
-  \item Given a simple point cloud stored in a CSV file (one $x,y,z$ per line), how many passes over the file does the triangulator of \citet{Isenburg06-1} make? What does each do?
+  \item The tree in \reffig{fig:kdtree2} is balanced, but if ($1,3$) had been selected as the root, how would the tree look like?
+  \item \citet{Isenburg06-1} argues that real-world point cloud datasets often have natural spatial coherence. Explain why that is the case for lidar datasets.
   \item How to construct a $k$d-tree that is as balanced as possible?
   \item ``The ideas behind streaming are very useful for certain \emph{local} problems, but unfortunately they cannot be used directly for \emph{global} problems such as visibility or flow modelling''. Explain why that is with a concrete example.
 \end{enumerate}
