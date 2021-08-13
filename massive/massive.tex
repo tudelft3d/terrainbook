@@ -6,39 +6,47 @@
 \setchapterpreamble[u]{\margintoc}
 % \setchapterpreamble[u]{\marginnote{\faYoutube\ https://3d.bk.tudelft.nl}}
 
-\chapter{Handling massive terrains}
+\chapter{Handling and processing massive terrains}%
 \label{chap:massive}
 
 
 \graphicspath{{massive/}}
 
 
-In this chapter we discuss three methods to deal with massive terrains (or input datasets).
+In this chapter we discuss three methods to handle and/or process {\LARGE massive} terrains and point cloud datasets.
 
 %
 
-``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 10 years ago a point cloud dataset containing 5 million points was considered massive, while in 2018 it is not.
-There are some massive datasets even in small areas, \eg\ a Lidar one of Dublin\sidenote{\url{https://bit.ly/32GXiFq}}, containing around 1.4 billion points with a density of 300pts/m$^2$, which was collected with airborne laser scanners.
-The lidar dataset of the Netherlands, AHN\sidenote{\emph{Actueel Hoogtebestand Nederland} (in Dutch): \url{http://www.ahn.nl}}, has about 10pts/m$^2$ covering the whole country, thus comprising more than 700 billion points which can be freely downloaded.
-% TODO : other massive dataset examples? SRTM? Rotterdam?
+``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 15 years ago a point cloud dataset containing 5 million elevation points was considered massive, but in 2021 it is considered a small one.%
+\index{massive datasets}
+Examples of massive datasets: 
+\begin{enumerate}
+  \item the point cloud dataset of a \SI{1.5}{km^2} of Dublin\sidenote{\url{https://bit.ly/32GXiFq}} contains around 1.4 billion points (density of \SI{300}{pts/m^2}), which was collected with airborne laser scanners; 
+  \item the lidar dataset of the whole of the Netherlands (called AHN\sidenote{\emph{Actueel Hoogtebestand Nederland} (in Dutch): \url{http://www.ahn.nl}}) has about \SI{10}{pts/m^2} and its latest version (AHN3) has more than 700 billion points (AHN4 will contain even more points);
+  \item more % TODO : other massive dataset examples? SRTM? Rotterdam? space lidar?
+\end{enumerate}
 
 %
 
-For the purpose of this course, we define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 16GB\@.
-This definition makes practical sense because working with data outside of the main memory of a computer is substantially slower (about 2 orders of magnitude for solid state drives and 5 for hard drives), causing many standard data processing algorithms to become impractical with massive datasets.
-Keep in mind that not only the ($xyz$) coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones).
+We define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is these days usually around 16GB\@.
+This definition makes practical sense because working with data outside of the main memory of a computer is substantially slower (about 2 orders of magnitude for solid state drives and 5 for spinning hard drives), causing many standard data processing algorithms to become impractical with massive datasets.
+Keep in mind that not only the $xyz$ coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones).
 Also, in the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
 
 %
 
-What is ironic is that while datasets like AHN3 are being collected in several countries, in practice they are seldom used since the tools that practitioners have, and are used to, usually cannot handle such massive datasets. 
-Indeed, the traditional GISs and terrain modelling tools are limited by the main memory of computers: if a dataset is bigger then operations will be very slow, and will most likely not finish.
+What is ironic is that while datasets like those above are being collected in several countries, in practice they are seldom used since the tools that practitioners have, and are used to, usually cannot handle such massive datasets. 
+Indeed, the traditional GISs and terrain modelling tools are limited by the main memory of computers: if a dataset is bigger then operations will be very slow, and will most likely not finish (and thus crash).
+
+%
+
+This chapter discusses one method to visualise massive raster terrains, one to index point clouds (for fast retrieval of neighbours, useful for several processing of points), and one to construct massive Delaunay triangulations (and potentially process them).
 
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Raster Pyramids}%
+\section{Raster pyramids}%
 \index{raster pyramid}
 
 Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large grids.
@@ -64,7 +72,7 @@ As shown in \reffig{fig:pyramids},
 a pyramid means creating recursively copies at lower-resolutions of an original raster (having $x$ columns and $y$ rows), the first copy having a size ($\frac{x}{2}$, $\frac{y}{2}$), the second ($\frac{x}{4}$, $\frac{y}{4}$), and so on (the number of images is arbitrary and defined by the user).
 Notice that the extra storage will be maximum $\frac{1}{3}$ of the original raster: the first pyramid is $\frac{1}{4}$, the second $\frac{1}{16}$, the third $\frac{1}{64}$, etc.
 
-Each lower-resolution copy of the raster is obtained with \emph{downsampling}.
+Each lower-resolution copy of the raster is obtained with \emph{downsampling}.%
 \index{downsampling}\marginnote{downsampling}
 The most common method is based on averaging the 4 pixels that are merged into one (as shown in \reffig{fig:pyramids}b), but other methods are possible such as nearest neighbour (interpolation method as seen in \refchap{chap:interpol}).
 
