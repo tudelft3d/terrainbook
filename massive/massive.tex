@@ -303,7 +303,16 @@ The issue that we are facing is that a triangle is respecting the Delaunay crite
 Streaming would mean here: can we assess that a given triangle is Delaunay without having to read/download the whole file?
 
 \begin{kaobox-practice}[frametitle=\faCog\ Streaming is realised with Unix pipes]
-  The key to implementing streaming of geometries is to use Unix pipes (also called pipelines).
+  The key to implementing streaming of geometries is to use Unix pipes (also called \emph{pipelines}).
+
+  Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow to chain several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the \emph{stream}). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
+
+  In Unix, the pipe operator is the vertical line ``\texttt{|}'', and several commands can be chained with it: ``\texttt{cmd1 | cmd2 | cmd3}''. A simple example would be ``\texttt{ls -l | grep json | wc -l}'' which would:
+  \begin{enumerate}
+    \item list all the files in the current directory (one file name per line); 
+    \item send this to the operator \emph{grep} which would discard all lines not having the keyworld `json'; 
+    \item send this to the operator \texttt{wc -l} which counts the number of line.
+   \end{enumerate} 
 \end{kaobox-practice}
 
 
@@ -328,15 +337,16 @@ This is performed with the finalisation tags and the following observation: if a
 
 
 %%%
-which mixes ideas from external memory algorithms with different ways to keep the memory footprint very low. 
-The basic idea of this paradigm is that of a \emph{streaming mesh}: a format for representing triangulations (or meshes) as a set of interleaved vertices, triangles and \emph{vertex finalization tags} that indicate when a vertex will not be used anymore.
-Standard mesh formats do not use finalization and can therefore suffer if the mesh is larger than memory.
-These tags allows us to keep in memory only a small part of a large dataset.
+
 
 A streaming mesh basically documents the \emph{spatial coherence}%
 \index{spatial coherence}\marginnote{spatial coherence} 
 of a dataset, which \citet{Isenburg06} defines as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
 They also demonstrate that real-world point cloud datasets often have natural spatial coherence and they exploit this coherence to compute Delaunay triangulations of massive datasets (instead of reordering the points, which is expensive); this coherence is expected since LiDAR samples are often stored in the order they were collected.
+
+Standard mesh formats do not use finalization and can therefore suffer if the mesh is larger than memory.
+These tags allows us to keep in memory only a small part of a large dataset.
+
 
 The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
 
