@@ -107,20 +107,20 @@ The downsamples grids are used to speed up visualisation (when a user zooms out 
 \section[kd-tree]{Indexing points in 3D space with the kd-tree}%
 \label{sec:kdtree}\index{kd-tree}
 
-A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
-In the context of terrains, $k$ is in most cases either 2 or 3.
-Notice that in practice we would never say a ``2d-tree'' or a ``3d-tree'': we call them ``$k$d-tree of dimension 2 (or 3)''.
-
-%
-
-As shown in \reffig{fig:kdtree},
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/kdtree}
   \caption{Example of $k$d-tree in 3D, with the dimension used at each level.}%
 \labfig{fig:kdtree}
 \end{marginfigure} 
-a $k$d-tree is a binary tree%
+
+A $k$-dimensional tree, $k$d-tree in short, is a data structure to organise points in a $k$-dimensional space; it also partitions the space into regions.
+In the context of terrains, $k$ is in most cases either 2 or 3.
+Notice that in practice we would never say a ``2d-tree'' or a ``3d-tree'': we call them ``$k$d-tree of dimension 2 (or 3)''.
+
+%
+
+As shown in \reffig{fig:kdtree}, a $k$d-tree is a binary tree%
 \index{binary tree}\marginnote{binary tree}
 (thus each node has a maximum of 2 children, if any), and the main idea is that each level of the tree compares against one specific dimension.
 We `cycle through' the dimensions as we walk down the levels of the tree.
@@ -267,20 +267,51 @@ This can help improve significantly the running time of several operations descr
 \section[Streaming paradigm]{Streaming paradigm to construct massive TINs and grids from point clouds}%
 \label{sec:streaming}
 
-The incremental construction algorithm for the Delaunay triangulation, presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
+The incremental construction algorithm for the Delaunay triangulation (DT), presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
 Or if it works, it will be very slow.
+The reason for this is that the data structure for the DT (to store the points coordinates, and also the data structure for the triangles and their topological relationships) will be partly in the main memory (say 16GB of RAM) and the rest will be on the harddrive, and a part of the data structure is necessary \emph{swapping}% 
+\marginnote{swapping and trashing}
+between the memory and the disk will be performed, and it is possible that if a lot (too many operations) of swapping are performed the process stops (called \emph{trashing}).
 
 %
 
-To deal with massive datasets, one can also design external memory algorithms.
-These basically use disks to store temporarily files that do not fit in memory, and instead of using the mechanism of the operating system, they design explicit rules for the swapping of data between the disk and the memory. 
+One solution to this problem, is to design external memory algorithms.%
+\index{external memory algorithms}\marginnote{external memory algorithms}
+These basically do not rely on the operating system to decide which parts of the data structure are stored on the disk, but improve the process by explicitly storing temporarily files and having explicit rules for the swapping of data between the disk and the memory. 
 % \citet{Agarwal05} construct massive TINs this way, and \citet{Arge06} and \citet{Agarwal08} have implemented spatial analysis functions on TINs based on that paradigm.
-The main drawbacks of this approach are that the design of such algorithms is rather complex, and that for different problems different solutions have to be designed.
+The main drawbacks of this approach are that the design of such algorithms is rather complex, that for different problems different solutions have to be designed, and that for problems like the DT construction a lot of large temporary files need to be created.
 
 %
 
-An alternative approach to dealing with massive datasets is \emph{spatial streaming},%
-\index{spatial streaming}\marginnote{spatial streaming} 
+We present in this section an alternative approach to dealing with massive datasets: \emph{streaming}.%
+\index{streaming data}\marginnote{streaming data} 
+The streaming paradigm means here that large files can be process without them to be fully loaded in memory (or that the algorithm has a global access to the said file).
+One concrete example is YouTube: to watch a given video one does not need to first download the whole file, they can simply start watching the video as soon as the first KB are downloaded.
+The content of the video is downloaded as one watches the video, and if the user fast-forward to for instance 5:32s then only the KB of content from where the cursor is need to be downloaded.
+At no moment is the full video downloaded to the user's device.
+
+%
+
+This idea can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
+Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calcute the slope of at one location in a point cloud we would need to retrieve all the neighbours and we saw above that this can be done with a kd-tree.
+The question is: is it possible to do this without reading the whole file and only process one part of it?
+
+%
+
+We focus in the following on the creation of a DT\@.
+The issue that we are facing is that a triangle is respecting the Delaunay criterion if its circumcircle is empty of any point, therefore while constructing the DT we need to test all the other points in the dataset to ensure that a given triangle is Delaunay (or not).
+
+\begin{kaobox-practice}[frametitle=\faCog\ Streaming is realised with Unix pipes]
+  The key to implementing streaming of geometries is to use Unix pipes (also called pipelines).
+\end{kaobox-practice}
+
+\paragraph{Finaliser.}
+The key idea is to \emph{preprocess} a set $S$ of points and insert \emph{finalisation tags} informing that certain points/areas will not be needed again.
+For the DT construction, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following process that a certain cell of the quadtree is empty, that all the points have been processed.
+
+
+
+%%%
 which mixes ideas from external memory algorithms with different ways to keep the memory footprint very low. 
 The basic idea of this paradigm is that of a \emph{streaming mesh}: a format for representing triangulations (or meshes) as a set of interleaved vertices, triangles and \emph{vertex finalization tags} that indicate when a vertex will not be used anymore.
 Standard mesh formats do not use finalization and can therefore suffer if the mesh is larger than memory.
@@ -308,6 +339,8 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
   The article summarises \citet{Isenburg06} (you do not need to read it), and shows how large rasters can be constructed with spatial interpolation.
 \end{kaobox-toread}
 
+
+% Notice that the pipeline shown in Figure 6 will work only if the input dataset has enough spatial coherence. Isenburg and Lindstrom (2005) define the maximum number of non-finalized points at any time as the width of a stream, the smaller it is the better the spatial coherence is (the smaller the memory footprint of the application is too); I report in the next section on the width of the datasets used for experiments.
 
 %%%%%%%%%%%%%%%%%%%%
 %
