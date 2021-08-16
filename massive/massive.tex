@@ -300,14 +300,30 @@ The question is: is it possible to do this without reading the whole file and on
 
 We focus in the following on the creation of a DT\@.
 The issue that we are facing is that a triangle is respecting the Delaunay criterion if its circumcircle is empty of any point, therefore while constructing the DT we need to test all the other points in the dataset to ensure that a given triangle is Delaunay (or not).
+Streaming would mean here: can we assess that a given triangle is Delaunay without having to read/download the whole file?
 
 \begin{kaobox-practice}[frametitle=\faCog\ Streaming is realised with Unix pipes]
   The key to implementing streaming of geometries is to use Unix pipes (also called pipelines).
 \end{kaobox-practice}
 
-\paragraph{Finaliser.}
+
+%%%
+\paragraph{Finaliser: adding finalisation tags.}
 The key idea is to \emph{preprocess} a set $S$ of points and insert \emph{finalisation tags} informing that certain points/areas will not be needed again.
-For the DT construction, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following process that a certain cell of the quadtree is empty, that all the points have been processed.
+For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following processes that a certain cell of the quadtree is empty, that all the points have been processed.
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/finaliser}
+  \caption{Left: 9 points and the related streams (just a list of the points with coordinates). Right: if a quadtree of depth 1 (in orange) is used (with 4 cells), then the stream would be augmented with finalisation tags.}%
+\label{fig:finaliser}
+\end{figure}
+
+
+%%%
+\paragraph{Triangulator.}
+The input of the triangulator is the output of the finaliser: a set of points with finalisation tags.
+The triangulator will triangulate the points as described in Section~\ref{sec:dtconstruction}, but will attempt to remove memory the triangles that are \emph{final}, those that we are sure will never be modified (since it it guaranteed that no new points will fall inside their circumcircle).
+This is performed with the finalisation tags and the following observation: if a quadtree cell is finalised (all the points in the streams inside that cell have been read) then if the circumcircle of a triangle inside it does not encroach on the other quadtree cells it is final, and can therefore be removed from memory and written to disk (or sent to another process that will read the stream of points and triangles coming out of the triangulation).
 
 
 
