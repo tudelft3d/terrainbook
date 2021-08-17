@@ -366,8 +366,29 @@ The constuction of a DT with the streaming paradigm will only work (in the sense
 \index{spatial coherence}\marginnote{spatial coherence} 
 of the input dataset is high.
 It is defined by \sidecitet{Isenburg06} as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
-They also demonstrate that real-world point cloud datasets often have natural spatial coherence because the points are usually stored in the order they were collected.
+They demonstrate that real-world point cloud datasets often have natural spatial coherence because the points are usually stored in the order they were collected.
 If we shuffled randomly the points in an input file, then the spatial coherence would be very low and the finalisation tags in the stream coming out of the finaliser would be located at the end (and now distributed in the stream).
+
+Figure~\ref{fig:spatial_coherence}
+\begin{figure*}
+  \centering
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/37EN1_double}
+    \caption{}
+  \end{subfigure}%
+  \qquad
+  \begin{subfigure}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/07BZ2-double}
+    \caption{}
+  \end{subfigure}
+\caption{Spatial coherence of 2 AHN3 tiles. The inner cell colour indicates the position in the stream of first point in that cell, and the outer cell colour indicates the position in the stream of the last point in that cell.}%
+\label{fig:spatial_coherence}
+\end{figure*}
+illustrates the spatial coherence for 2 tiles of the AHN3 dataset\marginnote{\url{https://www.ahn.nl/}} in the Netherlands.
+Notice that the cells are generally of the same colour, which means that the spatial coherence is relatively high.
+The two datasets are different patterns probably because they were compiled by different companies, who used different equipment and processing software to generate the datasets.
 
 
 % TODO: streaming useful for other ops?
