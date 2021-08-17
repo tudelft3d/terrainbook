@@ -320,7 +320,7 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
 \end{floatbox}
 
 %%%
-\paragraph{Overview of streaming DT construction.}
+\subsection{Overview of streaming DT construction}
 Figure~\ref{fig:streamingdt} shows the overview of the processes involved for the construction of a DT with the streaming paradigm.
 \begin{figure}
   \centering
@@ -328,11 +328,13 @@ Figure~\ref{fig:streamingdt} shows the overview of the processes involved for th
   \caption{.}%
 \label{fig:streamingdt}
 \end{figure}
+Think of the stream as a 1D list of objects (points, triangles, tags, etc.) and the aim is to be able to perform an operation without having in memory the whole stream.
+
 
 %%%
-\paragraph{Finaliser: adding finalisation tags.}
+\subsection{Finaliser: adding finalisation tags}
 The key idea is to \emph{preprocess} a set $S$ of points and insert \emph{finalisation tags} informing that certain points/areas will not be needed again.
-For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following processes that a certain cell of the quadtree is empty, that all the points have been processed.
+For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following processes that a certain cell of the quadtree is empty, that all the points inside have been processed (have already appeared in the stream).
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/finaliser}
@@ -342,9 +344,9 @@ For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be rea
 
 
 %%%
-\paragraph{Triangulator.}
+\subsection{Triangulator}
 The input of the triangulator is the output of the finaliser: a set of points with finalisation tags.
-The triangulator will triangulate the points as described in Section~\ref{sec:dtconstruction}, but will attempt to remove memory the triangles that are \emph{final}, those that we are sure will never be modified (since it it guaranteed that no new points will fall inside their circumcircle).
+The triangulator will triangulate the points as described in Section~\ref{sec:dtconstruction}, but will attempt to remove from memory the triangles that are \emph{final}, those that we are sure will never be modified (since it it guaranteed that no new points will fall inside their circumcircle).
 This is performed with the finalisation tags and the following observation (see Figure~\ref{fig:triangulator}): 
 \begin{figure}
   \centering
@@ -352,17 +354,20 @@ This is performed with the finalisation tags and the following observation (see 
   \caption{The DT at a given moment during the triangulation process. Blue quadtree cells are not finalised yet, white ones are; green triangles are still in memory (their circumcircle (red circles) encroach on unfinalised cells); white triangles have been written to disk since their circumcircle does not encroach on an active cell (some green circles shown as example).}%
 \label{fig:triangulator}
 \end{figure}
-a triangle inside a finalised quadtree cell (\ie\ where all the points in the streams inside that cell have been read) is final if its circumcircle does not encroach on an active quadtree cell.
-If its circumcircle overlaps with an active quadtree cell, then it is possible that further in the stream a new point will be added inside the circle and thus the triangle will not be Delaunay.
+a triangle inside a finalised quadtree cell (\ie\ where all the points in the streams inside that cell have been read) is \emph{final}%
+\marginnote{finalisation of triangles}
+if its circumcircle does not encroach on an active quadtree cell.
+If its circumcircle overlaps with an active quadtree cell, then it is possible that later in the stream a new point will be added inside the circle, and thus the triangle will not be Delaunay.
 Final triangles can be removed from memory and written to disk; it is also possible to add another process to the pipeline and send the final triangles to them.
+Notice also that the memory the triangle was using can be reused to store another new triangle created by new points arriving in the stream.
 
 % TODO: how many are kept in memory? or only in the video?
 
 
 %%%
-\paragraph{Spatial coherence.} % TODO: finish spatial coherence
+\subsection{Spatial coherence} 
 
-The constuction of a DT with the streaming paradigm will only work (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
+The constuction of a DT with the streaming paradigm will only succeed (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
 \index{spatial coherence}\marginnote{spatial coherence} 
 of the input dataset is high.
 It is defined by \sidecitet{Isenburg06} as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
@@ -391,28 +396,9 @@ Notice that the cells are generally of the same colour, which means that the spa
 The two datasets are different patterns probably because they were compiled by different companies, who used different equipment and processing software to generate the datasets.
 
 
-% TODO: streaming useful for other ops?
 %%%
-\paragraph{What problems.}
-The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
-
-\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-  This video explains how the streaming concepts can be applied to constructing the Delaunay triangulation of massive datasets.
-  You do \underline{not} need to read the full paper, which is \citet{Isenburg06}.
-  \\ \\
-  \url{https://youtu.be/DRCGTF2y_tM}
-\end{kaobox-toread}
-
-\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-  \fullcite{Isenburg06-1}
-  \\ \\
-  PDF: \url{http://dx.doi.org/10.1007/11863939_13}
-  \\ \\
-  The article summarises \citet{Isenburg06} (you do not need to read it), and shows how large rasters can be constructed with spatial interpolation.
-\end{kaobox-toread}
-
-
-% Notice that the pipeline shown in Figure 6 will work only if the input dataset has enough spatial coherence. Isenburg and Lindstrom (2005) define the maximum number of non-finalized points at any time as the width of a stream, the smaller it is the better the spatial coherence is (the smaller the memory footprint of the application is too); I report in the next section on the width of the datasets used for experiments.
+\subsection{Streaming cannot solve all problems related to terrains}
+The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation, creation of grids, extraction of contour lines), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -421,6 +407,10 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
 The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (\url{https://en.wikipedia.org/wiki/K-d_tree}) and the lecture notes entitled ``kd-Trees---CMSC 420'' from Carl Kingsford (available at \url{https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf}).
 
 \citet{Vitter01} provides an overview of external algorithms.
+
+The streaming computation of the DT algorithm is a simplification of the algorithm described in \citet{Isenburg06}, and some figures were basically redrawn.
+
+\citet{isenburg06-1} explains in details how large rasters can be constructed with spatial interpolation by modifying the streaming pipeline of Figure~\ref{fig:streamingdt}.
 
 
 %%%%%%%%%%%%%%%%%%%%
