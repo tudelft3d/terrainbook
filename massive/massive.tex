@@ -356,19 +356,23 @@ a triangle inside a finalised quadtree cell (\ie\ where all the points in the st
 If its circumcircle overlaps with an active quadtree cell, then it is possible that further in the stream a new point will be added inside the circle and thus the triangle will not be Delaunay.
 Final triangles can be removed from memory and written to disk; it is also possible to add another process to the pipeline and send the final triangles to them.
 
+% TODO: how many are kept in memory? or only in the video?
+
 
 %%%
-\paragraph{Spatial coherence.}
+\paragraph{Spatial coherence.} % TODO: finish spatial coherence
 
-A streaming mesh basically documents the \emph{spatial coherence}%
+The constuction of a DT with the streaming paradigm will only work (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
 \index{spatial coherence}\marginnote{spatial coherence} 
-of a dataset, which \citet{Isenburg06} defines as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
-They also demonstrate that real-world point cloud datasets often have natural spatial coherence and they exploit this coherence to compute Delaunay triangulations of massive datasets (instead of reordering the points, which is expensive); this coherence is expected since LiDAR samples are often stored in the order they were collected.
+of the input dataset is high.
+It is defined by \sidecitet{Isenburg06} as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
+They also demonstrate that real-world point cloud datasets often have natural spatial coherence because the points are usually stored in the order they were collected.
+If we shuffled randomly the points in an input file, then the spatial coherence would be very low and the finalisation tags in the stream coming out of the finaliser would be located at the end (and now distributed in the stream).
 
-Standard mesh formats do not use finalization and can therefore suffer if the mesh is larger than memory.
-These tags allows us to keep in memory only a small part of a large dataset.
 
-
+% TODO: streaming useful for other ops?
+%%%
+\paragraph{What problems.}
 The ideas behind streaming are very useful for certain \emph{local} problems (\eg\ interpolation and creation of grids), but unfortunately they cannot be used directly (or it would be extremely challenging) for \emph{global} problems such as visibility or flow modelling.
 
 \begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
