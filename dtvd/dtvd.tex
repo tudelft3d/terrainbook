@@ -166,6 +166,7 @@ The relationship is the following: every triangle of the lower envelope of conv(
 
  Construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
 
+
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
 \end{kaobox-practice}
@@ -335,11 +336,13 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 
 %
 
-\begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
+\begin{floatbox}
+\begin{kaobox-practice}[frametitle=\faCog\ How are DT created in practice?]
 Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
 It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
 There is also a variation on the big triangle: when an extra point is ``at the infinity''.
 \end{kaobox-practice}
+\end{floatbox}
 
 
 %%%

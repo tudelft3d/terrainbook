@@ -83,7 +83,7 @@ For downsampling, the most common method is based on averaging the 4 pixel value
 
 The downsamples grids are used to speed up visualisation (when a user zooms out on a lower-resolution grid is displayed) but the same principle could be applied to for processing (\eg\ the line-of-sight between 2 points in Chapter~\ref{chap:visibility} could be sped up by using this principle).
 
-
+\begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   For certain GIS formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
 
@@ -92,6 +92,7 @@ The downsamples grids are used to speed up visualisation (when a user zooms out 
   The GDAL utility \href{https://www.gdal.org/gdaladdo.html}{gdaladdo \faExternalLink} can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
   In QGIS, one can use \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
 \end{kaobox-practice}
+\end{floatbox}
 
 \begin{figure}
   \centering
@@ -302,18 +303,21 @@ We focus in the following on the creation of a DT\@.
 The issue that we are facing is that a triangle is respecting the Delaunay criterion if its circumcircle is empty of any point, therefore while constructing the DT we need to test all the other points in the dataset to ensure that a given triangle is Delaunay (or not).
 Streaming would mean here: can we assess that a given triangle is Delaunay without having to read/download the whole file?
 
+\begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ Streaming is realised with Unix pipes]
   The key to implementing streaming of geometries is to use Unix pipes (also called \emph{pipelines}).
 
   Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow to chain several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the \emph{stream}). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
 
-  In Unix, the pipe operator is the vertical line ``\texttt{|}'', and several commands can be chained with it: ``\texttt{cmd1 | cmd2 | cmd3}''. A simple example would be ``\texttt{ls -l | grep json | wc -l}'' which would:
+  In Unix, the pipe operator is the vertical line ``\texttt{|}'', and several commands can be chained with it: ``\texttt{cmd1 | cmd2 | cmd3}''. 
+  A simple example would be ``\texttt{ls -l | grep json | wc -l}'' which would:
   \begin{enumerate}
     \item list all the files in the current directory (one file name per line); 
     \item send this to the operator \emph{grep} which would discard all lines not having the keyworld `json'; 
     \item send this to the operator \texttt{wc -l} which counts the number of line.
    \end{enumerate} 
 \end{kaobox-practice}
+\end{floatbox}
 
 
 %%%
