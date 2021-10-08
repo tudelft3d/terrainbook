@@ -18,9 +18,9 @@ In this chapter we discuss algorithms for reading, transforming, processing, cle
 \section{Point cloud file formats}
 
 A point cloud is essentially an array of 3D points, and often that is also how it is stored in a file.
-Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and attributes of one point.
+Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and attributes of one sample point.
 
-A point record consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
+A point record usually consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
 A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number or colour information.
 The order and meaning of the fields in a record are fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
@@ -50,7 +50,8 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
 \end{figure}
 
 
-\subsection{The PLY format}
+\subsection{The PLY format}%
+\index{PLY format}
 The PLY format can be considered a standardised ASCII format.
 A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names and their data types.
 This makes it a very flexible standard, since the user can decide on the composition of the point record.
@@ -61,13 +62,18 @@ Figure~\ref{fig:ply} shows an example PLY file.
 \label{fig:ply}
 \end{figure}
 
+%
 
 PLY files are readable by many software packages and can also be stored in a binary encoding\sidenote{\url{https://en.wikipedia.org/wiki/PLY_(file_format)\#ASCII_or_binary_format}}.
 Compared to the ASCII encoding, the binary encoding results in a smaller file size and quicker reading and writing from and to the file.
 There is no standardised way to specify the CRS in a PLY file, although one could add a comment in the header stating the CRS\@.
 
-\subsection{The LAS format}
-The public LASER (LAS) file format is the most widely used standard for the dissemination of point cloud data.
+
+%%%
+\subsection{The LAS format}%
+\index{LAS format}
+
+The \emph{public LASER} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
 The LAS standard, currently at version 1.4, is maintained by the ASPRS organisation and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
 It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
@@ -114,7 +120,7 @@ The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{of
 The LAS standard defines several classification codes, as listed in Table~\ref{tab:las-classes}.
 \begin{table}
   \centering
-\begin{tabular}{l|l}
+  \begin{tabular}{l|l}
   % \toprule
   % \rowcolor[gray]{.9}
   Code & Meaning \\ \midrule
@@ -149,12 +155,14 @@ It is possible to define your own classes using code ranges that are reserved fo
 
 % The standard technically allows for additional user-defined attributes
 
-\paragraph{The LAZ format.}
+\paragraph{The LAZ format.}%
+\index{LAZ format}
+
 Finally, a compressed variant of the LAS format, dubbed the LAZ format, exists.
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
 This makes it more effective than simply using ZIP compression on a LAS file.
-In addition support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression does take some time).
+In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression does take some time).
 
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
@@ -165,6 +173,10 @@ Typically information is quite similar for points that are close to each other i
 Therefore, a greater compression factor can often be achieved after spatially sorting the points.
 
 In practice, for the AHN3 dataset, the LAZ file of the same area will about 10X more compacter then its LAS counterpart.
+% TODO: add that 10X compacter but also that it's slower to read/write? 
+% TODO: and that for AHN3, it's rather essential, since it would be too big otherwise, wouldn't it?
+
+% TODO: speak of zLAS as the devil?
 
 
 %%%
@@ -267,6 +279,7 @@ Figure~\ref{fig:mbes} gives an example.
 \caption{Outlier detection in a multi-beam echo sounding dataset using a TIN \citep{Arge10}.}%
 \label{fig:mbes}
 \end{figure*}
+% TODO: shouldn't we use our own figure here?
 
 
 %%%%%%%%%%%%%%%%%%%%
@@ -285,6 +298,8 @@ Ground filtering methods are typically based on the assumptions that
 \end{enumerate}
 This is reasonable because non-ground points are typically measurements from objects above the ground such as trees, street furniture and buildings (see \eg\ Figure~\ref{fig:axelsson:profiles}).
 
+
+% TODO: shouldn't we use our own figure here?
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figs/axelsson-profiles.png}
@@ -296,7 +311,9 @@ Notice that the resulting bare-earth model may thus have holes where these non-g
 If needed, these holes can be filled in a subsequent processing step involving spatial interpolation.
 
 %%%
+%
 \subsection{Ground filtering with TIN refinement}
+
 We will now discuss an effective ground filtering method that is based on the \emph{greedy} insertion of ground points into a TIN\@.
 Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in Section~\ref{sec:tin-simpl} is used.
 The algorithm consists of three main steps:
