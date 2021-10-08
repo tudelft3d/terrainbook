@@ -218,7 +218,9 @@ Especially in scenarios where the point density is very high and the available t
 
 %%%
 %
-\section{Outlier detection}
+\section{Outlier detection}%
+\label{sec:outlier_detection}
+
 Recall from Chapter~\ref{chap:acquisition} that outliers are points that have a large error in their coordinates.
 Outliers are typically located far away from the terrain surface and often occur in relatively low densities.
 Outlier detection aims to detect and remove outliers and is a common processing step for point clouds.
@@ -388,18 +390,86 @@ Figure~\ref{fig:axelsson} gives an example result.
 %
 \subsection{Cloth simulation filter algorithm (CSF)}
 
-An alternative to TIN refinement is 
+An alternative to TIN refinement is the algorithm called \emph{Cloth simulation filter} (CSF).
+Unlike the previous one, no TIN is required, its input is only a point cloud.
+The main observation necessary for this algorithm is that lower points are usually forming the ground, if there are no outliers in the dataset that it.
+(It is thus necessary to first run an outlier removal algorithm such as that in Section~\ref{sec:outlier_detection})
 
+%
+
+The key idea of the algorithm, shown in Figure~\ref{fig:csf_idea},
 \begin{figure*}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/csf_idea}
   \caption{Basic idea behind the CSF algorithm for ground filtering of a point cloud.}%
 \label{fig:csf_idea}
 \end{figure*}
+is to invert (upside-down) a dataset, and letting a piece of cloth fall from the sky.
+The cloth will fall until it reaches the points forming the ground.
+In the process, we aim at controlling the rigidity of the cloth, so that areas where there is no sample points or where there are large buildings can be filled realistically.
+
+%
+
+When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth.
+If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used: if this distance is less than a given user-defined threshold then the sample point is a ground point.
+
+%
+
+The CSF algorithm is a simplification of an algorithm in computer graphics to simulate a piece of cloth falling on an object.
+The cloth is modelled as a surface formed of \emph{particles} (vertices) that are regularly distributed on a grid, these particles have a mass and they are connected to their neighbours (4-neighbours in this case).
+For terrains (2.5D objects), the particles are constrained to only move vertically.
+
+Two factors influence the $z$-value of a particle during the cloth falling process:
+\begin{description}
+  \item[external forces:] in this case this is the gravity pulling a particle down;
+  \item[internal forces:] the tension in the cloth, which is modelled by the interactions between a particle and its neighbours.
+\end{description}
+As particles fall down, some will reach the ground will become \emph{unmovable}.
+These will potentially be neighbours to \emph{movable} ones, whose elevation will be controlled by how we define the rigidity of the cloth.
+
+As shown in Figure~\ref{fig:csf_iterations},
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/csf_iterations}
+  \caption{}%
+\label{fig:csf_iterations}
+\end{marginfigure}
+the process is iterative, that is we first define a clothe formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
+If a particle is movable (it hasn't reached the ground yet), then the gravity force is applied (a vector pointing downwards; its magnitude will depend on the momentum of the particle) and afterwards the internal forces are applied.
+Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) are have higher $z$-values.
+
+%
+
+The internal forces are applied only to movable particles; once a particle has been labelled as unmovable it cannot be moved again.
+Given a movable particle $p$, we apply the external forces by individually looking at its 4 neighbours $n_i$.
+For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/csf_2cases}
+  \caption{}%
+\label{fig:csf_2cases}
+\end{marginfigure}
+\begin{description}
+  \item[$n_i$ is movable:] the idea is that both $p$ and $n_i$ will try to move to the same height. The vector applied to each will be in opposite direction. Notice that in Figure~\ref{fig:csf_2cases} they are moved to the same place, but that it is also possible to scale the displacement vector, \eg\ to 0.9 of its length.
+  \item[$n_i$ is unmovable:] only $p$ is moved, towards $n_i$. Again, the displacement vector can be controlled, but in Figure~\ref{fig:csf_2cases} is it half-way.
+\end{description}
+
+%
+
+The algorithm is initialised with an horizontal cloth at an elevation higher than the (inverted) terrain.
+We assume that all particles have the same mass, and we define arbitrarily a first displacement vector due to the gravity (pointing downwards).
+At each iteration, for each particle, we apply the previous displacement (the difference between the previous position and the one before) and then we calculate the internal forces.
+This process is repeated until the maximum displacement of all particles is less than a user-defined parameters; or until a certain number of iterations has been performed.
+
+
+
+
+
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
-Lemongrass frosted gingerbread bites banana bread orange crumbled lentils sweet potato black bean burrito green pepper springtime strawberry ginger lemongrass agave green tea smoky maple tempeh glaze enchiladas couscous. Cranberry spritzer Malaysian cinnamon pineapple salsa apples spring cherry bomb bananas blueberry pops scotch bonnet pepper spiced pumpkin chili lime eating together kale blood orange smash arugula salad. Bento box roasted peanuts pasta Sicilian pistachio pesto lavender lemonade elderberry Southern Italian citrusy mint lime taco salsa lentils walnut pesto tart quinoa flatbread sweet potato grenadillo.
+TODO
+% TODO: CSF iplementation box
 \end{kaobox-practice}
 \end{floatbox}
 
