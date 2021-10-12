@@ -420,10 +420,10 @@ The cloth is modelled as a surface formed of \emph{particles} (vertices) that ar
 For terrains (2.5D objects), the particles are constrained to only move vertically.
 
 Two factors influence the $z$-value of a particle during the cloth falling process:
-\begin{description}
-  \item[external forces:] in this case this is the gravity pulling down a particle;
-  \item[internal forces:] the tension in the cloth, which is modelled by the interactions between a particle and its neighbours.
-\end{description}
+\begin{enumerate}
+  \item \textbf{external forces:} in this case this is the gravity pulling down a particle;
+  \item \textbf{internal forces:} the tension in the cloth, which is modelled by the interactions between a particle and its neighbours.
+\end{enumerate}
 As particles fall down, some will reach the ground and become \emph{unmovable}.
 These will potentially be neighbours to \emph{movable} ones, whose elevation will be controlled by how we define the rigidity of the cloth.
 
@@ -513,10 +513,10 @@ For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
   \caption{}%
 \label{fig:csf_2cases}
 \end{marginfigure}
-\begin{description}
-  \item[$n_i$ is unmovable:] only $p$ is moved, towards $n_i$. 
-  \item[$n_i$ is movable:] the idea is that both $p$ and $n_i$ will try to move to the same height. The vector applied to each will be in opposite direction. 
-\end{description}
+\begin{enumerate}
+  \item \textbf{$n_i$ is unmovable:} only $p$ is moved, towards $n_i$. 
+  \item \textbf{$n_i$ is movable:} the idea is that both $p$ and $n_i$ will try to move to the same height. The vector applied to each will be in opposite direction. 
+\end{enumerate}
 
 \paragraph{Controlling the tension/rigidity.}
 % TODO: understand and report on rigidity here?
