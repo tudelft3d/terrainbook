@@ -520,8 +520,11 @@ For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 
 \paragraph{Controlling the tension/rigidity.}
 % TODO: understand and report on rigidity here?
-Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the displacement vector, \eg\ to 0.9 of its length.
-The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector can be controlled by scaling the displacement vector. In Figure~\ref{fig:csf_2cases} is it 0.5 of the difference in elevation, but if more rigidity was wanted, then the vector could be 0.8 (so that the movable particle has a displacement $\vec{v}=(0, 0, 8)$).
+Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the displacement vector, \eg\ to 0.8 of its length (and thus increase the tension in the cloth).
+The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector can be controlled by scaling the displacement vector. 
+In Figure~\ref{fig:csf_2cases} is it 0.5 of the difference in elevation, but if more tension was wanted, then the vector could be 0.8 (so that the movable particle has a displacement $\vec{v}=(0, 0, 8)$).
+
+% TODO: order dependent
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
