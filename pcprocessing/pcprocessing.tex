@@ -9,7 +9,7 @@
 \chapter{Point cloud processing}%
 \label{chap:pcprocessing}
 
-In this chapter we discuss algorithms for reading, transforming, processing, cleaning and extracting information from point clouds, and we also briefly present the main storage formats used in practice.
+In this chapter we discuss algorithms for reading, transforming, processing, cleaning, and extracting information from point clouds, and we also briefly present the main storage formats used in practice.
 
 
 
@@ -18,24 +18,24 @@ In this chapter we discuss algorithms for reading, transforming, processing, cle
 \section{Point cloud file formats}
 
 A point cloud is essentially an array of 3D points, and often that is also how it is stored in a file.
-Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and attributes of one sample point.
+Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and some attributes of one sample point.
 
 A point record usually consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
 A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number or colour information.
-The order and meaning of the fields in a record are fixed for all the point records in one file.
+The order and meaning of the fields in a record are usually fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
-Notice that, in additions to the widely used formats mentioned here, there are also many proprietary formats. These are often specific to one particular software and are therefore not very useful for data exchange.
+Notice that, in additions to the widely used formats mentioned here, there are also many proprietary formats. 
+These are often specific to one particular software and are therefore not very useful for data exchange.
 
 \subsection{ASCII formats}
 ASCII formats are plain text files. 
 The point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
 In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated values (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
-The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes varies and also the used coordinate reference system (CRS) are usually not documented in the file.
-\begin{figure}[h]
-  % \begin{footnotesize}
-  \begin{lstlisting}
+The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes vary, and also the used coordinate reference system (CRS) is usually not documented in the file.
+\begin{figure}
+  \begin{verbatim}
     x y z
     84499.948 446610.324 0.407
     84499.890 446609.862 0.434
@@ -43,8 +43,7 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
     84499.777 446608.987 0.454
     84499.715 446608.528 0.444
     84499.839 446612.808 0.493
-  \end{lstlisting}
-  % \end{footnotesize}
+  \end{verbatim}
   \caption{An example of a CSV file used to store the $xyz$ coordinates of a point cloud.}%
 \label{fig:csv}
 \end{figure}
@@ -52,6 +51,7 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
 
 \subsection{The PLY format}%
 \index{PLY format}
+
 The PLY format can be considered a standardised ASCII format.
 A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names and their data types.
 This makes it a very flexible standard, since the user can decide on the composition of the point record.
@@ -74,7 +74,9 @@ There is no standardised way to specify the CRS in a PLY file, although one coul
 \index{LAS format}
 
 The \emph{public LASER} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
-The LAS standard, currently at version 1.4, is maintained by the ASPRS organisation and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
+The LAS standard, currently at version 1.4, 
+\marginnote{LAS v1.4 is the latest}
+is maintained by the ASPRS organisation and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
 It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
 
@@ -92,7 +94,7 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
     Intensity & unsigned int & 16 & The pulse return amplitude. \\ 
     Return number & unsigned int & 3 &  The total pulse return number for a given output pulse. \\ 
     Number of returns & unsigned int & 3 & Total number of returns for a given pulse \\ 
-    Scan Direction Flag & boolean & 1 & Denotes the direction at which the scanner mirror was traveling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite).  \\ 
+    Scan Direction Flag & boolean & 1 & Denotes the direction at which the scanner mirror was travelling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite).  \\ 
     Edge of Flight Line & boolean & 1 & Has a value of 1 only when the point is at the end of a scan. It is the last point on a given scan line before it changes direction. \\ 
     Classification & unsigned int & 5 & Classification code \\ 
     Scan Angle Rank & int & 4 & The angle at which the laser pulse was output from the scanner including the roll of the aircraft. \\ 
@@ -104,8 +106,9 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
 \label{tab:las-record}
 \end{table*}
 Other record types are available that also include fields to store for instance  RGB colour information or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
-While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format. 
-Notice that unused fields will still take up storage space in each record.
+While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.
+\marginnote{unused fields take up storage} 
+It is important to notice that unused fields will still take up storage space in each record.
 
 The CRS of the point cloud can be stored in the header of a LAS file, together with some other general information such as the total number of points and the bounding box of the point cloud. 
 The X, Y, and Z fields are stored as 32-bit integers. 
@@ -115,7 +118,7 @@ To convert these values to the actual coordinates on the ground, they need to be
   Y_{coordinate} = (Y_{record} * Y_{scale}) + Y_{offset} \\
   Z_{coordinate} = (Z_{record} * Z_{scale}) + Z_{offset}.
 \end{gather*}
-The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{offset}$, $Y_{offset}$, $Z_{offset}$ are also given in the header. Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $10$, $100$, and $1000$ would give us $1$, $2$, and $3$ decimals respectively.
+The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{offset}$, $Y_{offset}$, $Z_{offset}$ are also given in the header. Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
 
 The LAS standard defines several classification codes, as listed in Table~\ref{tab:las-classes}.
 \begin{table}
@@ -142,27 +145,41 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
 These codes are to be used as values for the classification field of a point record, and are intended to indicate the type of object a point belongs to.
 Which classes are used strongly depends on the dataset at hand.
 The codes $0$ and $1$ may appear ambiguous, but there is a clear distinction.
-To be exact, the code $0$ is used for points that never subject to a classification algorithm, whereas the code $1$ is used for points that have been processed by a classification algorithm, but could not successfully be assigned to a class.
+To be exact, the code $0$ is used for points that were never subjected to a classification algorithm, whereas the code $1$ is used for points that have been processed by a classification algorithm, but could not be assigned to a specific class.
 It is possible to define your own classes using code ranges that are reserved for that purpose.
 
-\paragraph{AHN3 classification.} The national Dutch AHN3 lidar dataset is disseminated in the LAZ format and uses the LAS classification codes. Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. The points in the unclassified class (1) typically belong to vegetation, street furniture or cars.
+%%%
+\paragraph{AHN3 classification.} 
+The national Dutch AHN3 lidar dataset 
+\marginnote{\emph{Actueel Hoogtebestand Nederland} (AHN)}
+\marginnote{\url{https://www.ahn.nl}}
+is disseminated in the LAZ format (a compressed LAS, see below) and uses the LAS classification codes. 
+Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3. 
 \begin{figure*}
   \includegraphics[width=\linewidth]{figs/ahn3.png}
   \caption{Classification codes used in the AHN3 dataset.}%
 \label{fig:ahn3}
 \end{figure*}
+Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. 
+
+Notice that in AHN3, the points representing vegetation are not classified as such, and vegetation is never explicitly classified.
+\marginnote{vegetation is classified as $1$/unclassified in AHN3}
+The is because the aim of the AHN project is mostly to model dikes and to protect us from floods, and vegetation is not very important for this use-case.
+The class $1$ is thus used for vegetation, but other objects such as street furniture (\eg\ lampposts) or cars are also classified as $1$.
 
 
 % The standard technically allows for additional user-defined attributes
 
+
+%%%
 \paragraph{The LAZ format.}%
 \index{LAZ format}
 
-Finally, a compressed variant of the LAS format, dubbed the LAZ format, exists.
+A compressed variant of the LAS format, dubbed ``LAZ'', exists.
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
-Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be packed into a fraction of the storage space required for the equivalent LAS file without any loss of information.
+Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be compressed into a fraction of the storage space required for the equivalent LAS file, without any loss of information.
 This makes it more effective than simply using ZIP compression on a LAS file.
-In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression does take some time).
+In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression and decompression operations do take extra time).
 
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
@@ -172,7 +189,8 @@ Also notice that the effectiveness of the compression algorithms depends on the 
 Typically information is quite similar for points that are close to each other in space.
 Therefore, a greater compression factor can often be achieved after spatially sorting the points.
 
-In practice, for the AHN3 dataset, the LAZ file of the same area will about 10X more compacter then its LAS counterpart.
+In practice, for the AHN3 dataset, the LAZ file of a given area is about 10X more compact than its LAS counterpart.
+\marginnote{LAZ = 10X compacter than LAS}
 % TODO: add that 10X compacter but also that it's slower to read/write? 
 % TODO: and that for AHN3, it's rather essential, since it would be too big otherwise, wouldn't it?
 
