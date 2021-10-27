@@ -1,8 +1,10 @@
 %!TEX root = ../terrainbook.tex
 % chktex-file 46
 
-\setchapterpreamble[u]{\margintoc}
 \graphicspath{{bathymetry/}}
+% \setchapterimage{figs/enc_denhelder.jpeg}
+
+\setchapterpreamble[u]{\margintoc}
 
 
 \chapter{Processing bathymetric data to produce hydrographic charts}%
@@ -11,10 +13,11 @@
 % \marginnote{\faVideoCamera\ \url{https://youtu.be/ysLCuqcyJZA}}
 
 
-An hydrographic chart is a map of the underwater world specifically intended for the safe navigation of ships, see below for an example.
+An hydrographic chart is a map of the underwater world specifically intended for the safe navigation of ships, see Figure~\ref{fig:enc} for an example.
 In its digital form, it is often called an electronic navigational chart, or ENC\@.%
 \index{electronic navigational chart (ENC)}
 The information appearing on an ENC are standardised, and there are open formats.
+
 
 %
 
@@ -117,7 +120,7 @@ It is therefore obvious that the end result must be a reasonable compromise betw
 
 
 %%%
-\section[Practical methods not satisfactory]{Common methods used in practice are not satisfactory}
+\section[Practical methods not good]{Common methods used in practice are not satisfactory}
 
 The generation of depth contours, and their generalisation, can be done by several methods.
 We present here the most frequently used methodologies to generate depth-contours from an MBES point cloud.
@@ -127,7 +130,8 @@ We present here the most frequently used methodologies to generate depth-contour
 %%%
 \subsection{Displacement and generalisation of the lines}
 
-It is tempting to start with the raw contours lines and use a generalisation operator to simplify them, \eg\ the Douglas-Peucker method.
+It is tempting to start with the raw contours lines and use a generalisation operator to simplify them, \eg\ the Douglas-Peucker method.%
+\index{Douglas-Peucker simplification}\marginnote{Douglas-Peucker simplification}
 It should however be noticed that this method does \emph{not} guarantee that the safety constraint will be respected, that is the generalised line will be ``pushed'' both to the deeper and the shallower part (there is no control for this with the Douglas-Peucker method).
 
 There exist a few algorithms to control the direction in which a line can be moved (these methods are outside the scope of this book), but these methods work only on lines individually and thus the resulting set of lines can contain intersecting lines.
@@ -187,7 +191,7 @@ While different functions can be used to select the point (\eg\ deepest, shallow
     \includegraphics[width=\textwidth,page=5]{figs/1Didw.pdf}
     \caption{IDW rasterisation and contours}\label{fig:fr:idw:b}
   \end{subfigure}
-\caption{On the top: profile views of different filtering and rasterisation methods. On the bottom: the corresponding contours. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}%
+\caption{rofile views of different filtering and rasterisation methods. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.}%
 \label{fig:filterraster}
 \end{figure}
 It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
@@ -221,7 +225,7 @@ Figures~\ref{fig:fr:idw:a} and~\ref{fig:fr:idw:b} illustrate the process of IDW 
 %%%
 \subsection{TIN simplification}
   
-One could use TIN simplification as explained in Chapter~\ref{chap:conversion} to simplify the riverbed.
+One could use TIN simplification, as explained in Chapter~\ref{chap:conversion}, to simplify the seabed.
 This would also simplify the depth-contours that are generated from the TIN\@. 
 However, as Figure~\ref{fig:simpfail} shows, 
 \begin{figure*}
@@ -247,7 +251,7 @@ However, as Figure~\ref{fig:simpfail} shows,
 \label{fig:simpfail}
 \end{figure*}
 the safety constraint is not guaranteed to be respected when vertices are removed from a TIN\@.
-This is due to the fact that the triangulation must be updated (with flips, see Chapter~\ref{chap:dtvd}) and the shapes of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
+This is due to the fact that the triangulation must be updated (with flips, see Section~\ref{sec:dtconstruction}) and the shapes of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
 
 
 %%%
@@ -274,7 +278,8 @@ Figure~\ref{fig:surfapproach} gives a schematic overview of the different compon
 \end{figure}
 
 Firstly, all the input points of a given area are used to construct a Delaunay TIN\@.
-Secondly, a number of generalisation operators are used that alter the TIN using Laplace interpolation, which is based on the Voronoi diagram.
+Secondly, a number of generalisation operators are used that alter the TIN using Laplace interpolation, which is based on the Voronoi diagram.%
+\index{Laplace interpolation}\marginnote{Laplace interpolation}
 These operators aim at improving the slope of the surface, and permit us to generalise the surface.
 Finally, contour lines are derived from the altered TIN using linear interpolation.
 
@@ -291,12 +296,12 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 
 %%%
 %
-\subsubsection{The smoothing operator}%
+\subsection{The smoothing operator}%
 \label{chap:myapproach:smoothing}
 
-The smoothing operator basically estimates, with the Laplace interpolant (see Section~\ref{sec:laplace} on page~\pageref{sec:laplace}), the depth of each vertex in a dataset by considering its natural neighbour (see Figure~\ref{fig:1Dsmoothop}).
+The smoothing operator basically estimates, with the Laplace interpolant (see Section~\ref{sec:laplace} on page~\pageref{sec:laplace}), the depth of each vertex in a dataset by considering its natural neighbours (see Figure~\ref{fig:1Dsmoothop}).
 If this depth is shallower, then the vertex is assigned this value; if it is deeper then nothing is done.
-Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths. 
+Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths upwards (if at all). 
 \begin{figure}[tbh]
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
@@ -340,7 +345,7 @@ Furthermore this operator can be applied any number of times, delivering more ge
 
 %%%
 %
-\subsubsection{The densification operator}%
+\subsection{The densification operator}%
 \label{sec:densification}
 
 Its objective is primarily to minimise the discretisation error between the Laplace interpolated field and the contours that are extracted from the DT, this is illustrated in Figure~\ref{fig:1Ddensop}.
@@ -473,7 +478,7 @@ This was tested with an MBES dataset from Zeeland, in the Netherlands.
     % \includegraphics[width=\textwidth]{figs/zl1845rmsdiffplot.pdf}
     % \caption{}\label{fig:zl1845rmsdiffplot}
   % \end{subfigure}
-  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a 50cm depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixelsize 50 cm).}%
+  \caption{The effect of the smoothing operator in the Zeeland dataset. \textbf{(a)} Raw contours extracted at a \SI{50}{\cm} depth interval. \textbf{(b)} Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. \textbf{(c)} Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixelsize \SI{50}{\cm}).}%
 \label{fig:zl1845fieldview}
 \end{figure*}
 As can be observed from Figure~\ref{fig:zl1845fieldview_o}, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 

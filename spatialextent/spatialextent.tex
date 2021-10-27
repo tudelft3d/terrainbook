@@ -2,10 +2,9 @@
 % chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
-\labch{spatialextent}
 \graphicspath{{spatialextent/}}
 
-\chapter{Spatial extent of a point cloud}%
+\chapter{Spatial extent of a set of points}%
 \label{chap:spatialextent}
 
 
@@ -14,21 +13,28 @@ That is, they need to define the shape of the region that best abstracts or repr
 As seen in \reffig{fig:examples}, 
 \begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.35\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/ahn3-water.png}
     \caption{}
   \end{subfigure}%
   \qquad
-  \begin{subfigure}[b]{0.33\linewidth}
+  \begin{subfigure}[b]{0.24\linewidth}
     \centering
     \includegraphics[page=2,width=\textwidth]{figs/facade.jpg}
     \caption{}
   \end{subfigure}
-\caption{Two point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows.}
+  \qquad
+  \begin{subfigure}[b]{0.28\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/footprint.png}
+    \caption{}
+  \end{subfigure}
+\caption{Three point cloud datasets for which we would like to find the spatial extent. \textbf{(a)} An aerial point cloud with several canals (dark colour). \textbf{(b)} A scan of a façade containing several windows. \textbf{(c)} For the subset formed of the building footprint (green points) we would like to obtain its footprint (line in red).}
 \labfig{fig:examples}  
 \end{figure*}
-this region is often in two dimensions, for example in the case of an aerial lidar datasets we want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+this region is often in two dimensions, for example in the case of an aerial lidar datasets we may want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
+Another example is if we consider a subset of a point cloud that represents the points for a given building, we can interested in creating the polygon that represents its footprint (\reffig{fig:examples}c).
 
 %
 
@@ -129,7 +135,7 @@ To evaluate the different algorithms to create R($S$), we list here different pr
   \item[P2.] \textbf{All points part of the region?} Can outliers be ignored? Or do they have to be part of the region? In \reffig{fig:properties:a} and \reffig{fig:properties:b} they are all part of the region, in \reffig{fig:properties:c} and \reffig{fig:properties:d} one outlier is not.
 %   (if we consider that $S$ represents the letter ``b'').
   \item[P3.] \textbf{Region is one connected component?} Or are more components allowed? In \reffig{fig:properties:a}--\reffig{fig:properties:c} there is one component, but \reffig{fig:properties:d} has two.
-  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in \reffig{fig:properties:a}--\subref{fig:properties:c} have only an exterior boundary, while in \reffig{fig:properties:d} one polygon has an interior boundary too (a hole).
+  \item[P4.] \textbf{Are holes allowed in a polygon?} Polygons in \reffig{fig:properties:a}--\reffig{fig:properties:c} have only an exterior boundary, while in \reffig{fig:properties:d} one polygon has an interior boundary too (a hole).
   \item[P5.] \textbf{Computational efficiency} What is the time complexity of the algorithm, and does it require large and complex auxiliary data structures?
 \end{description}
 
@@ -137,16 +143,17 @@ To evaluate the different algorithms to create R($S$), we list here different pr
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Convex hull}
+\section{Convex hull}%
+\label{sec:se_ch}
 
 As explained in Section~\ref{sec:convexhull}, given $S$, a set of points in $\mathbb{R}^2$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
-Two examples of convex hulls are in Figures~\ref{fig:ideas}b and~\ref{fig:properties}a.
+Two examples of convex hulls are in Figures~\reffig{fig:ideas}b and~\reffig{fig:properties}a.
 
 %
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
-It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or compute directly using a specialised algorithm.
-For example, using the well-known \emph{gift wrapping algorithm}, shown in \reffig{fig:giftwrapping}.
+It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or computed directly using a specific algorithm.
+An example of the latter is the well-known \emph{gift wrapping algorithm}, shown in \reffig{fig:giftwrapping}.
 \begin{marginfigure}
   \centering
   \begin{subfigure}[b]{\linewidth}
@@ -163,8 +170,9 @@ For example, using the well-known \emph{gift wrapping algorithm}, shown in \reff
   \caption{\textbf{(a)} First four steps of the gift wrapping algorithm to compute the convex hull. \textbf{(b)} The resulting convex hull.}%
 \labfig{fig:giftwrapping}
 \end{marginfigure}
-It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping} because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point (at $a$) is the smallest ($b$ in this case), and adds it to conv($S$).
-Then for $b$, the polar angle is calculated from the line $ab$; and the algorithm continues this way until $a$ is visited again.
+It begins with a point that is guaranteed to be on conv($S$) (we can take an `extreme', such as $a$ in \reffig{fig:giftwrapping}, because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point ($a$ at this step) is the largest ($b$ in this case), and adds it to conv($S$).
+Then for $b$, the polar angle is calculated from the line $ab$ and the $c$ is chosen since it forms the largest angle.
+The algorithm continues this way until $a$ is visited again.
 
 If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
 However, there exist more efficient algorithm that have a time complexity of $\mathcal{O}(n \log n)$.
@@ -192,7 +200,7 @@ Properties convex hull:
 \begin{marginfigure}
   \centering
   \includegraphics[page=1,width=\textwidth]{figs/movingarm.pdf}
-  \caption{First four steps of the \emph{moving arm algorithm} (with a lenght $l$) to compute the spatial extent.}%
+  \caption{First four steps of the \emph{moving arm algorithm} (with a length $l$) to compute the spatial extent.}%
 \labfig{fig:movingarm:1}
 \end{marginfigure}
 
@@ -211,7 +219,7 @@ Properties convex hull:
 \end{marginfigure}
 
 \paragraph{Arm of length $l$.} 
-The moving arm is a generalisation of the gift wrapping algorithm where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
+The moving arm is a generalisation of the gift wrapping algorithm (see Section~\ref{sec:se_ch}) where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the ``moving arm'').
 This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
 This also means that potentially the result is a polygon that is non-convex.
 \reffig{fig:movingarm:1} shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.

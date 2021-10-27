@@ -1,14 +1,20 @@
 %!TEX root = ../terrainbook.tex
 % chktex-file 46
 
-% \setchapterpreamble[u]{\marginnote[12pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}\margintoc[18pt]}
 \setchapterpreamble[u]{\margintoc}
+% \setchapterpreamble[u]{\marginnote[12pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}\margintoc[18pt]}
+% \setchapterpreamble[u]{\margintoc\marginnote[100pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}}
+% \setchapterpreamble[u]{\marginnote[12pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}\margintoc[18pt]}
 % \setchapterpreamble[u]{\margintocvideo[0mm]{https://youtu.be/_BSuNu3Ahw0}}
+
+
 \chapter{What is a terrain?}%
 \label{chap:whatisterrain}
-\labch{whatisterrain}
 
 \graphicspath{{whatisterrain/}}
+
+
+% \marginnote[-54pt]{\faVideoCamera\ \url{https://youtu.be/_BSuNu3Ahw0}}
 
 
 
@@ -30,6 +36,7 @@
 %   \includegraphics[width=0.95\linewidth]{figs/header.jpg}
 % \end{center}
 
+
 Defining what a terrain, also called a \emph{digital terrain model} (DTM), is not simple because there is no universal agreement, neither among practitioners nor in the scientific literature.
 Different terms are used, often interchangeably.
 
@@ -47,7 +54,7 @@ However, the ``Earth's surface'' is also not a clear concept, since several obje
   \caption{\textbf{Top}: a terrain with a mountain, a tree, and a building. \textbf{Bottom}: its DSM and DTM.}%
 \labfig{fig:dtmdsm}
 \end{marginfigure}
-We use the following definitions in this course (see \reffig{fig:dtmdsm}):
+In this book, we use the following definitions (see \reffig{fig:dtmdsm}):
 \begin{description}
   \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\index{DEM} 
   \item[DTM] (\textbf{D}igital \textbf{T}errain \textbf{M}odel). The surface of the Earth is the \emph{bare-earth}, that is no man-made objects or vegetation is present. 
@@ -130,7 +137,8 @@ Such a representation is usually done with a 2.5D terrain (although a 2.75D coul
 
 In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a \emph{field}.%
 \index{field}\marginnote{field}
-A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.
+A field is a model of the spatial variation of an attribute $a$ over a spatial domain, which in our case is $\mathbb{R}^2$, the two-dimensional Euclidean space.%
+\index{Euclidean space}\marginnote{Euclidean space}
 It is modelled by a function mapping one point $p$ in $\mathbb{R}^2$ to the value of $a$, thus 
 \[
   a = f(p)
@@ -144,7 +152,7 @@ First, fields are continuous functions, and, by contrast, computers are discrete
 Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.
 \index{discretisation}\marginnote{discretisation}
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
-The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{chap:acquisition}).
+The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{acquisition}).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
 
 
@@ -160,9 +168,9 @@ To represent a terrain in a computer, and be able to manipulate it (\ie\ edit th
 
 
 %%%
-\subsection{Strategy \#1: points + global interpolation function.}
+\subsection{Strategy \#1: points + global interpolation function}
 This means storing the original sample points with the parameters of the \emph{global} spatial interpolation method that is best suited to the distribution of the samples and their accuracy.
-Global methods are for instance inverse-distance to a power, natural neighbours, or Kriging.
+Global methods are for instance inverse-distance to a power, natural neighbours, or kriging.
 This strategy is used because one can compactly represent a field (only the samples and a few parameters need to be stored).
 
 Notice that this strategy permits us to reconstruct the continuity of a terrain from the samples by calculating the value of the elevation, but that this value is \emph{not} persistently stored in memory.
@@ -234,17 +242,19 @@ There is a loss of information, since the exact location of the meaningful point
 
 %
 
-\paragraph{Concrete example: a 2D grid.}
-A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
-The value assigned to each cell is an estimation previously obtained by spatial interpolation.
-However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
-Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
+\begin{kaobox}[frametitle=\faCog\ Concrete example: a 2D grid]
+  A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
+  The value assigned to each cell is an estimation previously obtained by spatial interpolation.
+  However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
+  Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
+\end{kaobox}
 
 %
 
 The wide popularity of regular tessellations in terrain modelling is probably due to simplicity and to the fact that they permit us to easily integrate 2D remote sensing images and terrains.
 Indeed, a grid is naturally stored in a computer as an array (each cell is addressed by its position in the array, and only the value of the cell is stored), and thus the spatial relationships between cells are implicit. 
-This is true for any dimensions, thus, contrary to other tessellations, grids are very easy to generalise to higher dimensions.
+This is true for any dimensions, thus, contrary to other tessellations, grids are very easy to generalise to higher dimensions (in 3D a pixel is a \emph{voxel}).%
+\index{higher-dimensional grids}
 The algorithms to analyse and manipulate (Boolean operations such as intersection or union) are also straightforwardly implemented in a computer. 
 
 On the other hand, grids also suffer problems.
@@ -285,7 +295,7 @@ As can be seen in~\reffig{fig:whydt},
   \caption{Two TINs (left is a DT, right has one non-Delaunay edge) and the result of estimating with linear interpolation in the TIN\@.}%
 \labfig{fig:whydt}
 \end{figure}
-the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of 95m is not used).
+the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of \SI{95}{\m} is not used).
 
 %
 
@@ -297,7 +307,7 @@ TINs are the most popular alternatives to 2D grids for modelling elevation; both
  
 A TIN in which a linear interpolation function is used yields a $C^0$ piecewise representation, \ie\ it is a continuous function but at the edges of the triangles the first derivative is not possible.
 It is possible to use higher-order functions in each triangle of a TIN, to construct a $C^1$ or $C^2$ field, \ie\ where the first and second derivative of the surface can be obtained. 
-Chapter~\ref{chap:interpol} gives more details.
+Chapter~\ref{chap:interpol} gives more details about spatial interpolation and continuity.
 
 
 
@@ -388,10 +398,10 @@ As shown in~\reffig{fig:isoline},
 \begin{figure}
   \centering
   \includegraphics[width=0.95\textwidth]{figs/isoline}
-  \caption{Cross-section of a terrain (left), and the 200m isoline extracted from a TIN (right).} 
+  \caption{Cross-section of a terrain (left), and the \SI{200}{\m} isoline extracted from a TIN (right).} 
 \labfig{fig:isoline}
 \end{figure}
-the idea is to compute the intersection between the level value (\eg\ 200m) and the terrain, represented for instance with a TIN\@. 
+the idea is to compute the intersection between the level value (\eg\ \SI{200}{\m}) and the terrain, represented for instance with a TIN\@. 
 Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
 Chapter~\ref{chap:conversion} gives more details.
 
@@ -439,7 +449,7 @@ Obtaining good slope from contour lines is possible, but is in practice a comple
 \section{Exercises}
 
 \begin{enumerate}
-  \item Explain in our own words why a point cloud (\eg\ collected with airborne lidar) is not considered a complete representation of a terrain.
+  \item Explain in your own words why a point cloud (\eg\ collected with airborne lidar) is not considered a complete representation of a terrain.
   \item What is a bivariate function? 
   \item Assume you have a 2.75D terrain of an area. Is it possible to extract the isolines from it? What properties will these have? Will they intersect?
 \end{enumerate}

@@ -23,6 +23,7 @@ Delaunay triangulations with constraints are also discussed.
 
 
 \section{Voronoi diagram}%
+\label{sec:vd}%
 \index{Voronoi diagram}
 
 Let $S$ be a set of points in $\mathbb{R}^2$ (the two-dimensional Euclidean space). 
@@ -165,9 +166,10 @@ The relationship is the following: every triangle of the lower envelope of conv(
 
  Construction of the two-dimensional DT can be transformed into the construction of the convex hull of the lifted set of points in three dimensions (followed by a simple project to the two-dimensional plane).
 
-\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
+
+\begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   Since it is easier to construct convex hulls (especially in higher dimensions, \ie\ 4+), the DT is often constructed with this approach, even in 2D. One popular and widely used implementation is Qhull (\url{http://www.qhull.org/}).
-\end{kaobox}
+\end{kaobox-practice}
 
 
 %%%
@@ -305,7 +307,7 @@ This process stops when every triangle having $p$ as one of its vertices respect
 
 
 %%%
-\paragraph{Initialisation: the big triangle.}%
+\subsection{Initialisation: the big triangle}%
 \label{sec:big_tr}
 Most of the incremental DT/VD algorithms assume that the set $S$ of points is entirely contained in a \emph{big triangle} ($\tau_{big}$) several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
 Figure~\ref{fig:big_tr} illustrates this.
@@ -334,15 +336,17 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 
 %
 
-\begin{kaobox}[frametitle=\faCog\ How does it work in practice?]
+\begin{floatbox}
+\begin{kaobox-practice}[frametitle=\faCog\ How are DT created in practice?]
 Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
 It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
 There is also a variation on the big triangle: when an extra point is ``at the infinity''.
-\end{kaobox}
+\end{kaobox-practice}
+\end{floatbox}
 
 
 %%%
-\paragraph{Point location with walking.}% 
+\subsection{Point location with walking}% 
 \label{sec:dtwalk}
 
 To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ since each triangle must be checked).
@@ -390,7 +394,7 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 
 
 %%%
-\paragraph{Flips.}
+\subsection{Flips}
 The \emph{flip22} operation used to modify the triangulation is a simple \emph{local} topological operation that modifies the configuration of two adjacent triangles. 
 It is performed in constant time $\mathcal{O}(1)$.
 Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
@@ -409,13 +413,14 @@ A flip13 refers to the operation of inserting a vertex inside a triangle, and sp
 
 
 %%%
-\paragraph{Controlling the flips.}
+\subsection{Controlling the flips}
 To control which triangles have to be checked and potentially flipped, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
 When the stack is empty, then there are no more triangles to be tested, and we are guaranteed that all the triangles in the triangulation have an empty circumcircle.
 
 
 %%%
-\paragraph{Predicates.}\index{predicates}
+\subsection{Predicates}%
+\index{predicates}
 Constructing a DT and manipulating it essentially require two basic geometric tests (called \emph{predicates}): \Orient\ determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and \Incircle\ determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$. 
 Both tests can be reduced to the computation of the determinant of a matrix:
 \begin{equation}
@@ -472,7 +477,7 @@ This is an important property that allows an efficient retrieval of triangles in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Constrained and Conforming Delaunay Triangulations}%
-\index{Constrained DT}\index{CDT}
+\index{Constrained DT}\index{CDT}\index{Conforming DT}
 
 Given as input a set $S$ of points and straight-line segments in the plane, different triangulations of $S$ (so that the segments are respected) can be constructed. 
 We are mostly interested in the \emph{constrained Delaunay triangulation} (ConsDT) and the \emph{conforming Delaunay triangulation} (ConfDT), see Figure~\ref{fig:cdt_example} for one example.
@@ -574,8 +579,7 @@ CGAL (\url{https://www.cgal.org/}), among many others, uses the triangle-based d
 Since a DT can be locally modified by adding one point (and not reconstructing the whole structure from scratch, see Figure~\ref{fig:insertion_deletion}), it is also possible to delete/remove one vertex from a DT with only local operations.
 \citet{Mostafavi03} and \citet{Devillers09} describe algorithms.
 
-
-
+The details of how the spatial interpolation methods generalise to 3D are given in \citet{Ledoux05}.
 
 %%%
 %
@@ -586,7 +590,7 @@ Since a DT can be locally modified by adding one point (and not reconstructing t
   \item If a given vertex $v$ in a DT has 7 incident triangles, how many vertices will its dual polygon contain?
   \item A DT has 6 vertices, and 3 of these are forming the convex hull. How many triangles does the DT have?
   \item Assume you have 8 points located on a circle. Draw the DT and the VD of these 8 points.
-  \item When inserting points in a DT (Algorithm~\ref{algo:insert1pt}), what happens if a new points is inserted directly on an edge? Line~2 states that the triangle is split into 3 new triangles, does it still hold?
+  \item When inserting points in a DT (Algorithm~\ref{algo:insert1pt}), what happens if a new point is inserted directly on an edge? Line~2 states that the triangle is split into 3 new triangles, does it still hold?
   \item Given the input formed of elevation points and breaklines below (both projected to the $xy$-plane), draw both the constrained and conforming Delaunay triangulation (an approximation is fine).
   \\ \\
   \centering{\includegraphics[width=0.95\linewidth]{figs/cdt_exercise}}

@@ -31,6 +31,9 @@
 \usepackage{styles/mdftheorems}
 %\usepackage{styles/plaintheorems}
 
+\usepackage{float}
+\newfloat{floatbox}{tb}{ext2}
+
 % \graphicspath{{images/}{./}} % Paths in which to look for images
 
 \makeindex[columns=3, title=Alphabetical Index, intoc] % Make LaTeX produce the files required to compile the index
@@ -39,7 +42,17 @@
 
 \makenomenclature % Make LaTeX produce the files required to compile the nomenclature
 
-
+%-- new box environments
+\newmdenv[
+  style=kaoboxstyle,
+  backgroundcolor=RoyalBlue!25!White,
+  frametitlebackgroundcolor=RoyalBlue!25!White,
+]{kaobox-practice}
+\newmdenv[
+  style=kaoboxstyle,
+  backgroundcolor=Dandelion!25!White,
+  frametitlebackgroundcolor=Dandelion!25!White,
+]{kaobox-toread}
 
 %----------------------------------------
 % HL
@@ -89,6 +102,7 @@
 \usepackage{xurl}
 \usepackage{hyperref}
 \hypersetup{breaklinks=true}
+\usepackage{siunitx}
 
 \setcounter{secnumdepth}{3}
 
@@ -104,9 +118,9 @@
 
 \title{Computational modelling of terrains}
 \author{Hugo Ledoux \hspace{7mm} Ken Arroyo Ohori \hspace{7mm} Ravi Peters}
-\date{\texttt{v0.7.0}}
+\date{\texttt{v0.9.0-beta.1}}
 
-\publishers{\includegraphics[width=\linewidth]{front-back/saba.png}}
+\publishers{\includegraphics[width=\linewidth]{front-back/nni_terrain.png}}
 
 %----------------------------------------------------------------------------------------
 
@@ -188,19 +202,19 @@
 \mainmatter 
 \setchapterstyle{kao} % Choose the default chapter heading style
 
-\include{whatisterrain/whatisterrain} %- 01
-\include{acquisition/acquisition} %- 02
+% \include{whatisterrain/whatisterrain} %- 01
+% \include{acquisition/acquisition} %- 02
 \include{dtvd/dtvd} %- 03
 \include{interpol/interpol} %- 04
-\include{kriging/kriging} %- 05
-\include{topofeatures/topofeatures} %- 06
-\include{runoff/runoff} %- 07
-\include{conversion/conversion} %- 08
-\include{spatialextent/spatialextent} %- 09
-\include{massive/massive} %- 10
-\include{visibility/visibility} %- 11
+% \include{kriging/kriging} %- 05
+% \include{topofeatures/topofeatures} %- 06
+% \include{runoff/runoff} %- 07
+% \include{conversion/conversion} %- 08
+% \include{spatialextent/spatialextent} %- 09
+% \include{massive/massive} %- 10
+% \include{visibility/visibility} %- 11
 \include{pcprocessing/pcprocessing} %- 12
-\include{bathymetry/bathymetry} %- 13
+% \include{bathymetry/bathymetry} %- 13
 %----------------------------------------------------------------------------------------
 
 

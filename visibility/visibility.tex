@@ -1,7 +1,8 @@
 %!TEX root = ../terrainbook.tex
+% chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
-\labch{visibility}
+
 
 \chapter{Visibility queries on terrains}%
 \label{chap:visibility}
@@ -14,8 +15,8 @@
 Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which part(s) of the surrounding terrain are visible.
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.
 There are also several related problems.
-One example is the estimation of shadows (position of the sun continually varies, also with seasons).
-Shadows are important to accurately measure the photovoltaic potential, for determining solar envelopes, for assessing the value of real estate, and for estimating the thermal comfort, among other applications.
+Two closely related examples are the estimation of shadows (position of the sun continually varies, also with seasons) and the calculation of the solar irradiance (how much sun light will a certain area have per day/week).
+These can be used to estimate the photovoltaic potential (where can we best install solar panels?), for estimating where snow will accumulate in mountains, or for estimating the temperature of the ground (necessary for climate modelling), among other applications.
 
 %
 
@@ -31,12 +32,12 @@ When referring to visibility problems, we address the following two fundamental 
   \begin{marginfigure}
     \centering
     \includegraphics[width=\linewidth]{figs/overview_viewshed}
-    \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to 15km).}%
+    \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to \SI{15}{\km}).}%
   \labfig{fig:overview_viewshed}
   \end{marginfigure} 
   \item[viewshed:] given a viewpoint $v$, which part(s) of the surrounding terrain are visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
-Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation 0m) or at a given height (2m for a human, or 30m for a telecommunication tower).
+Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation \SI{0}{\m}) or at a given height (\SI{2}{\m} for a human, or \SI{30}{\m} for a telecommunication tower).
 
 %
 
@@ -50,7 +51,7 @@ We discuss how to solve these problems for both TINs and grids.
 \section{Rendering + ray casting}
 
 Rendering is the process of generating images from 2D or 3D scenes.
-Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800x800 pixels) and assigning one colour to each pixel.
+Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{figs/Ray_trace_diagram.pdf}
@@ -64,13 +65,13 @@ The main issue involves finding that closest object, and especially discard the 
 
 
 %%
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
   \textbf{Parts of the following chapter.} It summarises different methods to determine which surfaces are visible, for the generic cases of objects in 3D space.
   Read only the following sections: 18.0, 18.1, 18.2, and 18.4.
   \\ \\
   \fullcite{Salomon11} \\ \\
   \textbf{PDF:} \url{https://doi.org/10.1007/978-0-85729-886-7_18}
-\end{kaobox}
+\end{kaobox-toread}
 
 
 
@@ -89,13 +90,13 @@ Furthermore, we can exploit the connectivity and adjacency between the 2D cells 
 \subsection{Visibility in TINs}
 % TODO : write my own part perhaps? Would be better IMO
 
-\begin{kaobox}[frametitle=\faExternalLink\ To read or to watch.]
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
 \textbf{Parts of the following chapter.} 
 Read from Section 1 to Section 3.1; it covers the simplest case for a LoS between 2 points on the surface.
 \\ \\
 \fullcite{deBerg97} \\ \\
 \textbf{PDF:} \url{https://doi.org/10.1007/3-540-63818-0_4}
-\end{kaobox}
+\end{kaobox-toread}
 
 
 %%%
@@ -139,7 +140,7 @@ As shown in \reffig{fig:viewshed},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/viewshed}
-  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (5000km in this case).}%
+  \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (\SI{5000}{\m} in this case).}%
 \labfig{fig:viewshed}
 \end{figure}
 computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
@@ -148,8 +149,8 @@ The result of a viewshed is a binary grid; in \reffig{fig:overview_viewshed}, Tr
 %
 
 While this brute-force approach will work, several redundant computations will be made, since several of the rays from $v$ will intersect the same grid cells.
-Furthermore, depending on the resolution, the number of cells in a 5km radius (a reasonable value where humans can see) can become \emph{very} large.
-As an example, with the AHN3 gridded version (50cm resolution), this means roughly 400M queries ($(\frac{5000 \times 2}{0.5})^2$).
+Furthermore, depending on the resolution, the number of cells in a \SI{5}{\km} radius (a reasonable value where humans can see) can become \emph{very} large.
+As an example, with the AHN3 gridded version (\SI{50}{\cm} resolution), this means roughly 400 million queries ($(\frac{5000 \times 2}{0.5})^2$).
 
 %
 
@@ -163,7 +164,7 @@ If $z$ is lower, then the cell is invisible.
 If $z$ is higher, then the cell is visible and $t_{cur}$ is updated with a new tangent using the current elevation.
 
 Viewsheds with several viewpoints $v_i$ are also very useful, think for instance of obtaining the viewshed along a road.
-This can be computed by sampling the road at every 50m and computing the viewsheds from each of the points. 
+This can be computed by sampling the road at every \SI{50}{\m} and computing the viewsheds from each of the points. 
 Each viewshed yields a binary grid, and it suffices to use a map algebra operator to combine the results into one grid (if one cell is visible from any viewpoint, then it is visible).
 
 
