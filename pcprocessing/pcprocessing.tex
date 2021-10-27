@@ -9,7 +9,7 @@
 \chapter{Point cloud processing}%
 \label{chap:pcprocessing}
 
-In this chapter we discuss algorithms for reading, transforming, processing, cleaning, and extracting information from point clouds, and we also briefly present the main storage formats used in practice.
+In this chapter we learn about  the main storage formats used in practice for point clouds and we discuss algorithms for processing, cleaning, and extracting information from point clouds.
 
 
 
@@ -25,13 +25,13 @@ A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point 
 The order and meaning of the fields in a record are usually fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
-Notice that, in additions to the widely used formats mentioned here, there are also many proprietary formats. 
+Notice that, in addition to the widely used formats mentioned here, there are also many proprietary formats. 
 These are often specific to one particular software and are therefore not very useful for data exchange.
 
 \subsection{ASCII formats}
-ASCII formats are plain text files. 
+ASCII\footnote{\url{https://en.wikipedia.org/wiki/ASCII}} formats are plain text files. 
 The point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
-In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated values (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
+In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated value (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
 The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes vary, and also the used coordinate reference system (CRS) is usually not documented in the file.
 \begin{figure}
@@ -74,9 +74,7 @@ There is no standardised way to specify the CRS in a PLY file, although one coul
 \index{LAS format}
 
 The \emph{public LASER} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
-The LAS standard, currently at version 1.4, 
-\marginnote{LAS v1.4 is the latest}
-is maintained by the ASPRS organisation and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
+The LAS standard, currently at version 1.4\marginnote{LAS v1.4 is the latest}, is maintained by the American Society for Photogrammetry and Remote Sensing (ASPRS)  and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
 It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
 
@@ -106,8 +104,7 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
 \label{tab:las-record}
 \end{table*}
 Other record types are available that also include fields to store for instance  RGB colour information or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
-While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.
-\marginnote{unused fields take up storage} 
+While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.\marginnote{unused fields take up storage} 
 It is important to notice that unused fields will still take up storage space in each record.
 
 The CRS of the point cloud can be stored in the header of a LAS file, together with some other general information such as the total number of points and the bounding box of the point cloud. 
@@ -317,7 +314,7 @@ Ground filtering methods are typically based on the assumptions that
   \item the ground is a continuous surface without sudden elevation jumps, 
   \item for a given 2D neighbourhood, the ground points are the ones with the lowest elevation.
 \end{enumerate}
-This is reasonable because non-ground points are typically measurements from objects above the ground such as trees, street furniture and buildings (see \eg\ Figure~\ref{fig:axelsson:profiles}).
+Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as that in Section~\ref{sec:outlier_detection}. (see \eg\ Figure~\ref{fig:axelsson:profiles}).
 
 
 % TODO: shouldn't we use our own figure here?
@@ -352,7 +349,7 @@ The cell-size of the grid should be chosen such that it is larger than the large
 Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ 110m, so that it is guaranteed that each grid-cell has at least a few ground points.
 Each point that is inserted into the TIN is considered to be a ground point.
 
-In the second step two geometric properties are computed for each unclassified point.
+In the second step two geometric properties are computed for each point that was not added to the TIN.
 These properties are based on the relation between the point $p$ and the triangle in the current TIN that intersects its vertical projection. 
 The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
 \begin{figure*}
@@ -412,8 +409,7 @@ Figure~\ref{fig:axelsson} gives an example result.
 
 An alternative to TIN refinement is the algorithm called \emph{Cloth simulation filter} (CSF).
 Unlike the previous one, no TIN is required, its input is only a point cloud.
-The main observation necessary for this algorithm is that lower points are usually forming the ground (if there are no outliers below the ground in the dataset).
-It is thus necessary to first run an outlier removal algorithm such as that in Section~\ref{sec:outlier_detection}.
+The main observation necessary for this algorithm is that lower points are usually forming the ground (again it is assumed no outliers appear below the ground in the dataset).
 
 %
 
@@ -426,7 +422,7 @@ The key idea of the algorithm, as shown in Figure~\ref{fig:csf_idea},
 \end{figure*}
 is to invert (upside-down) a point cloud, and to let a piece of cloth fall from the sky.
 The cloth will fall until it reaches the points forming the ground.
-During the process, we aim to control the tension (or rigidity) of the cloth, so that areas where there is no sample point or where there are large buildings can be filled realistically.
+During the process, we aim to control the \emph{tension} (or rigidity) of the cloth, so that areas where there is no sample point or where there are large buildings can be filled realistically.
 
 %
 
@@ -454,7 +450,7 @@ As shown in Figure~\ref{fig:csf_iterations},
   \caption{}%
 \label{fig:csf_iterations}
 \end{marginfigure}
-the process is iterative, that is we first define a cloth formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
+the process is iterative. We first define a cloth formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
 If a particle is movable (\ie\ it has not reached the ground yet), then the gravity force is applied (a vector pointing downwards; its magnitude will depend on the momentum of the particle) and afterwards the internal forces are applied.
 Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) are have higher $z$-values.
 
@@ -514,7 +510,7 @@ The cloth is first initialised at an arbitrary height above the highest points a
 The cloth is formed of particles regularly distributed according to a user-defined parameter.
 We assume that all particles have the same mass, and we define arbitrarily a first displacement vector due to the gravity (pointing downwards) (line~\ref{l:init_prev}).
 For each particle $p$, we need to define the lowest elevation it can move, once it reaches it it is labelled as unmovable (line~\ref{l:zmin}).
-The lowest elevation of one particle $p$ is defined as the original elevation of the closest sample point $s$ once both have been projected to the 2D-plane.
+The lowest elevation of one particle $p$ is defined as the original elevation of the closest sample point $s$ after projecting both to the 2D-plane.
 
 %
 
@@ -535,14 +531,14 @@ For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 \end{marginfigure}
 \begin{enumerate}
   \item \textbf{$n_i$ is unmovable:} only $p$ is moved, towards $n_i$. 
-  \item \textbf{$n_i$ is movable:} the idea is that both $p$ and $n_i$ will try to move to the same height. The vector applied to each will be in opposite direction. 
+  \item \textbf{$n_i$ is movable:} the idea is that both $p$ and $n_i$ will try to move towards each other to the same height. The vector applied to each will thus be in opposite direction. 
 \end{enumerate}
 
 \paragraph{Controlling the tension/rigidity.}
 % TODO: understand and report on rigidity here?
 Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the displacement vector, \eg\ to 0.8 of its length (and thus increase the tension in the cloth).
 The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector can be controlled by scaling the displacement vector. 
-In Figure~\ref{fig:csf_2cases} is it 0.5 of the difference in elevation, but if more tension was wanted, then the vector could be 0.8 (so that the movable particle has a displacement $\vec{v}=(0, 0, 8)$).
+In Figure~\ref{fig:csf_2cases} it is 0.5 of the difference in elevation, but if more tension is wanted, then the scale could be 0.8 (so that the movable particle has a displacement $\vec{v}=(0, 0, 5.6)$, because $0.8 * (10-2) = 5.6$).
 
 % TODO: order dependent
 
@@ -588,7 +584,7 @@ A line for example can be parametrised using the equation $y = mx + b$, in this 
 We can create an instance of a line by specifying values for its parameters $m$ and $b$, respectively fixing the slope and the position of the line.
 
 In the following, the methods are described in a general way, \ie\ without specialisations for one particular shape.
-Only for illustrative purposes specific shapes such as a line or a plane are used to (visually) explain the basic concept of each shape detection method, but the same could be done with spheres, cones, or others.
+Only for illustrative purposes specific shapes such as a line or a plane are used to (visually) explain the basic concept of each shape detection method, but the same could be done with spheres, cones, or other shapes.
 
 
 %In the following we will focus on plane detection  and discuss three different methods that can do that.
@@ -610,7 +606,7 @@ Only for illustrative purposes specific shapes such as a line or a plane are use
 
 RANSAC is short for \emph{RANdom SAmpling Consensus} and as its name implies it works by randomly sampling the input points.
 In fact it starts by picking a random set of points $M \subset P$. 
-This set $M$ is called the \emph{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
+This set $M$ is called the \emph{minimal set}\index{minimal set}\marginnote{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
 From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and~\ref{fig:ransac:c}).
 \begin{figure}
 	\centering
@@ -639,8 +635,8 @@ From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructe
 \end{figure}
 The algorithm then checks for each point $p \in \{P \setminus M\}$ if it fits with $\mathcal{I}$. 
 This is usually done by computing the distance $d$ from $p$ to $\mathcal{I}$ and comparing $d$ against a user-defined threshold $\epsilon$.
-If $d<\epsilon$ we say that $p$ is an \emph{inlier}, otherwise $p$ is an outlier.
-The complete set of inliers is called the \emph{consensus set}, and its size is referred to as the \emph{score}.
+If $d<\epsilon$ we say that $p$ is an \emph{inlier}\index{inlier}\marginnote{inlier}, otherwise $p$ is an outlier.
+The complete set of inliers is called the \emph{consensus set}\index{consensus set}\marginnote{consensus set}, and its size is referred to as the \emph{score}\index{score}\marginnote{score}.
 The whole process from picking a minimal set to computing the consensus set and its score, as shown in Algorithm~\ref{algo:ransac}, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (Figure~\ref{fig:ransac:d}). 
 
 \begin{algorithm}
@@ -686,7 +682,7 @@ The probability that a shape instance is detected with RANSAC depends mainly on 
 \end{enumerate}
 Naturally, it will be easier to detect a shape instance in a dataset with a relatively low number of outliers.
 And it is more likely that a shape instance is found if more minimal sets are evaluated.
-Picking a sufficiently high $k$ is therefore important for the success of the algorithm (although a higher $k$ also increases the computation time).
+Picking a sufficiently high $k$ is therefore important for the success of the algorithm, although a higher $k$ also increases the computation time.
 %With the right parameters it can detect shapes in point clouds with up to 50\% outliers.
 
 Because of the random nature of RANSAC, the minimal sets that it will evaluate will be different every time you run the algorithm, even if the input data is the same.
@@ -710,7 +706,7 @@ This could be a disadvantage.
 \index{region growing}
 
 Region growing works by gradually growing sets of points called \emph{regions} that fit a particular shape instance.
-A region $R$ starts from a \emph{seed point}, \ie\ a point that is suspected to fit a shape instance.
+A region $R$ starts from a \emph{seed point}\index{seed point}\marginnote{seed point}, \ie\ a point that is suspected to fit a shape instance.
 More points are added to $R$ by inspecting \emph{candidate points}, \ie\ points in the neighbourhood of the members of $R$.
 To check if a candidate point $c$ should be added to $R$, a test is performed.
 In the case of region growing for plane detection (see Figure~\ref{fig:region-growing}) this test entails computing the angle between the normal vector of $c$ and the normal vector\sidenote{The normal vector for a point $p\in P$ can be found by fitting a plane to the points in the local neighbourhood of $p$. The vector orthogonal to this plane is the normal vector.} of its neighbour in $R$.
@@ -818,7 +814,7 @@ To find the possible shape instances for $p$, the algorithm simply checks all po
 It is thus important to choose a good parametrisation of the shape that is to be detected.
 For instance when detecting lines one could use the slope-intercept form, \ie\ $y = mx+b$. 
 However, this particular parametrisation can not easily represent vertical lines, because $m$ would need become infinite which is computationally difficult to manage. 
-A better line parametrisation is the Hesse normal form which is defined as 
+A better line parametrisation is the Hesse normal form\index{Hesse normal form}\marginnote{Hesse normal form} which is defined as 
 \[
 r = x\cos{\phi} + y\sin{\phi}. 
 \]
@@ -898,9 +894,9 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 	\caption{The Hough transform algorithm}%
 \label{algo:hough-transform}
 \end{algorithm}
-The votes are saved in an \emph{accumulator} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
+The votes are saved in an \emph{accumulator\index{accumulator}\marginnote{accumulator}} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
 Notice that each element in the accumulator represents one possible shape instance.
-Because each axis only has a limited number of elements, each parameter is \emph{quantised}.
+Because each axis only has a limited number of elements, each parameter is \emph{quantised}\index{quantisation}\marginnote{quantisation}.
 This means that each parameter is restricted in the possible values it can have.
 The chosen quantisation determines the sensitivity of the accumulator.
 The accumulator of Figure~\ref{fig:hough-transform:d} for example, can only detect horizontal and vertical lines, because the $\phi$ parameter is quantised in only two possible values.
