@@ -93,7 +93,7 @@ Creating good depth-contours requires \emph{generalisation}, \ie\ the process of
 The process of generalisation is guided by constraints that essentially define when a depth-contour is ``good''.
 A good depth contour satisfies all of the following four generalisation constraints.
 \begin{enumerate}
-  \item The \emph{safety constraint}.  
+  \item The \emph{safety constraint}\marginnote{safety constraint}.  
   At every location, the indicated depth must not be deeper than the depth that was originally measured at that location; this is to guarantee that a ship never runs aground because of a faulty map.
   This constraint is a so-called hard constraint, \ie\ it can never be broken.
   \item The \emph{legibility constraint}. 
@@ -151,8 +151,8 @@ The following are methods that use a raster data structure either to select a su
 %
 \paragraph{Selection with virtual gridding.}
 This is a point filtering method that aims at reducing the volume of data, in order to create generalised contours and to speed up the computation time, or simply to make the computation possible, in the case the input dataset is several orders of magnitude bigger than the main memory of a computer.
-The idea is to overlay a virtual grid on the input points and to keep one point for every grid cell.
-The selected points can either be used to construct a raster or TIN surface, see below.
+The idea is to overlay a virtual grid on the input points and to keep one point for every grid cell (similar to grid thinning as explained in Section~\ref{sec:thinning}).
+The selected points can either be used to construct a raster using interpolation or  a TIN surface, and contours can be derived from that.
 While different functions can be used to select the point (\eg\ deepest, shallowest, average, or median), because of the safety constraint the shallowest point is often chosen by practitioners, see Figure~\ref{fig:fr:vg:a} for a one-dimensional equivalent.
 \begin{figure}
 \centering
@@ -251,16 +251,15 @@ However, as Figure~\ref{fig:simpfail} shows,
 \label{fig:simpfail}
 \end{figure*}
 the safety constraint is not guaranteed to be respected when vertices are removed from a TIN\@.
-This is due to the fact that the triangulation must be updated (with flips, see Section~\ref{sec:dtconstruction}) and the shapes of the triangles are not controlled by the depth of the vertices, but rather by the Delaunay criterion.
+This is due to the fact that the triangulation must be updated (with flips, see Section~\ref{sec:dtconstruction}) and it is likely that a change in the triangulation will eventually violate the safety constraint on a vertex that was removed earlier.
 
 
 %%%
 %
 \section[Voronoi-based approach]{A Voronoi-based surface approach}
 
-Part of the problems with existing approaches to generate depth-contours is the fact that the different processes, such as spatial interpolation, generalisation and contouring, are treated as independent processes.
-These are in fact interrelated, and we introduce in the following a method where the different processes are integrated.
-This method uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are safe and legible.
+Part of the problems with existing approaches to generate depth-contours is the fact that the different processes, such as spatial interpolation, generalisation and contouring, are treated as independent processes, while they are in fact interrelated. In the following  we introduce a method where the different processes are integrated.
+This method uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are both legible and guaranteed to be safe.
 
 %
 
@@ -334,7 +333,7 @@ Thus, the smoothing operator does not change the planimetric coordinates of vert
 To perform the Laplace interpolation for each vertex $v$ in the Voronoi diagram $\mathcal{D}$, it suffices to obtain the natural neighbours $p_i$ of $v$, and for each calculate the lengths of the Delaunay and the dual Voronoi edge (as explained in Section~\ref{sec:laplace}).
 There is no need to insert/remove $v$ in the dataset, since we are only interested in estimating its depth (without considering the depth it is already assigned).
 
-The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall feature shape. 
+The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall seabed shape. 
 Applying it reduces the angle between adjacent triangles which gives the surface a smoother look.
 
 It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $\mathcal{O}(n)$.
@@ -434,7 +433,7 @@ It should be noticed that the ``top'' of the pyramid was densified, and not so m
 %
 
 Densification aims to reduce the difference between the linear TIN and the Laplace interpolated field of its vertices---effectively improving the resolution of the extracted contours.
-Therefore, densification is to be applied just before the extraction of the depth-contours.
+Therefore, densification is to be applied just before the extraction of the depth-contours.\marginnote{Apply densification \emph{before} contour extraction and \emph{after} smoothing}
 If applied \emph{before} the smoothing operator, it would limit the effectiveness of that operator, since a denser triangulation smoothes more slowly.
 
 The densification operator uses an area-threshold that determines which triangles should be densified. 
