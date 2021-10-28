@@ -63,6 +63,13 @@ In this book, we use the following definitions (see \reffig{fig:dtmdsm}):
 
 It should be noticed that in some countries a DEM is often synonymous with a grid of elevation (see below).
 
+Some concepts are derived from there, for instance the \emph{normalised DSM},%
+\index{nDSM}\index{normalised DSM}\marginnote{nDSM: normalised DSM}
+which is defined as the difference between the DSM and the DTM\@.
+You thus obtain a value representing the height of man-made objects and trees, and zero when there are none.
+
+
+
 
 %%%
 %
@@ -149,10 +156,10 @@ The function can theoretically have any number of independent variables, but in 
 
 The representation of a field in a computer faces many problems. 
 First, fields are continuous functions, and, by contrast, computers are discrete machines. 
-Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.
+Fields must therefore be \emph{discretised}, \ie\ broken into finite parts.%
 \index{discretisation}\marginnote{discretisation}
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
-The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in \refchap{acquisition}).
+The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in Chapter~\ref{chap:acquisition}).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
 
 
