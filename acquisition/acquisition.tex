@@ -295,24 +295,25 @@ For this reason adjacent flight strips (see Figure~\ref{fig:lidarStrips}) often 
 \end{figure}
 If the strip adjustments process fails or is omitted, a `ghosting' effect can occur as illustrated in Figure~\ref{fig:lidarGableRoof} (top). 
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in Figure~\ref{fig:dim}.
-\begin{figure}
+\begin{figure*}
 	\centering
-	\begin{subfigure}{0.95\linewidth}
+	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_OP_NA_10cm.jpg}
 		\subcaption{Nadir image}\label{fig:dim:a}
 	\end{subfigure}
 	
-	\begin{subfigure}{0.95\linewidth}
+	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_DSM_NA_10cm.jpg}
 		\subcaption{DSM with good aerial triangulation}\label{fig:dim:b}
 	\end{subfigure}
-	\begin{subfigure}{0.95\linewidth}
+	\quad
+	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/Roof_DSM_NA+OBL_10cm.jpg}
 		\subcaption{DSM with poor aerial triangulation}\label{fig:dim:c}
 	\end{subfigure}
 	\caption{Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.}%
 \label{fig:dim}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Target surface}
@@ -397,19 +398,20 @@ An example of moving objects are flocks of birds flying in front of the scanner.
 It is common to perform some kind of process after acquisition in order to fix errors caused by the reasons mentioned above. 
 In most cases such processes are largely successful. 
 For instance, one can attempt to fill the void regions, sometimes referred to as \emph{no-data} regions, that are for instance due to pools of rainwater or occlusion, using an interpolation method (Figure~\ref{fig:voidfill}).
-\begin{figure}
+\begin{figure*}
 	\centering
-	\begin{subfigure}{0.9\linewidth}
+	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/srtm_trento_voidfill.png}
 		\subcaption{Void-filling through interpolation in SRTM data}\label{fig:voidfill}
 	\end{subfigure}
-	\begin{subfigure}{0.9\linewidth}
+	\quad
+	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ourlier-detection-wrong.png}
 		\subcaption{Good points, \ie\ those on the power line, may be removed during outlier detection}		\label{fig:outlier-wrong}
 	\end{subfigure}
 	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}%
 	\label{fig:processing}
-\end{figure}
+\end{figure*}
 Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds\sidenote{This is a topic of Chapter~\ref{chap:pcprocessing}}. 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).

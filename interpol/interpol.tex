@@ -116,7 +116,7 @@ The Runge's effect (also called \emph{overshoots}) are eliminated (since the deg
 %-------------------------------------------
 %-
 \section{Weighted-average methods}%
-\ref{sec:wam_interpol}
+\label{sec:wam_interpol}
 
 
 The five interpolation methods discussed in this section are \emph{weighted-average methods}.
@@ -228,7 +228,7 @@ As is the case for the VD, a triangulation is a piecewise subdivision (tessellat
 \begin{marginfigure}
   \includegraphics{../whatisterrain/figs/tin}
   \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}%
-\labfig{fig:tin}
+\label{fig:tin}
 \end{marginfigure}
 Interpolating at location $x$ means first finding inside which triangle $x$ lies, and then the height is estimated by linear interpolation on the 3D plane defined by the three vertices forming the triangle (the samples are lifted to their elevation value). 
 The number of samples used in the interpolation is therefore always 3, and their weight is based on the barycentric value (see below).
