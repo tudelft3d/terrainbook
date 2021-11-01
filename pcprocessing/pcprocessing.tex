@@ -58,7 +58,7 @@ This makes it a very flexible standard, since the user can decide on the composi
 Figure~\ref{fig:ply} shows an example PLY file.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ply_header.pdf}
-  \caption{A simple PLY file with 1 additional user-defined attribute of type integer (``int''). It contains 7 points.}%
+  \caption{A simple PLY file with 1 additional user-defined attribute of type integer (\texttt{int}). It contains 7 points.}%
 \label{fig:ply}
 \end{figure}
 
@@ -331,7 +331,7 @@ If needed, these holes can be filled in a subsequent processing step involving s
 
 %%%
 %
-\subsection{Ground filtering with TIN refinement}
+\subsection{Ground filtering with TIN refinement}%
 \index{ground filtering}
 
 We will now discuss an effective ground filtering method that is based on the \emph{greedy} insertion of ground points into a TIN\@.
@@ -347,10 +347,10 @@ The latter two steps are repeated until all remaining points fail the ground tes
 In the first step a rudimentary initial TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
 These points are found by superimposing a 2D grid over the data extent and by selecting the lowest point for each grid cell (similar to grid thinning).
 The cell-size of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
-Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ 110m, so that it is guaranteed that each grid-cell has at least a few ground points.
+Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \SI{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
 Each point that is inserted into the TIN is considered to be a ground point.
 
-In the second step two geometric properties are computed for each point that was not added to the TIN.
+In the second step two geometric properties are computed for each point that was not added to the TIN\@.
 These properties are based on the relation between the point $p$ and the triangle in the current TIN that intersects its vertical projection. 
 The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
 \begin{figure*}

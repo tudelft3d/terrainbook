@@ -220,9 +220,9 @@ w = A^{-1}d.
 
 Now, the obvious remaining questions are: (i) what expectation \(E[Z]\) to use, and (ii) what covariance function \(C\) to use.
 Without an external evaluation of the dataset, there are no optimal answers for either of those questions, which is the main weakness of simple kriging and the reason why it is not used widely in practice.
-That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\), and an arbitrary covariance function, such as the exponential, gaussian and spherical functions that we discuss in the following section.
+That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\), and an arbitrary covariance function, such as the exponential, Gaussian and spherical functions that we discuss in the following section.
 
-\section{The variogram}
+\section{The variogram}%
 \index{variogram}
 
 As we saw in simple kriging, the theoretical definitions of the variance and covariance functions imply that we know the expected value (\ie\ \(E[Z]\) in Equation~\ref{eq:variance1}, and \(E[Z_i]\) and \(E[Z_j]\) in Equation~\ref{eq:covariance}), which in practice is not realistic.

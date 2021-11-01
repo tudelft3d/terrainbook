@@ -401,7 +401,7 @@ Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilat
 \begin{marginfigure}
   \centering
   \includegraphics[width=0.5\textwidth]{figs/flip22}
-  \caption{A flip22}%
+  \caption{A \emph{flip22}}%
 \label{p:flip22}
 \end{marginfigure}
 There exist exactly two ways to triangulate $S$: the first one contains the triangles $abc$ and $bcd$; and the second one contains the triangles $abd$ and $acd$. 
@@ -409,7 +409,7 @@ Only the first triangulation of $S$ is Delaunay because $d$ is outside the circu
 A \emph{flip22} is the operation that transforms the first triangulation into the second, or vice-versa.
 
 Two other flips are possible: \emph{flip13} and \emph{flip31}; the numbers refer to the number of triangles before and after the flip.
-A flip13 refers to the operation of inserting a vertex inside a triangle, and splitting it into three triangles; and a flip31 is the inverse operation that deletes a vertex.
+A \emph{flip13} refers to the operation of inserting a vertex inside a triangle, and splitting it into three triangles; and a \emph{flip31} is the inverse operation that deletes a vertex.
 
 
 %%%
@@ -579,7 +579,6 @@ CGAL (\url{https://www.cgal.org/}), among many others, uses the triangle-based d
 Since a DT can be locally modified by adding one point (and not reconstructing the whole structure from scratch, see Figure~\ref{fig:insertion_deletion}), it is also possible to delete/remove one vertex from a DT with only local operations.
 \citet{Mostafavi03} and \citet{Devillers09} describe algorithms.
 
-The details of how the spatial interpolation methods generalise to 3D are given in \citet{Ledoux05}.
 
 %%%
 %
