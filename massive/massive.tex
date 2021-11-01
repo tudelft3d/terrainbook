@@ -294,7 +294,7 @@ At no moment is the full video downloaded to the user's device.
 %
 
 This idea can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
-Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calcute the slope of at one location in a point cloud we would need to retrieve all the neighbours and we saw above that this can be done with a kd-tree.
+Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calculate the slope of at one location in a point cloud we would need to retrieve all the neighbours and we saw above that this can be done with a kd-tree.
 The question is: is it possible to do this without reading the whole file and only process one part of it?
 
 %
@@ -313,7 +313,7 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
   A simple example would be ``\texttt{ls -l | grep json | wc -l}'' which would:
   \begin{enumerate}
     \item list all the files in the current directory (one file name per line); 
-    \item send this to the operator \emph{grep} which would discard all lines not having the keyworld `json'; 
+    \item send this to the operator \emph{grep} which would discard all lines not having the keyword `json'; 
     \item send this to the operator \texttt{wc -l} which counts the number of line.
    \end{enumerate} 
 \end{kaobox-practice}
@@ -367,7 +367,7 @@ Notice also that the memory the triangle was using can be reused to store anothe
 %%%
 \subsection{Spatial coherence} 
 
-The constuction of a DT with the streaming paradigm will only succeed (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
+The construction of a DT with the streaming paradigm will only succeed (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
 \index{spatial coherence}\marginnote{spatial coherence} 
 of the input dataset is high.
 It is defined by \sidecitet{Isenburg06} as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.

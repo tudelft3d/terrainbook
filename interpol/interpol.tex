@@ -496,7 +496,7 @@ One method (with given parameters) for a given dataset can be characterised by c
   RMSE = \sqrt{\frac{\sum_{i=1}^{n}(\hat{z}_i - z_i)^2}{n}}
 \end{equation}
 
-And it is a good idea to plot the results to observe where the largest differences between the estimation and the real values are obtained, this can help in idenfiying which parameters should be fine-tuned.
+And it is a good idea to plot the results to observe where the largest differences between the estimation and the real values are obtained, this can help in identifying which parameters should be fine-tuned.
 See for instance one example in \reffig{fig:jackknife}.
 \begin{figure*}
   \centering
@@ -522,7 +522,7 @@ See for instance one example in \reffig{fig:jackknife}.
     \includegraphics[width=\textwidth]{figs/jackknife/jk4.pdf}
     \caption{}
   \end{subfigure}
-\caption{\textbf{(a)} A terrain of a given area containing 2 hills. \textbf{(b)} A sample of 1000 points of this terrain. \textbf{(c)} A plot of the errors (absolute values) obtained from the jackkknife (with IDW and a given search radius and power). \textbf{(d)} A plot of the absolute elevation versus the estimated ones .}%
+\caption{\textbf{(a)} A terrain of a given area containing 2 hills. \textbf{(b)} A sample of 1000 points of this terrain. \textbf{(c)} A plot of the errors (absolute values) obtained from the jackknife (with IDW and a given search radius and power). \textbf{(d)} A plot of the absolute elevation versus the estimated ones .}%
 \labfig{fig:jackknife}
 \end{figure*}
 It can be seen in \reffig{fig:jackknife}c that the largest differences between the observed and estimated values are (mostly) concentrated around the two peaks of the terrain, which is not surprising.

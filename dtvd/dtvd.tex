@@ -123,7 +123,7 @@ Figure~\ref{fig:local} gives an example that violates the second criteria: both 
 \begin{marginfigure}
   \includegraphics[width=\textwidth,page=1]{figs/local}
   \includegraphics[width=\textwidth,page=2]{figs/local}
-  \caption{A quadrilateral that can be triangulated in two different ways. Only the top configuation is Delaunay. \textbf{(top)} $\sigma$ is not locally Delaunay. \textbf{(bottom)} $\sigma$ is not locally Delaunay.}%
+  \caption{A quadrilateral that can be triangulated in two different ways. Only the top configuration is Delaunay. \textbf{(top)} $\sigma$ is not locally Delaunay. \textbf{(bottom)} $\sigma$ is not locally Delaunay.}%
 \label{fig:local}
 \end{marginfigure}
 
@@ -339,7 +339,7 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ How are DT created in practice?]
 Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
-It is therefore essential to understand the mecanism, even if one is not constructing the DT herself.
+It is therefore essential to understand the mechanism, even if one is not constructing the DT herself.
 There is also a variation on the big triangle: when an extra point is ``at the infinity''.
 \end{kaobox-practice}
 \end{floatbox}
@@ -557,7 +557,7 @@ For the construction of the DT, the incremental algorithm was first described by
 
 The local optimality of a DT, which implies globally optimality in the case of the DT, was proven by \citet{Delaunay34} himself.
 The \emph{max-min angle optimality} of the DT was firstly observed by \citet{Sibson78}.
-This paraboloic lifting was first observed by \citet{Brown79} (who used a spherical transformation), further described by \citet{Seidel82,Edelsbrunner86}. 
+This parabolic lifting was first observed by \citet{Brown79} (who used a spherical transformation), further described by \citet{Seidel82,Edelsbrunner86}. 
 
 Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
 \citet{Liu05-1} explains the details.
