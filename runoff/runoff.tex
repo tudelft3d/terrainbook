@@ -130,15 +130,23 @@ Note that this calculation can be sped up substantially by: (i) storing the accu
 
 \emph{Sinks}\marginnote{sink}\index{sink}, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
 Some of these are natural features that are present in the terrain (\eg\ lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
-However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that easily flooded, after which water would flow out of them.
-In the latter case, we need to implement a mechanism to route water flows out of these depressions.
+However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that easily filled (\ie\ flooded), after which water would flow out of them.
+In the latter case, we need to implement a mechanism to route water flows out of these depressions, since otherwise our runoff model could have very large water flows stopping at even tiny depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
 
 \subsection{Filling in sinks}%
 \index{sink filling}
 
-The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (or possibly to a set of cells that are known to be valid outlets, \eg\ lakes and oceans)\@.
+The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (Figure~\ref{fig:pf}), or possibly to a set of cells that are known to be valid outlets, \eg\ lakes and oceans\@.
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
+In the best case scenario, we can imagine that the resulting DTM is one that resembles follows the terrain elevation of terrain where there is no water and the top of natural water bodies (but no artificial features as in a DEM).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{figs/pf.pdf}
+\caption{A vertical cross-section of a DTM with filled sinks. The dashed line represents the original terrain, whereas the thicker solid line represents the filled terrain. From \citet{Barnes14a}.}%
+\label{fig:pf}
+\end{figure}
 
 One efficient method to fill in sinks is the priority-flood algorithm~\citep{Barnes14a}.
 It works by keeping: (i) a list of DTM cells that are known to drain, which is kept sorted by elevation; and (ii) a raster marking whether each cell of the DTM is known to drain yet.
@@ -163,8 +171,28 @@ Flats can sometimes occur naturally, but they are more often the result of preci
 
 It is thus often necessary to apply a method that assigns a flow direction to flats, either by: (i) modifying the DTM to eliminate them, and then assigning them a flow direction in the usual way, or (ii) assigning them a flow direction directly.
 
-After all flats in a DTM have been identified and their extent is known, algorithms usually work by (i) assigning an artificial gradient away from higher terrain (\ie\ terrain in a flat is assumed to become lower as we move farther away from its neighbouring higher terrain) and/or (ii) assigning an artificial gradient towards lower terrain (\ie\ terrain in a flat is assumed to become lower as we move closer to its neighbouring lower terrain).
-\citet{Barnes14} is a good example of an efficient method that combines both of these approaches.
+After all flats in a DTM have been identified and their extent is known, algorithms usually work by (i) assigning an artificial gradient away from higher terrain (Figure~\ref{fig:ht}), \ie\ terrain in a flat is assumed to become lower as we move farther away from its neighbouring higher terrain; and/or (ii) assigning an artificial gradient towards lower terrain (Figure~\ref{fig:lt}), \ie\ terrain in a flat is assumed to become lower as we move closer to its neighbouring lower terrain.
+\citet{Barnes14} is a good example of an efficient method that combines both of these approaches, resulting in more natural flow directions and better results than would be possible with either approach individually.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\linewidth]{figs/ht.pdf}
+\caption{In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient away from the higher terrain to route water out of the flat and towards the outlet.
+For this, we can iteratively assign (tiny or symbolic) elevation decreases in the flat starting from the higher terrain until all non-draining cells in the flat have been covered.
+Note that in this case, a sink is produced by the procedure.
+From \citet{Barnes14}.}%
+\label{fig:ht}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=1.0\linewidth]{figs/lt.pdf}
+\caption{In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient towards from the outlet to route water out of the flat and towards the outlet.
+For this, we can iteratively assign (tiny or symbolic) elevation increases in the flat starting from the outlet until all non-draining cells in the flat have been covered.
+From \citet{Barnes14}.}%
+\label{fig:lt}
+\end{figure}
+
 
 \section{Drainage networks and basins}%
 \label{sec:drainage_basins}
