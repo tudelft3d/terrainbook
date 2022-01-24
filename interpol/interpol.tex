@@ -36,7 +36,7 @@ Extrapolating implies that more uncertainty is attached to the estimated value.
 Spatial interpolation methods are crucial in the visualisation process (\eg\ generation of contours lines), for the conversion of data from one format to another (\eg\ from scattered points to raster), to have a better understanding of a dataset, or simply to identify `bad' samples. 
 The result of interpolation---usually a surface that represents the terrain---must be as accurate as possible because it often forms the basis for spatial analysis, for example runoff modelling or visibility analysis. 
 Although interpolation helps in creating three-dimensional surfaces, in the case of terrains it is intrinsically a two-dimensional operation because only the ($x,y$) coordinates of each sample are used, and the elevation is the dependent attribute.
-Notice that the attribute used need not be only elevation, for other GIS applications one could use the spatial interpolation methods below for for instance rainfall amounts, percentage of humidity in the soil, maximum temperature, etc. 
+Notice that the attribute used need not be only elevation, for other GIS applications one could use the spatial interpolation methods below for instance rainfall amounts, percentage of humidity in the soil, maximum temperature, etc. 
 Spatial interpolation in 3D is also possible (but out of scope for this book), in that case there are 3 independent variables ($x,y,z$) and one dependent variable, for instance the temperature of the sea at different depth, or the concentration of a certain chemical in the ground.
 
 
@@ -81,7 +81,7 @@ We know that if we have $n$ points in $S$ (in $\mathbb{R}^3$ since the samples a
 This interpolant will be exact, continuous and smooth (at least $C^2$).
 However, it will not be local (which is problematic for terrains), and finding the polynomial of a high degree for large datasets might be impossible (or take a lot of time).
 
-The biggest concern polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the the set $S$.
+The biggest concern with polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the the set $S$.
 This is known as the Runge's phenomenon in numerical analysis,%
 \index{Runge's phenomenon }\marginnote{Runge's phenomenon}
 and is shown in \reffig{fig:polynomial}.
@@ -407,8 +407,8 @@ The weight $w_i$ of a $p_i$ is obtained, as shown in the \reffig{fig:laplace}, b
   w_{i}(x) = \frac{|edge_i(\mathcal{V}^{+}_{x})|}{|xp_i|}
   \label{eq:laplace}
 \end{equation}
-where $|edge_i(\mathcal{V}^{+}_{x})|$ represents the length of the Voronoi edge between $x$ and $p_i$ (the orange edge in \reffig{fig:laplace} for one neighbour); 
-and $|xp_i|$ the Euclidean distance (in 2D) between $x$ and $p_i$ (which is the Delaunay edge).
+where $|edge_i(\mathcal{V}^{+}_{x})|$ represents the length of the Voronoi edge dual to the Delaunay edge $xp_i$ (the orange edge in \reffig{fig:laplace} for one neighbour); 
+and $|xp_i|$ the Euclidean distance (in 2D) between $x$ and $p_i$.
 
 %
 

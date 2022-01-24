@@ -522,7 +522,7 @@ This iterative process is repeated until the maximum displacement of all particl
 
 \paragraph{Internal forces.}
 The internal forces are applied only to movable particles; once a particle has been labelled as unmovable it cannot be moved again.
-Given a movable particle $p$, we apply the external forces by individually looking at its 4 neighbours $n_i$.
+Given a movable particle $p$, we apply the internal forces by individually looking at its 4 neighbours $n_i$.
 For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 \begin{marginfigure}
   \centering
@@ -537,16 +537,17 @@ For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 
 \paragraph{Controlling the tension/rigidity.}
 % TODO: understand and report on rigidity here?
-Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the displacement vector, \eg\ to 0.8 of its length (and thus increase the tension in the cloth).
+Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the internal forces displacement vector, \eg\ to 0.8 of its length (and thus decrease the tension in the cloth). Lower internal force displacement means that the particles will move more during a single iteration and so the tension in the cloth is effectively reduced. 
 The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector can be controlled by scaling the displacement vector. 
-In Figure~\ref{fig:csf_2cases} it is 0.5 of the difference in elevation, but if more tension is wanted, then the scale could be for instance 0.4 (so that the movable particle has a displacement $\vec{v}=(0, 0, 3.2)$, because $0.4 * (10-2) = 3.2$) or 0.3.
+In Figure~\ref{fig:csf_2cases} it is 0.5 of the difference in elevation, but if less tension is wanted, then the scale could be for instance 0.4 (so that the movable particle has an internal displacement $\vec{v}=(0, 0, 3.2)$, because $0.4 * (10-2) = 3.2$) or 0.3.
 
 % TODO: order dependent
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
-The description of the CSF is a simplification omitting the post-processing to take into account steep slopes.
-The algorithm is implemented in the open-source software \emph{CloudCompare} (\url{https://cloudcompare.org}) and in the open-source library \emph{PDAL} (\url{https://pdal.io}).
+The description of the CSF algorithm in this book is a simplification of the original algorithm (see \citet{Zhang16}), it omits the post-processing to take into account steep slopes.
+\\ \\
+The complete algorithm is available in the open-source software \emph{CloudCompare} (\url{https://cloudcompare.org}) and in the open-source library \emph{PDAL} (\url{https://pdal.io}).
 \end{kaobox-practice}
 \end{floatbox}
 
