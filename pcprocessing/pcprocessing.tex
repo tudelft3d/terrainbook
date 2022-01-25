@@ -860,24 +860,25 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 				& $0^{\circ}$ & $90^{\circ}$ \\
 				\hline
 				$0.0$ & $0$ & $0$\\
-				$0.5$ & $0$ & $0$\\
+				$0.5$ & $\color[rgb]{0.459,0.976,0.298}{1}$ & $0$\\
+				$1.0$ & $0$ & $0$\\
 				$1.5$ & $\color[rgb]{0.647,0.165,0.165}{1}$ & $\mathbf{\color[rgb]{0,0,1}{3}}\leftarrow$ \\
 				$2.0$ & $\mathbf{\color[rgb]{0.627,0.125,0.941}{3}}\leftarrow$& $0$\\
 				$2.5$ & $0$ & $\color[rgb]{1,0.647,0}{1}$\\
 				$3.0$ & $0$ & $0$\\
-				$3.5$ & $0$ & $\color[rgb]{1,0,0}{1}$\\
+				$3.5$ & $\color[rgb]{1,0,0}{1}$ & $0$ \\
 				$4.0$ & $\color[rgb]{1,0.843,0}{1}$ & $\color[rgb]{0,0.392,0}{2}$\\
 				$4.5$ & $\color[rgb]{1,0.753,0.796}{1}$ & $\color[rgb]{0.678,0.847,0.902}{1}$\\
 			\end{tabular}
 			\hspace{1cm}
 		\end{minipage}
-		\caption{Accumulator. Most occurring line instances are highlighted.}\label{fig:hough-transform:d}
+		\caption{Accumulator contains the number of votes for each line instance.}\label{fig:hough-transform:d}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=4]{figs/hough-transform.pdf}
-		\caption{Detected line instances}\label{fig:hough-transform:e}
+		\caption{Detected line instances with a minimal vote count of  3.}\label{fig:hough-transform:e}
 	\end{subfigure}
 	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}%
 \label{fig:hough-transform}
