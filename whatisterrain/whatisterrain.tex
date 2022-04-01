@@ -76,7 +76,7 @@ You thus obtain a value representing the height of man-made objects and trees, a
 \section{Dimensionality of DTMs}
 
 The term ``3D'' is misleading in a DTM context, as it is in a GIS context, 
-\marginnote{3D is misleading}
+\marginnote{3D is misleading: 2.5D? 2.75D? Volumes?}
 because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see \reffig{fig:dimgis}).
 \begin{figure*}[b]
   \centering
@@ -249,12 +249,12 @@ There is a loss of information, since the exact location of the meaningful point
 
 %
 
-\begin{kaobox}[frametitle=\faCog\ Concrete example: a 2D grid]
+\begin{kaobox-practice}[frametitle=\faCog\ Concrete example: a 2D grid]
   A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
   The value assigned to each cell is an estimation previously obtained by spatial interpolation.
   However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
   Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
-\end{kaobox}
+\end{kaobox-practice}
 
 %
 

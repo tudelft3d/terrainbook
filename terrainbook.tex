@@ -43,15 +43,17 @@
 \makenomenclature % Make LaTeX produce the files required to compile the nomenclature
 
 %-- new box environments
+\definecolor{redish}{HTML}{F7E0E0}
+\definecolor{greenish}{HTML}{DDECF1}
 \newmdenv[
   style=kaoboxstyle,
-  backgroundcolor=RoyalBlue!25!White,
-  frametitlebackgroundcolor=RoyalBlue!25!White,
+  backgroundcolor=redish,
+  frametitlebackgroundcolor=redish,
 ]{kaobox-practice}
 \newmdenv[
   style=kaoboxstyle,
-  backgroundcolor=Dandelion!25!White,
-  frametitlebackgroundcolor=Dandelion!25!White,
+  backgroundcolor=greenish,
+  frametitlebackgroundcolor=greenish,
 ]{kaobox-toread}
 
 %----------------------------------------
@@ -203,18 +205,18 @@
 \setchapterstyle{kao} % Choose the default chapter heading style
 
 \include{whatisterrain/whatisterrain} %- 01
-% \include{acquisition/acquisition} %- 02
-% \include{dtvd/dtvd} %- 03
-% \include{interpol/interpol} %- 04
-% \include{kriging/kriging} %- 05
-% \include{topofeatures/topofeatures} %- 06
-% \include{runoff/runoff} %- 07
-% \include{conversion/conversion} %- 08
-% \include{spatialextent/spatialextent} %- 09
-% \include{massive/massive} %- 10
-% \include{visibility/visibility} %- 11
-% \include{pcprocessing/pcprocessing} %- 12
-% \include{bathymetry/bathymetry} %- 13
+\include{acquisition/acquisition} %- 02
+\include{dtvd/dtvd} %- 03
+\include{interpol/interpol} %- 04
+\include{kriging/kriging} %- 05
+\include{topofeatures/topofeatures} %- 06
+\include{runoff/runoff} %- 07
+\include{conversion/conversion} %- 08
+\include{spatialextent/spatialextent} %- 09
+\include{massive/massive} %- 10
+\include{visibility/visibility} %- 11
+\include{pcprocessing/pcprocessing} %- 12
+\include{bathymetry/bathymetry} %- 13
 %----------------------------------------------------------------------------------------
 
 
