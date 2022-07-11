@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "How to cite this book"
+authors:
+- family-names: "Ledoux"
+  given-names: "Hugo"
+  orcid: "https://orcid.org/0000-0002-1251-8654"
+- family-names: "Arroyo Ohori"
+  given-names: "Ken"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "Computational modelling of terrains"
+version: 0.9.0
+doi: 10.5281/zenodo.3992107
+date-released: 2022-07-11
+url: "https://github.com/tudelft3d/terrainbook"
