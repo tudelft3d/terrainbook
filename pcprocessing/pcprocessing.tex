@@ -203,11 +203,12 @@ In practice, for the AHN3 dataset, the LAZ file of a given area is about 10X mor
 A point cloud with fewer points is easier to manage and quicker to visualise and process.
 Therefore a point cloud is sometimes \emph{thinned}, which simply means that a portion of the points is discarded and not used for processing.
 Commonly encountered thinning methods in practice are:
-\begin{description}
-  \item[random] randomly remove a given percentage of the points.
-  \item[nth-point] iterate through the points and keep only the first point for every $n$ points. For example a dataset with 1000 points is reduced to 100 points if $n=10$. This is the quickest thinning method.
-  \item[grid] Overlay a 2D or 3D regular grid over the point cloud and keep one point per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
-\end{description}
+\begin{itemize}
+  \item \textbf{random:} randomly keep a given percentage of the points, \eg\ 10\%.
+  \item \textbf{\emph{n}th-point:} keep only the $n$th point in the dataset. For instance, if $n=100$, we would keep the 1st, the 101th, the 201th, etc; a dataset with \qty{100000} points is reduced to \qty{1000} points. This is the quickest thinning method.
+  \item \textbf{\emph{n}th-point random:} if there is some structure in the input points (\eg\ if generated from a gridded terrain) then this method could create datasets with artefacts. A variation involves keeping randomly in the $n$ points the point to keep.
+  \item \textbf{grid: }overlay a 2D or 3D regular grid over the points and keep $m$ point(s) per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
+\end{itemize}
 See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and grid thinning.
 \begin{figure}
   \centering
@@ -268,11 +269,11 @@ The underlying assumption of most outlier detection methods is that an outlier i
 \label{fig:outlier-detection}
 \end{figure}
 
-\begin{description}
-  \item[radius count] Count the number of points that are within a fixed radius from $p$. If the count is lower than a given threshold, $p$ is marked as an outlier.
-  \item[grid count] Superimpose a grid on the point cloud and count for each grid-cell the number of points. If the count is lower than a given threshold, the points inside the corresponding grid cell are marked as outliers. Sometimes the neighbourhood is extended with adjacent grid cells. The grid method has the advantage that it can be used with the spatial streaming paradigm (see Section~\ref{sec:streaming}).
-  \item[knn distance] Find the $k$ nearest neighbours of $p$, \eg\ using a $k$d-tree, and compute the mean or median of the distances between $p$ and its neighbours. If this value is above a given threshold, $p$ is marked as an outlier.
-\end{description}
+\begin{itemize}
+  \item \textbf{radius count:} Count the number of points that are within a fixed radius from $p$. If the count is lower than a given threshold, $p$ is marked as an outlier.
+  \item \textbf{grid count:} Superimpose a grid on the point cloud and count for each grid-cell the number of points. If the count is lower than a given threshold, the points inside the corresponding grid cell are marked as outliers. Sometimes the neighbourhood is extended with adjacent grid cells. The grid method has the advantage that it can be used with the spatial streaming paradigm (see Section~\ref{sec:streaming}).
+  \item \textbf{knn distance:} Find the $k$ nearest neighbours of $p$, \eg\ using a $k$d-tree, and compute the mean or median of the distances between $p$ and its neighbours. If this value is above a given threshold, $p$ is marked as an outlier.
+\end{itemize}
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
@@ -284,13 +285,13 @@ This splits the TIN into several smaller TINs, and the largest of those should t
 Figure~\ref{fig:mbes} gives an example.
 \begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.4\linewidth}
+  \begin{subfigure}[b]{0.44\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/mbes_cleaning_before.png}
     \caption{before outlier detection}
   \end{subfigure}
   \qquad%
-  \begin{subfigure}[b]{0.4\linewidth}
+  \begin{subfigure}[b]{0.44\linewidth}
     \centering
     \includegraphics[width=\textwidth]{figs/mbes_cleaning_after.png}
     \caption{after outlier detection}
@@ -406,7 +407,7 @@ Figure~\ref{fig:axelsson} gives an example result.
 
 %%%
 %
-\subsection{Cloth simulation filter algorithm (CSF)}
+\subsection{Cloth simulation filter (CSF) algorithm}
 
 An alternative to TIN refinement is the algorithm called \emph{Cloth simulation filter} (CSF).
 Unlike the previous one, no TIN is required, its input is only a point cloud.
