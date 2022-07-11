@@ -423,12 +423,7 @@ The key idea of the algorithm, as shown in Figure~\ref{fig:csf_idea},
 \end{figure*}
 is to invert (upside-down) a point cloud, and to let a piece of cloth fall from the sky.
 The cloth will fall until it reaches the points forming the ground.
-During the process, we aim to control the \emph{tension} (or rigidity) of the cloth, so that areas where there is no sample point or where there are large buildings can be filled realistically.
-
-%
-
-When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth.
-If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used: if this distance is less than a given user-defined threshold then the sample point is a ground point.
+During the process, we aim to control the \emph{tension} (or rigidity) of the cloth, so that areas where there is no sample point, or where there are large buildings, can be filled realistically.
 
 %
 
@@ -542,6 +537,11 @@ The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector c
 In Figure~\ref{fig:csf_2cases} it is 0.5 of the difference in elevation, but if less tension is wanted, then the scale could be for instance 0.4 (so that the movable particle has an internal displacement $\vec{v}=(0, 0, 3.2)$, because $0.4 * (10-2) = 3.2$) or 0.3.
 
 % TODO: order dependent
+
+\paragraph{Output: a ground surface +  classification of points.}
+
+When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth (it is possible to triangle it or to create a grid from it).
+If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used: if this distance is less than a given user-defined threshold then the sample point is a ground point.
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
