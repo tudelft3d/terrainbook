@@ -1,0 +1,53 @@
+
+- chapter: 1
+  title: What is a terrain
+  # video:
+
+- chapter: 2
+  title: Acquisition of elevation measurements
+  video: _BSuNu3Ahw0
+
+- chapter: 3
+  title: Delaunay triangulations & Voronoi diagrams
+  video: ysLCuqcyJZA
+
+- chapter: 4
+  title: "Spatial interpolation: deterministic methods"
+  video: 8H84AoSXkJs
+
+- chapter: 5
+  title: "Spatial interpolation: kriging"
+  video: ZaadzBvgE2s
+
+- chapter: 6
+  title: Topographic features
+  video: iF64Qeb_isw
+
+- chapter: 7
+  title: Runoff modelling
+  video: 0NzZoJATFjc
+
+- chapter: 8
+  title: Conversion between terrain representations
+  video: Nqfp94KpcUA
+
+- chapter: 9
+  title: Spatial extent of a point cloud
+  video: dqRb32iGZ_c
+
+- chapter: 10
+  title:  Handling massive terrains  
+  
+- chapter: 11
+  title: "Visibility queries on terrains"
+  video: 3HYlBogztOU
+
+- chapter: 12
+  title: "Point cloud processing"
+  video: gGchA5fluos
+
+
+- chapter: 13
+  title: Processing bathymetric data to produce hydrographic charts
+  video: DVUm7SdzhfI
+

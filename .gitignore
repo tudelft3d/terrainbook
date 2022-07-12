@@ -244,3 +244,7 @@ TSWLatexianTemp*
 #--------
 terrainbook.pdf
 *DS_Store
+.jekyll-cache/*
+docs/.jekyll-cache/*
+_site/*
+docs/_site/*
