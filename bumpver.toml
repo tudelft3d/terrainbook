@@ -1,0 +1,17 @@
+[bumpver]
+current_version = "0.9.0"
+version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+commit = false
+tag = false
+push = false
+
+[bumpver.file_patterns]
+"terrainbook.tex" = [
+    'v{version}',
+]
+"docs/_config.yml" = [
+    "latest_version: {version}",
+]
+
+
+
