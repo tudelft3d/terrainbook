@@ -337,8 +337,8 @@ Because it is convenient to store and manipulate only triangles having 3 neighbo
   The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
   \item \textbf{Infinite vertex:} a fictitious vertex is inserted at the ``infinity'', and therefore the edges on the boundary of conv($S$) are incident to ``infinite triangles'' formed by a convex hull edge and the infinite vertex. See Figure~\ref{fig:infinite_vertex}.
   This can be conceptually seen as embedding $S$ on a sphere, and adding the infinite vertex on the other side of the sphere.
-  Observe that since the infinite vertex has no coordinates, the predicates \Orient\ and \Incircle\ used to construct a DT (see Section~\ref{sec:predicates}) cannot be used on infinite triangle.
-  Instead, one should handle infinite triangle with specific cases.
+  The infinite vertex is conceptually the same as the big triangle but is numerically more stable since the size of the big triangle does not need to be defined.
+  Observe however that since the infinite vertex has no coordinates, the predicates \Orient\ and \Incircle\ used to construct a DT (see Section~\ref{sec:predicates}) cannot be used on infinite triangle, instead one should handle infinite triangles with specific cases.
 \end{itemize}
 
 %
@@ -589,8 +589,7 @@ The local optimality of a DT, which implies globally optimality in the case of t
 The \emph{max-min angle optimality} of the DT was firstly observed by \citet{Sibson78}.
 This parabolic lifting was first observed by \citet{Brown79} (who used a spherical transformation), further described by \citet{Seidel82,Edelsbrunner86}. 
 
-Instead of using a \emph{big triangle}, several will use an ``infinite point'' or a ``far-away point'', which is conceptually the same but numerically more stable (since the size of the big triangle does not need to be defined).
-\citet{Liu05-1} explains the details.
+\citet{Liu05-1} explains the details of the infinite vertex.
 
 The walking algorithm described, with a few modifications, can perform point location in $\mathcal{O}(n^{1/3}$).
 The walking in the triangulation to locate the triangle containing a newly inserted point is not the fastest solution, \citet{Mucke99} and \citet{Devillers02} discuss alternatives that are optimal (\ie\ $\mathcal{O}(\log n)$).
