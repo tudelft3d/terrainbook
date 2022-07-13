@@ -302,7 +302,7 @@ Figure~\ref{fig:insertion_steps} illustrates the steps of the algorithm, and Alg
 \label{algo:insert1pt}
 \end{algorithm} 
 In a nutshell, for the insertion of a new point $p$ in a DT($S$), the triangle $\tau$ containing $p$ is identified and then split into three new triangles by joining $p$ to every vertex of $\tau$. 
-Second, each new triangle is tested---according to the Delaunay criterion---against its opposite neighbour (with respect to $p$); if it is not a Delaunay triangle then the edge shared by the two triangles is \emph{flipped} (see below) and the two new triangles will also have to be tested later. 
+Second, each new triangle is tested---according to the Delaunay criterion---against its opposite neighbour (with respect to $p$); if it is not a Delaunay triangle then the edge shared by the two triangles is \emph{flipped} (a \emph{flip} is an operation to modify adjacent triangles, see below) and the two new triangles will also have to be tested later. 
 This process stops when every triangle having $p$ as one of its vertices respects the Delaunay criterion.
 
 
@@ -395,26 +395,35 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 
 %%%
 \subsection{Flips}
-The \emph{flip22} operation used to modify the triangulation is a simple \emph{local} topological operation that modifies the configuration of two adjacent triangles. 
-It is performed in constant time $\mathcal{O}(1)$.
-Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{p:flip22}. 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.5\textwidth]{figs/flip22}
-  \caption{A \emph{flip22}}%
-\label{p:flip22}
+  \includegraphics[width=0.7\textwidth]{figs/flip22}
+  \caption{A \emph{flip22}.}%
+\label{fig:flip22}
 \end{marginfigure}
-There exist exactly two ways to triangulate $S$: the first one contains the triangles $abc$ and $bcd$; and the second one contains the triangles $abd$ and $acd$. 
-Only the first triangulation of $S$ is Delaunay because $d$ is outside the circumcircle of $abc$. 
-A \emph{flip22} is the operation that transforms the first triangulation into the second, or vice-versa.
-
-Two other flips are possible: \emph{flip13} and \emph{flip31}; the numbers refer to the number of triangles before and after the flip.
-A \emph{flip13} refers to the operation of inserting a vertex inside a triangle, and splitting it into three triangles; and a \emph{flip31} is the inverse operation that deletes a vertex.
+Flips are operations that modify \emph{locally} the triangulation.
+There are 3 flip operations (the numbers refer to the number of triangles before and after the flip):
+\begin{itemize}
+  \item a \textbf{flip22} modifies the configuration of two adjacent triangles. 
+  Consider the set $S = \{a, b, c, d\}$ of points in the plane forming a quadrilateral, as shown in Figure~\ref{fig:flip22}. 
+  There exist exactly two ways to triangulate $S$: the first one contains the triangles $abc$ and $bcd$; and the second one contains the triangles $abd$ and $acd$. 
+  Only the first triangulation of $S$ is Delaunay because $d$ is outside the circumcircle of $abc$. 
+  A \emph{flip22} is the operation that transforms the first triangulation into the second, or vice-versa.
+  It is performed in constant time $\mathcal{O}(1)$.
+  \item a \textbf{flip13} is the operation of inserting a vertex inside a triangle, and splitting it into three triangles (see Figure~\ref{fig:flip13}).
+  \item a \textbf{flip31} is the inverse operation that deletes a vertex (see Figure~\ref{fig:flip13}).
+\end{itemize}
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figs/flip13}
+  \caption{A \emph{flip13} and its inverse operation \emph{flip31}.}%
+\label{fig:flip13}
+\end{marginfigure}
 
 
 %%%
 \subsection{Controlling the flips}
-To control which triangles have to be checked and potentially flipped, we use a stack\footnote{A data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
+To control which triangles have to be checked and potentially flipped, we use a stack\footnote{The first-in-last-out data structure: \url{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}}. 
 When the stack is empty, then there are no more triangles to be tested, and we are guaranteed that all the triangles in the triangulation have an empty circumcircle.
 
 
