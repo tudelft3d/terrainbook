@@ -307,40 +307,52 @@ This process stops when every triangle having $p$ as one of its vertices respect
 
 
 %%%
-\subsection{Initialisation: the big triangle}%
+\subsection{Initialisation: the big triangle or the infinite vertex}%
 \label{sec:big_tr}
-Most of the incremental DT/VD algorithms assume that the set $S$ of points is entirely contained in a \emph{big triangle} ($\tau_{big}$) several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
-Figure~\ref{fig:big_tr} illustrates this.
+
+The DT of a set $S$ of points subdivides conv($S$), which means in practice that the triangles on the boundary of conv($S$) will not be adjacent to exactly 3 neighbouring triangles.
+
 \begin{marginfigure}
   \includegraphics[width=\textwidth]{figs/big_tr}
   \caption[The big triangle containing all the dataset.]{The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.}% 
 \label{fig:big_tr}
 \end{marginfigure}
-The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
+\begin{marginfigure}
+  \includegraphics[width=0.7\textwidth]{figs/infinite_vertex}
+  \caption[The infinite vertex.]{The infinite vertex ($\infty$) is used to ensure that the triangles in DT($S$) are always adjacent to exactly 3 triangles.}% 
+\label{fig:infinite_vertex}
+\end{marginfigure}
+Because it is convenient to store and manipulate only triangles having 3 neighbours, in practice most DT construction algorithms will use one of these two ``tricks'':
+\begin{itemize}
+  \item \textbf{Big triangle:} $S$ is entirely contained in a big triangle $\tau_{big}$ several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
+  Figure~\ref{fig:big_tr} illustrates this.
+  The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
+  \item \textbf{Infinite vertex:} A variation of the big triangle is the infinite vertex: a fictitious vertex is inserted (at the ``infinity'') and the edges on the boundary of conv($S$) are incident to ``infinite triangles'' formed by an edge and the infinite vertex. See Figure~\ref{fig:infinite_vertex}.
+  This can be conceptually seen as embedding $S$ on a sphere, and adding the infinite vertex on the other side of the sphere.
+\end{itemize}
 
 %
 
 Doing this has many advantages. 
-First, when a single point $p$ needs to be inserted in DT($S$), this guarantees that $p$ is always inside an existing triangle; we thus do not have to deal explicitly with vertices added outside the convex hull. 
-Second, we do not have to deal with the (nasty) case of deleting a vertex that bounds conv($S$). 
-Third, since an edge is always guaranteed to be shared by two triangles, point location algorithms never ``fall off'' the convex hull. 
-Fourth, identifying the vertices that bounds conv($S$) is easy: they have one incident triangle that has one or more of the big triangle vertices.
-Fifth, the Voronoi cells of the points that bounds conv($S$) will be bounded, since the only unbounded cells will be the ones of the four points of $\tau_{big}$. 
+First, since an edge is always guaranteed to be shared by two triangles, point location algorithms never ``fall off'' the convex hull. 
+Second, when a single point $p$ needs to be inserted in DT($S$), this guarantees that $p$ is always inside an existing triangle; we thus do not have to deal explicitly with vertices added outside the convex hull. 
+Third, identifying the vertices that bounds conv($S$) is easy: they have one incident triangle that has one or more of the big triangle vertices (or it contains the infinite vertex).
+Fourth, the Voronoi cells of the points that bounds conv($S$) will be bounded, since the only unbounded cells will be the ones of the 3 points of $\tau_{big}$. 
 This can help for some of the spatial analysis operations, for instance interpolation based on the VD (see Chapter~\ref{chap:interpol}).
 
 %
 
 The main disadvantage is that more triangles than needed are constructed. 
 For example in Figure~\ref{fig:big_tr} only the shaded triangles would be part of DT($S$). 
-The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the three points forming $\tau_{big}$. 
+The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the 3 points forming $\tau_{big}$. 
 
 %
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ How are DT created in practice?]
-Several implementations of the DT use a big triangle,  CGAL (\url{https://www.cgal.org/}) being one example, and these often label vertices and/or triangles as ``infinite''.
-It is therefore essential to understand the mechanism, even if one is not constructing the DT herself.
-There is also a variation on the big triangle: when an extra point is ``at the infinity''.
+Several implementations of the DT use a big triangle or the infinite vertex,  CGAL (\url{https://www.cgal.org/}) and startinpy (\url{https://github.com/hugoledoux/startinpy}) are two examples.
+Those will refer in their API to ``finite'' and ``infinite'' vertices, edges, and triangles.
+It is therefore essential to understand the mechanism to use those librairies, even if one is not constructing the DT herself.
 \end{kaobox-practice}
 \end{floatbox}
 
