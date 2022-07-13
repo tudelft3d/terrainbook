@@ -266,7 +266,7 @@ Observe that the insertion of a single point $p$ in a DT modifies only \emph{loc
 %
 
 In sharp contrast to this, other strategies to construct a DT (\eg\ divide-and-conquer and plane sweep algorithms, see Section~\ref{sec:notes}), build a DT in \emph{one} operation (this is a batch operation), and if another point needs to be inserted after this, the whole construction operation must be done again from scratch. 
-That hinders their use for some applications where new data coming from a sensor would have to be added.
+That hinders their use for some applications where new data coming from a sensor would have to be added, or where we want to delete points because they are outliers.
 
 %
 
@@ -468,7 +468,6 @@ Both tests can be reduced to the computation of the determinant of a matrix:
 \end{equation}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section[DT data structures]{Data structures for storing a DT}
 
