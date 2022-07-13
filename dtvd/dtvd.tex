@@ -37,6 +37,7 @@ This line is the perpendicular bisector of the line segment from $p$ to $q$, and
 $\mathcal{V}_p$ is formed by the half-plane containing $p$, and $\mathcal{V}_q$ by the one containing $q$. 
 As shown in Figure~\ref{fig:halfspaces},
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth]{figs/halfspaces}
   \caption{The Voronoi cell $\mathcal{V}_p$ is formed by the intersection of all the half-planes between $p$ and the other points. }% 
 \label{fig:halfspaces}
@@ -49,6 +50,7 @@ Notice also that every point $x \in \mathbb{R}^2$ has at least one nearest point
 
 As shown in Figure~\ref{fig:vd_circle}, 
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth]{figs/vd_circle}
   \caption{The VD for a set $S$ of points in the plane (the black points). The Voronoi vertices (brown points) are located at the centre of the circle passing through three points in $S$, provided that this circle contains no other points in $S$ in its interior.}% 
 \label{fig:vd_circle}
@@ -102,6 +104,7 @@ The DT of a set $S$ of points subdivides completely conv($S$), \ie\ the union of
 Let $S$ be a set of points in $\mathbb{R}^2$, the \emph{convex hull} of $S$, denoted conv($S$), is the minimal convex set containing $S$. 
 It is best understood with the elastic band analogy: imagine each point in $\mathbb{R}^2$ being a nail sticking out of the plane, and a rubber band stretched to contain all the nails, as shown in Figure~\ref{fig:convex_hull}. 
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth]{figs/convex_hull}
   \caption{The convex hull of a set of points in $\mathbb{R}^2$.}% 
 \label{fig:convex_hull}
@@ -121,6 +124,7 @@ An edge $\sigma$ is said to be \emph{locally} Delaunay if it either:
 Figure~\ref{fig:local} gives an example that violates the second criteria: both $p$ and $q$ are contained by the circumcircles of their opposing triangles, \ie\ of $\tau_b$ and $\tau_a$ respectively.
 
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth,page=1]{figs/local}
   \includegraphics[width=\textwidth,page=2]{figs/local}
   \caption{A quadrilateral that can be triangulated in two different ways. Only the top configuration is Delaunay. \textbf{(top)} $\sigma$ is locally Delaunay. \textbf{(bottom)} $\sigma$ is not locally Delaunay.}%
@@ -157,6 +161,7 @@ Observe that the paraboloid in three dimensions defines a surface whose vertical
 
 The relationship is the following: every triangle of the lower envelope of conv($S^{+}$) projects to a triangle of the Delaunay triangulation of $S$; this is illustrated in Figure~\ref{fig:paraboloid} for a simple DT\@. 
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth]{figs/paraboloid}
   \caption{The parabolic lifting map for a set $S$ of points $\mathbb{R}^2$.}%
 \label{fig:paraboloid}
@@ -204,6 +209,7 @@ Duality can have many different meanings in mathematics, but it always refers to
 We use it in this course in the sense of the dual graph of a given graph. 
 Let $G$ be a planar graph, as illustrated in Figure~\ref{fig:dual_graph} (black edges).
 \begin{marginfigure}
+  \centering
   \includegraphics[width=\textwidth]{figs/dual_graph}
   \caption{A graph $G$ (black lines), and its dual graph $G^\star$ (dashed lines).}%
 \label{fig:dual_graph}
