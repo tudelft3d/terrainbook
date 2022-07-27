@@ -333,30 +333,30 @@ The DT of a set $S$ of points subdivides conv($S$), which means in practice that
 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/big_tr}
+  \includegraphics[width=\textwidth]{big_tr}
   \caption[The big triangle containing all the dataset.]{The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.}% 
 \label{fig:big_tr}
 \end{marginfigure}
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.6\textwidth]{figs/infinite_vertex}
+  \includegraphics[width=0.6\textwidth]{infinite_vertex}
   \caption[The infinite vertex.]{The infinite vertex ($\infty$) is used to ensure that the triangles in DT($S$) are always adjacent to exactly 3 triangles. This DT contains 7 finite triangles, and 5 infinite vertices.}% 
 \label{fig:infinite_vertex}
 \end{marginfigure}
-Because it is convenient to store and manipulate only triangles having 3 neighbours, in practice most DT construction algorithms will use one of these two ``tricks'':
+Because it is convenient to store and manipulate triangles having exactly 3 neighbours, in practice most DT construction algorithms will use one of these two ``tricks'':
 \begin{itemize}
   \item \textbf{Big triangle:} $S$ is entirely contained in a big triangle $\tau_{big}$ several times larger than the spatial extent of $S$; conv($S$) therefore becomes $\tau_{big}$. 
   Figure~\ref{fig:big_tr} illustrates this.
   The construction of DT($S$) is for example always initialised by first constructing $\tau_{big}$, and then the points in $S$ are inserted one by one. 
-  \item \textbf{Infinite vertex:} a fictitious vertex is inserted at the ``infinity'', and therefore the edges on the boundary of conv($S$) are incident to ``infinite triangles'' formed by a convex hull edge and the infinite vertex. See Figure~\ref{fig:infinite_vertex}.
+  \item \textbf{Infinite vertex:} a fictitious vertex is inserted at the ``infinity'', and therefore the edges on the boundary of conv($S$) are incident to ``infinite triangles'' formed by a convex hull edge and the infinite vertex, see Figure~\ref{fig:infinite_vertex}.
   This can be conceptually seen as embedding $S$ on a sphere, and adding the infinite vertex on the other side of the sphere.
   The infinite vertex is conceptually the same as the big triangle but is numerically more stable since the size of the big triangle does not need to be defined.
-  Observe however that since the infinite vertex has no coordinates, the predicates \Orient\ and \Incircle\ used to construct a DT (see Section~\ref{sec:predicates}) cannot be used on infinite triangle, instead one should handle infinite triangles with specific cases.
+  Observe however that since the infinite vertex has no coordinates, the predicates \Orient\ and \Incircle\ used to construct a DT (see Section~\ref{sec:predicates}) cannot be used with the infinite vertex and infinite triangles, instead one should handle those with specific cases.
 \end{itemize}
 
 %
 
-Doing this has many advantages. 
+Using a big triangle or an infinite vertex has many practical advantages. 
 First, since an edge is always guaranteed to be shared by two triangles, point location algorithms never ``fall off'' the convex hull. 
 Second, when a single point $p$ needs to be inserted in DT($S$), this guarantees that $p$ is always inside an existing triangle; we thus do not have to deal explicitly with vertices added outside the convex hull. 
 Third, identifying the vertices that bounds conv($S$) is easy: they have one incident triangle that has one or more of the big triangle vertices (or it contains the infinite vertex).
