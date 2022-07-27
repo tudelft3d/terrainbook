@@ -292,21 +292,21 @@ As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $
 \end{marginfigure}
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
-While not a requirement, the triangulation is usually a Delaunay triangulation (more about this in Chapter~\ref{chap:dtvd}).
+While not a requirement, the triangulation is usually a \emph{Delaunay triangulation} (more about this in Chapter~\ref{chap:dtvd}).%
 \index{Delaunay triangulation}
 The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
 As can be seen in~\reffig{fig:whydt},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/whydt}
-  \caption{Two TINs (left has one non-Delaunay edge; right is a DT) and the result of estimating with linear interpolation in the TIN\@.}%
+  \caption{Two TINs (left is non-Delaunay; right is a DT) and the result of estimating with linear interpolation in the TIN\@.}%
 \labfig{fig:whydt}
 \end{figure}
-the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of \SI{95}{\m} is not used).
+the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of \qty{95}{\m} is not used).
 
 %
 
-Each of the points (which becomes vertices in the triangulation) are lifted to its elevation to create a surface, embedded in three dimensions, approximating the morphology of the terrain.
+Every point (which becomes a vertex in the triangulation) is lifted to its elevation to create a surface, embedded in three dimensions, approximating the morphology of the terrain.
 The value of elevation at an unsampled location $p$ is obtained by linearly interpolating on the plane passing through the three vertices of the triangle containing $p$. 
 TINs are the most popular alternatives to 2D grids for modelling elevation; both representations have advantages and disadvantages.
 
