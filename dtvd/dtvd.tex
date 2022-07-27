@@ -3,7 +3,7 @@
 % chktex-file 46
 
 \setchapterpreamble[u]{\margintoc}
-\graphicspath{{dtvd/}}
+\graphicspath{{dtvd/figs/}}
 
 
 \newcommand{\Orient}{O\textsc{rientation}\xspace}
@@ -38,7 +38,7 @@ $\mathcal{V}_p$ is formed by the half-plane containing $p$, and $\mathcal{V}_q$ 
 As shown in Figure~\ref{fig:halfspaces},
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/halfspaces}
+  \includegraphics[width=\textwidth]{halfspaces}
   \caption{The Voronoi cell $\mathcal{V}_p$ is formed by the intersection of all the half-planes between $p$ and the other points. }% 
 \label{fig:halfspaces}
 \end{marginfigure}
@@ -51,7 +51,7 @@ Notice also that every point $x \in \mathbb{R}^2$ has at least one nearest point
 As shown in Figure~\ref{fig:vd_circle}, 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/vd_circle}
+  \includegraphics[width=\textwidth]{vd_circle}
   \caption{The VD for a set $S$ of points in the plane (the black points). The Voronoi vertices (brown points) are located at the centre of the circle passing through three points in $S$, provided that this circle contains no other points in $S$ in its interior.}% 
 \label{fig:vd_circle}
 \end{marginfigure}
@@ -60,7 +60,7 @@ Its edges are the perpendicular bisectors of the line segments of pairs of point
 The VD in $\mathbb{R}^2$ can also be seen as a two-dimensional cell complex where each 2-cell is a (convex) polygon (see Figure~\ref{fig:vd2d}). 
 \begin{figure}
   \centering
-  \includegraphics[page=3,width=\textwidth]{figs/vd2d}
+  \includegraphics[page=3,width=\textwidth]{vd2d}
   \caption{VD of a set of points in the plane (clipped by a box). The point $p$ (whose Voronoi cell is dark grey) has seven neighbouring cells (light grey).}% 
 \label{fig:vd2d}
 \end{figure}
@@ -88,7 +88,7 @@ Because the vertices in $\mathcal{D}$ are of degree 3 (3 edges connected to it),
 $\mathcal{T}$ is actually called the Delaunay triangulation (DT) of $S$, and, as shown in Figure~\ref{fig:dt2da}, 
 \begin{figure}
   \centering
-   \includegraphics[page=4,width=\textwidth]{figs/vd2d}
+   \includegraphics[page=4,width=\textwidth]{vd2d}
   \caption{The DT of a set of points in the plane (same point set as Figure~\ref{fig:vd2d}). The green circles show 2 examples of empty circumcircles.}%
 \label{fig:dt2da}
 \end{figure}
@@ -105,7 +105,7 @@ Let $S$ be a set of points in $\mathbb{R}^2$, the \emph{convex hull} of $S$, den
 It is best understood with the elastic band analogy: imagine each point in $\mathbb{R}^2$ being a nail sticking out of the plane, and a rubber band stretched to contain all the nails, as shown in Figure~\ref{fig:convex_hull}. 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/convex_hull}
+  \includegraphics[width=\textwidth]{convex_hull}
   \caption{The convex hull of a set of points in $\mathbb{R}^2$.}% 
 \label{fig:convex_hull}
 \end{marginfigure}
@@ -125,8 +125,8 @@ Figure~\ref{fig:local} gives an example that violates the second criteria: both 
 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth,page=1]{figs/local}
-  \includegraphics[width=\textwidth,page=2]{figs/local}
+  \includegraphics[width=\textwidth,page=1]{local}
+  \includegraphics[width=\textwidth,page=2]{local}
   \caption{A quadrilateral that can be triangulated in two different ways. Only the top configuration is Delaunay. \textbf{(top)} $\sigma$ is locally Delaunay. \textbf{(bottom)} $\sigma$ is not locally Delaunay.}%
 \label{fig:local}
 \end{marginfigure}
@@ -175,7 +175,7 @@ Observe that the paraboloid in three dimensions defines a surface whose vertical
 The relationship is the following: every triangle of the lower envelope of conv($S^{+}$) projects to a triangle of the Delaunay triangulation of $S$; this is illustrated in Figure~\ref{fig:paraboloid} for a simple DT\@. 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/paraboloid}
+  \includegraphics[width=\textwidth]{paraboloid}
   \caption{The parabolic lifting map for a set $S$ of points $\mathbb{R}^2$.}%
 \label{fig:paraboloid}
 \end{marginfigure}
@@ -201,7 +201,7 @@ For example, in two dimensions, when four or more points in $S$ are cocircular t
 As shown in Figure~\ref{fig:degeneracies},
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/degeneracies}
+  \includegraphics[width=\textwidth]{degeneracies}
   \caption{The DT for four cocircular points in two dimensions is not unique (but the VD is).}%
 \label{fig:degeneracies}
 \end{marginfigure}
@@ -223,7 +223,7 @@ We use it in this course in the sense of the dual graph of a given graph.
 Let $G$ be a planar graph, as illustrated in Figure~\ref{fig:dual_graph} (black edges).
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\textwidth]{figs/dual_graph}
+  \includegraphics[width=\textwidth]{dual_graph}
   \caption{A graph $G$ (black lines), and its dual graph $G^\star$ (dashed lines).}%
 \label{fig:dual_graph}
 \end{marginfigure}
@@ -239,7 +239,7 @@ The VD and the DT are the best example of the duality between plane graphs.
 % \setcapindent{1em}
 \centering
 \begin{minipage}[c]{0.4\textwidth}
-  \includegraphics[width=\textwidth]{figs/dualdetail.pdf}
+  \includegraphics[width=\textwidth]{dualdetail.pdf}
 \end{minipage}
 \begin{minipage}[c]{0.45\textwidth}
 % \hspace{1.1em}
@@ -277,7 +277,7 @@ An incremental algorithm is one where the structure is built incrementally; in o
 Observe that the insertion of a single point $p$ in a DT modifies only \emph{locally} the DT, \ie\ only the triangles whose circumcircle contains $p$ need to be deleted and replaced by new ones respecting the Delaunay criterion (see Figure~\ref{fig:insertion_deletion} for an example). 
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.9\textwidth]{figs/insertion_deletion}
+  \includegraphics[width=0.9\textwidth]{insertion_deletion}
   \caption{\textbf{(top)} The DT before and \textbf{(bottom)} after a point $p$ has been inserted. Notice that the DT is updated only locally (only the yellow triangles are affected).}%
 \label{fig:insertion_deletion}
 \end{marginfigure}
@@ -296,7 +296,7 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
 Figure~\ref{fig:insertion_steps} illustrates the steps of the algorithm, and Algorithm~\ref{algo:insert1pt} its pseudo-code. 
 \begin{figure*}
   \centering
-  \includegraphics[width=\textwidth]{figs/insertion_steps}
+  \includegraphics[width=\textwidth]{insertion_steps}
   \caption{Step-by-step insertion, with flips, of a single point in a DT in two dimensions.}%
 \label{fig:insertion_steps}
 \end{figure*}
@@ -390,7 +390,7 @@ A better alternative is to use the adjacency relationships between the triangles
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/walk}
+  \includegraphics[width=0.7\textwidth]{walk}
   \caption{The Walk algorithm for a DT in two dimensions. The query point is $p$.}%
 \label{fig:walk}
 \end{figure}
@@ -432,7 +432,7 @@ This will ensure that if the query point $p$ is located exactly at the same posi
 \subsection{Flips}
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/flip22}
+  \includegraphics[width=0.7\textwidth]{flip22}
   \caption{A \emph{flip22}.}%
 \label{fig:flip22}
 \end{marginfigure}
@@ -450,7 +450,7 @@ There are 3 flip operations (the numbers refer to the number of triangles before
 \end{itemize}
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figs/flip13}
+  \includegraphics[width=0.7\textwidth]{flip13}
   \caption{A \emph{flip13} and its inverse operation \emph{flip31}.}%
 \label{fig:flip13}
 \end{marginfigure}
@@ -508,7 +508,7 @@ However, because it is simpler to manage triangles over arbitrary polygons (they
 The simplest data structure, as shown in Figure~\ref{fig:tr_ds}, 
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{figs/tr_ds}
+  \includegraphics[width=\linewidth]{tr_ds}
   \caption{The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).}%
 \label{fig:tr_ds}
 \end{figure}
@@ -526,7 +526,7 @@ Given as input a set $S$ of points and straight-line segments in the plane, diff
 We are mostly interested in the \emph{constrained Delaunay triangulation} (ConsDT) and the \emph{conforming Delaunay triangulation} (ConfDT), see Figure~\ref{fig:cdt_example} for one example.
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.85\linewidth]{figs/cdt_example}
+  \includegraphics[width=0.85\linewidth]{cdt_example}
   \caption{\textbf{(top)} A set $S$ of points and straight-line segments. \textbf{(middle)} Constrained DT of $S$. \textbf{(bottom)} Conforming DT of $S$; the Steiner points added are in red.}%
 \label{fig:cdt_example}
 \end{marginfigure}
@@ -541,7 +541,7 @@ The constrained segments in $S$ act as visibility blockers.
 Figure~\ref{fig:cdt_buildings} shows one example.
 \begin{figure}
   \centering
-  \includegraphics[width=0.95\textwidth]{figs/cdtbuildings}
+  \includegraphics[width=0.95\textwidth]{cdtbuildings}
   \caption{The ConsDT of a set of segments. On the right, the triangle whose circumcircle is green is a Delaunay (no other points in its interior) and so is the triangle whose circumcircle is in purple (there is one point in its interior, but it cannot be seen because of the constrained segment).}%
 \label{fig:cdt_buildings}
 \end{figure}
@@ -551,7 +551,7 @@ Figure~\ref{fig:cdt_buildings} shows one example.
 Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see Figure~\ref{fig:cdt_steps}):
 \begin{figure*}
   \centering
-  \includegraphics[width=0.95\linewidth]{figs/cdt_steps}
+  \includegraphics[width=0.95\linewidth]{cdt_steps}
   \caption{Steps to construct a ConsDT.}%
 \label{fig:cdt_steps}
 \end{figure*}
@@ -567,7 +567,7 @@ Without going into details about one potential algorithm, one way to construct a
 Observe that the ConsDT can be used to triangulate polygons with holes (see Figure~\ref{fig:cdt_dog}), it suffices to remove the triangle outside the exterior boundary, but inside the convex hull.
 \begin{marginfigure}
   \centering
-  \includegraphics[width=0.8\linewidth]{figs/cdt_dog}
+  \includegraphics[width=0.8\linewidth]{cdt_dog}
   \caption{\textbf{(top)} One polygon with 4 holes (interior rings). \textbf{(middle)} its ConsDT\@. \textbf{(bottom)} its ConfDT (the Steiner point added is in red).}%
 \label{fig:cdt_dog}
 \end{marginfigure}
@@ -635,5 +635,5 @@ Since a DT can be locally modified by adding one point (and not reconstructing t
   \item When inserting points in a DT (Algorithm~\ref{algo:insert1pt}), what happens if a new point is inserted directly on an edge? Line~2 states that the triangle is split into 3 new triangles, does it still hold?
   \item Given the input formed of elevation points and breaklines below (both projected to the $xy$-plane), draw both the constrained and conforming Delaunay triangulation (an approximation is fine).
   \\ \\
-  \centering{\includegraphics[width=0.95\linewidth]{figs/cdt_exercise}}
+  \centering{\includegraphics[width=0.95\linewidth]{cdt_exercise}}
 \end{enumerate}
