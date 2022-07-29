@@ -26,21 +26,23 @@ gDEMS are several properties and characteristics that apply only to them, and we
 
 \begin{itemize}
   \item InSAR
+  \item Photogrammetry from high-resolution satellite images
   \item Space lidar (ICESat-2 + GEDI)
 \end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Characteristics of gDEMs}
+\section[Specific characteristics]{Specific characteristics of gDEMs}
 
 \begin{itemize}
-  \item CRS
+  \item CRS, especially for the elevation (different geoids are used)
+  \item resolution (often in degrees)
   \item DSM (more than DTM)
   \item size of datasets
-  \item resolution (often in degrees)
   \item errors
-  \item integration with the sea-level datasets
+  \item integration with sea-level datasets
+  \item accuracy affected by slope (most image-based products)
 \end{itemize}
 
 
@@ -49,11 +51,14 @@ gDEMS are several properties and characteristics that apply only to them, and we
 \section[Most common products]{Most common products available}
 
 \begin{itemize}
+  \item ASTER
+  \item AW3D30
   \item STRM
   \item CopernicusDEM
+  \item MERIT
+  \item FABDEM
   \item ICESat-2 (the gridded version?)
   \item GEDI (the gridded version?)
-  \item FABDEM
 \end{itemize}
 
 
@@ -62,6 +67,8 @@ gDEMS are several properties and characteristics that apply only to them, and we
 \section{Conversion DSM to DTM}
 
 Some examples of how done?
+
+Or: correction bias for vegetations/trees and buildings (all man-made objects).
 
 %%%%%%%%%%%%%%%%%%%%
 %
