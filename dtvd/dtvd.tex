@@ -150,12 +150,12 @@ Notice here that maximising the minimum angle is not the same as minimising the 
 
 In the context of modelling terrains, the max-min angle optimality ensures that a surface approximated with the set of lifted (Delaunay) triangles will be close to the original surface.
 Figure~\ref{fig:notdelaunay} shows two examples of a hill, the left surface is a random triangulation of some sample points of the surface, and the right one is the Delaunay triangulation of the same set of points.
-\begin{figure}
+\begin{figure*}
   \centering
-  \includegraphics[width=\textwidth]{notdelaunay/notdelaunay}
+  \includegraphics[width=0.9\linewidth]{notdelaunay/notdelaunay}
   \caption{The same set of sample points of a hill is triangulated on the left with a random triangulation (non-Delaunay) and right with a Delaunay triangulation. The shape of the triangles is shown at the bottom by projecting them to the $xy$-plane.}%
 \label{fig:notdelaunay}
-\end{figure}
+\end{figure*}
 
 
 
@@ -296,7 +296,7 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
 Figure~\ref{fig:insertion_steps} illustrates the steps of the algorithm, and Algorithm~\ref{algo:insert1pt} its pseudo-code. 
 \begin{figure*}
   \centering
-  \includegraphics[width=\textwidth]{insertion_steps}
+  \includegraphics[width=0.9\linewidth]{insertion_steps}
   \caption{Step-by-step insertion, with flips, of a single point in a DT in two dimensions.}%
 \label{fig:insertion_steps}
 \end{figure*}
