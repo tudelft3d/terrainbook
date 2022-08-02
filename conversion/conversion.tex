@@ -192,7 +192,7 @@ This can be done by simply starting with a segment \(ab\), and searching for the
 %
 
 As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell \(\tau_0\) intersecting the isoline at a given elevation, `tracing' the isoline by navigating from \(\tau_0\)to the adjacent cell, and continuing until \(\tau_0\) is visited again (or the border of the dataset is reached).
-To navigate to the adjacent cell, it suffices to identify the edge \(\epsilon\) intersecting the isoline, and then navigating to the triangle/cell that is incident to \(\epsilon\).
+To navigate to the adjacent cell, it suffices to identify the edge $\epsilon$ intersecting the isoline, and then navigating to the triangle/cell that is incident to $\epsilon$.
 It is possible that there is no adjacent cell, if the boundary of the convex hull is reached in a TIN for instance.
 This requires that the TIN be stored in a topological data structure in which the adjacency between the triangles is available (for a grid this is implied).
 

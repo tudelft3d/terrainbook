@@ -15,7 +15,11 @@ Nowadays, these measurements are usually collected in large quantities using som
 In raw form, elevation measurements are typically stored as a point cloud, \ie\ a collection of georeferenced 3D points with each point representing one elevation measurement on the Earth's surface.
 
 There are a number of remote sensing techniques that are used to measure elevation on Earth or other planets. 
-Typically, these techniques measure 1) the distance to the target surface and 2) their own position and orientation with respect to some global reference system. 
+Typically, these techniques measure
+\begin{enumerate}
+	\item the distance to the target surface; 
+	\item their own position and orientation with respect to some global reference system. 
+\end{enumerate}
 By combining these, we can compute the 3D coordinates of the measured location on the target surface. 
 
 In this chapter we will focus primarily on lidar, the most common acquisition technique for large scale terrain models with centimetre level accuracy. 
@@ -27,10 +31,9 @@ This is because, as with any kind of real-world measurements, there are various 
 %Section~\ref{sec:artefacts} gives an overview of common problems in elevation data.
 
 \section{Principles of lidar}%
-\label{sec:lidar-principles}
+\label{sec:lidar-principles}\index{lidar}
 
 A lidar system\sidenote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. (from \href{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}{Wikipedia})} measures the distance to a target by illuminating it with pulsed laser light and measuring the reflected or \emph{backscattered}\sidenote{Backscattering is the natural phenomenon of  the reflection of (electromagnetic) waves or signals back to the direction they came from.} signal with a sensor (see Figure~\ref{fig:acqLidar}). 
-\index{acquisition lidar}
 \begin{marginfigure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/lidar.png}
@@ -110,6 +113,7 @@ For each return the return count is recorded, \eg\ the first return is the first
 \subsection{Anatomy of a lidar system}%
 \label{lidar:anatomy}
 
+
 A lidar system consists of an optical and an electronic part. 
 As shown in Figure~\ref{fig:lidar-components}, each part consists of several components.
 \begin{figure}
@@ -172,7 +176,8 @@ Apart from lidar there are also other sensor techniques that can be used to acqu
 
 % FIXME image with flight parameters and strips
 
-\subsection{Photogrammetry}
+\subsection{Photogrammetry}%
+\label{sec:photogrammetry}\index{photogrammetry}
 \begin{marginfigure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/photogrammetry.png}
@@ -207,7 +212,9 @@ This could be considered an advantage over lidar which captures several attribut
 Both airborne and spaceborne photogrammetry are possible.
 
 %%%
-\subsection{InSAR}
+\subsection{InSAR}%
+\label{sec:insar}%
+\index{InSar}
 
 Interferometric synthetic aperture radar (InSAR) is a radar-based technique that is used from space in the context of terrain generation. 
 It is quite different from airborne lidar or photo\-gramme\-try-based acquisition because of the extremely high altitude of the satellite carrying the sensor. 
@@ -329,8 +336,8 @@ The shape of the target surfaces in relation to the sensor position has a great 
 \end{marginfigure}
 which illustrates this for lidar, surfaces that are closest to the scanner and orthogonal to the laser beams will yield the highest point densities (see the rooftop of the middle house). Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
 
+\emph{Occlusion} happens when a surface is not visible from the scanner position.% 
 \index{occlusion}
-\emph{Occlusion} happens when a surface is not visible from the scanner position. 
 As a result there will be gaps in the point coverage, also visible in Figure~\ref{fig:lidarAcquisitionConditions:a}. 
 Notice how some steep surfaces and some of the adjacent ground are not registered at all by the scanner because it simply could not `see' these parts.
 
@@ -344,7 +351,7 @@ However, regardless of what flight parameters are chosen for a survey both effec
 	\centering
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ahn1_d.png}
-		\subcaption{AHN1 (1996-2003)}\label{fig:pcd:ahn1}
+		\subcaption{AHN1 (1996--2003)}\label{fig:pcd:ahn1}
 	\end{subfigure}
 	\quad
 	\begin{subfigure}{0.45\linewidth}
@@ -407,7 +414,7 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 	\quad
 	\begin{subfigure}{0.45\linewidth}
 		\includegraphics[width=\textwidth]{figs/ourlier-detection-wrong.png}
-		\subcaption{Good points, \ie\ those on the power line, may be removed during outlier detection}		\label{fig:outlier-wrong}
+		\subcaption{Good points, \ie\ those on the power line, may be removed during outlier detection}\label{fig:outlier-wrong}
 	\end{subfigure}
 	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}%
 	\label{fig:processing}
@@ -429,19 +436,19 @@ This is a paper that compares lidar and photogrammetry derived point clouds for 
 %For instance, an outlier filter 
 %misclassified points, smoothing effects in DIM
 
-%Difficulties in automated DTM generation
-%• Homogeneous areas and repeating structures;
-% No distinct peak or multiple peaks of the similarity measures
-%• Areas occluded in one image
-% No correspondence exists;
-%• Steep sloped surfaces
-% Geometric difference between template and match window;
-%• Discontinuities and break-lines
-% No correspondence or geometric difference;
-%• Non-lambertian surfaces
-% Radiometric difference between template and match window;
-%• Moving objects
-% correct correspondence, incorrect elevation
+% Difficulties in automated DTM generation
+% - Homogeneous areas and repeating structures;
+% - No distinct peak or multiple peaks of the similarity measures
+% - Areas occluded in one image
+% - No correspondence exists;
+% - Steep sloped surfaces
+% - Geometric difference between template and match window;
+% - Discontinuities and break-lines
+% - No correspondence or geometric difference;
+% - Non-lambertian surfaces
+% - Radiometric difference between template and match window;
+% - Moving objects
+% - correct correspondence, incorrect elevation
 
 % strip misalignment
 % occlusion/geometry of target surface vs scanning position, density of points
