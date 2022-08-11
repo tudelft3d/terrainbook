@@ -348,7 +348,7 @@ The latter two steps are repeated until all remaining points fail the ground tes
 In the first step a rudimentary initial TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
 These points are found by superimposing a 2D grid over the data extent and by selecting the lowest point for each grid cell (similar to grid thinning).
 The cell-size of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
-Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \SI{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
+Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \qty{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
 Each point that is inserted into the TIN is considered to be a ground point.
 
 In the second step two geometric properties are computed for each point that was not added to the TIN\@.
