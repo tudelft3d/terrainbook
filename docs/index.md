@@ -16,13 +16,24 @@ Each chapter is a lesson in the course, and each lesson is accompanied by a vide
 Written by [Hugo Ledoux](https://3d.bk.tudelft.nl/hledoux), [Ken Arroyo Ohori](https://3d.bk.tudelft.nl/ken), and [Ravi Peters](https://3d.bk.tudelft.nl/rypeters).
 
 
-{% for chap in site.data.chapters %}
-## Chapter {{ chap.chapter }}--{{ chap.title}}?
-{% if chap.video %}
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ chap.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{% else %}
-  no video
-{% endif %}
----
-{% endfor %}
+- - -
 
+- [Extra material]({{ site.baseurl }}/extra)
+- [TU Delft course about terrain modelling](https://3d.bk.tudelft.nl/courses/geo1015/)
+
+- - -
+
+  1. What is a terrain?
+  1. Acquisition of elevation measurements
+  1. Global digital elevation models
+  1. Delaunay triangulations & Voronoi diagrams
+  1. Spatial interpolation: deterministic methods
+  1. Spatial interpolation: kriging
+  1. Conversions between terrain representations
+  1. Topographic properties and features
+  1. Visibility queries on terrains
+  1. Runoff modelling
+  1. Point cloud processing
+  1. Handling and processing massive terrains
+  1. Spatial extent of a set of points
+  1. Processing bathymetric data to produce hydrographic charts
