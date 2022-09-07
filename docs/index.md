@@ -13,7 +13,7 @@ The course is tailored for MSc students who have already followed an introductor
 
 Each chapter is a lesson in the course, and each lesson is accompanied by a video introducing the key ideas and/or explaining some parts of the lessons.
 
-Written by [Hugo Ledoux](https://3d.bk.tudelft.nl/hledoux), [Ken Arroyo Ohori](https://3d.bk.tudelft.nl/ken), and [Ravi Peters](https://3d.bk.tudelft.nl/rypeters).
+Written by [Hugo Ledoux](https://3d.bk.tudelft.nl/hledoux), [Ken Arroyo Ohori](https://3d.bk.tudelft.nl/ken), [Ravi Peters](https://3dgi.nl), and [Maarten Pronk](https://evetion.nl).
 
 
 - - -
