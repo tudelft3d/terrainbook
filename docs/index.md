@@ -19,7 +19,8 @@ Written by [Hugo Ledoux](https://3d.bk.tudelft.nl/hledoux), [Ken Arroyo Ohori](h
 - - -
 
 - [Extra material]({{ site.baseurl }}/extra)
-- [TU Delft course about terrain modelling](https://3d.bk.tudelft.nl/courses/geo1015/)
+- [YouTube videos]({{ site.baseurl }}/videos)
+- [TU Delft course about terrain modelling (GEO1015)](https://3d.bk.tudelft.nl/courses/geo1015/) (where this book is used as the main reference)
 
 - - -
 
