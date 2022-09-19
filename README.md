@@ -1,5 +1,5 @@
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3992107.svg)](https://doi.org/10.5281/zenodo.3992107)
+[![CC4](https://mirrors.creativecommons.org/presskit/buttons/80x15/svg/by.svg)](http://creativecommons.org/licenses/by/4.0/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3992107.svg)](https://doi.org/10.5281/zenodo.3992107) [![extras](https://img.shields.io/badge/videos-tudelft3d.github.io/%2Fterrainbook%2F-fea93b)](https://tudelft3d.github.io/terrainbook/)
 
 # Computational modelling of terrains
 
@@ -27,7 +27,7 @@ Most chapters have a short YouTube video explaining the key concepts, and some c
 
 ## Open material
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License.
 
 
 
