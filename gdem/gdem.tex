@@ -40,15 +40,16 @@ As an alternative to InSAR and images from satellite is lidar.
 
 
 %%%
+\subsection{Photogrammetry from high-resolution satellite images}
+
+See Section~\ref{sec:photogrammetry}.
+
+
+%%%
 \subsection{InSAR}
 
 See Section~\ref{sec:insar}.
 
-
-%%%
-\subsection{Photogrammetry from high-resolution satellite images}
-
-See Section~\ref{sec:photogrammetry}.
 
 %%%
 \subsection{Space lidar (ICESat-2 + GEDI)}
@@ -78,12 +79,12 @@ NASA launched in 2018 two missions measure the elevation of the Earth globally w
   It does not have global coverage since it collects measurements only between \ang{51.6} N and \ang{51.6} S.
   GEDI has been combined with TanDEM-X data to produce biomass estimates and with Landsat imagery to produce a global canopy height map.
 \end{itemize}
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{orbit}
-  \caption{Three successive ground tracks for ICESat-2 and GEDI\@. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond \ang{51.6}~latitude for GEDI.}%
+  \caption{Ground tracks for three successive orbits of ICESat-2 and GEDI. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond \ang{51.6}~latitude for GEDI.}%
 \labfig{fig:orbit}
-\end{figure}
+\end{figure*}
 
 %
 
@@ -106,7 +107,7 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
     \ along track spacing  & \qty{0.7}{m}                         & \qty{70}{m}                            & \qty{0.1}{m}     \\
     \ across track spacing & \qty{3}{km}/\qty{90}{m} between pair & \qty{0.6}{km}                          & \qty{0.1}{m}     \\
     \ swath width          & \qty{6.6}{km}                        & \qty{4.2}{km}                          & \qty{1}{km}      \\
-    \ beam frequency       & \qty{512}{nm} (green)                & \qty{1064}{nm} (near-infrared)         & Either           \\
+    \ beam frequency       & \qty{512}{nm} (green)                & \qty{1064}{nm} (near-infrared)         & either           \\
     \ \# beams             & 6 (in 3 pairs)                       & 8                                      & 1                \\
       \bottomrule
   \end{tabular}%
@@ -189,7 +190,7 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
 We list only the ones available as open-access?
 For instance AW3D is also available as 5m-grid, but €€€.
 
-Maybe we should make our own table with paid products too? Like that table: https://github.com/DahnJ/Awesome-DEM#summary
+Maybe we should make our own table with paid products too? Like that table: \url{https://github.com/DahnJ/Awesome-DEM#summary}
 I find it interesting to know that some products are not free, and way better
 
 % TODO: remake the inheritance fig
