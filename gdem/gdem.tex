@@ -32,11 +32,12 @@ gDEMS have several properties and characteristics that apply only to them, and w
 \section[Acquisition of global data]{Acquisition of global elevation data}
 
 The acquisition of gDEMs requires the use of a sensor mounted on a satellite.
-
-The first gDEM (SRTM v1) was constructed with InSAR and released in 2003. 
-
-As an alternative to InSAR and images from satellite is lidar.
-
+The three most used instruments to collect elevation information are:
+\begin{enumerate}
+  \item photogrammetry from satellite images
+  \item InSAR
+  \item space lidar
+\end{enumerate}
 
 
 %%%
@@ -47,6 +48,8 @@ See Section~\ref{sec:photogrammetry}.
 
 %%%
 \subsection{InSAR}
+
+The first gDEM (SRTM v1) was constructed with InSAR and released in 2003. 
 
 See Section~\ref{sec:insar}.
 
@@ -170,17 +173,45 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
 %
 \section[Specific characteristics]{Specific characteristics of gDEMs}
 
-\begin{itemize}
-  \item often near-global, depends on the orbits
-  \item CRS, especially vertical datums
-  \item resolution (often in degrees)
-  \item DSM (more than DTM)
-  \item size of datasets
-  \item void filling: \url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission#Void-filled_SRTM_datasets}
-  \item errors
-  \item integration with sea-level datasets
-  \item accuracy affected by slope (most image-based products)
-\end{itemize}
+%%
+\paragraph{Global often means near-global}
+
+The data collected depend on the orbit of the satellite.
+Some satellites have a polar orbit and will therefore completely the Earth (ICESat-2 is one example, see~\reffig{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see~\reffig{fig:orbit}).
+
+
+%%
+\paragraph{Vertical datums}
+
+
+%%
+\paragraph{resolution (often in degrees)}
+
+
+
+
+%%
+\paragraph{size of datasets}
+
+%%\paragraph{void filling: \url{https://en.wikipedia.org/wiki/}Shuttle_Radar_Topography_Mission#Void-filled_SRTM_datasets}
+
+
+%%
+\paragraph{errors}
+
+
+%%
+\paragraph{integration with sea-level datasets}
+
+
+%%
+\paragraph{accuracy affected by slope (most image-based products)}
+
+
+
+%%
+\paragraph{DSM (more than DTM)}
+
 
 
 %%%%%%%%%%%%%%%%%%%%
