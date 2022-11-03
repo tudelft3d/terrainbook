@@ -36,16 +36,20 @@ However, gDEMS have several properties and characteristics that apply only to th
 
 The acquisition of gDEMs requires the use of a sensor mounted on a satellite.
 The three most used instruments to collect elevation information are:
+
 \begin{enumerate}
-  \item photogrammetry from optical satellite images
-  \item InSAR
-  \item spaceborne lidar
+  \item Photogrammetry from optical satellite images
+  \item Interferometric synthetic-aperture radar (InSAR)
+  \item Spaceborne lidar
 \end{enumerate}
 
 %%%
 \subsection{InSAR}
 
-The first gDEM (SRTM v1) was constructed with InSAR and released in 2003.
+The first gDEM (SRTM v1) was measured with InSAR in 2000, aboard the Space Shuttle Endeavour.
+As InSAR requires two images of the same area for stereoscopy to derive a DEM, the Shuttle was equipped with two antennas, one in the payload bay, and one a mast extending \qty{60}{m} from the Shuttle.
+
+Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred meters(!) away, to generate InSAR data in a single pass.
 
 See Section~\ref{sec:insar}.
 
@@ -147,7 +151,6 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
 %%%%%%%%%%%%%%%%%%%%
 %
 \section[Specific characteristics]{Specific characteristics of gDEMs}
-% Something about DTED specs
 
 %%
 \paragraph{Global often means near-global}
@@ -160,7 +163,7 @@ Similarly, while the Tandem-X mission produced a DEM with a global coverage, the
 %%
 \paragraph{Vertical datums}
 % Do students know about geoids? If not, explain it here, ellipsoid vs geoid.
-Global DEMs are often vertically referenced to the geoid, specifically EGM96 for SRTM and EGM2008 for CopernicusDEM.
+Global DEMs are often vertically referenced to the geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM.
 There's a small difference---generally less than half a metre---between these versions of the EGM geoid.
 
 % MSS = Geoid + MDT
@@ -168,16 +171,19 @@ Note that the geoid is not the same as Mean Sea Level (MSL), as it does not take
 Depending on the location, the difference between the geoid and MSL can be up to 1.5 metres.
 
 %%
-\paragraph{resolution (often in degrees)}
+\paragraph{Format}  % include resolution
+The format of DEMs has historically been defined by the military, which are still used by many government agencies.
+There is the Digital Terrain Elevation Data (DTED) format, developed in the 1970s, which stores elevation in integers (saying something about the accuracy back then).
+It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
+More recently, in 2016, the Defense Gridded Elevation Data (DGED) has been defined, specifiying more levels to higher resolutions and allowing for geotiffs.
+It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
 
-
-%%
-\paragraph{size of datasets}
-
+Datasets such as SRTM and derived NASADEM will provide data as .hgt (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
+GDAL can read these files.
 
 
 %% Accuracy?
-\paragraph{errors}
+\paragraph{Errors}
 As with any measurements taken, gDEMs contain errors, or outliers.
 SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts.
 CopernicusDEM suffers from multipath errors in urban areas, which lead to small pits in the DEM.
