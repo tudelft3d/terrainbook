@@ -19,7 +19,8 @@ Indeed, looking at the map in Figure~\ref{fig:dem_coverage}, we see that local e
 
 \begin{figure}
   \centering
-  \caption{OpenTopography coverage + European datasets.}%
+  \includegraphics[width=\linewidth]{opentopography.pdf}
+  \caption{OpenTopography coverage with some European datasets added in pink by author(s).} % might be more European datasets
   \label{fig:dem_coverage}
 \end{figure}
 
@@ -173,19 +174,25 @@ Depending on the location, the difference between the geoid and MSL can be up to
 %%
 \paragraph{Format}  % include resolution
 The format of DEMs has historically been defined by the military, which are still used by many government agencies.
-There is the Digital Terrain Elevation Data (DTED) format, developed in the 1970s, which stores elevation in integers (saying something about the accuracy back then).
+There is the Digital Terrain Elevation Data (DTED) format, developed in the 1970s, which stores elevation in integers (saying something about the accuracy).
 It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
 More recently, in 2016, the Defense Gridded Elevation Data (DGED) has been defined, specifiying more levels to higher resolutions and allowing for geotiffs.
-It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
 
-Datasets such as SRTM and derived NASADEM will provide data as .hgt (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
+It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
+Most of the gDEMS are tiled in a similar way.
+CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601x3601 pixels on the equator, but 3600x2400 (height, width) pixels at \qty{50}{\degree} latitude, 3600x1800 at \qty{60}{\degree} latitude, 3600x1200 at \qty{70}{\degree} latitude, becoming as small as 3600x360 for the last 5 degrees of latitude.
+This tiling scheme results in the most square pixels possible, but makes it hard to work with tiles from different latitudes.
+
+Datasets such as SRTM and derived NASADEM can provide data as .hgt (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
 GDAL can read these files.
+Luckily, most of the gDEMS are available in a standard format, such as GeoTIFF.
+However, for broad compatibility, recent advances such as Cloud Optimized GeoTIFF (COG) are not yet widely used.
 
 
 %% Accuracy?
 \paragraph{Errors}
 As with any measurements taken, gDEMs contain errors, or outliers.
-SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts.
+SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts, visible (the derived NASADEM) in Figure~\ref{fig:nasadem}.
 CopernicusDEM suffers from multipath errors in urban areas, which lead to small pits in the DEM.
 
 Most gDEMS suffer from voids in steep terrain, as peaks can occlude valleys below (shadow effect).
@@ -245,16 +252,27 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
   \labfig{fig:gdem_inheritance}
 \end{figure}
 
-% TODO: Make into table with resolution(s) (paid-free) and maybe license(s) (research-non-commercial)
-\begin{itemize}
-  \item ASTER
-  \item ALOS World 3D
-  \item STRM
-  \item NASADEM
-  \item CopernicusDEM
-  \item MERIT
-  \item FABDEM
-\end{itemize}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+  \begin{tabular}{@{}l|llllll@{}}
+    \toprule
+    gDEM          & Year released & By              & Sensor  & Type     & License & Resolution \\
+    \midrule
+    SRTM          & 2001          & NASA            & inSAR   & DSM      & Open    & 30m-90m    \\
+    ASTER         & 2009          & NASA            & optical & DSM      & Open    & 30m        \\
+    Tandem-X      & 2014          & DLR             & inSAR   & DSM      & Closed  & 12m        \\
+    WorldDEM      & 2014          & Airbus          & inSAR   & DSM/'DTM & Closed  & 5-12m      \\
+    ALOS          & 2016          & JAXA            & optical & DSM      & Open    & 30m        \\
+    MERIT         & 2017          & Yamazaki et al. & inSAR   & 'DTM     & Open    & 90m        \\
+    NASADEM       & 2019          & NASA            & inSAR   & DSM      & Open    & 30m        \\
+    CopernicusDEM & 2020          & ESA             & inSAR   & DSM      & Open    & 30m-90m    \\
+    FABDEM        & 2022          & Hawker et al.   & inSAR   & 'DTM     & Closed  & 30m        \\
+    \bottomrule
+  \end{tabular}
+  \caption{Overview of gDEMS}
+  \label{tab:gdem_overview}
+\end{table}
 
 % A few words about fusion? [Okolie22] has very long review.
 
@@ -287,7 +305,11 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (\url{https://opentopography.org}).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
+In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as .tar (archives) for 1 by 1 degree tiles via ftp, in folders for each continent and then country.
+Data is duplicated for the border areas, totalling \qty{2}{TB}.
 
+To read up on the DGED format, check out \url{https://dgiwg.org/documents/dgiwg-standards}.
+Similarly, reading a User Guide on any of the gDEMS is a good idea, such as the one for CopernicusDEM (\url{https://spacedata.copernicus.eu/documents/20126/0/GEO1988-CopernicusDEM-SPE-002_ProductHandbook_I3.0+%281%29.pdf/68854203-e022-1446-b216-41becd2399b5?t=1618937501277}).
 
 
 
@@ -296,5 +318,5 @@ Otherwise each gDEM has its own download portal, with its own registration syste
 \section{Exercises}
 
 \begin{enumerate}
-  \item What is what?
+  \item Can you create a gDEM using infrared images?
 \end{enumerate}
