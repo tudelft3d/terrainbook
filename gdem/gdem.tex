@@ -8,18 +8,18 @@
 \chapter{Global digital elevation models}% or global terrains
 \label{chap:gdem}
 
-We define as ``global digital elevation models'' (gDEMs below, we can also refer to them as `global terrains') the datasets that cover (most of) the Earth.%
+We define as ``global digital elevation models'' (or global terrains; we refer to them as ``gDEMs'' in this chapter below) the datasets that cover (most of) the Earth.%
 \index{global DEM}
-Those datasets require different acquisition methods from local datasets, since flying an airplane or performing local surveys at the scale of the Earth has not been done as it would prohibitively expensive.
-The acquisition instruments used must be \emph{space-borne}, \ie\ mounted on a satellite for instance.
+Those datasets require different acquisition methods from local datasets, since flying an airplane or performing local surveys at the scale of the Earth has not been done yet, and it would be prohibitively expensive.
+The acquisition instruments for a global coverage must be \emph{space-borne}, \ie\ mounted on a satellite for instance.
 Notice that the orbit of some satellites makes them technically non-global, but that we still refer to their datasets as global since they have a wide coverage, just restricted to certain latitudes.
 
 %
 
-It cannot be understated that before the introduction of gDEMs (in 2001), we had no way of knowing the elevation for most of the Earth.
+It cannot be understated that before the introduction of gDEMs (with SRTM v1 in 2000, see below for more information), we had no way of knowing the elevation for a given location on the Earth.
 Indeed, looking at the datasets listed and/or hosted at 
 \marginnote{\url{https://opentopography.org}}
-OpenTopography (Figure~\ref{fig:dem_coverage}), we can observe that local elevation datasets are limited to developed countries.
+OpenTopography (Figure~\ref{fig:dem_coverage}), we can observe that, even in 2022, local elevation datasets are mostly limited to developed countries.
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{opentopography.pdf}
@@ -27,12 +27,16 @@ OpenTopography (Figure~\ref{fig:dem_coverage}), we can observe that local elevat
 \label{fig:dem_coverage}
 \end{figure}
 
-Global DEMs thus enabled \emph{global} environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, and their ubiquitous use in flood modelling (see Chapter~\ref{chap:runoff}).
-However, gDEMS have several properties and characteristics that apply only to them, and we report in this chapter on the main ones.
+%
 
-% a few examples are the detection geological structures, the analysis of tectonic evolution, flood modelling, and the understanding of volcanic processes.
+Global DEMs enable us to perform \emph{global} environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and floor simulations (see Chapter~\ref{chap:runoff}).
+
+%
+
+While gDEMs are elevation models like local ones (and can be modelled with essentially the same formats and tools as local ones), they have several properties and characteristics that apply only to them, and we report in this chapter on the main ones.
 
 % We first describe global acquisition techniques, then we discuss the properties (and errors and biases, etc.) that the datasets collected will have,
+
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -40,22 +44,12 @@ However, gDEMS have several properties and characteristics that apply only to th
 
 The acquisition of gDEMs requires the use of a sensor mounted on a satellite.
 The three most used instruments to collect elevation information are:
-
 \begin{enumerate}
   \item Photogrammetry from optical satellite images
   \item Interferometric synthetic-aperture radar (InSAR)
-  \item Spaceborne lidar
+  \item Lidar
 \end{enumerate}
 
-%%%
-\subsection{InSAR}
-
-The first gDEM (SRTM v1) was measured with InSAR in 2000, aboard the Space Shuttle Endeavour.
-As InSAR requires two images of the same area for stereoscopy to derive a DEM, the Shuttle was equipped with two antennas, one in the payload bay, and one a mast extending \qty{60}{m} from the Shuttle.
-
-Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred meters (!) away, to generate InSAR data in a single pass.
-
-See Section~\ref{sec:insar}.
 
 %%%
 \subsection{Photogrammetry from high-resolution satellite images}
@@ -63,17 +57,29 @@ See Section~\ref{sec:insar}.
 See Section~\ref{sec:photogrammetry}.
 
 
+%%%
+\subsection{InSAR}%
+\index{InSAR}
+
+The first gDEM (SRTM v1) was collected with InSAR in 2000, aboard the Space Shuttle Endeavour.
+As InSAR requires two images of the same area for stereoscopy to derive a DEM, the Shuttle was equipped with two antennas, one in the payload bay, and one on a mast protruding \qty{60}{m} from the Shuttle.
+
+Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred meters (!) away, to generate InSAR data in a single pass.
+
+See Section~\ref{sec:insar} for more information.
 
 
 %%%
 \subsection{Spaceborne lidar (ICESat-2 + GEDI)}%
 \index{spaceborne lidar}\index{lidar}
 
-Spaceborne lidar is a relatively new technique, and has not yet been used to produce a gDEM.
-We still include it here because it enables \emph{terrain} elevation measurements globally.
+Spaceborne lidar is a relatively new technique, and has not yet been used to produce a gDEM\@.
+We still include it here because it enables \emph{terrain} elevation measurements globally (vegetation can be filtered out), and we believe it will help us create gDEMs in the near future.
+
+%
 
 Lidar was first used in space on the Apollo missions, and with further technological developments, it has been used extensively from the 1990s onwards.
-For example, Mercury, Mars, near-Earth asteroids, and lately again the moon have been scanned using lidar.
+For example, Mercury, Mars, near-Earth asteroids, and lately again the Moon have been scanned using lidar.
 Earth surface elevation lidar measurements have also been developed, often flown on the Space Shuttles.
 ICESat was the first Earth-based lidar satellite, launched in 2003, with the primary goal of ice sheet monitoring.
 It had an elevation accuracy of several cm and was operational for five years.
@@ -128,15 +134,6 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
 
 %
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\linewidth]{tracks}
-  \caption{Filtered ICESat-2 and GEDI points from a single granule each at the 47th latitude, demonstrating the beam patterns.
-    Note that ICESat-2 has a smaller beam footprint and a much higher pulse repetition, but a more uneven spatial coverage than GEDI\@.
-    The gaps between data here will decrease by using multiple granules, but will never disappear completely.}%
-  \label{fig:beams}
-\end{figure}
-
 ICESat-2 lasers split into six beams, divided into three pairs, each pair \qty{90}{m} apart and the pairs \qty{3.3}{km} apart, for a total swath width of \qty{6.6}{km}.
 Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{\pm17}{m}, so each measurement overlaps.
 GEDI sensor has eight beams, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
@@ -159,89 +156,22 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
 
 %%%
 \paragraph{Comparison to typical airbone lidar.}
+
 These space borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
 The altitude increase results in a wider beam footprint, from \qty{\sim0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\sim15}{m} for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from \qty{0.5}{km} to \qty{480}{km}.
 A comparison is given in Table~\ref{tab:lidarcomparison}.
 Airborne LiDAR often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
 While both ICESat-2 and GEDI employ instruments with multiple (split) laser beams, including the ability to point the laser away from the ground track, all to maximize coverage, this still results in very sparse and uneven coverage as shown in Figure~\ref{fig:beams}.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{tracks}
+  \caption{Filtered ICESat-2 and GEDI points from a single granule each at the 47th latitude, demonstrating the beam patterns.
+    Note that ICESat-2 has a smaller beam footprint and a much higher pulse repetition, but a more uneven spatial coverage than GEDI\@.
+    The gaps between data here will decrease by using multiple granules, but will never disappear completely.}%
+\label{fig:beams}
+\end{figure}
 
-
-
-%%%%%%%%%%%%%%%%%%%%
-%
-\section[Specific characteristics]{Specific characteristics of gDEMs}
-
-%%
-\paragraph{Global often means near-global.}
-
-The data collected depend on the orbit of the satellite.
-Some satellites have a polar orbit and can therefore completely measure the Earth (ICESat-2 is one example, see~\reffig{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see~\reffig{fig:orbit}).
-Similarly, while the Tandem-X mission produced a DEM with a global coverage, the SRTM DEM was measured from the Space Shuttle and only covered up to \qty{60}{\degree} latitude.
-
-
-%%
-\paragraph{Vertical datums.}
-
-Global DEMs are often vertically referenced to the geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM\@.
-Be aware that there is a small difference---generally less than half a meter---between these versions of the EGM geoid.
-
-% MSS = Geoid + MDT
-Note that the geoid is not the same as the mean sea level (MSL), 
-\index{mean sea level}\marginnote{mean sea level (MSL)}
-as it does not take into account the dynamic effects of temperature and currents.
-Depending on the location, the difference between the geoid and MSL can be up to \qty{1.5}{m}.
-
-%%
-\paragraph{Format.}  % include resolution
-The format of DEMs has historically been defined by the military, which are still used by many government agencies.
-There is the Digital Terrain Elevation Data (DTED) format, developed in the 1970s, which stores elevation in integers (saying something about the accuracy).
-It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
-More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing for GeoTIFFs.
-
-It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arc seconds become smaller near the poles.
-Most of the gDEMS are tiled in a similar way.
-CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601x3601 pixels on the equator, but 3600x2400 (height, width) pixels at \qty{50}{\degree} latitude, 3600x1800 at \qty{60}{\degree} latitude, 3600x1200 at \qty{70}{\degree} latitude, becoming as small as 3600x360 for the last 5 degrees of latitude.
-This tiling scheme results in the most square pixels possible, but makes it hard to work with tiles from different latitudes.
-
-Datasets such as SRTM and derived NASADEM can provide data as \texttt{.hgt} (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
-GDAL can read these files.
-Luckily, most of the gDEMS are available in a standard format, such as GeoTIFF\@.
-However, for broad compatibility, recent advances such as Cloud Optimized GeoTIFF (COG) are not yet widely used.
-% TODO: COG here?
-
-
-%% Accuracy?
-\paragraph{Errors.}
-As with any measurements taken, gDEMs contain errors, or outliers.
-SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts, visible (the derived NASADEM) in Figure~\ref{fig:nasadem}.
-CopernicusDEM suffers from multipath errors in urban areas, which lead to small pits in the DEM.
-
-Most gDEMS suffer from voids in steep terrain, as peaks can occlude valleys below (shadow effect).
-%%\paragraph{void filling: \url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission#Void-filled_SRTM_datasets}
-These voids are often filled in not (only) by interpolation, but by other gDEMS, as they measured the same area from a different angle.
-
-
-Global DEM products are often accompanied by a quality layer, which indicates where data has been void-filled.
-Similarly, error masks with the calculated instrument error and water masks are often provided alongside the elevation data.
-% Something about vertical accuracy, it getting better.
-
-%%
-% \paragraph{integration with sea-level datasets}
-
-
-%%
-% \paragraph{accuracy affected by slope (most image-based products)}
-
-
-%%
-\paragraph{DSM (more than DTM).}
-In contrast to local DEMs, which are often provided as either a classified pointcloud, or as separate raster DSM and DTMs, gDEMs should be classified as DSMs.
-The current measurement techniques will measure the top of canopy and buildings, and not the ground below.
-This is the largest source of error in gDEMS, and can considerably limit the applicability of the data.
-
-Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a pseudo DTM ('DTM).
-While these methods improve the accuracy of gDEMs considerably, they are not perfect, and results are still far removed from a local DTM\@.
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -256,6 +186,8 @@ An overview of the most common gDEMS are given in Figure~\ref{fig:gdem_inheritan
 \end{figure*}
 Note that all these products differ considerably in terms of coverage, resolution, accuracy and licensing.
 Even the same product can have different versions, with different resolutions and licenses.
+
+%
 
 For example, SRTM is freely available, including its derived NASADEM, and was first introduced at \qty{90}{m}, with subsequent versions at \qty{30}{m}.
 Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of \qty{\pm12}{m}.
@@ -283,12 +215,12 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
     SRTM          & 2001          & NASA            & inSAR   & DSM      & Open    & 30m-90m    \\
     ASTER         & 2009          & NASA            & optical & DSM      & Open    & 30m        \\
     Tandem-X      & 2014          & DLR             & inSAR   & DSM      & Closed  & 12m        \\
-    WorldDEM      & 2014          & Airbus          & inSAR   & DSM/'DTM & Closed  & 5--12m      \\
+    WorldDEM      & 2014          & Airbus          & inSAR   & DSM/DTM$^{*}$ & Closed  & 5--12m      \\
     ALOS          & 2016          & JAXA            & optical & DSM      & Open    & 30m        \\
-    MERIT         & 2017          & Yamazaki et al. & inSAR   & 'DTM     & Open    & 90m        \\
+    MERIT         & 2017          & Yamazaki et al. & inSAR   & DTM$^{*}$     & Open    & 90m        \\
     NASADEM       & 2019          & NASA            & inSAR   & DSM      & Open    & 30m        \\
     CopernicusDEM & 2020          & ESA             & inSAR   & DSM      & Open    & 30m-90m    \\
-    FABDEM        & 2022          & Hawker et al.   & inSAR   & 'DTM     & Closed  & 30m        \\
+    FABDEM        & 2022          & Hawker et al.   & inSAR   & DTM$^{*}$     & Closed  & 30m        \\
     \bottomrule
   \end{tabular}
   \caption{Overview of gDEMS}%
@@ -314,9 +246,111 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 \end{figure*}
 
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%
+\section[Specific characteristics]{Specific characteristics of gDEMs}
+
+%%
+\subsection{Global often means near-global}
+
+The data collected depend on the orbit of the satellite.
+Some satellites have a polar orbit and can therefore completely measure the Earth (ICESat-2 is one example, see~\reffig{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see~\reffig{fig:orbit}).
+
+Similarly, while the Tandem-X mission produced a DEM with a global coverage, the SRTM DEM was measured from the Space Shuttle and only covers up to \qty{60}{\degree} latitude.
+
+
+%%
+\subsection{Format}  
+
+The formats used to store and exchange DEMs have historically been defined by the military, which are still used by many government agencies.
+One example is the \emph{Digital Terrain Elevation Data} (DTED) format, developed in the 1970s, which stores elevation in integers (which tells us a lot about the accuracy and precision possible 50 years ago).
+It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
+More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing GeoTIFFs to used (which removes the integer constraint).
+DGED also defines the structure and the specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
+
+%
+
+Most of the gDEMS are tiled in a similar way.
+CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601$\times$3601 pixels on the equator, but 3600$\times$2400 (height, width) pixels at \qty{50}{\degree} latitude, 3600$\times$1800 at \qty{60}{\degree} latitude, 3600$\times$1200 at \qty{70}{\degree} latitude, becoming as small as 3600$\times$360 for the last 5 degrees of latitude.
+This tiling scheme results in pixels being as square as possible, but makes it hard to work with tiles from different latitudes.
+
+% TODO: add something about SRTM 30m resolution not being 'really 30m'?
+
+%
+
+Datasets such as SRTM and NASADEM can provide data as \texttt{.hgt} (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
+GDAL can however read these files.
+
+Luckily, most of the gDEMS are available in a standard format, such as GeoTIFF\@.
+However, for broad compatibility, recent advances such as Cloud Optimized GeoTIFF (COG) are not yet widely used.
+% TODO: COG here?
+
+
+%% TODO: Accuracy?
+\subsection{Errors}
+
+As with any measurements taken, gDEMs contain errors and outliers.
+SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts, visible  in Figure~\ref{fig:nasadem} for the derived NASADEM\@.
+
+CopernicusDEM suffers from multipath errors in urban areas, which lead to small pits in the DEM\@.
+% TODO: is there an example of this? A figure would be nice
+
+Most gDEMS suffer from voids in steep terrain, as peaks can occlude valleys below (called the shadow effect).
+%%\paragraph{void filling: \url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission#Void-filled_SRTM_datasets}
+These voids are often filled in not only by interpolation, but with the help of other gDEMS, as they measured the same area from a different angle.
+
+
+Global DEM products are often accompanied by a quality layer, which indicates where data has been void-filled.
+Similarly, error masks with the calculated instrument error and water masks are often provided alongside the elevation data.
+% Something about vertical accuracy, it getting better.
+
+
+
+%%
+% \paragraph{integration with sea-level datasets}
+%%
+% \paragraph{accuracy affected by slope (most image-based products)}
+
+
+%%
+\subsection{Vertical datums}
+
+Global DEMs are vertically referenced to a specific geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM\@.
+Be aware that there is a small difference---generally less than half a meter---between these versions of the EGM geoid.
+
+% MSS = Geoid + MDT
+Note that the geoid is not the same as the mean sea level (MSL),% 
+\index{mean sea level}\marginnote{mean sea level (MSL)}
+as it does not take into account the dynamic effects of temperature and currents.
+Depending on the location, the difference between the geoid and MSL can be up to \qty{1.5}{m}.
+
+
+%%
+\subsection{gDEMs are DSM (more than DTM)}
+
+In contrast to local DEMs, which are often provided as either a classified point cloud, or as separate raster DSMs and DTMs, gDEMs should be classified as DSMs.
+The current measurement techniques will measure the top of canopy and buildings, and not the ground below.
+This is the largest source of error in gDEMS, and can considerably limit the applicability of the data.
+
+%
+
+Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a \emph{pseudo DTM} (DTM$^{*}$).
+While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrain still contain vegetation and/or buildings.
+% are still far removed from a local DTM\@.
+
+%
+
+Space lidar is promising as a source to reconstruct gDEMs because lidar penetrates vegetation, and thus obtaining a DTM is an easier process.
+
+
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes \& comments}
+
+% TODO: add some papers to read here
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
 
