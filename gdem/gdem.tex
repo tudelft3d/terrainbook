@@ -140,6 +140,17 @@ Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{
 GEDI sensor has eight beams, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
 GEDI measures a point every \qty{70}{m} along-track, with a beam footprint of \qty{23}{m}.
 Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon LiDAR at a bathymetric ``green'' wavelength of \qty{512}{nm}.
+%%%
+\paragraph{Product levels.}
+The data from the ICESat-2 and GEDI missions is made publicly available in several data products, categorised in 3 levels (Level 1, 2, and 3 data products), where a higher-level is derived from a lower-level product.
+\begin{enumerate}
+  \item \textbf{Level 1} products contains the raw telemetry;
+  \item \textbf{Level 2} products contain directly usable geolocated data to which several corrections---such as accounting for atmospheric effects---are applied.
+  \item \textbf{Level 3} data are aggregated versions of Level 2 products, which are smaller in filesize and easier to process.
+  ICESat-2 differentiates between a Level 3A, which are aggregated Level 2 data products per \emph{granule}, and a Level 3B, which are gridded versions of the aggregated Level 3A data products.
+  GEDI's Level 3 data product are gridded versions of Level 2 data products, like ICESat-2's Level 3B.
+  GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
+\end{enumerate}
 
 %%%
 \paragraph{Comparison to typical airbone lidar.}
