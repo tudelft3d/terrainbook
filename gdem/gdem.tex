@@ -66,7 +66,9 @@ See Section~\ref{sec:photogrammetry}.
 
 
 %%%
-\subsection{Spaceborne lidar (ICESat-2 + GEDI)}
+\subsection{Spaceborne lidar (ICESat-2 + GEDI)}%
+\index{spaceborne lidar}\index{lidar}
+
 Spaceborne lidar is a relatively new technique, and has not yet been used to produce a gDEM.
 We still include it here because it enables \emph{terrain} elevation measurements globally.
 
@@ -79,12 +81,12 @@ Most recently, NASA launched in 2018 two missions measure the elevation of the E
 
 \begin{itemize}
   \item \textbf{ICESat-2}
-        \marginnote{\url{https://icesat-2.gsfc.nasa.gov/}}
+        \marginnote{\url{https://icesat-2.gsfc.nasa.gov/}}\index{ICESat-2}
         (Ice, Cloud, and Land Elevation Satellite-2) is in a low Earth and polar orbit to investigate ice sheets, it covers the Earth between \ang{-88} and \ang{88} latitude.
         Its instrument to measure altimetry is called \emph{Advanced Topographic Laser Altimeter System} (ATLAS).
         Apart from terrain retrieval, ICESat-2 also measures the surface, such as canopy height, and has many other applications such as measuring bathymetry and estimating biomass.
   \item \textbf{GEDI}
-        \marginnote{\url{https://gedi.umd.edu/}}
+        \marginnote{\url{https://gedi.umd.edu/}}\index{GEDI}
         (Global Ecosystem Dynamics Investigation) is attached to the international space station (ISS) and its main goal is to investigate global ecosystems.
         It does not have global coverage since it collects measurements only between \ang{51.6} N and \ang{51.6} S.
         GEDI has been combined with TanDEM-X data to produce biomass estimates and with Landsat imagery to produce a global canopy height map.
@@ -92,7 +94,7 @@ Most recently, NASA launched in 2018 two missions measure the elevation of the E
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{orbit}
-  \caption{Ground tracks for three successive orbits of ICESat-2 and GEDI. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond \ang{51.6}~latitude for GEDI.}%
+  \caption{Ground tracks for three successive orbits of ICESat-2 and GEDI\@. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond \ang{51.6}~latitude for GEDI.}%
   \labfig{fig:orbit}
 \end{figure*}
 
@@ -140,6 +142,8 @@ Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{
 GEDI sensor has eight beams, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
 GEDI measures a point every \qty{70}{m} along-track, with a beam footprint of \qty{23}{m}.
 Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon LiDAR at a bathymetric ``green'' wavelength of \qty{512}{nm}.
+
+
 %%%
 \paragraph{Product levels.}
 The data from the ICESat-2 and GEDI missions is made publicly available in several data products, categorised in 3 levels (Level 1, 2, and 3 data products), where a higher-level is derived from a lower-level product.
@@ -151,6 +155,7 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
   GEDI's Level 3 data product are gridded versions of Level 2 data products, like ICESat-2's Level 3B.
   GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
 \end{enumerate}
+
 
 %%%
 \paragraph{Comparison to typical airbone lidar.}
@@ -177,22 +182,24 @@ Similarly, while the Tandem-X mission produced a DEM with a global coverage, the
 
 %%
 \paragraph{Vertical datums.}
-% Do students know about geoids? If not, explain it here, ellipsoid vs geoid.
-Global DEMs are often vertically referenced to the geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM.
-There's a small difference---generally less than half a metre---between these versions of the EGM geoid.
+
+Global DEMs are often vertically referenced to the geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM\@.
+Be aware that there is a small difference---generally less than half a meter---between these versions of the EGM geoid.
 
 % MSS = Geoid + MDT
-Note that the geoid is not the same as Mean Sea Level (MSL), as it does not take into account the dynamic effects of temperature and currents.
-Depending on the location, the difference between the geoid and MSL can be up to 1.5 metres.
+Note that the geoid is not the same as the mean sea level (MSL), 
+\index{mean sea level}\marginnote{mean sea level (MSL)}
+as it does not take into account the dynamic effects of temperature and currents.
+Depending on the location, the difference between the geoid and MSL can be up to \qty{1.5}{m}.
 
 %%
 \paragraph{Format.}  % include resolution
 The format of DEMs has historically been defined by the military, which are still used by many government agencies.
 There is the Digital Terrain Elevation Data (DTED) format, developed in the 1970s, which stores elevation in integers (saying something about the accuracy).
 It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
-More recently, in 2016, the Defense Gridded Elevation Data (DGED) has been defined, specifiying more levels to higher resolutions and allowing for geotiffs.
+More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing for GeoTIFFs.
 
-It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
+It also defines the structure and specific tiling of the data at higher latitudes, as resolutions in arc seconds become smaller near the poles.
 Most of the gDEMS are tiled in a similar way.
 CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601x3601 pixels on the equator, but 3600x2400 (height, width) pixels at \qty{50}{\degree} latitude, 3600x1800 at \qty{60}{\degree} latitude, 3600x1200 at \qty{70}{\degree} latitude, becoming as small as 3600x360 for the last 5 degrees of latitude.
 This tiling scheme results in the most square pixels possible, but makes it hard to work with tiles from different latitudes.
@@ -201,6 +208,7 @@ Datasets such as SRTM and derived NASADEM can provide data as \texttt{.hgt} (hei
 GDAL can read these files.
 Luckily, most of the gDEMS are available in a standard format, such as GeoTIFF\@.
 However, for broad compatibility, recent advances such as Cloud Optimized GeoTIFF (COG) are not yet widely used.
+% TODO: COG here?
 
 
 %% Accuracy?
