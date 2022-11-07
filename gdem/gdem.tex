@@ -158,7 +158,7 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
 \paragraph{Comparison to typical airbone lidar.}
 
 These space borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
-The altitude increase results in a wider beam footprint, from \qty{\sim0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\sim15}{m} for space platforms.
+The altitude increase results in a wider beam footprint, from \qty{\pm0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\pm15}{m} for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from \qty{0.5}{km} to \qty{480}{km}.
 A comparison is given in Table~\ref{tab:lidarcomparison}.
 Airborne LiDAR often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
@@ -193,7 +193,7 @@ For example, SRTM is freely available, including its derived NASADEM, and was fi
 Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of \qty{\pm12}{m}.
 WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data, even has a resolution of \qty{\pm5}{m}.
 CopernicusDEM is a resampled WorldDEM---bought with your taxpayer money by ESA and freely distributed---at \qty{30}{m} resolution.
-The pseudo DTM FABDEM, while derived from the free CopernicusDEM, is only free for research purposes.
+The pseudo DTM FABDEM (\textbf{F}orest \textbf{A}nd \textbf{B}uilding removed), while derived from the freely available CopernicusDEM, is only free for research purposes.
 
 Similarly, while ALOS World3D is freely available at \qty{30}{m}, it also comes in a commercial version at \qty{5}{m} resolution.
 There is even a \qty{0.5}{m} commercial version, based on multiple optical satellites, available on request.
@@ -208,22 +208,22 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table*}[]
-  \begin{tabular}{@{}l|llllll@{}}
+  \begin{tabular}{@{}l|clllll@{}}
     \toprule
-    gDEM          & Year released & By              & Sensor  & Type     & License & Resolution \\
+                  & Year released & By                 & Sensor  & Type               & License & Resolution \\
     \midrule
-    SRTM          & 2001          & NASA            & inSAR   & DSM      & Open    & 30m-90m    \\
-    ASTER         & 2009          & NASA            & optical & DSM      & Open    & 30m        \\
-    Tandem-X      & 2014          & DLR             & inSAR   & DSM      & Closed  & 12m        \\
-    WorldDEM      & 2014          & Airbus          & inSAR   & DSM/DTM$^{*}$ & Closed  & 5--12m      \\
-    ALOS          & 2016          & JAXA            & optical & DSM      & Open    & 30m        \\
-    MERIT         & 2017          & Yamazaki et al. & inSAR   & DTM$^{*}$     & Open    & 90m        \\
-    NASADEM       & 2019          & NASA            & inSAR   & DSM      & Open    & 30m        \\
-    CopernicusDEM & 2020          & ESA             & inSAR   & DSM      & Open    & 30m-90m    \\
-    FABDEM        & 2022          & Hawker et al.   & inSAR   & DTM$^{*}$     & Closed  & 30m        \\
+    SRTM          & 2001          & NASA               & InSAR   & DSM                & Open    & 30--90m    \\
+    ASTER         & 2009          & NASA               & optical & DSM                & Open    & 30m        \\
+    Tandem-X      & 2014          & DLR                & InSAR   & DSM                & Closed  & 12m        \\
+    WorldDEM      & 2014          & Airbus             & InSAR   & DSM/DTM$^{\prime}$ & Closed  & 5--12m     \\ 
+    ALOS          & 2016          & JAXA               & optical & DSM                & Open    & 30m        \\
+    MERIT         & 2017          & \citet{Yamazaki17} & InSAR   & DTM$^{\prime}$     & Open    & 90m        \\ 
+    NASADEM       & 2019          & NASA               & InSAR   & DSM                & Open    & 30m        \\
+    CopernicusDEM & 2020          & ESA                & InSAR   & DSM                & Open    & 30--90m    \\
+    FABDEM        & 2022          & \citet{Hawker22}   & InSAR   & DTM$^{\prime}$     & Closed  & 30m        \\
     \bottomrule
   \end{tabular}
-  \caption{Overview of gDEMS}%
+  \caption{Overview of global DEMS, see Figure~\ref{fig:dem_comparison} for their lineage.}%
 \label{tab:gdem_overview}
 \end{table*}
 
@@ -337,7 +337,8 @@ This is the largest source of error in gDEMS, and can considerably limit the app
 
 %
 
-Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a \emph{pseudo DTM} (DTM$^{*}$).
+Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a \emph{pseudo DTM} (DTM$^{\prime}$).
+\marginnote{DTM$^{\prime} =$ pseudo DTM}
 While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrain still contain vegetation and/or buildings.
 % are still far removed from a local DTM\@.
 
@@ -354,6 +355,7 @@ Space lidar is promising as a source to reconstruct gDEMs because lidar penetrat
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
 
+
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (\url{https://opentopography.org}).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
 In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as \texttt{.tar} (archives) for 1 by 1 degree tiles via ftp, in folders for each continent and then country.
@@ -362,12 +364,13 @@ Data is duplicated for the border areas, totalling \qty{2}{TB}.
 To learn more about the DGED format, read \url{https://dgiwg.org/documents/dgiwg-standards}.
 Similarly, reading a user guide on any of the gDEMS is a good idea, such as the one for \href{https://spacedata.copernicus.eu/documents/20126/0/GEO1988-CopernicusDEM-SPE-002_ProductHandbook_I3.0+%281%29.pdf}{CopernicusDEM Product Handbook}.
 
-
+\citet{Hawker22} give the details how the vegetation and buildings are removed from CopernicusDEM to create FABDEM\@.
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Exercises}
 
+% TODO: think of some exam questions to put here
 \begin{enumerate}
   \item Can you create a gDEM using infrared images?
 \end{enumerate}
