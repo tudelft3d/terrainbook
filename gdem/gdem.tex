@@ -116,8 +116,8 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
                            & ICESat-2                             & GEDI                                   & airborne lidar   \\
     \midrule
     \ type                 & discrete photon                      & full waveform                          & either           \\
-    \ objective            & cryosphere monitoring                & Ecosystems                             & -                \\
-    \ duration             & 2019--2022                            & 2019--2021                              & single flight(s) \\
+    \ objective            & cryosphere monitoring                & Ecosystems                             & --               \\
+    \ duration             & 2019--2022                            & 2019--2021                            & single flight(s) \\
     \ orbit inclination    & \ang{92}                             & \ang{51.6}                             & NA               \\
     \ laser pulse power    & \qty{175}{{\mu}J}/\qty{45}{{\mu}J}   & \qty{10000}{{\mu}J}/\qty{5000}{{\mu}J} & NA               \\
     \ elevation            & \qty{\pm480}{km}                     & \qty{\pm420}{km}                       & \qty{0.5}{km}    \\
@@ -293,19 +293,20 @@ However, for broad compatibility, recent advances such as Cloud Optimized GeoTIF
 \subsection{Errors}
 
 As with any measurements taken, gDEMs contain errors and outliers.
-SRTM for example, contains a lot of noise, and has (diagonal) striping artefacts, visible  in Figure~\ref{fig:nasadem} for the derived NASADEM\@.
-
-CopernicusDEM suffers from multipath errors in urban areas, which lead to small pits in the DEM\@.
+For example, SRTM contains a lot of noise, and has (diagonal) striping artefacts, visible  in Figure~\ref{fig:nasadem} for the derived NASADEM\@.
+Another example is CopernicusDEM that suffers from multipath errors in urban areas, which lead to small pits in the DEM\@.
 % TODO: is there an example of this? A figure would be nice
+
+%
 
 Most gDEMS suffer from voids in steep terrain, as peaks can occlude valleys below (called the shadow effect).
 %%\paragraph{void filling: \url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission#Void-filled_SRTM_datasets}
-These voids are often filled in not only by interpolation, but with the help of other gDEMS, as they measured the same area from a different angle.
+These voids are often filled not only by interpolation, but with the help of other gDEMS, as they measured the same area from a different angle.
 
+%
 
-Global DEM products are often accompanied by a quality layer, which indicates where data has been void-filled.
+Furthermore, gDEM products are often accompanied by a quality layer, which indicates where data has been void-filled.
 Similarly, error masks with the calculated instrument error and water masks are often provided alongside the elevation data.
-% Something about vertical accuracy, it getting better.
 
 
 
@@ -318,8 +319,9 @@ Similarly, error masks with the calculated instrument error and water masks are 
 %%
 \subsection{Vertical datums}
 
-Global DEMs are vertically referenced to a specific geoid, specifically EGM96 for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM\@.
-Be aware that there is a small difference---generally less than half a meter---between these versions of the EGM geoid.
+Global DEMs are vertically referenced to a specific geoid, specifically EGM96 (EPSG:5171) for SRTM and EGM2008 (EPSG:3855) for CopernicusDEM\@.%
+\marginnote{Earth Gravitational Model (EGM)}
+Be aware that there is a small difference---generally less than \qty{0.5}{m}---between these versions of the EGM geoid.
 
 % MSS = Geoid + MDT
 Note that the geoid is not the same as the mean sea level (MSL),% 
