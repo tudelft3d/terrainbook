@@ -17,14 +17,14 @@ Notice that the orbit of some satellites makes them technically non-global, but 
 %
 
 It cannot be understated that before the introduction of gDEMs (with SRTM v1 in 2000, see below for more information), we had no way of knowing the elevation for a given location on the Earth.
-Indeed, looking at the datasets listed and/or hosted at 
+Indeed, looking at the datasets listed and/or hosted at
 \marginnote{\url{https://opentopography.org}}
 OpenTopography (Figure~\ref{fig:dem_coverage}), we can observe that, even in 2022, local elevation datasets are mostly limited to developed countries.
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{opentopography.pdf}
   \caption{OpenTopography coverage with some European datasets added in pink; there are in fact more European datasets but there is no global registry for them.}%
-\label{fig:dem_coverage}
+  \label{fig:dem_coverage}
 \end{figure}
 
 %
@@ -117,7 +117,7 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
     \midrule
     \ type                 & discrete photon                      & full waveform                          & either           \\
     \ objective            & cryosphere monitoring                & Ecosystems                             & --               \\
-    \ duration             & 2019--2022                            & 2019--2021                            & single flight(s) \\
+    \ duration             & 2019--2022                           & 2019--2021                             & single flight(s) \\
     \ orbit inclination    & \ang{92}                             & \ang{51.6}                             & NA               \\
     \ laser pulse power    & \qty{175}{{\mu}J}/\qty{45}{{\mu}J}   & \qty{10000}{{\mu}J}/\qty{5000}{{\mu}J} & NA               \\
     \ elevation            & \qty{\pm480}{km}                     & \qty{\pm420}{km}                       & \qty{0.5}{km}    \\
@@ -148,9 +148,9 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
   \item \textbf{Level 1} products contains the raw telemetry;
   \item \textbf{Level 2} products contain directly usable geolocated data to which several corrections---such as accounting for atmospheric effects---are applied.
   \item \textbf{Level 3} data are aggregated versions of Level 2 products, which are smaller in filesize and easier to process.
-  ICESat-2 differentiates between a Level 3A, which are aggregated Level 2 data products per \emph{granule}, and a Level 3B, which are gridded versions of the aggregated Level 3A data products.
-  GEDI's Level 3 data product are gridded versions of Level 2 data products, like ICESat-2's Level 3B.
-  GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
+        ICESat-2 differentiates between a Level 3A, which are aggregated Level 2 data products per \emph{granule}, and a Level 3B, which are gridded versions of the aggregated Level 3A data products.
+        GEDI's Level 3 data product are gridded versions of Level 2 data products, like ICESat-2's Level 3B.
+        GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
 \end{enumerate}
 
 
@@ -169,7 +169,7 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
   \caption{Filtered ICESat-2 and GEDI points from a single granule each at the 47th latitude, demonstrating the beam patterns.
     Note that ICESat-2 has a smaller beam footprint and a much higher pulse repetition, but a more uneven spatial coverage than GEDI\@.
     The gaps between data here will decrease by using multiple granules, but will never disappear completely.}%
-\label{fig:beams}
+  \label{fig:beams}
 \end{figure}
 
 
@@ -178,11 +178,11 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
 \section[Most common products]{Most common products available}
 
 An overview of the most common gDEMS are given in Figure~\ref{fig:gdem_inheritance}.
-\begin{figure*} % TODO: remake the inheritance fig
+\begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{dems_overview}
   \caption{An overview of current gDEMs}%
-\label{fig:gdem_inheritance}
+  \label{fig:gdem_inheritance}
 \end{figure*}
 Note that all these products differ considerably in terms of coverage, resolution, accuracy and licensing.
 Even the same product can have different versions, with different resolutions and licenses.
@@ -205,7 +205,6 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 % I find it interesting to know that some products are not free, and way better
 
 
-% Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table*}[]
   \begin{tabular}{@{}l|clllll@{}}
@@ -215,21 +214,21 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
     SRTM          & 2001          & NASA               & InSAR   & DSM                & Open    & 30--90m    \\
     ASTER         & 2009          & NASA               & optical & DSM                & Open    & 30m        \\
     Tandem-X      & 2014          & DLR                & InSAR   & DSM                & Closed  & 12m        \\
-    WorldDEM      & 2014          & Airbus             & InSAR   & DSM/DTM$^{\prime}$ & Closed  & 5--12m     \\ 
+    WorldDEM      & 2014          & Airbus             & InSAR   & DSM/DTM$^{\prime}$ & Closed  & 5--12m     \\
     ALOS          & 2016          & JAXA               & optical & DSM                & Open    & 30m        \\
-    MERIT         & 2017          & \citet{Yamazaki17} & InSAR   & DTM$^{\prime}$     & Open    & 90m        \\ 
+    MERIT         & 2017          & \citet{Yamazaki17} & InSAR   & DTM$^{\prime}$     & Open    & 90m        \\
     NASADEM       & 2019          & NASA               & InSAR   & DSM                & Open    & 30m        \\
     CopernicusDEM & 2020          & ESA                & InSAR   & DSM                & Open    & 30--90m    \\
     FABDEM        & 2022          & \citet{Hawker22}   & InSAR   & DTM$^{\prime}$     & Closed  & 30m        \\
     \bottomrule
   \end{tabular}
   \caption{Overview of global DEMS, see Figure~\ref{fig:dem_comparison} for their lineage.}%
-\label{tab:gdem_overview}
+  \label{tab:gdem_overview}
 \end{table*}
 
 % A few words about fusion? [Okolie22] has very long review.
 
-% These subfigures (images are the same size) have a horizontal shift in the book?
+% TODO These subfigures (images are the same size) have a horizontal shift in the book?
 \begin{figure*}
   \centering
   \begin{subfigure}{0.45\linewidth}
@@ -242,7 +241,7 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
     \caption{CopernicusDEM}\label{fig:copernicusdem}
   \end{subfigure}
   \caption{NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how CopernicusDEM has more detail. There is $\pm$twelve years between these images.}%
-\label{fig:dem_comparison}
+  \label{fig:dem_comparison}
 \end{figure*}
 
 
@@ -263,7 +262,7 @@ Similarly, while the Tandem-X mission produced a DEM with a global coverage, the
 
 
 %%
-\subsection{Format}  
+\subsection{Format}
 
 The formats used to store and exchange DEMs have historically been defined by the military, which are still used by many government agencies.
 One example is the \emph{Digital Terrain Elevation Data} (DTED) format, developed in the 1970s, which stores elevation in integers (which tells us a lot about the accuracy and precision possible 50 years ago).
@@ -272,31 +271,50 @@ More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defin
 DGED also defines the structure and the specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
 
 %
-
 Most of the gDEMS are tiled in a similar way.
 CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601$\times$3601 pixels on the equator, but 3600$\times$2400 (height, width) pixels at \qty{50}{\degree} latitude, 3600$\times$1800 at \qty{60}{\degree} latitude, 3600$\times$1200 at \qty{70}{\degree} latitude, becoming as small as 3600$\times$360 for the last 5 degrees of latitude.
 This tiling scheme results in pixels being as square as possible, but makes it hard to work with tiles from different latitudes.
 
-% TODO: add something about SRTM 30m resolution not being 'really 30m'?
-
+In this context it becomes clear resolution should not be discussed in terms of meters, but in divisions of a degree.
+As the Earth has a circumference of \qty{\pm40000}{km}, a degree---of which there are 360 in total---of latitude is \qty{\pm111}{km} and a degree of longitude is \qty{111}{cos\phi}{km} at latitude ($\phi$).
+Degrees are further divided into 60 arcminutes (\lq), which themselves are divided into 60 arcseconds (\lq\lq).
+DTED level 0 thus has a resolution of 30 arcseconds, while level 2 has a resolution of 1 arcsecond.
 %
 
 Datasets such as SRTM and NASADEM can provide data as \texttt{.hgt} (height) files, which are not even a format, but are simply a binary file with the elevation data, with the geographic extent to be derived from the filename.
 GDAL can however read these files.
 
 Luckily, most of the gDEMS are available in a standard format, such as GeoTIFF\@.
-However, for broad compatibility, recent advances such as Cloud Optimized GeoTIFF (COG) are not yet widely used.
-% TODO: COG here?
+However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
+
+% TODO: Practicalities margin box? Or GeoGeek
+One such advance are Cloud Optimized GeoTIFFs (COG), which are normal GeoTIFFs with a specific structure that allows them to be read piecewise from the cloud.
+Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
+
 
 
 %% TODO: Accuracy?
+\subsection{Accuracy}
+The accuracy of GDEMs if often broken down into several components and related metrics, which are not always well-defined.
+The DTED and DGED specifications differentiate between horizontal and vertical accuracy, and within each defines both relative and absolute accuracy.
+Relative accuracy describes the consistency of the measurements, specified as the random error component of the uncertainty between two DEM pixels. % this is related to precision
+Absolute accuracy describes the total error of a measurement compared to a reference.
+
+The DGED standard specifies a relative vertical accuracy of less than 12m for level 2 (resolution of 1 arcsecond / \qty{\pm30}{m}) and an absolute accuracy (goal) of \qty{18}{m}.
+An actual implementation, such as CopernicusDEM, reports a mean error of less than 2 meters for 65\% of its tiles, and another 19\% with an error of less than 5 meters in terms of absolute accuracy.
+
 \subsection{Errors}
 
 As with any measurements taken, gDEMs contain errors and outliers.
 For example, SRTM contains a lot of noise, and has (diagonal) striping artefacts, visible  in Figure~\ref{fig:nasadem} for the derived NASADEM\@.
 Another example is CopernicusDEM that suffers from multipath errors in urban areas, which lead to small pits in the DEM\@.
-% TODO: is there an example of this? A figure would be nice
 
+\begin{figure*}
+  \centering
+  \includegraphics[width=\linewidth]{low_outliers.pdf}
+  \caption{Low outliers in TandemX DEM, with orthophoto on the right for context. Electricity poles, indicated by their shadows, are the cause for these errors here.}%
+  \label{fig:tandemx_error}
+\end{figure*}
 %
 
 Most gDEMS suffer from voids in steep terrain, as peaks can occlude valleys below (called the shadow effect).
@@ -324,7 +342,7 @@ Global DEMs are vertically referenced to a specific geoid, specifically EGM96 (E
 Be aware that there is a small difference---generally less than \qty{0.5}{m}---between these versions of the EGM geoid.
 
 % MSS = Geoid + MDT
-Note that the geoid is not the same as the mean sea level (MSL),% 
+Note that the geoid is not the same as the mean sea level (MSL),%
 \index{mean sea level}\marginnote{mean sea level (MSL)}
 as it does not take into account the dynamic effects of temperature and currents.
 Depending on the location, the difference between the geoid and MSL can be up to \qty{1.5}{m}.
@@ -356,7 +374,9 @@ Space lidar is promising as a source to reconstruct gDEMs because lidar penetrat
 % TODO: add some papers to read here
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
-
+\citet{Schumann2018} make a case for the need for high-accuracy open-access DEMs, demonstrating SRTM is not good enough for many applications.
+Finally, \citet{Hancock2021} investigates the requirements for a global lidar DEM.
+Further reading about DEM terminology can be found in \citet{Guth2021}, which is one of the products of Digital Elevation Model Intercomparison eXperiment (DEMIX) group.
 
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (\url{https://opentopography.org}).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
@@ -375,4 +395,6 @@ Similarly, reading a user guide on any of the gDEMS is a good idea, such as the 
 % TODO: think of some exam questions to put here
 \begin{enumerate}
   \item Can you create a gDEM using infrared images?
+  \item How wide is 1 degree latitude at BK? And at the North Pole?
+  \item How old is the oldest gDEM, and what latitudes did it cover?
 \end{enumerate}
