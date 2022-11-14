@@ -41,6 +41,8 @@ a {
 
 a:hover, a:focus {
   color:#069;
+  -webkit-text-stroke-width: thin;
+  -webkit-text-stroke-color: inherit;
 }
 
 a small {
@@ -161,7 +163,6 @@ ul.downloads {
 
 .downloads a:hover, .downloads a:focus {
   color:#675C5C;
-  font-weight:bold;
 }
 
 .downloads ul a:active {
