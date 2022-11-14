@@ -11,7 +11,7 @@ This book is the bundle of the lecture notes that we ([@hugoledoux](https://gith
 
 The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
 We wanted the book to be agnostic to the programming language.
-On the website of the course for which this book was developed (\url{https://3d.bk.tudelft.nl/courses/geo1015}), there are assignments in Python and in C++.
+On the website of the course for which this book was developed, there are assignments in Python and in C++.
 
 
 ## PDF version
