@@ -388,13 +388,16 @@ Space lidar is promising as a source to reconstruct gDEMs because lidar penetrat
 % TODO: add some papers to read here
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
+
 \citet{Schumann2018} make a case for the need for high-accuracy open-access DEMs, demonstrating SRTM is not good enough for many applications.
-Finally, \citet{Hancock2021} investigates the requirements for a global lidar DEM\@.
-Further reading about DEM terminology can be found in \citet{Guth2021}, which is one of the products of \emph{Digital Elevation Model Intercomparison eXperiment} (DEMIX) group.
+
+\citet{Hancock2021} investigates the requirements for a global lidar DEM\@.
+
+Further reading about DEM terminology can be found in \citet{Guth2021}, which is one of the products of the \emph{Digital Elevation Model Intercomparison eXperiment} (DEMIX) group.
 
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (\url{https://opentopography.org}).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
-In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as \texttt{.tar} (archives) for 1 by 1 degree tiles via ftp, in folders for each continent and then country.
+In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as \texttt{.tar} (archives) for \ang{1}$\times$\ang{1} tiles via FTP, in folders for each continent and then country.
 Data is duplicated for the border areas, totalling \qty{2}{TB}.
 
 To learn more about the DGED format, read \url{https://dgiwg.org/documents/dgiwg-standards}.
@@ -408,8 +411,7 @@ Similarly, reading a user guide on any of the gDEMS is a good idea, such as the 
 
 % TODO: think of some exam questions to put here
 \begin{enumerate}
-  % \item Can you create a gDEM using infrared images?
   \item How wide is 1 degree latitude at the longitude where the city of Delft is? And at the North Pole?
   \item How old is the oldest gDEM, and what latitudes did it cover?
-  \item Assume you want to compare the elevation from AHN3 to those of CopernicusDEM\@. Which steps/conversions are needed?
+  \item Assume you want to compare the elevations from AHN3 to those of CopernicusDEM\@. Which steps/conversions are needed?
 \end{enumerate}
