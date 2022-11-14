@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [0.9.0] - 2022-11-14
+### Added
+  - a new chapter about Global DEMs, which includes a section about space lidar
+  - a new author (of the new chapter): welcome @evetion!
+  - better explanation of the "infinity vertex" for Delaunay triangulations
+### Modified
+  - whole book switch to siunitx for units and values
+  - fixed and improves clarity there and there  
+
+
 ## [0.8.0] - 2021-11-08
 ### Added
   - remove "external dependencies" in runoff modelling and replace by own text
@@ -53,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - First release of the book (beta version)
 
 
+[0.9.0]: https://github.com/tudelft3d/terrainbook/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/tudelft3d/terrainbook/compare/0.7.2...0.8.0
 [0.7.2]: https://github.com/tudelft3d/terrainbook/compare/0.7.1...0.7.2
 [0.7.1]: https://github.com/tudelft3d/terrainbook/compare/0.7.0...0.7.1
