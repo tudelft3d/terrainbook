@@ -192,17 +192,19 @@ A quadratic polynomial could for instance be defined:
 and if a local coordinate system centered at $c_{i,j}$ is used, then $x = y = 0$, and thus $\frac{\partial f}{\partial x} = d$ and $\frac{\partial f}{\partial y} = e$.
 
 
-\begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
-  The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
+\begin{floatbox}
+  \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
+    The GDAL utility \texttt{gdaldem} (\url{https://www.gdal.org/gdaldem.html}) does not have the best documentation and does not explicitly mention which method is used.
 
-  After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specifically the Horn's method is used~\citep{Horn81}.
-  This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
+    After some searching, we can conclude that the method ``4. Local polynomial fitting'' is used by default for slope/aspect, and specifically the Horn's method is used~\citep{Horn81}.
+    This uses a 3$\times$3 window, and fits a polynomial; the centre pixel value is not used.
 
-  If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
-  This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
+    If the option \texttt{-alg ZevenbergenThorne} is used, then the algorithm of \citet{Zevenbergen87} is used. 
+    This uses only the 4 neighbours, and is a variation of the method ``3. Finite difference'' above.
 
-  The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
-\end{kaobox-practice}
+    The documentation of \texttt{gdaldem} states that: ``literature suggests Zevenbergen \& Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain.''
+  \end{kaobox-practice}
+\end{floatbox}
 
 
 %%%
@@ -421,13 +423,15 @@ Hillshading is a technique used to help visualise the relief of a gridded terrai
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position (usually North-West).
 
-\begin{kaobox-practice}[frametitle=\faCog\ Why does the sunlight come from the North-West?]
-  The source of the light for hillshading is usually set at the North-West, but in reality the sun is \emph{never} located there (in the northern hemisphere).
-  Why is this a common practice then?
-  The main reason is because the human brain usually assume that the light comes from above when looking at picture.
-  Doing so reduces the chances of \emph{relief inversion}, \ie\ when mountains are perceived as valleys, and vice-versa.
-  This \href{https://ramblemaps.com/why-does-sunlight-come-from-north}{website \faExternalLink} gives a clear example where a valley is interpreted as a mountain ridge by many if the sun is coming from the South.
-\end{kaobox-practice}
+\begin{floatbox}
+  \begin{kaobox-practice}[frametitle=\faCog\ Why does the sunlight come from the North-West?]
+    The source of the light for hillshading is usually set at the North-West, but in reality the sun is \emph{never} located there (in the northern hemisphere).
+    Why is this a common practice then?
+    The main reason is because the human brain usually assume that the light comes from above when looking at picture.
+    Doing so reduces the chances of \emph{relief inversion}, \ie\ when mountains are perceived as valleys, and vice-versa.
+    This \href{https://ramblemaps.com/why-does-sunlight-come-from-north}{website \faExternalLink} gives a clear example where a valley is interpreted as a mountain ridge by many if the sun is coming from the South.
+  \end{kaobox-practice}
+\end{floatbox}
 
 While it would be possible to use advanced computer graphics methods (see \refchap{chap:visibility}) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
 

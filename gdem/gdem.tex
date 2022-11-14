@@ -288,13 +288,15 @@ Datasets such as SRTM and NASADEM can be provided as \texttt{.hgt} (height) file
 % GDAL can however read these files.
 
 
-\begin{kaobox-practice}[frametitle=\faCog\ Downloading gDEMs]
-  Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF\@.
-  However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
+\begin{floatbox}
+  \begin{kaobox-practice}[frametitle=\faCog\ Downloading gDEMs]
+    Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF\@.
+    However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
 
-  One such advance are Cloud Optimized GeoTIFFs (COG: \url{https://www.cogeo.org}), which are normal GeoTIFFs with a specific structure that allows them to be read piecewise from the cloud.
-  Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
-\end{kaobox-practice}
+    One such advance are Cloud Optimized GeoTIFFs (COG: \url{https://www.cogeo.org}), which are normal GeoTIFFs with a specific structure that allows them to be read piecewise from the cloud.
+    Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
+  \end{kaobox-practice}
+\end{floatbox}
 
 %%%
 \subsection{Accuracy}
