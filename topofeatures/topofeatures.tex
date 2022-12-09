@@ -450,7 +450,7 @@ As above and in Figure~\ref{fig:hillshade-params},
 \end{figure}
 for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{i,j}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rand is the horizon, $\pi$ rand is the zenith).
 \begin{equation}  
-  hillshade_{i,j} = 250 \times ((\cos\gamma \times \cos\theta_{i,j}) + (\sin\gamma \times \sin\theta_{i,j} \times \cos (\psi - \alpha_{i,j}))) 
+  hillshade_{i,j} = 255 ((\cos (\pi/2 - \gamma) \cos\alpha_{i,j}) + (\sin (\pi/2 - \gamma)  \sin\alpha_{i,j} \cos (\psi - \theta_{i,j}))) 
 \end{equation}
 (all angles need to be radians)
 
