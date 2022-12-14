@@ -261,10 +261,11 @@ In a refinement algorithm, we do the opposite: we start with a very simple TIN, 
 
 
 \subsubsection{TIN simplification by refinement}
-Here we describe an iterative refinement algorithm based on greedy insertion\footnote{A greedy algorithm is one that divides a complex problem into a series of easier steps, then solves it by making the locally optimal choice at each step, and never goes back on this choice.
-In our case the heuristic is the importance measure, \ie\ the vertical error. See \url{https://en.wikipedia.org/wiki/Greedy_algorithm}.}. 
+
+Here we describe an iterative refinement algorithm based on a series of insertion.
 It begins with a simple triangulation of the spatial extent and, at each iteration, finds the input point with highest importance---the highest vertical error---in the current TIN and inserts it as a new vertex in the triangulation. 
-The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $\epsilon_{\max}$. Algorithm~\ref{algo:tin-simp:ref} shows the pseudo-code.
+The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $\epsilon_{\max}$. 
+Algorithm~\ref{algo:tin-simp:ref} shows the pseudo-code.
 It is also possible to insert only a certain percentage of the number of input points, \eg\ we might want to keep only 10\% of them.
 
 \begin{algorithm}[tb] 
