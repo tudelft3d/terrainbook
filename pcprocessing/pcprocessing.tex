@@ -459,10 +459,7 @@ Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was
 The algorithm is detailed in Algorithm~\ref{algo:csf}.
 \begin{algorithm} 
   \DontPrintSemicolon\
-  \KwIn{A set $S$ of sample points from a point cloud;\\ 
-  resolution $r$ of the cloth grid;\\ 
-  tolerance $\epsilon_{zmax}$ to stop the iterations\\
-  tolerance $\epsilon_{ground}$ to classify points in $S$}
+  \KwIn{A set $S$ of sample points from a point cloud; resolution $r$ of the cloth grid;   tolerance $\epsilon_{zmax}$ to stop the iterations; tolerance $\epsilon_{ground}$ to classify points in $S$}
   \KwOut{The points in $S$ are classified as ground/non-ground}
   invert $S$ \;
   initialise the cloth $C$ at an elevation $z_0$ higher than the highest elevation \;
@@ -544,14 +541,14 @@ This iterative process is repeated until the maximum displacement of all particl
 %
 
 \paragraph{Two possible outputs.}
-
+When the process is completed, the surface of the cloth can be used to obtain two outputs:
 \begin{enumerate}
   \item a surface representing the ground (the cloth)
   \item classification of points into ground/non-ground
 \end{enumerate}
-
-When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth, it is for instance possible to triangle it or to create a grid from it.
-If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used: if this distance is less than a given user-defined threshold then the sample point is a ground point.
+If the surface of the cloth is used, it is for instance possible to triangle it or to create a grid from it.
+If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used (this is the parameter $\epsilon_{ground}$ in Algorithm~\ref{algo:csf}).
+If this distance is less than a given user-defined threshold, then the sample point is a ground point.
 
 \begin{floatbox}
   \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
@@ -575,27 +572,27 @@ If a segmentation/classification of the input points is wanted, then the distanc
 \label{fig:bk-planes}
 \end{figure*}
 
-Using shape detection we are able to automatically detect simple shapes such as planes in a point cloud.
-See for example Figure~\ref{fig:bk-planes}, where the points are randomly coloured according to the corresponding planar surfaces.
+Shape detection is used to automatically detect simple shapes---such as planes---in a point cloud.
+See for example Figure~\ref{fig:bk-planes} where the points are randomly coloured according to the corresponding planar surfaces.
 Shape detection is an important step in the extraction and reconstruction of more complex objects, \eg\ man-made structures such as buildings are often composed of planar surfaces.
 
 In this section, three shape detection methods will be introduced: 
 \begin{enumerate}
-  \item RANSAC, 
-  \item region growing, 
-  \item Hough transform.
+  \item RANSAC 
+  \item region growing 
+  \item Hough transform
 \end{enumerate}
 
 
-But, first we will declare some common terminology.
-Let $P$ denote a point cloud. 
-If we perform shape detection on $P$ we aim to find a subset of points $S \subset P$ that fit with a particular shape. 
+First, some common terminology.
+Let $P$ denote a point cloud, if we perform shape detection on $P$ we aim to find a subset of points $S \subset P$ that fit with a particular shape. 
 Most shape detection methods focus on shapes that can be easily parametrised, such as a line, a plane, or a sphere. 
 If we specify values for the parameters of such a parametrised shape, we define an \emph{instance} of that shape.
-A line for example can be parametrised using the equation $y = mx + b$, in this case $m$ and $b$ are the parameters.
+For example, a line in the plane can be parametrised using the equation $y = mx + b$, in this case $m$ and $b$ are the parameters.
 We can create an instance of a line by specifying values for its parameters $m$ and $b$, respectively fixing the slope and the position of the line.
 
 In the following, the methods are described in a general way, \ie\ without specialisations for one particular shape.
+\marginnote{spheres, cones, cylinders, planes, etc. can be detected}
 Only for illustrative purposes specific shapes such as a line or a plane are used to (visually) explain the basic concept of each shape detection method, but the same could be done with spheres, cones, or other shapes.
 
 
@@ -616,11 +613,11 @@ Only for illustrative purposes specific shapes such as a line or a plane are use
 \index{RANSAC}
 % how does it work, pseudocode
 
-RANSAC is short for \emph{RANdom SAmpling Consensus} and as its name implies it works by randomly sampling the input points.
+RANSAC is short for \emph{RANdom SAmpling Consensus} and, as its name implies, works by randomly sampling the input points.
 In fact it starts by picking a random set of points $M \subset P$. 
 This set $M$ is called the \emph{minimal set}\index{minimal set}\marginnote{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
 From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and~\ref{fig:ransac:c}).
-\begin{figure}
+\begin{figure*}
 	\centering
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
@@ -630,12 +627,12 @@ From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructe
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=2]{figs/ransac.pdf}
-		\caption{First minimal set}\label{fig:ransac:b}
+		\caption{1st minimal set}\label{fig:ransac:b}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
 		\includegraphics[width=\textwidth,page=3]{figs/ransac.pdf}
-		\caption{Second minimal set}\label{fig:ransac:c}
+		\caption{2nd minimal set}\label{fig:ransac:c}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
@@ -644,7 +641,7 @@ From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructe
 	\end{subfigure}
 	\caption{RANSAC for line detection ($k=2$ iterations)}%
 \label{fig:ransac}
-\end{figure}
+\end{figure*}
 The algorithm then checks for each point $p \in \{P \setminus M\}$ if it fits with $\mathcal{I}$. 
 This is usually done by computing the distance $d$ from $p$ to $\mathcal{I}$ and comparing $d$ against a user-defined threshold $\epsilon$.
 If $d<\epsilon$ we say that $p$ is an \emph{inlier}\index{inlier}\marginnote{inlier}, otherwise $p$ is an outlier.
@@ -792,7 +789,7 @@ Also notice that candidate points that are already assigned to a region are skip
 
 The seed points can be generated by assessing the local neighbourhood of each input point. 
 For example in case of plane detection one could fit a plane through each point neighbourhood and subsequently sort all points on the fitting error. 
-Naturally, points with a low plane fitting error are probably part of a planar region so we can expect them to be good seeds.
+Points with a low plane fitting error are probably part of a planar region so we can expect them to be good seeds.
 
 To compute the point neighbourhoods a k-nearest neighbour search or a fixed radius search can be used, which can both be implemented efficiently using a $k$d-tree (see Section~\ref{sec:kdtree}).
 Notice that region growing is based on the idea that we can always find a path of neighbouring points between any pair of points within the same region.
@@ -818,7 +815,7 @@ In practice it should be better since $S$ is not likely to be $n$ large, and it 
 \index{Hough transform}
 
 The Hough transform uses a voting mechanism to detect shapes.
-It lets every point $p \in P$ vote on each shape instance that could possible contain $p$.
+It lets every point $p \in P$ vote on each shape instance that could possibly contain $p$.
 Possible shape instances thus accumulate votes from the input points.
 The detected shape instances are the ones that receive the highest number of votes.
 To find the possible shape instances for $p$, the algorithm simply checks all possible parameter combinations that give a shape instance that fits with $p$.
@@ -830,7 +827,7 @@ A better line parametrisation is the Hesse normal form\index{Hesse normal form}\
 \[
 r = x\cos{\phi} + y\sin{\phi}. 
 \]
-As illustrated in Figure~\ref{fig:hough-transform:a} $(r,\phi)$ are the polar coordinates of the point on the line that is closest to the origin, \ie\ $r$ is the distance from the origin to the closest point on the line, and $\phi \in [0^\circ, 180^\circ]$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line. 
+As illustrated in Figure~\ref{fig:hough-transform:a}, $(r,\phi)$ are the polar coordinates of the point on the line that is closest to the origin, \ie\ $r$ is the distance from the origin to the closest point on the line, and $\phi \in [0^\circ, 180^\circ]$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line. 
 This parametrisation has no problems with vertical lines (\ie\ $\phi=90^{\circ}$).
 Similarly, for plane detection we can use the parametrisation
 \[
@@ -890,7 +887,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 		\includegraphics[width=\textwidth,page=4]{figs/hough-transform.pdf}
 		\caption{Detected line instances with a minimal vote count of  3.}\label{fig:hough-transform:e}
 	\end{subfigure}
-	\caption{Hough transform for line detection with a $9\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}%
+	\caption{Hough transform for line detection with a $10\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}%
 \label{fig:hough-transform}
 \end{figure*}
 \begin{algorithm} 
