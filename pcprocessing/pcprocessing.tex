@@ -22,6 +22,7 @@ Regardless of the format, a point cloud file can often be seen as an array of \e
 
 A point record usually consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
 A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number or colour information.
+\marginnote{$(x,y,z)$ + attributes}
 The order and meaning of the fields in a record are usually fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
@@ -29,8 +30,7 @@ Notice that, in addition to the widely used formats mentioned here, there are al
 These are often specific to one particular software and are therefore not very useful for data exchange.
 
 \subsection{ASCII formats}
-ASCII\footnote{\url{https://en.wikipedia.org/wiki/ASCII}} formats are plain text files. 
-The point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
+ASCII formats are plain text files\sidenote{\url{https://en.wikipedia.org/wiki/ASCII}}, the point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
 In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated value (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
 The biggest downside is that they are not standardised, \ie\ the type, order, and number of attributes vary, and also the used coordinate reference system (CRS) is usually not documented in the file.
@@ -53,8 +53,8 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
 \index{PLY format}
 
 The PLY format can be considered a standardised ASCII format.
-A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names and their data types.
-This makes it a very flexible standard, since the user can decide on the composition of the point record.
+A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names, and their data types.
+Because the user can decide on the composition of the point record, this makes it a very flexible format.
 Figure~\ref{fig:ply} shows an example PLY file.
 \begin{figure}
   \includegraphics[width=\linewidth]{figs/ply_header.pdf}
@@ -73,7 +73,7 @@ There is no standardised way to specify the CRS in a PLY file, although one coul
 \subsection{The LAS format}%
 \index{LAS format}
 
-The \emph{public LASER} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
+The \emph{LASer} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
 The LAS standard, currently at version 1.4\marginnote{LAS v1.4 is the latest}, is maintained by the American Society for Photogrammetry and Remote Sensing (ASPRS)  and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
 It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
@@ -86,18 +86,18 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
     % \toprule
     % \rowcolor[gray]{.9}
     Field & Format & Length (bits) & Description\\ \midrule
-    X & int & 32 & X coordinate. \\ 
-    Y & int & 32 & Y coordinate. \\ 
-    Z & int & 32 & Z coordinate. \\ 
-    Intensity & unsigned int & 16 & The pulse return amplitude. \\ 
-    Return number & unsigned int & 3 &  The total pulse return number for a given output pulse. \\ 
+    X & int & 32 & X coordinate \\ 
+    Y & int & 32 & Y coordinate \\ 
+    Z & int & 32 & Z coordinate \\ 
+    Intensity & unsigned int & 16 & The pulse return amplitude \\ 
+    Return number & unsigned int & 3 &  The total pulse return number for a given output pulse \\ 
     Number of returns & unsigned int & 3 & Total number of returns for a given pulse \\ 
     Scan Direction Flag & boolean & 1 & Denotes the direction at which the scanner mirror was travelling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite).  \\ 
     Edge of Flight Line & boolean & 1 & Has a value of 1 only when the point is at the end of a scan. It is the last point on a given scan line before it changes direction. \\ 
     Classification & unsigned int & 5 & Classification code \\ 
-    Scan Angle Rank & int & 4 & The angle at which the laser pulse was output from the scanner including the roll of the aircraft. \\ 
-    User Data & unsigned int & 4 & May be used at the user's discretion. \\ 
-    Point Source ID & unsigned int & 8 & Indicates the file from which this point originated. Non-zero if this point was copied from another file.
+    Scan Angle Rank & int & 4 & The angle at which the laser pulse was output from the scanner including the roll of the aircraft \\ 
+    User Data & unsigned int & 4 & May be used at the user's discretion \\ 
+    Point Source ID & unsigned int & 8 & Indicates the file from which this point originated Non-zero if this point was copied from another file
     % \bottomrule
   \end{tabular}
 \caption{LAS Point Data Record Format 0}%
@@ -113,9 +113,11 @@ To convert these values to the actual coordinates on the ground, they need to be
 \begin{gather*}
   X_{coordinate} = (X_{record} * X_{scale}) + X_{offset} \\
   Y_{coordinate} = (Y_{record} * Y_{scale}) + Y_{offset} \\
-  Z_{coordinate} = (Z_{record} * Z_{scale}) + Z_{offset}.
+  Z_{coordinate} = (Z_{record} * Z_{scale}) + Z_{offset}
 \end{gather*}
-The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{offset}$, $Y_{offset}$, $Z_{offset}$ are also given in the header. Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
+The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{offset}$, $Y_{offset}$, $Z_{offset}$ are also listed in the header. 
+\marginnote{scaling factors and offsets are stored in the LAS header}
+Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
 
 The LAS standard defines several classification codes, as listed in Table~\ref{tab:las-classes}.
 \begin{table}
@@ -157,9 +159,9 @@ Figure~\ref{fig:ahn3} shows all the codes that are used in  AHN3.
   \caption{Classification codes used in the AHN3 dataset.}%
 \label{fig:ahn3}
 \end{figure*}
-Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructural works such as bridges and viaducts. 
+Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for an `artefact' (Dutch: \emph{kunstwerk}) class that includes special infrastructures such as bridges and viaducts. 
 
-Notice that in AHN3, the points representing vegetation are not classified as such, and vegetation is never explicitly classified.
+Notice that in AHN3 the points representing vegetation are not classified as such, and vegetation is never explicitly classified.
 \marginnote{vegetation is classified as $1$/unclassified in AHN3}
 The is because the aim of the AHN project is mostly to model dikes and to protect us from floods, and vegetation is not very important for this use-case.
 The class $1$ is thus used for vegetation, but other objects such as street furniture (\eg\ lampposts) or cars are also classified as $1$.
@@ -180,6 +182,7 @@ In addition, support for LAZ is typically built into point cloud reading and wri
 
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
+\marginnote{LAZ creates blocks of neighbouring points}
 Each block is individually compressed, which makes it possible to partially decompress only the needed blocks from a file (instead of always needing to compress the whole file).
 This can save a lot of decompression computations if only a few points from a huge point cloud are needed.
 Also notice that the effectiveness of the compression algorithms depends on the similarity in information between subsequent point records.
@@ -187,8 +190,8 @@ Typically information is quite similar for points that are close to each other i
 Therefore, a greater compression factor can often be achieved after spatially sorting the points.
 
 In practice, for the AHN3 dataset, the LAZ file of a given area is about 10X more compact than its LAS counterpart.
-\marginnote{LAZ = 10X compacter than LAS}
-% TODO: add that 10X compacter but also that it's slower to read/write? 
+\marginnote{LAZ = about 10X compacter than LAS}
+However, the main disadvantage is that reading and writing a LAZ file is slower than a LAS file, since more operations need to be performed.
 % TODO: and that for AHN3, it's rather essential, since it would be too big otherwise, wouldn't it?
 
 % TODO: speak of zLAS as the devil?
@@ -197,7 +200,7 @@ In practice, for the AHN3 dataset, the LAZ file of a given area is about 10X mor
 %%%
 %
 \section{Thinning}%
-\label{sec:thinning}
+\label{sec:thinning}%
 \index{thinning}
 
 A point cloud with fewer points is easier to manage and quicker to visualise and process.
@@ -206,7 +209,7 @@ Commonly encountered thinning methods in practice are:
 \begin{itemize}
   \item \textbf{random:} randomly keep a given percentage of the points, \eg\ 10\%.
   \item \textbf{\emph{n}th-point:} keep only the $n$th point in the dataset. For instance, if $n=100$, we would keep the 1st, the 101th, the 201th, etc; a dataset with \qty{100000} points is reduced to \qty{1000} points. This is the quickest thinning method.
-  \item \textbf{\emph{n}th-point random:} if there is some structure in the input points (\eg\ if generated from a gridded terrain) then this method could create datasets with artefacts. A variation involves keeping randomly in the $n$ points the point to keep.
+  \item \textbf{\emph{n}th-point random:} if there is some structure in the input points (\eg\ if generated from a gridded terrain) then \emph{n}th-point could create datasets with artefacts. The randomised variation chooses randomly in the $n$ points one point.
   \item \textbf{grid: }overlay a 2D or 3D regular grid over the points and keep $m$ point(s) per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
 \end{itemize}
 See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and grid thinning.
@@ -232,6 +235,7 @@ However, for a given number of resulting points, TIN simplification yields a hig
 Thinning methods on the other hand do not consider the `importance' of a point in any way, and might discard a lot of potentially meaningful details.
 So why bother with thinning? The answer is that thinning methods are a lot faster since they do not require something like a computationally expensive triangulation.
 Especially in scenarios where the point density is very high and the available time is limited, thinning can be useful.
+They are also very useful to test algorithms to get an answer quickly, and then the final processing can be done with all the points.
 
 
 %%%
@@ -270,7 +274,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
 \end{figure}
 
 \begin{itemize}
-  \item \textbf{radius count:} Count the number of points that are within a fixed radius from $p$. If the count is lower than a given threshold, $p$ is marked as an outlier.
+  \item \textbf{radius count:} Count the number of points that are within a fixed radius from $p$ (a sphere in 3D). If the count is lower than a given threshold, $p$ is marked as an outlier.
   \item \textbf{grid count:} Superimpose a grid on the point cloud and count for each grid-cell the number of points. If the count is lower than a given threshold, the points inside the corresponding grid cell are marked as outliers. Sometimes the neighbourhood is extended with adjacent grid cells. The grid method has the advantage that it can be used with the spatial streaming paradigm (see Section~\ref{sec:streaming}).
   \item \textbf{knn distance:} Find the $k$ nearest neighbours of $p$, \eg\ using a $k$d-tree, and compute the mean or median of the distances between $p$ and its neighbours. If this value is above a given threshold, $p$ is marked as an outlier.
 \end{itemize}
@@ -280,7 +284,7 @@ However, in some cases this assumption does not hold.
 For example in case of a point cloud derived from multi-beam echo sounding (see Section~\ref{sec:acquisistion-techniques}), a common issue is the occurrence of (shoals of) fish. 
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
-A possible solution is to construct a TIN of all points and to `cut' the relatively long edges that connect the outlier clusters to the seafloor.
+A possible solution is to construct a TIN of all points and to remove the relatively long edges that connect the outlier clusters to the seafloor.
 This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers. 
 Figure~\ref{fig:mbes} gives an example.
 \begin{figure*}
@@ -307,7 +311,7 @@ Figure~\ref{fig:mbes} gives an example.
 
 \section{Ground filtering}
 Ground filtering involves classifying the points of a point cloud into ground points and non-ground points.
-Ground points are those points that are part of the bare-earth surface of the earth, thus excluding vegetation and man-made structures such as buildings and cars.
+Ground points are those points that are part of the bare-earth surface of the Earth, thus excluding vegetation and man-made structures such as buildings, statues, and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:regiongrowing}).
 
@@ -316,7 +320,8 @@ Ground filtering methods are typically based on the assumptions that
   \item the ground is a continuous surface without sudden elevation jumps, 
   \item for a given 2D neighbourhood, the ground points are the ones with the lowest elevation.
 \end{enumerate}
-Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as that in Section~\ref{sec:outlier_detection}. (see \eg\ Figure~\ref{fig:axelsson:profiles}).
+Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as one from Section~\ref{sec:outlier_detection} (see \eg\ Figure~\ref{fig:axelsson:profiles}).
+% TODO: not sure why link to this figure
 
 
 % TODO: shouldn't we use our own figure here?
@@ -328,7 +333,7 @@ Notice that outliers (especially those under the ground surface) may break these
 \end{figure}
 
 Notice that the resulting bare-earth model may thus have holes where these non-ground objects used to be.
-If needed, these holes can be filled in a subsequent processing step involving spatial interpolation.
+If needed, these holes can be filled in a subsequent processing step with for example spatial interpolation.
 
 %%%
 %
@@ -336,7 +341,7 @@ If needed, these holes can be filled in a subsequent processing step involving s
 \index{ground filtering}
 
 We will now discuss an effective ground filtering method that is based on the \emph{greedy} insertion of ground points into a TIN\@.
-Indeed, the same algorithmic paradigm of iterative TIN refinement that we saw earlier in Section~\ref{sec:tin-simpl} is used.
+Indeed, the same algorithmic paradigm of iterative TIN refinement from Section~\ref{sec:tin-simpl} is used.
 The algorithm consists of three main steps:
 \begin{enumerate}
   \item construction of a rudimentary initial TIN (usually a Delaunay TIN);
@@ -351,7 +356,7 @@ The cell-size of the grid should be chosen such that it is larger than the large
 Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \qty{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
 Each point that is inserted into the TIN is considered to be a ground point.
 
-In the second step two geometric properties are computed for each point that was not added to the TIN\@.
+In the second step, two geometric properties are computed for each point that is not in the TIN\@.
 These properties are based on the relation between the point $p$ and the triangle in the current TIN that intersects its vertical projection. 
 The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
 \begin{figure*}
@@ -409,7 +414,7 @@ Figure~\ref{fig:axelsson} gives an example result.
 %
 \subsection{Cloth simulation filter (CSF) algorithm}
 
-An alternative to TIN refinement is the algorithm called \emph{Cloth simulation filter} (CSF).
+An alternative to TIN refinement is the algorithm called \emph{cloth simulation filter} (CSF).
 Unlike the previous one, no TIN is required, its input is only a point cloud.
 The main observation necessary for this algorithm is that lower points are usually forming the ground (again it is assumed no outliers appear below the ground in the dataset).
 
@@ -418,13 +423,13 @@ The main observation necessary for this algorithm is that lower points are usual
 The key idea of the algorithm, as shown in Figure~\ref{fig:csf_idea},
 \begin{figure*}
   \centering
-  \includegraphics[width=0.95\linewidth]{figs/csf_idea}
+  \includegraphics[width=\linewidth]{figs/csf_idea}
   \caption{Basic idea behind the CSF algorithm for ground filtering of a point cloud: inverting the data and letting a cloth fall.}%
 \label{fig:csf_idea}
 \end{figure*}
 is to invert (upside-down) a point cloud, and to let a piece of cloth fall from the sky.
 The cloth will fall until it reaches the points forming the ground.
-During the process, we aim to control the \emph{tension} (or rigidity) of the cloth, so that areas where there is no sample point, or where there are large buildings, can be filled realistically.
+During the process, we aim to control the \emph{tension} (or rigidity) of the cloth, so that areas where there is no sample point (\eg\ where there are large buildings or water) can be filled realistically.
 
 %
 
@@ -449,7 +454,7 @@ As shown in Figure~\ref{fig:csf_iterations},
 \end{marginfigure}
 the process is iterative. We first define a cloth formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
 If a particle is movable (\ie\ it has not reached the ground yet), then the gravity force is applied (a vector pointing downwards; its magnitude will depend on the momentum of the particle) and afterwards the internal forces are applied.
-Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) are have higher $z$-values.
+Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) have higher $z$-values.
 
 The algorithm is detailed in Algorithm~\ref{algo:csf}.
 \begin{algorithm} 
@@ -511,11 +516,6 @@ The lowest elevation of one particle $p$ is defined as the original elevation of
 
 %
 
-\paragraph{How the process ends.}
-This iterative process is repeated until the maximum displacement of all particles is less than a user-defined parameters ($\epsilon_{zmax}$); or until a certain number of iterations has been performed.
-
-%
-
 \paragraph{Internal forces.}
 The internal forces are applied only to movable particles; once a particle has been labelled as unmovable it cannot be moved again.
 Given a movable particle $p$, we apply the internal forces by individually looking at its 4 neighbours $n_i$.
@@ -534,13 +534,23 @@ For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 \paragraph{Controlling the tension/rigidity.}
 Notice that in Figure~\ref{fig:csf_2cases}b, both particles are moved to the same elevation, but that it is also possible to scale the internal forces displacement vector, \eg\ to 0.8 of its length (and thus decrease the tension in the cloth). Lower internal force displacement means that the particles will move more during a single iteration and so the tension in the cloth is effectively reduced. 
 The same idea applies to Figure~\ref{fig:csf_2cases}a, the displacement vector can be controlled by scaling the displacement vector. 
-In Figure~\ref{fig:csf_2cases} it is 0.5 of the difference in elevation, but if less tension is wanted, then the scale could be for instance 0.4 (so that the movable particle has an internal displacement $\vec{v}=(0, 0, 3.2)$, because $0.4 * (10-2) = 3.2$) or 0.3.
+In Figure~\ref{fig:csf_2cases}a, it is 0.5 of the difference in elevation, but if less tension is wanted, then the scale could be for instance 0.4 (so that $p$ has an internal displacement $\vec{v}=(0, 0, 3.2)$, because $0.4 * (10-2) = 3.2$) or 0.3.
 
-% TODO: order dependent
+% TODO: add order dependent?
 
-\paragraph{Output: a ground surface +  classification of points.}
+\paragraph{How the process ends.}
+This iterative process is repeated until the maximum displacement of all particles is less than a user-defined parameters ($\epsilon_{zmax}$); or until a certain number of iterations has been performed.
 
-When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth (it is possible to triangle it or to create a grid from it).
+%
+
+\paragraph{Two possible outputs.}
+
+\begin{enumerate}
+  \item a surface representing the ground (the cloth)
+  \item classification of points into ground/non-ground
+\end{enumerate}
+
+When the process is completed, the surface of the cloth can be used as an approximation of the bare-earth, it is for instance possible to triangle it or to create a grid from it.
 If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used: if this distance is less than a given user-defined threshold then the sample point is a ground point.
 
 \begin{floatbox}
