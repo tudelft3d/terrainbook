@@ -8,7 +8,7 @@
 \chapter{Global digital elevation models}% or global terrains
 \label{chap:gdem}
 
-We define as ``global digital elevation models'' (or global terrains; we refer to them as ``gDEMs'' in this chapter below) the datasets that cover (most of) the Earth.%
+We define as ``global digital elevation models'' (or global terrains; we refer to them as ``gDEMs'' in this book) the datasets that cover (most of) the Earth.%
 \index{global DEM}
 Those datasets require different acquisition methods from local datasets, since flying an airplane or performing local surveys at the scale of the Earth has not been done yet, and it would be prohibitively expensive.
 The acquisition instruments for a global coverage must be \emph{space-borne}, \ie\ mounted on a satellite for instance.
@@ -292,7 +292,7 @@ Datasets such as SRTM and NASADEM can be provided as \texttt{.hgt} (height) file
   \begin{kaobox-practice}[frametitle=\faCog\ Downloading gDEMs]
     Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF\@.
     However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
-    \\
+    \\ \\
     One such advance is Cloud Optimized GeoTIFF (COG: \url{https://www.cogeo.org}), which is a normal GeoTIFF with a specific structure that allows it to be read piecewise from the cloud.
     Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
   \end{kaobox-practice}
