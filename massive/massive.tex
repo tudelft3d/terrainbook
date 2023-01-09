@@ -25,14 +25,15 @@ Examples of massive datasets:
 
 %
 
-We define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is these days usually around 16GB\@.
+We define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 16GB these days.
 This definition makes practical sense because working with data outside of the main memory of a computer is substantially slower (about 2 orders of magnitude for solid state drives and 5 for spinning hard drives), causing many standard data processing algorithms to become impractical with massive datasets.
 Keep in mind that not only the $xyz$ coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones).
 Also, in the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
 
 %
 
-What is ironic is that while datasets like those above are being collected in several countries, in practice they are seldom used since the tools that practitioners have, and are used to, usually cannot handle such massive datasets. 
+What is ironic is that while datasets like those above are being collected in several countries, in practice they are seldom used directly since the tools that practitioners have, and are used to, usually cannot handle such massive datasets. 
+Instead of the raw point clouds, gridded terrains are often derived (for example with a \qty{50}{cm} resolution), because those are easier to process with a personal computer.
 Indeed, the traditional GISs and terrain modelling tools are limited by the main memory of computers: if a dataset is bigger then operations will be very slow, and will most likely not finish (and thus crash).
 
 %
@@ -83,9 +84,9 @@ The downsamples grids are used to speed up visualisation (when a user zooms out 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
   For certain GIS formats, \eg\ GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
-
+  \\ \\
   For other formats, if the GDAL library is used (the \emph{de facto} open-source library for GIS images and grids), the pyramids can be stored in an auxiliary file with the extension \texttt{.ovr}, which is actually a TIFF format.
-
+  \\ \\
   The GDAL utility \href{https://www.gdal.org/gdaladdo.html}{gdaladdo \faExternalLink} can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
   In QGIS, one can use \texttt{gdaladdo}, or there is also a built-in mechanism, as can be seen in \reffig{fig:qgis}
 \end{kaobox-practice}
