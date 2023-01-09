@@ -19,7 +19,7 @@ In this chapter we discuss three methods to handle and/or process \emph{massive}
 Examples of massive datasets: 
 \begin{enumerate}
   \item the point cloud dataset of a \qty{1.5}{km^2} of Dublin\sidenote{\url{https://bit.ly/32GXiFq}} contains around 1.4 billion points (density of \qty{300}{pts/m^2}), which was collected with airborne laser scanners; 
-  \item the lidar dataset of the whole of the Netherlands (called AHN\sidenote{\emph{Actueel Hoogtebestand Nederland} (in Dutch): \url{http://www.ahn.nl}}) has about \qty{10}{pts/m^2} and its latest version (AHN3) has more than 700 billion points (AHN4 will contain even more points);
+  \item the lidar dataset of the whole of the Netherlands (AHN) has about \qty{10}{pts/m^2} and its latest version (AHN3) has more than 700 billion points (AHN4 will contain even more points);
   \item the global digital surface model \emph{ALOS World 3D---30m (AW3D30)}\sidenote{\url{https://www.eorc.jaxa.jp/ALOS/en/aw3d30/index.htm}} is a raster dataset with a resolution of \ang{;;1}. Thus we have about \num{8.4d11} pixels.
 \end{enumerate}
 
@@ -256,10 +256,12 @@ It can provide the $m$ nearest neighbours to a point by maintaining $m$ current 
 A branch is only eliminated when $m$ points have been found and the branch cannot have points closer than any of the $m$ current bests. 
 This can help improve significantly the running time of several operations described in this book: IDW with a fixed number of neighbours (Section~\ref{sec:wam_interpol}), extracting shapes from point clouds (Section~\ref{sec:shape-detection}), calculating the spatial extent (Chapter~\ref{chap:spatialextent}), are only but a few examples.
 
+% TODO: add this for kd-tree in practice?
 % \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
 % python the easiest is ckdtree from scipy
 % astest I know is this: https://github.com/storpipfugl/pykdtree
 % \end{kaobox-practice}
+
 
 %%%%%%%%%%%%%%%%%%%%
 %
@@ -268,9 +270,11 @@ This can help improve significantly the running time of several operations descr
 
 The incremental construction algorithm for the Delaunay triangulation (DT), presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
 Or if it works, it will be very slow.
-The reason for this is that the data structure for the DT (to store the points coordinates, and also the data structure for the triangles and their topological relationships) will be partly in the main memory (say 16GB of RAM) and the rest will be on the harddrive, and a part of the data structure is necessary \emph{swapping}% 
+The reason for this is that the data structure for the DT (to store the points coordinates, and also the data structure for the triangles and their topological relationships) will not fully fit in the main memory.
+Therefore, part of it will be in the main memory (say 16GB of RAM) and the other part will be on the harddrive.
+The operating system controls which parts are in memory and which parts are on the harddrive, and we call \emph{swapping} the operations to transfer between them.
 \marginnote{swapping and trashing}
-between the memory and the disk will be performed, and it is possible that if a lot (too many operations) of swapping are performed the process stops (called \emph{trashing}).
+The danger is that if a lot (too many operations) of swapping are performed the process stops (called \emph{trashing}).
 
 %
 
@@ -282,31 +286,31 @@ The main drawbacks of this approach are that the design of such algorithms is ra
 
 %
 
-We present in this section an alternative approach to dealing with massive datasets: \emph{streaming}.%
+We discuss in this section an alternative approach to dealing with massive datasets: \emph{streaming}.%
 \index{streaming data}\marginnote{streaming data} 
-The streaming paradigm means here that large files can be process without them to be fully loaded in memory (or that the algorithm has a global access to the said file).
-One concrete example is YouTube: to watch a given video one does not need to first download the whole file, they can simply start watching the video as soon as the first KB are downloaded.
+The streaming paradigm means here that large files can be processed without them to be fully loaded in memory.
+One concrete example is YouTube: to watch a given video one does not need to first download the whole file, she can simply start watching the video as soon as the first KB are downloaded.
 The content of the video is downloaded as one watches the video, and if the user fast-forward to for instance 5:32s then only the KB of content from where the cursor is need to be downloaded.
 At no moment is the full video downloaded to the user's device.
 
 %
 
 This idea can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
-Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calculate the slope of at one location in a point cloud we would need to retrieve all the neighbours and we saw above that this can be done with a kd-tree.
+Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calculate the slope at one location in a point cloud we would need to retrieve all the neighbouring points and potentially calculate locally the DT\@.
 The question is: is it possible to do this without reading the whole file and only process one part of it?
 
 %
 
 We focus in the following on the creation of a DT\@.
-The issue that we are facing is that a triangle is respecting the Delaunay criterion if its circumcircle is empty of any point, therefore while constructing the DT we need to test all the other points in the dataset to ensure that a given triangle is Delaunay (or not).
+The main issue that we are facing is that a triangle is respecting the Delaunay criterion if its circumcircle is empty of any point, therefore while constructing the DT we need to test all the other points in the dataset to ensure that a given triangle is Delaunay (or not).
 Streaming would mean here: can we assess that a given triangle is Delaunay without having to read/download the whole file?
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ Streaming is realised with Unix pipes]
   The key to implementing streaming of geometries is to use Unix pipes (also called \emph{pipelines}).
-
+  \\ \\
   Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow to chain several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the \emph{stream}). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
-
+  \\ \\
   In Unix, the pipe operator is the vertical line ``\texttt{|}'', and several commands can be chained with it: ``\texttt{cmd1 | cmd2 | cmd3}''. 
   A simple example would be ``\texttt{ls -l | grep json | wc -l}'' which would:
   \begin{enumerate}
@@ -320,17 +324,17 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
 %%%
 \subsection{Overview of streaming DT construction}
 Figure~\ref{fig:streamingdt} shows the overview of the processes involved for the construction of a DT with the streaming paradigm.
-\begin{figure}
+\begin{figure*}
   \centering
-  \includegraphics[width=\linewidth]{figs/streaming_pipeline}
-  \caption{Overview of the streaming pipeline described in the section.}%
+  \includegraphics[width=0.9\linewidth]{figs/streaming_pipeline}
+  \caption{Overview of the streaming pipeline to construct a DT (or extract isolines).}%
 \label{fig:streamingdt}
-\end{figure}
+\end{figure*}
 Think of the stream as a 1D list of objects (points, triangles, tags, etc.) and the aim is to be able to perform an operation without having in memory the whole stream.
 
 
 %%%
-\subsection{Finaliser: adding finalisation tags}
+\subsection{Finaliser: adding finalisation tags to the stream}
 The key idea is to \emph{preprocess} a set $S$ of points and insert \emph{finalisation tags} informing that certain points/areas will not be needed again.
 For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be realised by constructing a quadtree of $S$; a finalisation tag basically informs the following processes that a certain cell of the quadtree is empty, that all the points inside have been processed (have already appeared in the stream).
 \begin{figure*}
@@ -339,6 +343,12 @@ For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be rea
   \caption{How the finaliser modifies to input and injects finalisation tags. \textbf{Left:} 9 points and the related streams (just a list of the points with coordinates). \textbf{Right:} if a quadtree of depth 1 (in orange) is used (with 4 cells), then the stream would be augmented with finalisation tags.}%
 \label{fig:finaliser}
 \end{figure*}
+
+In practice, this is performed by reading a LAS/LAZ file (or any format with points) \emph{twice} from disk: 
+\begin{enumerate}
+  \item the first pass will count how many points are in each cell of the quadtree (and store the results)
+  \item the second pass will read again sequentially each point (and send it in the stream), and decrement the counter for each cell. When it is empty, a finalisation tag will be added to the stream.
+\end{enumerate}
 
 
 %%%
@@ -349,16 +359,21 @@ This is performed with the finalisation tags and the following observation (see 
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/triangulator}
-  \caption{The DT at a given moment during the triangulation process. Blue quadtree cells are not finalised yet, white ones are; green triangles are still in memory (their circumcircle (red circles) encroach on unfinalised cells); white triangles have been written to disk since their circumcircle does not encroach on an active cell (some green circles shown as example).}%
+  \caption{The DT at a given moment during the triangulation process. Blue quadtree cells are not finalised yet, white ones are; yellow triangles are still in memory (their circumcircles (in red) encroach on unfinalised cells); white triangles have been written to disk since their circumcircles do not encroach on an active cell (some green circles shown as example).}%
 \label{fig:triangulator}
 \end{figure}
 a triangle inside a finalised quadtree cell (\ie\ where all the points in the streams inside that cell have been read) is \emph{final}%
 \marginnote{finalisation of triangles}
 if its circumcircle does not encroach on an active quadtree cell.
 If its circumcircle overlaps with an active quadtree cell, then it is possible that later in the stream a new point will be added inside the circle, and thus the triangle will not be Delaunay.
-Final triangles can be removed from memory and written to disk; it is also possible to add another process to the pipeline and send the final triangles to them.
-Notice also that the memory the triangle was using can be reused to store another new triangle created by new points arriving in the stream.
 
+%
+
+Final triangles can be removed from memory and written directly to disk; it is however possible to add another process to the pipeline and send the final triangles to them (\eg\ to create a grid or to extract isolines).
+
+%
+
+Notice also that the memory the triangle was using can be reused to store another new triangle created by new points arriving in the stream.
 % TODO: how many are kept in memory? or only in the video?
 
 
@@ -366,13 +381,25 @@ Notice also that the memory the triangle was using can be reused to store anothe
 \subsection{Spatial coherence} 
 
 The construction of a DT with the streaming paradigm will only succeed (in the sense that the memory footprint will stay relatively low) if the \emph{spatial coherence}%
-\index{spatial coherence}\marginnote{spatial coherence} 
+\index{spatial coherence}
 of the input dataset is high.
 It is defined by \sidecitet{Isenburg06} as: ``a correlation between the proximity in space of geometric entities and the proximity of their representations in [the file]''.
 They demonstrate that real-world point cloud datasets often have natural spatial coherence because the points are usually stored in the order they were collected.
 If we shuffled randomly the points in an input file, then the spatial coherence would be very low and the finalisation tags in the stream coming out of the finaliser would be located at the end (and not distributed in the stream).
 
-Figure~\ref{fig:spatial_coherence}
+%
+
+It is possible to visualise the spatial coherence of a dataset by colouring, for an arbitrary grid, the positions of the first and last points; Figure~\ref{fig:spatial_coherence}
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{figs/spatial_coherence}
+  \caption{The colour map used for the position of a point in the file, and 3 examples of cells.}%
+\label{fig:spatial_coherence}
+\end{marginfigure}
+gives an example.
+The idea is to assign a colour map based on the position of the points in the file, and to colour the centre of the cells with the position of the first point inside that cell, and to colour the boundary of the cell with the position of the last point.
+
+Figure~\ref{fig:spatial_coherence_examples}
 \begin{figure*}
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
@@ -387,11 +414,11 @@ Figure~\ref{fig:spatial_coherence}
     \caption{}
   \end{subfigure}
 \caption{Spatial coherence of 2 AHN3 tiles. The inner cell colour indicates the position in the stream of first point in that cell, and the outer cell colour indicates the position in the stream of the last point in that cell.}%
-\label{fig:spatial_coherence}
+\label{fig:spatial_coherence_examples}
 \end{figure*}
-illustrates the spatial coherence for 2 tiles of the AHN3 dataset\marginnote{\url{https://www.ahn.nl/}} in the Netherlands.
+illustrates the spatial coherence for 2 tiles of the AHN3 dataset in the Netherlands.
 Notice that the cells are generally of the same colour, which means that the spatial coherence is relatively high.
-The two datasets are different patterns probably because they were compiled by different companies, who used different equipment and processing software to generate the datasets.
+It is interesting to notice that the two datasets have different patterns probably because they were compiled by different companies, who used different equipment and processing software to generate the datasets.
 
 
 %%%
