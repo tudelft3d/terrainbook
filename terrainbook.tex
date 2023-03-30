@@ -25,11 +25,12 @@
 % \addbibresource{book-template.bib} % Bibliography file
 
 % Load the package for hyperreferences
-\usepackage{styles/kaorefs}
+\usepackage{kaorefs}
 
 % Load mathematical packages for theorems and related environments. NOTE: choose only one between 'mdftheorems' and 'plaintheorems'.
-\usepackage{styles/mdftheorems}
+% \usepackage{styles/mdftheorems}
 %\usepackage{styles/plaintheorems}
+\usepackage[framed=true]{kaotheorems}
 
 \usepackage{float}
 \newfloat{floatbox}{tb}{ext2}
@@ -97,6 +98,7 @@
 
 \setcounter{margintocdepth}{1}
 \setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
 
 \usepackage{subcaption}
 \usepackage{fontawesome}
@@ -106,7 +108,6 @@
 \hypersetup{breaklinks=true}
 \usepackage{siunitx}
 
-\setcounter{secnumdepth}{3}
 
 
 %----------------------------------------------------------------------------------------
@@ -160,9 +161,9 @@
 
 % If twoside=false, \uppertitleback and \lowertitleback are not printed
 % To overcome this issue, we set twoside=semi just before printing the title pages, and set it back to false just after the title pages
-\KOMAoptions{twoside=semi}
-\maketitle
-\KOMAoptions{twoside=false}
+% \KOMAoptions{twoside=semi}
+% \maketitle
+% \KOMAoptions{twoside=false}
 
 %----------------------------------------------------------------------------------------
 % PREFACE
@@ -205,19 +206,19 @@
 \setchapterstyle{kao} % Choose the default chapter heading style
 
 \include{whatisterrain/whatisterrain} %- 01
-\include{acquisition/acquisition}     %- 02
-\include{gdem/gdem}                   %- 03
-\include{dtvd/dtvd}                   %- 04
-\include{interpol/interpol}           %- 05
-\include{kriging/kriging}             %- 06
-\include{conversion/conversion}       %- 07
-\include{topofeatures/topofeatures}   %- 08
-\include{visibility/visibility}       %- 09
-\include{runoff/runoff}               %- 10
-\include{pcprocessing/pcprocessing}   %- 11
-\include{massive/massive}             %- 12
-\include{spatialextent/spatialextent} %- 13
-\include{bathymetry/bathymetry}       %- 14
+% \include{acquisition/acquisition}     %- 02
+% \include{gdem/gdem}                   %- 03
+% \include{dtvd/dtvd}                   %- 04
+% \include{interpol/interpol}           %- 05
+% \include{kriging/kriging}             %- 06
+% \include{conversion/conversion}       %- 07
+% \include{topofeatures/topofeatures}   %- 08
+% \include{visibility/visibility}       %- 09
+% \include{runoff/runoff}               %- 10
+% \include{pcprocessing/pcprocessing}   %- 11
+% \include{massive/massive}             %- 12
+% \include{spatialextent/spatialextent} %- 13
+% \include{bathymetry/bathymetry}       %- 14
 %----------------------------------------------------------------------------------------
 
 
