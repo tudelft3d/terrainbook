@@ -103,15 +103,14 @@ The DT of a set $S$ of points subdivides completely conv($S$), \ie\ the union of
 
 Let $S$ be a set of points in $\mathbb{R}^2$, the \emph{convex hull} of $S$, denoted conv($S$), is the minimal convex set containing $S$. 
 It is best understood with the elastic band analogy: imagine each point in $\mathbb{R}^2$ being a nail sticking out of the plane, and a rubber band stretched to contain all the nails, as shown in Figure~\ref{fig:convex_hull}. 
+When released, the rubber band will assume the shape of the convex hull of the nails. 
+Notice that conv($S$) is not only formed by the edges connecting the points (the rubber band), but all the points of $\mathbb{R}^2$ that are contained within these edges (thus the whole polygon).
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{convex_hull}
   \caption{The convex hull of a set of points in $\mathbb{R}^2$.}% 
 \label{fig:convex_hull}
 \end{marginfigure}
-When released, the rubber band will assume the shape of the convex hull of the nails. 
-Notice that conv($S$) is not only formed by the edges connecting the points (the rubber band), but all the points of $\mathbb{R}^2$ that are contained within these edges (thus the whole polygon).
-
 
 %
 \subsection{Local optimality}

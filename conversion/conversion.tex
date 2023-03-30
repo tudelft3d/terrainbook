@@ -337,7 +337,7 @@ It should be noticed that the implementation of this algorithm requires a method
 \marginnote{The implementation of the DT in \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Delaunay.html}{SciPy} does not allow to delete/remove vertices, but \href{https://www.cgal.org}{CGAL} and \href{https://github.com/hugoledoux/startin}{startin} do.}
 
 Observe that the Algorithms~\ref{algo:tin-simp:ref} and~\ref{algo:tin-simp:dec} both state that the importance of the points must be completely recomputed after each iteration of the algorithms (either one removal or one insertion), but that in practice several of these will not have changed.
-As can be seen in \refchap{chap:dtvd}, the insertion/deletion of a single point/vertex will only \emph{locally} modify the triangulation, and it is thus faster from a computational point of view to flag the vertices incident to the modified triangles, and only update these.
+As can be seen in Chapter~\ref{chap:dtvd}, the insertion/deletion of a single point/vertex will only \emph{locally} modify the triangulation, and it is thus faster from a computational point of view to flag the vertices incident to the modified triangles, and only update these.
 
 
 %%%
@@ -394,7 +394,6 @@ Solving this problem requires solutions specifically designed for such inputs.
 The main ideas for most of them is to add extra vertices between the isolines, to avoid having horizontal triangles. 
 One strategy that has proven to work is to add the new vertices on the \emph{skeleton}, or medial-axis transform, of the isolines, which are located `halfway' between two isolines.
 The elevation assigned to these is based on the elevations of the isolines.
-%\refchap{chap:mat} explains in details what the medial-axis transform is.
 
 
 %%%%%%%%%%%%%%%%%%%%

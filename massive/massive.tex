@@ -75,7 +75,7 @@ Notice that the extra storage will be maximum $\frac{1}{3}$ of the original rast
 
 %
 
-For downsampling, the most common method is based on averaging the 4 pixel values that are merged into one (as shown in \reffig{fig:pyramids}b), but other interpolation methods are possible, \eg\ nearest neighbour as seen in \refchap{chap:interpol}.
+For downsampling, the most common method is based on averaging the 4 pixel values that are merged into one (as shown in \reffig{fig:pyramids}b), but other interpolation methods are possible, \eg\ nearest neighbour as seen in Chapter~\ref{chap:interpol}.
 
 %
 
@@ -268,7 +268,7 @@ This can help improve significantly the running time of several operations descr
 \section[Streaming paradigm]{Streaming paradigm to construct massive TINs and grids from point clouds}%
 \label{sec:streaming}
 
-The incremental construction algorithm for the Delaunay triangulation (DT), presented in \refchap{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
+The incremental construction algorithm for the Delaunay triangulation (DT), presented in Chapter~\ref{chap:dtvd}, will not work if the size of the input dataset is larger than the main memory.
 Or if it works, it will be very slow.
 The reason for this is that the data structure for the DT (to store the points coordinates, and also the data structure for the triangles and their topological relationships) will not fully fit in the main memory.
 Therefore, part of it will be in the main memory (say 16GB of RAM) and the other part will be on the harddrive.

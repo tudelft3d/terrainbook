@@ -39,9 +39,9 @@ However, the ``Earth's surface'' is also not a clear concept, since several obje
 \begin{figure*}
   \includegraphics[width=0.9\linewidth]{figs/destm}
   \caption{The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.}%
-\labfig{fig:dtmdsm}
+\label{fig:dtmdsm}
 \end{figure*}
-In this book, we use the following definitions (see \reffig{fig:dtmdsm}):
+In this book, we use the following definitions (see Figure~\ref{fig:dtmdsm}):
 \begin{description}
   \item[DTM] (\textbf{D}igital \textbf{T}errain \textbf{M}odel). The surface is the \emph{bare-earth}, that is no man-made objects or vegetation is present.\index{DTM}
   \item[DSM] (\textbf{D}igital \textbf{S}urface \textbf{M}odel). The surface includes all objects and structures on the terrain.\index{DSM}
@@ -64,34 +64,34 @@ You thus obtain a value representing the height of man-made objects and trees, a
 
 The term ``3D'' is misleading in a DTM context, as it is in a GIS context, 
 \marginnote{3D is misleading: 2.5D? 2.75D? Volumes?}
-because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see \reffig{fig:dimgis}).
+because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
 \begin{figure*}[b]
   \centering
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=1,width=\linewidth]{figs/dimgis}
-    \caption{A terrain}\labfig{fig:dimgis:1}
+    \caption{A terrain}\label{fig:dimgis:1}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=6,width=\linewidth]{figs/dimgis}
-    \caption{2.5D modelling}\labfig{fig:dimgis:25}
+    \caption{2.5D modelling}\label{fig:dimgis:25}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=5,width=\linewidth]{figs/dimgis}
-    \caption{2.75D modelling}\labfig{fig:dimgis:275}
+    \caption{2.75D modelling}\label{fig:dimgis:275}
   \end{subfigure}%
   \qquad %-- that adds some space between th 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
-    \caption{Volumetric modelling, or full 3D}\labfig{fig:dimgis:3}
+    \caption{Volumetric modelling, or full 3D}\label{fig:dimgis:3}
   \end{subfigure}%
   \caption{Different meanings for `3D GIS' in the context of terrains.}
-\labfig{fig:dimgis}
+\label{fig:dimgis}
 \end{figure*}
 
 \subsection{2.5D}%
@@ -103,12 +103,12 @@ is embedded in 3D space, and each location ($x,y$) is assigned to one and only o
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
 When we refer to terrains in this course, this is what is usually mean, unlike explicitly stated otherwise.
 This is often what is used in GIS software, and both the well-known raster/grid  is such a case.
-Observe that this restricts the real-world cases that can be modelled because, as shown in \reffig{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overfolds (\eg\ the balcony of a house) and caves are impossible to represent.
+Observe that this restricts the real-world cases that can be modelled because, as shown in Figure~\ref{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overfolds (\eg\ the balcony of a house) and caves are impossible to represent.
 As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of building could deviate by for instance 1 degree from the vertical. 
 
 \subsection{2.75D}%
 \index{2.75D} 
-The term ``2.75D'' refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see \reffig{fig:dimgis}c).
+The term ``2.75D'' refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see Figure~\ref{fig:dimgis}c).
 Thus, more than one $z$ value is allowed for a given location ($x,y$).
 The term '2.75D' was coined because: it is more than 2.5D, but less than 3D.
 \marginnote{2.75D}\index{2.75D}
@@ -119,7 +119,7 @@ We are not aware of any popular GIS software that allows us to model a terrain a
 \subsection[3D]{Full 3D, or volumetric modelling} 
 This refers to the modelling of not only the boundaries of objects, but also of the interior of these.
 \marginnote{volumetric modelling}\index{volumetric modelling}
-Notice for instance in \reffig{fig:dimgis}d that each building is represented with a solid.
+Notice for instance in Figure~\ref{fig:dimgis}d that each building is represented with a solid.
 The volume of buildings can therefore be calculated (since the ground floor of buildings would be modelled for instance), while with the other variations it is not possible. 
 Such a representation is usually done with a 2.5D terrain (although a 2.75D could also be used) and a set of buildings/objects that are connected to the terrain.
 
@@ -155,7 +155,7 @@ This fact is aggravated for fields as found in GIS-related disciplines because, 
 
 To represent a terrain in a computer, and be able to manipulate it (\ie\ edit the terrain and extract information such as slope), two things are needed:
 \begin{enumerate}
-  \item a set of samples that were collected to study the terrain, for instance a point cloud obtained from airborne laserscanning or photogrammetry (see \refchap{chap:acquisition} for details).
+  \item a set of samples that were collected to study the terrain, for instance a point cloud obtained from airborne laserscanning or photogrammetry (see Chapter~\ref{chap:acquisition} for details).
   \item a set of rules to obtain one and only one elevation value at any location ($x,y$); in other words, to reconstruct the continuity of the surface from the discrete samples.
   This operation is referred to as spatial interpolation (Chapters~\ref{chap:interpol} and~\ref{chap:kriging}). 
 \end{enumerate}
@@ -185,13 +185,13 @@ This function is usually a simple mathematical function:
 
 %
 
-In general, we  classify the tessellations of space into three categories (as shown in \reffig{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.%
+In general, we  classify the tessellations of space into three categories (as shown in Figure~\ref{fig:tesstypes}): \emph{regular}, \emph{irregular}, and \emph{hierarchical}.%
 \index{tessellation}
 \begin{marginfigure}
   \centering
   \includegraphics[width=0.7\textwidth]{figs/tesstype}
   \caption{Type of tessellations.}% 
-\labfig{fig:tesstypes}
+\label{fig:tesstypes}
 \end{marginfigure}
 
 %
@@ -219,7 +219,7 @@ The same spatial data model can therefore be implemented with different data str
 %%%
 \subsection{Regular tessellations} 
 
-As shown in \reffig{fig:tesstypes}a, all the cells have the same shape and size.
+As shown in Figure~\ref{fig:tesstypes}a, all the cells have the same shape and size.
 The most common regular tessellation in GIS and in terrain modelling is by far the grid (or raster representation), in which the cells are squares in 2D (usually called \emph{pixels}, a portmanteau of `picture' and `element', as an analogy to digital images).
 \marginnote{pixel}\index{pixel}
 However, while they are not common in practice, other regular shapes are possible, such as hexagons or triangles.
@@ -273,23 +273,23 @@ The subdivision is potentially better than that obtained with regular tessellati
 The most known examples of the use of irregular tessellations in terrain modelling is the \emph{triangulated irregular network}, or TIN\@.%
 \index{TIN}\marginnote{TIN: triangulated irregular network}
 
-As shown in \reffig{fig:tin}, a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
+As shown in Figure~\ref{fig:tin}, a TIN refers to an irregular tessellation of the $xy$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
 \begin{marginfigure}
   \includegraphics{figs/tin}
   \caption{A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.}%
-\labfig{fig:tin}
+\label{fig:tin}
 \end{marginfigure}
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $xy$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
 While not a requirement, the triangulation is usually a \emph{Delaunay triangulation} (more about this in Chapter~\ref{chap:dtvd}).%
 \index{Delaunay triangulation}
 The main reason is that Delaunay triangles are as ``fat'' as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
-As can be seen in~\reffig{fig:whydt},
+As can be seen in Figure~\ref{fig:whydt},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{figs/whydt}
   \caption{Two TINs (left is non-Delaunay; right is a DT) and the result of estimating with linear interpolation in the TIN\@.}%
-\labfig{fig:whydt}
+\label{fig:whydt}
 \end{figure}
 the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of \qty{95}{\m} is not used).
 
@@ -339,7 +339,7 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
   \centering
   \includegraphics[width=0.75\linewidth]{figs/reps}
   \caption{Four most common data models for terrains.}%
-\labfig{fig:reps}
+\label{fig:reps}
 \end{marginfigure}
 
 In the GIS literature, besides the ones above, different representations for terrains are often listed, the two most relevant being:
@@ -351,7 +351,7 @@ It should be noticed that these two are however \emph{incomplete}: the set of ru
 Conceptually speaking, these should therefore not be considered valid representations of a terrain.
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
 
-We will nevertheless consider these in the course; the four representations we will use are shown in \reffig{fig:reps}.
+We will nevertheless consider these in the course; the four representations we will use are shown in Figure~\ref{fig:reps}.
 
 %
 
@@ -367,7 +367,7 @@ Isolines have been traditionally used to represent the elevation in topographic 
 \begin{marginfigure}
   \includegraphics{figs/contours.jpg}
   \caption{A few examples of terrain features and their contour lines. (Figure from \citet{Kjellstrom99})}%
-\labfig{fig:contours}
+\label{fig:contours}
 \end{marginfigure}
 
 One particular property of an isoline is that its direction is always perpendicular to the direction of the steepest slope of the terrain. 
@@ -376,7 +376,7 @@ Another property that follows from the $2.5D$ property of the field is that cont
 %
 
 The purpose of isolines on a map is to reveal the shape of the underlying terrain. 
-By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see~\reffig{fig:contours} for a few examples.
+By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see Figure~\ref{fig:contours} for a few examples.
 It should be noticed that data between contours is absent in the contour map. 
 Yet, in case of good contours the reader will still be able to deduct the general morphology of the field. 
 It is even so that the use of contours will speed up the map reading process, as it conveys just that relevant bit of data to the map reader rather than `flooding' the reader with information which essentially makes the user do his own cartographic selection. 
@@ -390,12 +390,12 @@ But, depending on the relation between the spacing between contours (the \emph{c
 
 In practice, isolines are only approximated from the computer representation of a field.
 They are usually extracted directly from a TIN or a regular grid. 
-As shown in~\reffig{fig:isoline},
+As shown in Figure~\ref{fig:isoline},
 \begin{figure}
   \centering
   \includegraphics[width=0.95\textwidth]{figs/isoline}
   \caption{Cross-section of a terrain (left), and the \qty{200}{\metre} isoline extracted from a TIN (right).} 
-\labfig{fig:isoline}
+\label{fig:isoline}
 \end{figure}
 the idea is to compute the intersection between the level value (\eg\ \qty{200}{m}) and the terrain, represented for instance with a TIN\@. 
 Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
@@ -412,7 +412,7 @@ A data model will be judged more \emph{efficient} than another if it represents 
 This of course depends on the data structure used to store that data model.
 
 It should be said that both TIN and raster have advantages and disadvantages (as we will see during this course), and in practice one should choose the most appropriate model for the task at hand.
-This means converting between the two data models when it is necessary (topic of \refchap{chap:conversion}).
+This means converting between the two data models when it is necessary (topic of Chapter~\ref{chap:conversion}).
 
 
 %%%
