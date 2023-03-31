@@ -9,10 +9,7 @@
 
 \graphicspath{{visibility/}}
 
-
-
-
-Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which part(s) of the surrounding terrain are visible.
+Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which area of the surrounding terrain is visible?
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.
 There are also several related problems.
 Two closely related examples are the estimation of shadows (position of the sun continually varies, also with seasons) and the calculation of the solar irradiance (how much sun light will a certain area have per day/week).
@@ -35,7 +32,7 @@ When referring to visibility problems, we address the following two fundamental 
     \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to \qty{15}{\km}).}%
   \labfig{fig:overview_viewshed}
   \end{marginfigure} 
-  \item[viewshed:] given a viewpoint $v$, which part(s) of the surrounding terrain are visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
+  \item[viewshed:] given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
 Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation \qty{0}{\m}) or at a given height (\qty{2}{\m} for a human, or \qty{30}{\m} for a telecommunication tower).
 
@@ -87,21 +84,6 @@ The main issue involves finding that closest object, and especially discard the 
 The problem is simplified for terrains because a terrain is a 2.5D surface, and we can convert the problem to a 2D one.
 Furthermore, we can exploit the connectivity and adjacency between the 2D cells forming a terrain to minimise the number of objects to test (for intersections and for determining who is in front of who).
 
-
-%%%
-%
-\subsection{Visibility in TINs}
-% TODO : write my own part perhaps? Would be better IMO
-
-\begin{floatbox}
-  \begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-  \textbf{Parts of the following chapter.} 
-  Read from Section 1 to Section 3.1; it covers the simplest case for a LoS between 2 points on the surface.
-  \\ \\
-  \fullcite{deBerg97} \\ \\
-  \textbf{PDF:} \url{https://doi.org/10.1007/3-540-63818-0_4}
-  \end{kaobox-toread}
-\end{floatbox}
 
 
 %%%
@@ -171,6 +153,21 @@ If $z$ is higher, then the cell is visible and $t_{cur}$ is updated with a new t
 Viewsheds with several viewpoints $v_i$ are also very useful, think for instance of obtaining the viewshed along a road.
 This can be computed by sampling the road at every \qty{50}{\m} and computing the viewsheds from each of the points. 
 Each viewshed yields a binary grid, and it suffices to use a map algebra operator to combine the results into one grid (if one cell is visible from any viewpoint, then it is visible).
+
+
+%%%
+%
+\subsection{Visibility in TINs}
+% TODO : write my own part perhaps? Would be better IMO
+
+\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
+  \textbf{Parts of the following chapter.} 
+  Read from Section 1 to Section 3.1; it covers the simplest case for a LoS between 2 points on the surface.
+  \\ \\
+  \fullcite{deBerg97} \\ \\
+  \textbf{PDF:} \url{https://doi.org/10.1007/3-540-63818-0_4}
+\end{kaobox-toread}
+
 
 
 %%%%%%%%%%%%%%%%%%%%
