@@ -11,10 +11,10 @@
 
 A point cloud is essentially an array of 3D points, and often that is also how it is stored in a file.
 Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and potentially some attributes (also called \emph{fields}).
-\marginnote{$(x,y,z)$ + attributes}
 
 A field stores a single value---\eg\ an integer, a float, or a boolean---and can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number, the classification of the point, or the colour information.
 The order and meaning of the fields in a record are usually fixed for all the point records in one file.
+\marginnote{$(x,y,z)$ + attributes}
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
 Notice that, in addition to the widely used formats mentioned here, there are also many proprietary formats. 
@@ -46,7 +46,7 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
 
 %%%
 %
-\section{The PLY format}%
+\section{PLY format}%
 \index{PLY format}
 
 \begin{figure}
@@ -69,7 +69,7 @@ There is however no standardised way to specify the CRS in a PLY file, although 
 
 %%%
 %
-\section{The LAS format}%
+\section{LAS format}%
 \index{LAS format}
 
 
@@ -105,7 +105,8 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
 \end{table*}
 In the specifications this is referred to as the ``Format 0'', and other record types are possible (Formats 1 to 10).
 Other record types can add for instance the RGB colour information of the point, or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
-While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.\marginnote{unused fields take up storage} 
+While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.
+\marginnote{Unused fields take up storage} 
 It is important to notice that unused fields will still take up storage space in each record (a default value is then assigned, such as 0.0 for floats or 0 for integers).
 
 \paragraph{CRS.}
@@ -118,7 +119,7 @@ To convert these values to the actual coordinates on the ground, they need to be
   Z_{coordinate} = (Z_{record} * Z_{scale}) + Z_{offset}
 \end{gather*}
 The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{offset}$, $Y_{offset}$, $Z_{offset}$ are also listed in the header. 
-\marginnote{scaling factors and offsets are stored in the LAS header}
+\marginnote{Scaling factors and offsets are stored in the LAS header}
 Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
 
 \paragraph{Classification.}
@@ -153,7 +154,7 @@ It is possible to define your own classes using code ranges that are reserved fo
 
 
 %%%
-\section{The LAZ format}%
+\section{LAZ format}%
 \index{LAZ format}
 
 A compressed variant of the LAS format, dubbed ``LAZ'', exists.

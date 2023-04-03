@@ -3,16 +3,28 @@
 
 \graphicspath{{appendices/ahn/figs/}}
 
-\chapter{LAS \& AHN classification}%
+\chapter{Extra information about AHN}%
 \label{app:ahn}
 
-
 % TODO: add class=14? https://geoforum.nl/t/ahn4-classifications-same-as-ahn3/8170/2
-\begin{figure*}
+
+
+Both AHN3 and AHN4 LAZ files use the ``Point Data Record Format 1'', which contains all fields from Format 0 (Table~\ref{tab:las-record}) with the addition of the GPS time of the measurement.
+% TODO: The standard technically allows for additional user-defined attributes, AHN4 does that actually
+LAS v1.4 allows to store certain attributes, and in AHN4 the following 3 are also stored:
+\begin{description}
+  \item[Amplitude:] echo signal amplitude [dB] (min: 0; max: 10000) 
+  \item[Reflectance:] echo signal reflectance [dB] (min: 0; max: 10000)
+  \item[Deviation:] pulse shape deviation (min: 0; max: 65535)
+\end{description}
+
+%
+
+\begin{figure}
   \includegraphics[width=\linewidth]{ahn4.png}
   \caption{Classification codes used in the AHN3+AHN4 datasets.}%
 \label{fig:ahn3}
-\end{figure*}
+\end{figure}
 The national Dutch AHN lidar dataset 
 \marginnote{\emph{Actueel Hoogtebestand Nederland} (AHN)}
 \marginnote{\url{https://www.ahn.nl}}
@@ -21,9 +33,16 @@ Figure~\ref{fig:ahn3} shows all the codes that are used in both AHN3 and AHN4 (t
 Notice that apart from the pre-defined codes from Table~\ref{tab:las-classes}, it also uses the custom code $26$ for a `civil structure' (Dutch: \emph{kunstwerk}) class that includes special infrastructures such as bridges, statues, and viaducts. 
 
 Notice that in AHN the points representing vegetation are not classified as such, and vegetation is never explicitly classified.
-\marginnote{vegetation is classified as $1$/unclassified in AHN3}
+\marginnote{Vegetation is classified as $1$/unclassified}
 The is because the aim of the AHN project is mostly to model dikes and to protect us from floods, and vegetation is not very important for this use-case.
 The class $1$ is thus used for vegetation, but other objects such as street furniture (\eg\ lampposts) or cars are also classified as $1$.
 
+%
 
-% TODO: The standard technically allows for additional user-defined attributes, AHN4 does that actually
+Certain tiles contain a new classification (\emph{high-voltage pylons and cables} == \texttt{class 14}), but not all of them. 
+\marginnote{Class=14 for pylons+cables (for some tiles only)}
+If 14 is not used, the pylons and cables are in class 26.
+
+%
+
+
