@@ -1,32 +1,30 @@
 %!TEX root = ../../terrainbook.tex
 % chktex-file 46
 
+\setchapterpreamble[u]{\margintoc}
+
 \graphicspath{{appendices/pcformats/figs/}}
 
 \chapter{Point cloud file formats}%
 \label{app:pcformats}
 
-In this chapter we learn about  the main storage formats used in practice for point clouds and we discuss algorithms for processing, cleaning, and extracting information from point clouds.
-
-
-
-%%%%%%%%%%%%%%%%%%%%
-%
-\section{Point cloud file formats}
 
 A point cloud is essentially an array of 3D points, and often that is also how it is stored in a file.
-Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and some attributes of one sample point.
-
-A point record usually consists of several \emph{fields}, each of which stores a single value, \eg\ an integer, float, or boolean.
-A field can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number or colour information.
+Regardless of the format, a point cloud file can often be seen as an array of \emph{point records}, each of which contains the coordinates and potentially some attributes (also called \emph{fields}).
 \marginnote{$(x,y,z)$ + attributes}
+
+A field stores a single value---\eg\ an integer, a float, or a boolean---and can for instance represent the $x$-, $y$-, or $z$-coordinate of a point or one of its attributes, \eg\ the lidar return number, the classification of the point, or the colour information.
 The order and meaning of the fields in a record are usually fixed for all the point records in one file.
 How exactly the point records are structured and stored in the file, and what additional metadata are available, depends on the specific file format that is used.
 
 Notice that, in addition to the widely used formats mentioned here, there are also many proprietary formats. 
 These are often specific to one particular software and are therefore not very useful for data exchange.
 
-\subsection{ASCII formats}
+
+%%%
+%
+\section{ASCII formats}
+
 ASCII formats are plain text files\sidenote{\url{https://en.wikipedia.org/wiki/ASCII}}, the point cloud information is thus stored as a sequence of ASCII characters, usually one point record per line.
 In most cases you can recognise such files by the \emph{.xyz}, \emph{.csv}, or \emph{.txt} extensions; these are in most cases comma-separated value (CSV) files\sidenote{\url{https://en.wikipedia.org/wiki/Comma-separated_values}}.
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
@@ -41,44 +39,50 @@ The biggest downside is that they are not standardised, \ie\ the type, order, an
     84499.715 446608.528 0.444
     84499.839 446612.808 0.493
   \end{verbatim}
-  \caption{An example of a CSV file used to store the $xyz$ coordinates of a point cloud.}%
+  \caption{An example of a CSV file used to store the $xyz$ coordinates of a point cloud. Notice that the delimiter is in this case not a comma but a space.}%
 \label{fig:csv}
 \end{figure}
 
-\subsection{The PLY format}%
+
+%%%
+%
+\section{The PLY format}%
 \index{PLY format}
 
-The PLY format can be considered a standardised ASCII format.
-A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (called \emph{properties}), their order, their names, and their data types.
-Because the user can decide on the composition of the point record, this makes it a very flexible format.
-Figure~\ref{fig:ply} shows an example PLY file.
 \begin{figure}
   \includegraphics[width=\linewidth]{ply_header.pdf}
   \caption{A simple PLY file with 1 additional user-defined attribute of type integer (\texttt{int}). It contains 7 points.}%
 \label{fig:ply}
 \end{figure}
+The PLY format can be considered a standardised ASCII format.
+\marginnote{More information about PLY: \url{http://paulbourke.net/dataformats/ply/}}
+A PLY file contains a header\sidenote{A header is supplemental information placed at the beginning of a file, \eg\ to store metadata about the file.} that specifies the structure of the point records in the file, \ie\ the number of attributes (for this format called a \emph{property}), their order, their names, and their data types.
+Because the user can decide on the composition of the point record, this makes it a very flexible format.
+Figure~\ref{fig:ply} shows an example PLY file.
 
 %
 
 PLY files are readable by many software packages and can also be stored in a binary encoding\marginnote{\url{https://en.wikipedia.org/wiki/PLY_(file_format)\#ASCII_or_binary_format}}.
 Compared to the ASCII encoding, the binary encoding results in a smaller file size and quicker reading and writing from and to the file.
-There is no standardised way to specify the CRS in a PLY file, although one could add a comment in the header stating the CRS\@.
+There is however no standardised way to specify the CRS in a PLY file, although one could add a comment in the header stating the CRS\@.
 
 
 %%%
-\subsection{The LAS format}%
+%
+\section{The LAS format}%
 \index{LAS format}
 
-The \emph{LASer} (LAS) file format is the most widely used standard for the dissemination of point cloud data.
-The LAS standard, currently at version 1.4\marginnote{LAS v1.4 is the latest}, is maintained by the American Society for Photogrammetry and Remote Sensing (ASPRS)  and, as the name implies, it was designed for datasets that originate from (airborne) lidar scanners.
-However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
-It is a binary-encoded standard and compared to the PLY format it is rather strict because it prescribes exactly what a point record should look like, \ie\ what attributes are present and how many bits each attribute must use. 
 
+The \emph{LASer} file format (LAS) is the most widely used standard for the dissemination of point cloud data.
+The LAS standard, currently at version 1.4\marginnote{LAS v1.4-R15 is the latest version}, is maintained by the American Society for Photogrammetry and Remote Sensing (ASPRS) and, as the name implies, was designed for datasets that originate from (airborne) lidar scanners.
+\marginnote{\url{https://github.com/ASPRSorg/LAS}}
+However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
+LAS files are binary and unlike the PLY format the fields are prescribed, \ie\ the attributes for each point record are their types (number of bits) cannot be modified.
 Table~\ref{tab:las-record} shows the composition of the simplest record type that is available for LAS files.
 \begin{table*}
   \centering
   \small
-  \begin{tabular}{l|l|l|p{7cm}}
+  \begin{tabular}{l|l|r|p{7cm}}
     % \toprule
     % \rowcolor[gray]{.9}
     Field & Format & Length (bits) & Description\\ \midrule
@@ -99,10 +103,12 @@ Table~\ref{tab:las-record} shows the composition of the simplest record type tha
 \caption{LAS Point Data Record Format 0}%
 \label{tab:las-record}
 \end{table*}
-Other record types are available that also include fields to store for instance  RGB colour information or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
+In the specifications this is referred to as the ``Format 0'', and other record types are possible (Formats 1 to 10).
+Other record types can add for instance the RGB colour information of the point, or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
 While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.\marginnote{unused fields take up storage} 
-It is important to notice that unused fields will still take up storage space in each record.
+It is important to notice that unused fields will still take up storage space in each record (a default value is then assigned, such as 0.0 for floats or 0 for integers).
 
+\paragraph{CRS.}
 The CRS of the point cloud can be stored in the header of a LAS file, together with some other general information such as the total number of points and the bounding box of the point cloud. 
 The X, Y, and Z fields are stored as 32-bit integers. 
 To convert these values to the actual coordinates on the ground, they need to be multiplied by a scaling factor and added to an offset value, \ie:
@@ -115,10 +121,11 @@ The scaling factors $X_{scale}$, $Y_{scale}$, $Z_{scale}$ and the offsets $X_{of
 \marginnote{scaling factors and offsets are stored in the LAS header}
 Notice that the scaling factor determines the number of decimals that can be stored, \eg\ the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
 
+\paragraph{Classification.}
 The LAS standard defines several classification codes, as listed in Table~\ref{tab:las-classes}.
 \begin{table}
   \centering
-  \begin{tabular}{l|l}
+  \begin{tabular}{r|l}
   % \toprule
   % \rowcolor[gray]{.9}
   Code & Meaning \\ \midrule
@@ -132,6 +139,7 @@ The LAS standard defines several classification codes, as listed in Table~\ref{t
   7 & low point (noise) \\
   8 & \emph{reserved} \\
   9 & water \\
+  13--31 & user-defined \\
   % \bottomrule
 \end{tabular}
 \caption{The first 10 LAS classification code numbers. More codes exist, but they are not listed here.}%
@@ -149,6 +157,7 @@ It is possible to define your own classes using code ranges that are reserved fo
 \index{LAZ format}
 
 A compressed variant of the LAS format, dubbed ``LAZ'', exists.
+\marginnote{\citet{Isenburg13} describes in details the LAS format}
 While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be compressed into a fraction of the storage space required for the equivalent LAS file, without any loss of information.
 This makes it more effective than simply using ZIP compression on a LAS file.
