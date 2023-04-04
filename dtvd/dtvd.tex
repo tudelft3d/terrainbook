@@ -227,9 +227,9 @@ Let $G$ be a planar graph, as illustrated in Figure~\ref{fig:dual_graph} (black 
   \caption{A graph $G$ (black lines), and its dual graph $G^\star$ (dashed lines).}%
 \label{fig:dual_graph}
 \end{marginfigure}
-Observe that $G$ can also be seen as a cell complex in $\mathbb{R}^{2}$. 
 
-The duality mapping is as follows (also shown in details in Figure~\ref{fig:dualdetailtab}).
+Observe that $G$ can also be seen as a cell complex in $\mathbb{R}^{2}$. 
+The duality mapping is as follows (also shown in details in Figure~\ref{fig:dualdetail}).
 The dual graph $G^{\star}$ has a vertex for each face (polygon) in $G$, and the vertices in $G^{\star}$ are linked by an edge if and only if the two corresponding dual faces in $G$ are adjacent (in Figure~\ref{fig:dual_graph}, $G^{\star}$ is represented with dashed lines). 
 Notice also that each polygon in $G^{\star}$ corresponds to a vertex in $G$, and that each edge of $G$ is actually dual to one edge (an arc in Figure~\ref{fig:dual_graph}) of $G^{\star}$ (for the sake of simplicity the dual edges to the edges on the boundary of $G$ are not drawn).
 
@@ -240,43 +240,27 @@ As Figure~\ref{fig:dualdetail} demonstrates:
   \item a Voronoi edge is dual to a Delaunay edge;
   \item a Voronoi vertex is dual to a Delaunay triangle.
 \end{enumerate}
-Observe that, as shown in Figures~\ref{fig:vd2d} and~\ref{fig:dualdetail}, the location of a Voronoi vertex $v^{\star}$ dual to a Delaunay triangle $\tau$ is that the centre of the circumcircle of $\tau$.
-This can be obtained
-
-% TODO: finish centre of circumcircle
-
-% \begin{equation}
-%   \textrm{O}\textsc{rientation}(a, b, p) = 
-%   \left| 
-%   \begin{array}{cccc}
-%     a_{x} & a_{y} & 1 \\
-%     b_{x} & b_{y} & 1 \\
-%     p_{x} & p_{y} & 1 
-%   \end{array} 
-%   \right| 
-% \end{equation}
-
+Observe that, as shown in Figures~\ref{fig:vd2d} and~\ref{fig:dualdetail}, the location of a Voronoi vertex $v^{\star}$, which is dual to a Delaunay triangle $\tau$, is at the centre of the circumcircle of $\tau$.
+Appendix~\ref{app:equations} describes how to obtain the location, given 3 points.
 \begin{figure}
-% \centering
-% \setcapindent{1em}
-\centering
-\begin{minipage}[c]{0.4\textwidth}
-  \includegraphics[width=\textwidth]{dualdetail.pdf}
-\end{minipage}
-\begin{minipage}[c]{0.45\textwidth}
-% \hspace{1.1em}
   \centering
-  \begin{tabular}{lcl}
-  \toprule
-  DT & & VD \\
-  \midrule
-  $\mathbf{\color{YellowGreen}{face}}$ & $\leftrightarrow$ & $\mathbf{\color{ForestGreen}{vertex}}$\\
-  $\mathbf{\color{Blue}{vertex}}$ & $\leftrightarrow$ & $\mathbf{\color{SkyBlue}{face}}$\\
-  $\mathbf{\color{Orange}{edge}}$ & $\leftrightarrow$ & $\mathbf{\color{Dandelion}{edge}}$\\
-  \bottomrule
-  \end{tabular}
-\end{minipage}
-\caption{Duality between the DT (dotted) and the VD (dashed).}%
+  \begin{minipage}[c]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{dualdetail.pdf}
+  \end{minipage}
+  \begin{minipage}[c]{0.45\textwidth}
+  % \hspace{1.1em}
+    \centering
+    \begin{tabular}{lcl}
+    \toprule
+    DT & & VD \\
+    \midrule
+    $\mathbf{\color{YellowGreen}{face}}$ & $\leftrightarrow$ & $\mathbf{\color{ForestGreen}{vertex}}$\\
+    $\mathbf{\color{Blue}{vertex}}$ & $\leftrightarrow$ & $\mathbf{\color{SkyBlue}{face}}$\\
+    $\mathbf{\color{Orange}{edge}}$ & $\leftrightarrow$ & $\mathbf{\color{Dandelion}{edge}}$\\
+    \bottomrule
+    \end{tabular}
+  \end{minipage}
+  \caption{Duality between the DT (dotted) and the VD (dashed).}%
 \label{fig:dualdetail}
 \end{figure}
 
