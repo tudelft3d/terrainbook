@@ -12,11 +12,11 @@
 Both AHN3 and AHN4 LAZ files use the ``Point Data Record Format 1'', which contains all fields from Format 0 (Table~\ref{tab:las-record}) with the addition of the GPS time of the measurement.
 % TODO: The standard technically allows for additional user-defined attributes, AHN4 does that actually
 LAS v1.4 allows to store certain attributes, and in AHN4 the following 3 are also stored:
-\begin{description}
-  \item[Amplitude:] echo signal amplitude [dB] (min: 0; max: 10000) 
-  \item[Reflectance:] echo signal reflectance [dB] (min: 0; max: 10000)
-  \item[Deviation:] pulse shape deviation (min: 0; max: 65535)
-\end{description}
+\begin{enumerate}
+  \item \emph{Amplitude:} echo signal amplitude [dB] (min: 0; max: 10000) 
+  \item \emph{Reflectance:} echo signal reflectance [dB] (min: 0; max: 10000)
+  \item \emph{Deviation:} pulse shape deviation (min: 0; max: 65535)
+\end{enumerate}
 
 %
 
@@ -39,7 +39,7 @@ The class $1$ is thus used for vegetation, but other objects such as street furn
 
 %
 
-Certain tiles contain a new classification (\emph{high-voltage pylons and cables} == \texttt{class 14}), but not all of them. 
+Certain tiles contain a new classification (\emph{high-voltage pylons and cables} == class 14), but not all of them. 
 \marginnote{Class=14 for pylons+cables (for some tiles only)}
 If 14 is not used, the pylons and cables are in class 26.
 
