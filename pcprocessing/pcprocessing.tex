@@ -132,7 +132,7 @@ Ground filtering involves classifying the points of a point cloud into ground po
 As shown in Figure~\ref{fig:filter-profile}, ground points are those points that are part of the bare-earth surface of the Earth, thus excluding vegetation and man-made structures such as buildings, statues, and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:regiongrowing}).
-\begin{figure*}
+\begin{figure}
   \centering
   \begin{subfigure}[b]{\linewidth}
     \centering
@@ -145,8 +145,8 @@ Or, the non-ground points can be used as input for another classifier, \eg\ to c
     \caption{After ground filtering}
   \end{subfigure}
   \caption{Profile of the point cloud of an area.}%
-\label{fig:filter-profile}
-\end{figure*}
+  \label{fig:filter-profile}
+\end{figure}
 
 %
 
@@ -186,26 +186,26 @@ Each point that is inserted into the TIN is considered to be a ground point.
 In the second step, two geometric properties are computed for each point that is not in the TIN\@.
 These properties are based on the relation between the point $p$ and the triangle in the current TIN that intersects its vertical projection. 
 The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
-\begin{figure*}
+\begin{marginfigure}
   \centering
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{groundfilter-symbols.pdf}
     \caption{}\label{fig:ground-filtering:symbols}
   \end{subfigure}
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{groundfilter-ground.pdf}
     \caption{example ground point}\label{fig:ground-filtering:ground}
   \end{subfigure}
-  \begin{subfigure}[b]{0.25\linewidth}
+  \begin{subfigure}[b]{0.6\linewidth}
     \centering
     \includegraphics[width=\textwidth]{groundfilter-nonground.pdf}
     \caption{example non-ground point}\label{fig:ground-filtering:nonground}
   \end{subfigure}
   \caption{Geometric properties for a point $p$ in the method for ground filtering based on TIN refinement.}%
 \label{fig:ground-filtering}
-\end{figure*}
+\end{marginfigure}
 The first property, denoted $d$, is the perpendicular distance between the $p$ and the plane spanned by the triangle.
 The second property, denoted $\alpha$, is the largest angle of the angles between the triangle and the three vectors that connect each vertex with $p$. 
 
@@ -214,25 +214,11 @@ If this is indeed the case, the point is labelled as a ground point and inserted
 Compare Figures~\ref{fig:ground-filtering:ground} and~\ref{fig:ground-filtering:nonground}.
 
 Of course, if the triangles in the TIN change, the properties of the overlapping unclassified points need to be recomputed. 
-However, the algorithm is greedy, which means that it never ``goes back'' on operations that were previously performed, and thus  when a point $p$ is inserted as the ground, it is never removed.
+However, the algorithm is greedy, which means that it never ``goes back'' on operations that were previously performed, and thus when a point $p$ is inserted as the ground, it is never removed.
 When all remaining points fail the ground test, the algorithm terminates.
-Figure~\ref{fig:ground-filtering-example} gives an example result.
-\begin{figure*}
-  \centering
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{filter_before.png}
-    \caption{Original point cloud}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{0.45\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{filter_after.png}
-    \caption{The ground extract with a ground filter}
-  \end{subfigure}
-\caption{Ground filtering example.}%
-\label{fig:ground-filtering-example}
-\end{figure*}
+% Figure~\ref{fig:ground-filtering-example} gives an example result.
+
+%
 
 \paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need to recompute the geometric properties of at most $n$ points.
 
@@ -368,14 +354,34 @@ This iterative process is repeated until the maximum displacement of all particl
 %
 
 \paragraph{Two possible outputs.}
-When the process is completed, the surface of the cloth can be used to obtain two outputs:
+When the process is completed, the surface of the cloth can be used to obtain two outputs (see Figure~\ref{fig:csf-example}:
 \begin{enumerate}
-  \item a surface representing the ground (the cloth)
   \item classification of points into ground/non-ground
+  \item a surface representing the ground (the cloth)
 \end{enumerate}
 If the surface of the cloth is used, it is for instance possible to triangle it or to create a grid from it.
 If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used (this is the parameter $\epsilon_{ground}$ in Algorithm~\ref{algo:csf}).
 If this distance is less than a given user-defined threshold, then the sample point is a ground point.
+\begin{figure*}
+  \centering
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{csf_before.png}
+    \caption{Original point cloud}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{csf_onlyground.png}
+    \caption{Output \#1: the ground points}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.8\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{csf_after.png}
+    \caption{Output \#2: the ground surface}
+  \end{subfigure}
+\caption{Two outputs of the CSF algorithm for a given area.}%
+\label{fig:csf-example}
+\end{figure*}
 
 \begin{floatbox}
   \begin{kaobox-practice}[frametitle=\faCog\ CSF is implemented in several open-source libraries]
