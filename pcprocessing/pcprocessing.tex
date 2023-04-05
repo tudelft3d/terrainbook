@@ -34,13 +34,13 @@ See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and gri
   \centering
   \begin{subfigure}[b]{0.95\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/rand01.png}
+    \includegraphics[width=\textwidth]{rand01.png}
     \caption{random thinning}
   \end{subfigure}
 
   \begin{subfigure}[b]{0.95\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/voxel08m.png}
+    \includegraphics[width=\textwidth]{voxel08m.png}
     \caption{3D grid thinning}
   \end{subfigure}
 \caption{Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.}%
@@ -73,17 +73,17 @@ The underlying assumption of most outlier detection methods is that an outlier i
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/radius-count.pdf}
+    \includegraphics[width=\textwidth]{radius-count.pdf}
     \caption{radius count}
   \end{subfigure}
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/grid-count.pdf}
+    \includegraphics[width=\textwidth]{grid-count.pdf}
     \caption{grid count}
   \end{subfigure}
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/knn-distance.pdf}
+    \includegraphics[width=\textwidth]{knn-distance.pdf}
     \caption{knn distance ($k=3$)}
   \end{subfigure}
 \caption{Three outlier detection methods based on local point density. The red point is an outlier, whereas the blue point is an inlier.}%
@@ -108,13 +108,13 @@ Figure~\ref{fig:mbes} gives an example.
   \centering
   \begin{subfigure}[b]{0.44\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/mbes_cleaning_before.png}
+    \includegraphics[width=\textwidth]{mbes_cleaning_before.png}
     \caption{before outlier detection}
   \end{subfigure}
   \qquad%
   \begin{subfigure}[b]{0.44\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/mbes_cleaning_after.png}
+    \includegraphics[width=\textwidth]{mbes_cleaning_after.png}
     \caption{after outlier detection}
   \end{subfigure}
 \caption{Outlier detection in a multi-beam echo sounding dataset using a TIN \citep{Arge10}.}%
@@ -180,17 +180,17 @@ The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
   \centering
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/groundfilter-symbols.pdf}
+    \includegraphics[width=\textwidth]{groundfilter-symbols.pdf}
     \caption{}\label{fig:ground-filtering:symbols}
   \end{subfigure}
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/groundfilter-ground.pdf}
+    \includegraphics[width=\textwidth]{groundfilter-ground.pdf}
     \caption{example ground point}\label{fig:ground-filtering:ground}
   \end{subfigure}
   \begin{subfigure}[b]{0.25\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/groundfilter-nonground.pdf}
+    \includegraphics[width=\textwidth]{groundfilter-nonground.pdf}
     \caption{example non-ground point}\label{fig:ground-filtering:nonground}
   \end{subfigure}
   \caption{Geometric properties for a point $p$ in the method for ground filtering based on TIN refinement.}%
@@ -211,13 +211,13 @@ Figure~\ref{fig:axelsson} gives an example result.
   \centering
   \begin{subfigure}[b]{0.48\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/axelsson-before.png}
+    \includegraphics[width=\textwidth]{axelsson-before.png}
     \caption{Before}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{0.48\linewidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/axelsson-after.png}
+    \includegraphics[width=\textwidth]{axelsson-after.png}
     \caption{After}
   \end{subfigure}
 \caption{Ground filtering \citep{axelsson2000generation}}%
@@ -240,7 +240,7 @@ The main observation necessary for this algorithm is that lower points are usual
 The key idea of the algorithm, as shown in Figure~\ref{fig:csf_idea},
 \begin{figure*}
   \centering
-  \includegraphics[width=\linewidth]{figs/csf_idea}
+  \includegraphics[width=\linewidth]{csf_idea}
   \caption{Basic idea behind the CSF algorithm for ground filtering of a point cloud: inverting the data and letting a cloth fall.}%
 \label{fig:csf_idea}
 \end{figure*}
@@ -265,7 +265,7 @@ These will potentially be neighbours to \emph{movable} ones, whose elevation wil
 As shown in Figure~\ref{fig:csf_iterations},
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\linewidth]{figs/csf_iterations}
+  \includegraphics[width=\linewidth]{csf_iterations}
   \caption{}%
 \label{fig:csf_iterations}
 \end{marginfigure}
@@ -336,7 +336,7 @@ Given a movable particle $p$, we apply the internal forces by individually looki
 For each neighbour $n_i$, there are two cases (see Figure~\ref{fig:csf_2cases}):
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\linewidth]{figs/csf_2cases}
+  \includegraphics[width=\linewidth]{csf_2cases}
   \caption{}%
 \label{fig:csf_2cases}
 \end{marginfigure}
@@ -384,7 +384,7 @@ If this distance is less than a given user-defined threshold, then the sample po
 
 \begin{figure*}
 	\centering
-	\includegraphics[width=\linewidth]{figs/bk-planes.png}
+	\includegraphics[width=\linewidth]{bk-planes.png}
 	\caption{Planar regions in the AHN3 point cloud. Each region was assigned a random colour.}%
 \label{fig:bk-planes}
 \end{figure*}
@@ -438,22 +438,22 @@ From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructe
 	\centering
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=1]{figs/ransac.pdf}
+		\includegraphics[width=\textwidth,page=1]{ransac.pdf}
 		\caption{Input points}\label{fig:ransac:a}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=2]{figs/ransac.pdf}
+		\includegraphics[width=\textwidth,page=2]{ransac.pdf}
 		\caption{1st minimal set}\label{fig:ransac:b}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=3]{figs/ransac.pdf}
+		\includegraphics[width=\textwidth,page=3]{ransac.pdf}
 		\caption{2nd minimal set}\label{fig:ransac:c}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.24\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=4]{figs/ransac.pdf}
+		\includegraphics[width=\textwidth,page=4]{ransac.pdf}
 		\caption{Detected line instance}\label{fig:ransac:d}
 	\end{subfigure}
 	\caption{RANSAC for line detection ($k=2$ iterations)}%
@@ -520,7 +520,7 @@ This could be a disadvantage.
 %Another disadvantage is that RANSAC can output spurious results in some cases. This is shown in Figure~\ref{fig:ransac-spurious} where RANSAC found a plane 
 %\begin{figure}
 %	\centering
-%	\includegraphics[width=0.8\textwidth]{figs/ransac-spurious.png}
+%	\includegraphics[width=0.8\textwidth]{ransac-spurious.png}
 %	\caption{Detection of a spurious plane by RANSAC \citep{Limberger15}.}
 %	\label{fig:ransac-spurious}
 %\end{figure}
@@ -542,30 +542,30 @@ Otherwise $c$ is ignored (Figure~\ref{fig:region-growing:d}).
 	\centering
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=1]{figs/region-growing.pdf}
+		\includegraphics[width=\textwidth,page=1]{region-growing.pdf}
 		\caption{Input points with normals and three seed points}\label{fig:region-growing:a}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=2]{figs/region-growing.pdf}
+		\includegraphics[width=\textwidth,page=2]{region-growing.pdf}
 		\caption{Start growing. Add neighbours if the normal angle is small.}\label{fig:region-growing:b}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=3]{figs/region-growing.pdf}
+		\includegraphics[width=\textwidth,page=3]{region-growing.pdf}
 		\caption{Continue growing from new region point}\label{fig:region-growing:c}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=4]{figs/region-growing.pdf}
+		\includegraphics[width=\textwidth,page=4]{region-growing.pdf}
 		\caption{Stop growing where the normal angle is too great}\label{fig:region-growing:d}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=5]{figs/region-growing.pdf}
+		\includegraphics[width=\textwidth,page=5]{region-growing.pdf}
 		\caption{Final regions from all three seed points}\label{fig:region-growing:e}
 	\end{subfigure}
 	\caption{Region growing for plane detection based on the angle between neighbouring point normals}%
@@ -657,19 +657,19 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 	\centering
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=1]{figs/hough-transform.pdf}
+		\includegraphics[width=\textwidth,page=1]{hough-transform.pdf}
 		\caption{Line parametrisation}\label{fig:hough-transform:a}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=2]{figs/hough-transform.pdf}
+		\includegraphics[width=\textwidth,page=2]{hough-transform.pdf}
 		\caption{Input points}\label{fig:hough-transform:b}
 	\end{subfigure}
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=3]{figs/hough-transform.pdf}
+		\includegraphics[width=\textwidth,page=3]{hough-transform.pdf}
 		\caption{Line instances for each point}\label{fig:hough-transform:c}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.3\linewidth}
@@ -701,7 +701,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 	\qquad
 	\begin{subfigure}[b]{0.3\linewidth}
 		\centering
-		\includegraphics[width=\textwidth,page=4]{figs/hough-transform.pdf}
+		\includegraphics[width=\textwidth,page=4]{hough-transform.pdf}
 		\caption{Detected line instances with a minimal vote count of  3.}\label{fig:hough-transform:e}
 	\end{subfigure}
 	\caption{Hough transform for line detection with a $10\times2$ accumulator. The $(\phi,r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y=mx+b$ form for example).}%
