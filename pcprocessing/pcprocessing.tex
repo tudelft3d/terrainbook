@@ -123,31 +123,41 @@ Figure~\ref{fig:mbes} gives an example.
 % TODO: shouldn't we use our own figure here?
 
 
+
 %%%%%%%%%%%%%%%%%%%%
 %
-
 \section{Ground filtering}
+
 Ground filtering involves classifying the points of a point cloud into ground points and non-ground points.
-Ground points are those points that are part of the bare-earth surface of the Earth, thus excluding vegetation and man-made structures such as buildings, statues, and cars.
+As shown in Figure~\ref{fig:filter-profile}, ground points are those points that are part of the bare-earth surface of the Earth, thus excluding vegetation and man-made structures such as buildings, statues, and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, \eg\ to classify buildings and vegetation possibly using a region growing algorithm (see Section~\ref{sec:regiongrowing}).
+\begin{figure*}
+  \centering
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{filter-profile-before.png}
+    \caption{Original point cloud}
+  \end{subfigure}
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{filter-profile-after.png}
+    \caption{After ground filtering}
+  \end{subfigure}
+  \caption{Profile of the point cloud of an area.}%
+\label{fig:filter-profile}
+\end{figure*}
+
+%
 
 Ground filtering methods are typically based on the assumptions that 
 \begin{enumerate}
   \item the ground is a continuous surface without sudden elevation jumps, 
   \item for a given 2D neighbourhood, the ground points are the ones with the lowest elevation.
 \end{enumerate}
-Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as one from Section~\ref{sec:outlier_detection} (see \eg\ Figure~\ref{fig:axelsson:profiles}).
-% TODO: not sure why link to this figure
+Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as one from Section~\ref{sec:outlier_detection}.
 
-
-% TODO: shouldn't we use our own figure here?
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{figs/axelsson-profiles.png}
-  \caption{Cross-section of a terrain with lamp posts and trees before (top) and after (bottom) ground filtering \citep{axelsson2000generation}.}%
-\label{fig:axelsson:profiles}
-\end{figure}
+%
 
 Notice that the resulting bare-earth model may thus have holes where these non-ground objects used to be.
 If needed, these holes can be filled in a subsequent processing step with for example spatial interpolation.
