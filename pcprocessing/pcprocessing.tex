@@ -3,14 +3,15 @@
 
 \setchapterpreamble[u]{\margintoc}
 
-
 \graphicspath{{pcprocessing/figs/}}
 
 \chapter{Point cloud processing}%
 \label{chap:pcprocessing}
 
-% TODO: rewrite this, it can be better
-In this chapter we learn about  the main storage formats used in practice for point clouds and we discuss algorithms for processing, cleaning, and extracting information from point clouds.
+Point clouds are irregularly spaced sample points (to which attributes are attached, see Appendix~\ref{app:pcformats}), that are most often acquired from lidar or obtained from the dense matching of images.
+While they are often considered as a suitable terrain representation, as explained in Section~\ref{sec:representation_others}, it should be stressed that they are not since they are 3D (\eg\ samples can represent vertical walls) and they are not continuous surfaces.
+
+This chapter describes algorithms and techniques to process a point cloud such as it can be used to construct a (2.5D) terrain, or to extract objects that can be used in applications related to the built environment.
 
 
 

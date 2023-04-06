@@ -333,7 +333,8 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
 
 
 %%%
-\subsection{Other common terrain representations used in GIS}
+\subsection{Other common terrain representations used in GIS}%
+\label{sec:representation_others}
 
 \begin{marginfigure}
   \centering
@@ -350,6 +351,7 @@ In the GIS literature, besides the ones above, different representations for ter
 It should be noticed that these two are however \emph{incomplete}: the set of rules to reconstruct the surface at unsampled locations is not explicitly given, they are not continuous surfaces.
 Conceptually speaking, these should therefore not be considered valid representations of a terrain.
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
+In Chapter~\ref{chap:pcprocessing} we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
 
 We will nevertheless consider these in the course; the four representations we will use are shown in Figure~\ref{fig:reps}.
 
