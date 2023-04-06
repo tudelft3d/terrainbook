@@ -7,7 +7,7 @@
 \chapter{Visibility queries on terrains}%
 \label{chap:visibility}
 
-\graphicspath{{visibility/}}
+\graphicspath{{visibility/figs}}
 
 Several applications using terrains involve \emph{visibility queries}, \ie\ given a viewpoint, which area of the surrounding terrain is visible?
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.
@@ -21,16 +21,16 @@ When referring to visibility problems, we address the following two fundamental 
 \begin{description}
   \begin{marginfigure}
     \centering
-    \includegraphics[width=\linewidth]{figs/overview_los}
+    \includegraphics[width=\linewidth]{overview_los}
     \caption{Line-of-sight between $v$ and $q$; $q$ is not visible.}%
-    \labfig{fig:overview_los}
+    \label{fig:overview_los}
   \end{marginfigure} 
   \item[line-of-sight (LoS):] given a viewpoint $v$ and another point $q$, does $v$ sees $q$ (and vice-versa)? Or, in other words, does the segment $vq$ intersects the terrain? The result is either True or False.
   \begin{marginfigure}
     \centering
-    \includegraphics[width=\linewidth]{figs/overview_viewshed}
+    \includegraphics[width=\linewidth]{overview_viewshed}
     \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to \qty{15}{\km}).}%
-  \labfig{fig:overview_viewshed}
+  \label{fig:overview_viewshed}
   \end{marginfigure} 
   \item[viewshed:] given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
@@ -48,17 +48,48 @@ We discuss how to solve these problems for both TINs and grids.
 \section{Rendering + ray casting}
 
 Rendering is the process of generating images from 2D or 3D scenes.
-Without going into details, as shown in \reffig{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel.
+As shown in Figure~\ref{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel (that of the closest object).
 \begin{marginfigure}
   \centering
-  \includegraphics[width=\linewidth]{figs/Ray_trace_diagram.pdf}
+  \includegraphics[width=\linewidth]{Ray_trace_diagram.pdf}
   \caption{Ray tracing builds the image pixel by pixel by extending rays into the scene. (Figure from \url{https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg})}%
-\labfig{fig:Ray_trace_diagram}
+\label{fig:Ray_trace_diagram}
 \end{marginfigure}
-The colour of a pixel is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (this goes beyond the scope of this course!).
+To obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (this goes beyond the scope of this book).
 
-Ray casting is used for each pixel: a ray is defined between the viewpoint $p$ and the centre of the pixel, and the closest object in the scene must be found.
+%
+
+Ray casting is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.
 The main issue involves finding that closest object, and especially discard the other objects lying behind it.
+
+%
+
+Figure~\ref{fig:zbuffer} shows the idea for 2 objects ($O_1$ and $O_2$).
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{zbuffer.pdf}
+  \caption{}%
+\label{fig:zbuffer}
+\end{marginfigure}
+Observe that objects can \emph{partially} be hidden by others, and that the value of the pixel should always contain the closest object at that location.
+
+%
+
+One solution to solving is the \emph{depth-sort algorithm}, it assumes that all objects are planar polygons.
+Its main idea is to define a coordinate reference system with $x$ and $y$ on the viewing plane, and $z$ perpendicular to it.
+The objects are first sorted according to their maximal $z$-values, and the objects are drawn on the viewing plane from the furthest to the closest.
+The value of a given pixel could therefore be redrawn several times, but its value will contain the colour of the closest object.
+Observe this algorithm is often referred to as the painter's algorithm since it mimics the way one would draw a scene (details in the foreground are drawn ``over'' the background).
+
+It should however be noticed that it is possible that objects are not all $z$-ordered, since their $z$-values can overlap.
+Figure~\ref{fig:depthsort_issues} shows one example: the object $O_2$ from Figure~\ref{fig:zbuffer} was rotate and now part of it is in front of $O_1$ and part behind.
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{depthsort_issues.pdf}
+  \caption{Part of $O_2$ is behind $O_1$ and part is in front.}%
+\label{fig:depthsort_issues}
+\end{marginfigure}
+The solution to this is to decompose one of the objects by the plane of the other, and to process all the parts as different objects.
 
 %%
 
@@ -102,16 +133,16 @@ We describe here how both LoS and viewshed queries can be implemented for grids;
 \paragraph{Line-of-sight.}
 A LoS query, between a viewpoint $v$ and another point $q$, implies reconstructing the profile of the terrain along the vertical projection of $vq$ (let us call it $vq_{xy}$).
 It then suffices to follow $vq$ and verify whether the elevation at any ($x,y$) location along the profile is higher than that of $vq$.
-As shown in \reffig{fig:los}, 
+As shown in Figure~\ref{fig:los}, 
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{figs/los}
+  \includegraphics[width=\linewidth]{los}
   \caption{Line-of-sight for between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.}%
-\labfig{fig:los}
+\label{fig:los}
 \end{figure}
 since the terrain is discretised into grid cells, there are 2 options to reconstruct the profile between $v$ and $q$:
 \begin{enumerate}
-  \item identify all the cells intersected by $vq_{xy}$, and assign the centre of each cell by projecting it to the terrain profile. This is what is done in \reffig{fig:los}.
+  \item identify all the cells intersected by $vq_{xy}$, and assign the centre of each cell by projecting it to the terrain profile. This is what is done in Figure~\ref{fig:los}.
   \item consider the edges of the cells, collect all the edges that are intersected by $vq_{xy}$, and linearly interpolate the elevations. This is far more expensive to compute, and therefore less used in practice.
 \end{enumerate}
 
@@ -123,15 +154,15 @@ If the pixel containing $q$ is reached without detecting an intersection, then t
 
 %%%
 \paragraph{Viewshed.}
-As shown in \reffig{fig:viewshed},
+As shown in Figure~\ref{fig:viewshed},
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{figs/viewshed}
+  \includegraphics[width=\linewidth]{viewshed}
   \caption{Viewshed for the point $v$; the blue circle is the radius of the horizon (\qty{5000}{\m} in this case).}%
-\labfig{fig:viewshed}
+\label{fig:viewshed}
 \end{figure}
 computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
-The result of a viewshed is a binary grid; in \reffig{fig:overview_viewshed}, True/visible pixels are green, and False/invisible ones are dark grey.
+The result of a viewshed is a binary grid; in Figure~\ref{fig:overview_viewshed}, True/visible pixels are green, and False/invisible ones are dark grey.
 
 %
 
@@ -141,8 +172,8 @@ As an example, with the AHN3 gridded version (\qty{50}{\cm} resolution), this me
 
 %
 
-One alternative solution is shown in \reffig{fig:viewshed}b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $vq_i$ as we `walk' from $v$.
-Observe that, along $vq_i$, it is possible that a point far from $v$ is visible, while several closer points are not; \reffig{fig:viewshed}c gives an example.
+One alternative solution is shown in Figure~\ref{fig:viewshed}b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $vq_i$ as we `walk' from $v$.
+Observe that, along $vq_i$, it is possible that a point far from $v$ is visible, while several closer points are not; Figure~\ref{fig:viewshed}c gives an example.
 
 One solution involves using so-called \emph{tangents}.
 The current tangent $t_{cur}$ is first initialised as a vector pointing downwards.
@@ -158,7 +189,30 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 %%%
 %
 \subsection{Visibility in TINs}
-% TODO : write my own part perhaps? Would be better IMO
+% TODO : finish this, this WIP!
+
+
+Indeed, for some arbitrary triangulations, such as the one in Figure~\ref{fig:acyclicity}, it might never end. 
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{acyclicity.pdf}
+  \caption{The W\textsc{alk} algorithm might never end for this triangulation because the three skinny triangles form a cycle, when viewed from the viewpoint in the middle}%
+\label{fig:acyclicity}
+\end{marginfigure}
+
+\begin{marginfigure}
+  \centering
+  \includegraphics[width=\linewidth]{ordering_triangles.pdf}
+  \caption{The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.}%
+\label{fig:ordering_triangles}
+\end{marginfigure}
+
+The walk is guaranteed to end is the case of a DT because it was proved that DTs are \emph{acyclic} for any fixed viewpoint. In other words, the in-front/behind relationship for the $d$-simplices of a DT, with respect to a viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
+
+So this means that visibility queries in TIN---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in Figure~\ref{fig:depthsort_issues}).
+
+
+
 
 \begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
   \textbf{Parts of the following chapter.} 
@@ -178,12 +232,13 @@ The `tangent algorithm' to compute viewsheds was first described by \citet{Blell
 
 The description here is inspired by that of \citet{DeFloriani99-1}.
 
+\citet{Edelsbrunner90} proved that Delaunay triangulations, in any dimensions, are acyclic.
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Exercises}
 
 \begin{enumerate}
-  \item Explain why the spacing in \reffig{fig:los}c along the profile has points that are not equally spaced.
+  \item Explain why the spacing in Figure~\ref{fig:los}c along the profile has points that are not equally spaced.
   \item Your are given a 2.75D terrain of an area, it is composed of triangles, and your aim is to perform line-of-sight queries between some locations. Describe the algorithm that you will implement to perform the queries.
 \end{enumerate}
