@@ -448,7 +448,7 @@ Only for illustrative purposes specific shapes such as a line or a plane are use
 
 RANSAC is short for \emph{RANdom SAmpling Consensus} and, as its name implies, works by randomly sampling the input points.
 In fact it starts by picking a random set of points $M \subset P$. 
-This set $M$ is called the \emph{minimal set}\index{minimal set}\marginnote{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
+This set $M$ is called the \emph{minimal set}\marginnote{minimal set} and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, \eg\ 2 for a line and 3 for a plane. 
 From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructed (see Figures~\ref{fig:ransac:b} and~\ref{fig:ransac:c}).
 \begin{figure*}
 	\centering
@@ -477,8 +477,8 @@ From the minimal set $M$ the (unique) shape instance $\mathcal{I}$ is constructe
 \end{figure*}
 The algorithm then checks for each point $p \in \{P \setminus M\}$ if it fits with $\mathcal{I}$. 
 This is usually done by computing the distance $d$ from $p$ to $\mathcal{I}$ and comparing $d$ against a user-defined threshold $\epsilon$.
-If $d<\epsilon$ we say that $p$ is an \emph{inlier}\index{inlier}\marginnote{inlier}, otherwise $p$ is an outlier.
-The complete set of inliers is called the \emph{consensus set}\index{consensus set}\marginnote{consensus set}, and its size is referred to as the \emph{score}\index{score}\marginnote{score}.
+If $d<\epsilon$ we say that $p$ is an \emph{inlier}\index{inliers}\marginnote{inlier}, otherwise $p$ is an outlier.
+The complete set of inliers is called the \emph{consensus set}\marginnote{consensus set}, and its size is referred to as the \emph{score}\marginnote{score}.
 The whole process from picking a minimal set to computing the consensus set and its score, as shown in Algorithm~\ref{algo:ransac}, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (Figure~\ref{fig:ransac:d}). 
 
 \begin{algorithm}
@@ -737,7 +737,7 @@ Figure~\ref{fig:hough-transform} shows an example for line detection with the Ho
 	\caption{The Hough transform algorithm}%
 \label{algo:hough-transform}
 \end{algorithm}
-The votes are saved in an \emph{accumulator\index{accumulator}\marginnote{accumulator}} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
+The votes are saved in an \emph{accumulator\marginnote{accumulator}} which is essentially a matrix with an axis for each parameter of the shape, \eg\ for detecting lines we would need two axes (See Figure~\ref{fig:hough-transform:d}).
 Notice that each element in the accumulator represents one possible shape instance.
 Because each axis only has a limited number of elements, each parameter is \emph{quantised}\index{quantisation}\marginnote{quantisation}.
 This means that each parameter is restricted in the possible values it can have.
