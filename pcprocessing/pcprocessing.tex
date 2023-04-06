@@ -28,25 +28,24 @@ Commonly encountered thinning methods in practice are:
   \item \textbf{random:} randomly keep a given percentage of the points, \eg\ 10\%.
   \item \textbf{\emph{n}th-point:} keep only the $n$th point in the dataset. For instance, if $n=100$, we would keep the 1st, the 101th, the 201th, etc; a dataset with \qty{100000} points is reduced to \qty{1000} points. This is the quickest thinning method.
   \item \textbf{\emph{n}th-point random:} if there is some structure in the input points (\eg\ if generated from a gridded terrain) then \emph{n}th-point could create datasets with artefacts. The randomised variation chooses randomly in the $n$ points one point.
-  \item \textbf{grid: }overlay a 2D or 3D regular grid over the points and keep $m$ point(s) per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
+  \item \textbf{grid: }overlay a 2D or 3D regular grid over the points and keep $m$ points per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
 \end{itemize}
 See Figure~\ref{fig:randvsgrid} for a comparison between random thinning and grid thinning.
-\begin{figure}
+\begin{figure*}
   \centering
-  \begin{subfigure}[b]{0.95\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth]{rand01.png}
     \caption{random thinning}
   \end{subfigure}
-
-  \begin{subfigure}[b]{0.95\linewidth}
+  \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[width=\textwidth]{voxel08m.png}
     \caption{3D grid thinning}
   \end{subfigure}
 \caption{Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.}%
 \label{fig:randvsgrid}
-\end{figure}
+\end{figure*}
 
 From Section~\ref{sec:tin-simpl} you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
 However, for a given number of resulting points, TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
@@ -70,7 +69,7 @@ The neighbourhood can be defined using a $k$-nearest neighbour (knn) search (see
 The points that are determined to be in the neighbourhood of a point of interest $p$ are used to determine whether $p$ is an outlier or not.
 
 The underlying assumption of most outlier detection methods is that an outlier is often an isolated point, \ie\ there are not many points in its neighbourhood. We distinguish the following outlier detection methods (see also Figure~\ref{fig:outlier-detection}):
-\begin{figure}[htb]
+\begin{figure}
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
@@ -118,7 +117,7 @@ Figure~\ref{fig:mbes} gives an example.
     \includegraphics[width=\textwidth]{mbes_cleaning_after.png}
     \caption{after outlier detection}
   \end{subfigure}
-\caption{Outlier detection in a multi-beam echo sounding dataset using a TIN \citep{Arge10}.}%
+\caption{Outlier detection in a multi-beam echo sounding dataset using a TIN\@. Figure from \citep{Arge10}.}%
 \label{fig:mbes}
 \end{figure*}
 % TODO: shouldn't we use our own figure here?
@@ -355,7 +354,7 @@ This iterative process is repeated until the maximum displacement of all particl
 %
 
 \paragraph{Two possible outputs.}
-When the process is completed, the surface of the cloth can be used to obtain two outputs (see Figure~\ref{fig:csf-example}:
+When the process is completed, the surface of the cloth can be used to obtain two outputs (see Figure~\ref{fig:csf-example}):
 \begin{enumerate}
   \item classification of points into ground/non-ground
   \item a surface representing the ground (the cloth)
@@ -426,7 +425,7 @@ For example, a line in the plane can be parametrised using the equation $y = mx 
 We can create an instance of a line by specifying values for its parameters $m$ and $b$, respectively fixing the slope and the position of the line.
 
 In the following, the methods are described in a general way, \ie\ without specialisations for one particular shape.
-\marginnote{spheres, cones, cylinders, planes, etc. can be detected}
+\marginnote{spheres, cones, cylinders, planes, etc.\ can be detected}
 Only for illustrative purposes specific shapes such as a line or a plane are used to (visually) explain the basic concept of each shape detection method, but the same could be done with spheres, cones, or other shapes.
 
 
