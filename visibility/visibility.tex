@@ -30,7 +30,7 @@ When referring to visibility problems, we address the following two fundamental 
     \centering
     \includegraphics[width=\linewidth]{overview_viewshed}
     \caption{The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to \qty{15}{\km}).}%
-  \label{fig:overview_viewshed}
+    \label{fig:overview_viewshed}
   \end{marginfigure} 
   \item[viewshed:] given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain ``horizon'', or radius of visibility. If the terrain is formed of different objects (\eg\ buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
 \end{description}
@@ -48,41 +48,43 @@ We discuss how to solve these problems for both TINs and grids.
 \section{Rendering + ray casting}
 
 Rendering is the process of generating images from 2D or 3D scenes.
-As shown in Figure~\ref{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel (that of the closest object).
+As shown in Figure~\ref{fig:Ray_trace_diagram}, it involves projecting the (3D) objects in a scene to an image (say 800$\times$800 pixels) and assigning one colour to each pixel.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{Ray_trace_diagram.pdf}
   \caption{Ray tracing builds the image pixel by pixel by extending rays into the scene. (Figure from \url{https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg})}%
-\label{fig:Ray_trace_diagram}
+  \label{fig:Ray_trace_diagram}
 \end{marginfigure}
-To obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (this goes beyond the scope of this book).
+In the simplest case the colour assigned is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (however this goes beyond the scope of this book).
 
 %
 
-Ray casting is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.
-The main issue involves finding that closest object, and especially discard the other objects lying behind it.
-
-%
-
+\emph{Ray casting} is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.%
+\index{ray casting}\marginnote{Ray casting}
+The main issue involves finding that closest object, and especially discarding the other objects lying behind it (an operation usually called hidden-surface determination/removal).%
+\index{hidden-surface determination}\marginnote{Hidden-surface determination}
 Figure~\ref{fig:zbuffer} shows the idea for 2 objects ($O_1$ and $O_2$).
+Observe that objects can \emph{partially} be hidden by others, and that the value of the pixel should always contain the closest object at that location.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{zbuffer.pdf}
-  \caption{}%
-\label{fig:zbuffer}
+  \caption{Two planar objects $O_1$ and $O_2$ are partially overlapping when viewed from $v$.}%
+  \label{fig:zbuffer}
 \end{marginfigure}
-Observe that objects can \emph{partially} be hidden by others, and that the value of the pixel should always contain the closest object at that location.
 
 %
 
-One solution to solving is the \emph{depth-sort algorithm}, it assumes that all objects are planar polygons.
+One often used algorithm to solving the hidden-surface determination is the \emph{depth-sort method}.
 Its main idea is to define a coordinate reference system with $x$ and $y$ on the viewing plane, and $z$ perpendicular to it.
 The objects are first sorted according to their maximal $z$-values, and the objects are drawn on the viewing plane from the furthest to the closest.
 The value of a given pixel could therefore be redrawn several times, but its value will contain the colour of the closest object.
-Observe this algorithm is often referred to as the painter's algorithm since it mimics the way one would draw a scene (details in the foreground are drawn ``over'' the background).
+The algorithm assumes that all objects are planar polygons, which is for the case of terrains not an issue.
+Observe that this algorithm is often referred to as the \emph{painter's algorithm} since it mimics the way one would draw a scene: details in the foreground are drawn ``over'' the background.
 
-It should however be noticed that it is possible that objects are not all $z$-ordered, since their $z$-values can overlap.
-Figure~\ref{fig:depthsort_issues} shows one example: the object $O_2$ from Figure~\ref{fig:zbuffer} was rotate and now part of it is in front of $O_1$ and part behind.
+%
+
+It should be noticed that it is possible that objects cannot be strictly $z$-ordered since their $z$-values can overlap.
+Figure~\ref{fig:depthsort_issues} shows one example: the object $O_2$ from Figure~\ref{fig:zbuffer} was slightly rotated and now part of it is in front of $O_1$ and part of it is behind.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{depthsort_issues.pdf}
@@ -93,17 +95,9 @@ The solution to this is to decompose one of the objects by the plane of the othe
 
 %%
 
-\begin{floatbox}
-  \begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-    \textbf{Parts of the following chapter.} It summarises different methods to determine which surfaces are visible, for the generic cases of objects in 3D space.
-    Read only the following sections: 18.0, 18.1, 18.2, and 18.4.
-    \\ \\
-    \fullcite{Salomon11} \\ \\
-    \textbf{PDF:} \url{https://doi.org/10.1007/978-0-85729-886-7_18}
-    % TODO: remove external material
-  \end{kaobox-toread}
-\end{floatbox}
-
+An efficient implementation of the depth-sort algorithm requires indexing the objects in the scene, and for this BSP-trees are commonly used.
+\marginnote{BSP-tree: binary space partitioning}
+A depth order for the scene can now be obtained by a traversal of the BSP tree.
 
 
 
@@ -112,9 +106,8 @@ The solution to this is to decompose one of the objects by the plane of the othe
 \section[2.5D terrains are simple]{For 2.5D terrains, the problem is simpler}
 
 % Simplifying the problem by sorting the triangles
-The problem is simplified for terrains because a terrain is a 2.5D surface, and we can convert the problem to a 2D one.
-Furthermore, we can exploit the connectivity and adjacency between the 2D cells forming a terrain to minimise the number of objects to test (for intersections and for determining who is in front of who).
-
+The problem is simplified for terrains we can sort the cells (pixels or triangles) and, because a terrain is a 2.5D surface, and we can convert the problem to a 2D one.
+We can then exploit the connectivity and adjacency between the 2D cells forming a terrain to minimise the number of objects to test (for intersections and for hidden-surface determination).
 
 
 %%%
@@ -191,36 +184,32 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 \subsection{Visibility in TINs}
 % TODO : finish this, this WIP!
 
-
-Indeed, for some arbitrary triangulations, such as the one in Figure~\ref{fig:acyclicity}, it might never end. 
+Using the depth-sort algorithm for arbitrary triangles would require using a BSP-tree for indexing and sorting the triangles, and some triangles would need to be decomposed, as explained above.
+Figure~\ref{fig:acyclicity} shows one simple example.
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{acyclicity.pdf}
-  \caption{The W\textsc{alk} algorithm might never end for this triangulation because the three skinny triangles form a cycle, when viewed from the viewpoint in the middle}%
-\label{fig:acyclicity}
+  \caption{The 3 triangles $\tau_1$, $\tau_2$, and $\tau_3$ form a cycle when viewed from the viewpoint $v$, and it is not possible to sort them from furthest to closest (without decomposing them).}%
+  \label{fig:acyclicity}
 \end{marginfigure}
 
+%
+
+However, it was proved that Delaunay triangulations are \emph{acyclic} for any fixed viewpoint. 
+In other words, the in-front/behind relationship for the triangles of a DT, with respect to a viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{ordering_triangles.pdf}
   \caption{The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.}%
-\label{fig:ordering_triangles}
+  \label{fig:ordering_triangles}
 \end{marginfigure}
 
-The walk is guaranteed to end is the case of a DT because it was proved that DTs are \emph{acyclic} for any fixed viewpoint. In other words, the in-front/behind relationship for the $d$-simplices of a DT, with respect to a viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
+We can thus obtain the triangles intersecting a ray coming out of a viewpoint in the order from closest to farthest, it suffices to modify slight the point location algorithm from Section~\ref{sec:dtwalk}.
+This operation can be performed in 2D, by projecting the triangles of the TIN to the $xy$-plane.
 
-So this means that visibility queries in TIN---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in Figure~\ref{fig:depthsort_issues}).
+%
 
-
-
-
-\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-  \textbf{Parts of the following chapter.} 
-  Read from Section 1 to Section 3.1; it covers the simplest case for a LoS between 2 points on the surface.
-  \\ \\
-  \fullcite{deBerg97} \\ \\
-  \textbf{PDF:} \url{https://doi.org/10.1007/3-540-63818-0_4}
-\end{kaobox-toread}
+This means that visibility queries in TIN---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in Figure~\ref{fig:depthsort_issues}).
 
 
 
@@ -231,6 +220,8 @@ So this means that visibility queries in TIN---like in grids---are greatly simpl
 The `tangent algorithm' to compute viewsheds was first described by \citet{Blelloch90}.
 
 The description here is inspired by that of \citet{DeFloriani99-1}.
+
+\citet{Newell72} first proposed the depth-sorting algorithm and the decomposition necessary when polygons in the scene cannot be sorted from furthest to closest.
 
 \citet{Edelsbrunner90} proved that Delaunay triangulations, in any dimensions, are acyclic.
 
