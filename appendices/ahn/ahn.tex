@@ -6,12 +6,10 @@
 \chapter{Extra information about AHN}%
 \label{app:ahn}
 
-% TODO: add class=14? https://geoforum.nl/t/ahn4-classifications-same-as-ahn3/8170/2
 
 
 Both AHN3 and AHN4 LAZ files use the ``Point Data Record Format 1'', which contains all fields from Format 0 (Table~\ref{tab:las-record}) with the addition of the GPS time of the measurement.
-% TODO: The standard technically allows for additional user-defined attributes, AHN4 does that actually
-LAS v1.4 allows to store certain attributes, and in AHN4 the following 3 are also stored:
+LAS v1.4 allows to store certain extra user-defined attributes, and in AHN4 the following 3 are also stored:
 \begin{enumerate}
   \item \emph{Amplitude:} echo signal amplitude [dB] (min: 0; max: 10000) 
   \item \emph{Reflectance:} echo signal reflectance [dB] (min: 0; max: 10000)
@@ -20,11 +18,12 @@ LAS v1.4 allows to store certain attributes, and in AHN4 the following 3 are als
 
 %
 
-\begin{figure}
+
+\begin{figure*}[t]
   \includegraphics[width=\linewidth]{ahn4.png}
   \caption{Classification codes used in the AHN3+AHN4 datasets.}%
 \label{fig:ahn3}
-\end{figure}
+\end{figure*}
 The national Dutch AHN lidar dataset 
 \marginnote{\emph{Actueel Hoogtebestand Nederland} (AHN)}
 \marginnote{\url{https://www.ahn.nl}}
