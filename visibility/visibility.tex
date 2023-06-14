@@ -182,7 +182,6 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 %%%
 %
 \subsection{Visibility in TINs}
-% TODO : finish this, this WIP!
 
 Using the depth-sort algorithm for arbitrary triangles would require using a BSP-tree for indexing and sorting the triangles, and some triangles would need to be decomposed, as explained above.
 Figure~\ref{fig:acyclicity} shows one simple example.
@@ -195,21 +194,20 @@ Figure~\ref{fig:acyclicity} shows one simple example.
 
 %
 
-However, it was proved that Delaunay triangulations are \emph{acyclic} for any fixed viewpoint. 
-In other words, the in-front/behind relationship for the triangles of a DT, with respect to a viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
+However, it has been proven that Delaunay triangulations are \emph{acyclic} for any fixed viewpoint. 
+In other words, the in-front/behind relationship for the triangles of a DT, with respect to a given viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{ordering_triangles.pdf}
   \caption{The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.}%
   \label{fig:ordering_triangles}
 \end{marginfigure}
-
-We can thus obtain the triangles intersecting a ray coming out of a viewpoint in the order from closest to farthest, it suffices to modify slight the point location algorithm from Section~\ref{sec:dtwalk}.
+Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slight the point location algorithm from Section~\ref{sec:dtwalk}.
 This operation can be performed in 2D, by projecting the triangles of the TIN to the $xy$-plane.
 
 %
 
-This means that visibility queries in TIN---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in Figure~\ref{fig:depthsort_issues}).
+This means that visibility queries in TINs---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in Figure~\ref{fig:depthsort_issues}).
 
 
 
