@@ -50,10 +50,10 @@ In this book, we use the following definitions (see Figure~\ref{fig:dtmdsm}):
 
 It should be noticed that in some countries a DEM is often synonymous with a grid of elevation (see below).
 
-Some concepts are derived from those, for instance the \emph{normalised DSM},%
+Some concepts are derived from those, for instance the \emph{normalised DSM} (\textbf{nDSM}),%
 \index{nDSM}\index{normalised DSM}\marginnote{nDSM: normalised DSM}
 which is defined as the difference between the DSM and the DTM\@.
-You thus obtain a value representing the height of man-made objects and trees, and zero when there are none.
+You thus obtain a value representing the height of man-made objects and trees, and zero where there are none.
 
 
 
@@ -63,7 +63,8 @@ You thus obtain a value representing the height of man-made objects and trees, a
 \section{Dimensionality of DTMs}
 
 The term ``3D'' is misleading in a DTM context, as it is in a GIS context, 
-\marginnote{3D is misleading: 2.5D? 2.75D? Volumes?}
+\marginnote{3D is misleading}
+\marginnote{2.5D? 2.75D? Volumes?}
 because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
 \begin{figure*}[b]
   \centering
@@ -90,16 +91,15 @@ because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Fig
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
     \caption{Volumetric modelling, or full 3D}\label{fig:dimgis:3}
   \end{subfigure}%
-  \caption{Different meanings for `3D GIS' in the context of terrains.}
-\label{fig:dimgis}
+  \caption{Different meanings for `3D GIS' in the context of terrains.}%
+  \label{fig:dimgis}
 \end{figure*}
 
 \subsection{2.5D}%
 \index{2.5D} 
 What is usually used for modelling terrains: a surface (which is a topologically a 2D object; also called a 2-manifold) 
-\marginnote{2-manifold}\index{2-manifold}
 is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
-% \marginnote{Text of the note}
+\marginnote{2-manifold}\index{2-manifold}
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
 When we refer to terrains in this course, this is what is usually mean, unlike explicitly stated otherwise.
 This is often what is used in GIS software, and both the well-known raster/grid  is such a case.
