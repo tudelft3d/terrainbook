@@ -60,9 +60,9 @@ In the simplest case the colour assigned is that of the closest object, but to o
 %
 
 \emph{Ray casting} is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.%
-\index{ray casting}\marginnote{Ray casting}
+\index{ray casting}\marginnote{ray casting}
 The main issue involves finding that closest object, and especially discarding the other objects lying behind it (an operation usually called hidden-surface determination/removal).%
-\index{hidden-surface determination}\marginnote{Hidden-surface determination}
+\index{hidden-surface determination}\marginnote{hidden-surface determination}
 Figure~\ref{fig:zbuffer} shows the idea for 2 objects ($O_1$ and $O_2$).
 Observe that objects can \emph{partially} be hidden by others, and that the value of the pixel should always contain the closest object at that location.
 \begin{marginfigure}
