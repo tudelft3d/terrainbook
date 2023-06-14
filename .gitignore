@@ -243,6 +243,7 @@ TSWLatexianTemp*
 
 #--------
 terrainbook.pdf
+terrainbook.sublime*
 *DS_Store
 .jekyll-cache/*
 docs/.jekyll-cache/*
