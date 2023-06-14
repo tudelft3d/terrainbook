@@ -44,7 +44,7 @@ Given\marginnote{flow accumulation}\index{flow accumulation} a DTM cell, what is
 
 We look at a few different methods to compute these values in the next two sections.
 
-\section{Computing the flow direction}%
+\section{Computing the flow direction}[Flow direction]%
 \label{se:direction}
 
 Theoretically, the flow direction of a point is the direction with the steepest descent at that location, which does correspond to the direction towards which water would naturally flow.
@@ -110,7 +110,7 @@ More modern approaches try to combine some of the advantages of both approaches.
 \label{fig:dispersion}
 \end{figure}
 
-\section[Computing flow accumulation]{Computing the flow accumulation}%
+\section{Computing the flow accumulation}[Flow accumulation]%
 \label{se:accumulation}
 
 After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in all of them.
@@ -126,6 +126,8 @@ A_0 = a_0 + \sum_{i=1}^{n} p_i A_i
 where \(A_0\) is the accumulated flow for a cell, \(a_0\) is the area of the cell, \(p\) is the proportion of the i-th neighbour that drains to the cell, \(A_i\) is the accumulated flow for the i-th neighbour, \(n\) is the total number of the neighbouring cells.
 Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when \(p_i = 0\).
 
+
+%%%
 \section{Solving issues with sinks}
 
 \emph{Sinks}\marginnote{sink}\index{sink}, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
@@ -162,7 +164,7 @@ For this, the usual approach is to implement a variation of the \(A^{*}\) search
 The LCP algorithm is similar to priority-flood in that it keeps a sorted list of DTM cells that are known to drain, which is also initialised to the boundary pixels (and possibly other cells).
 Then, it iteratively: (i) removes the lowest cell from this list, (ii) sets the drainage direction of its neighbours that are not yet known to drain towards itself, (iii) adds the neighbours that are not yet known to drain to the list.
 
-\section[Flow direction in flats]{Assigning flow direction in flats}
+\section{Assigning flow direction in flats}[Flow direction in flats]
 
 \emph{Flats} are areas in a DTM that have the same elevation.
 \marginnote{flat}\index{flat}
@@ -194,7 +196,7 @@ From \citet{Barnes14}.}%
 \end{figure}
 
 
-\section{Drainage networks and basins}%
+\section{Drainage networks and basins}[Drainage networks]%
 \label{sec:drainage_basins}
 
 

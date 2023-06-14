@@ -28,7 +28,7 @@ The creation of these depth-contours from an input point cloud of depth measurem
 
 %%%
 %
-\section[Depth-contours in practice]{How are depth-contours produced in practice?}
+\section{How are depth-contours produced in practice?}[Depth contours]
 
 Traditionally, depth-contours were drawn by hand by skilled hydrographers.
 They used a sparse set of scattered surveyed depth measurements to deduct and depict the morphology of the seafloor with smooth-looking curves.
@@ -120,7 +120,7 @@ It is therefore obvious that the end result must be a reasonable compromise betw
 
 
 %%%
-\section[Practical methods not good]{Common methods used in practice are not satisfactory}
+\section{Common methods used in practice are not satisfactory}[Common methods]
 
 The generation of depth contours, and their generalisation, can be done by several methods.
 We present here the most frequently used methodologies to generate depth-contours from an MBES point cloud.
@@ -256,7 +256,7 @@ This is due to the fact that the triangulation must be updated (with flips, see 
 
 %%%
 %
-\section[Voronoi-based approach]{A Voronoi-based surface approach}
+\section{A Voronoi-based surface approach}[Voronoi-based approach]
 
 Part of the problems with existing approaches to generate depth-contours is the fact that the different processes, such as spatial interpolation, generalisation and contouring, are treated as independent processes, while they are in fact interrelated. In the following  we introduce a method where the different processes are integrated.
 This method uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are both legible and guaranteed to be safe.
@@ -447,7 +447,7 @@ However, because of the maximum area threshold, that worst case scenario will ne
 
 %%%
 %
-\section[Real-world examples]{Some examples of results with real-world datasets}
+\section{Some examples of results with real-world datasets}[Real-world examples]
 
 
 Figure~\ref{fig:zl1845fieldview} shows the results obtained with the implementation of the method described in this chapter.
