@@ -35,27 +35,25 @@ The union of the Voronoi cells of all generating points $p \in S$ form the Voron
 If $S$ contains only two points $p$ and $q$, then VD($S$) is formed by a single line defined by all the points $x \in \mathbb{R}^2$ that are equidistant from $p$ and $q$. 
 This line is the perpendicular bisector of the line segment from $p$ to $q$, and splits the plane into two half-planes. 
 $\mathcal{V}_p$ is formed by the half-plane containing $p$, and $\mathcal{V}_q$ by the one containing $q$. 
-As shown in Figure~\ref{fig:halfspaces},
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{halfspaces}
   \caption{The Voronoi cell $\mathcal{V}_p$ is formed by the intersection of all the half-planes between $p$ and the other points. }% 
 \label{fig:halfspaces}
 \end{marginfigure}
-when $S$ contains more than two points (let us say it contains $n$ points), the Voronoi cell of a given point $p \in S$ is obtained by the intersection of $n-1$ half-planes defined by $p$ and the other points $q \in S$. 
+As shown in Figure~\ref{fig:halfspaces}, when $S$ contains more than two points (let us say it contains $n$ points), the Voronoi cell of a given point $p \in S$ is obtained by the intersection of $n-1$ half-planes defined by $p$ and the other points $q \in S$. 
 That means that $\mathcal{V}_{p}$ is always convex. 
 Notice also that every point $x \in \mathbb{R}^2$ has at least one nearest point in $S$, which means that VD($S$) covers the entire space.
 
 %
 
-As shown in Figure~\ref{fig:vd_circle}, 
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{vd_circle}
   \caption{The VD for a set $S$ of points in the plane (the black points). The Voronoi vertices (brown points) are located at the centre of the circle passing through three points in $S$, provided that this circle contains no other points in $S$ in its interior.}% 
 \label{fig:vd_circle}
 \end{marginfigure}
-the VD of a set $S$ of points in $\mathbb{R}^2$ is a planar graph. 
+As shown in Figure~\ref{fig:vd_circle}, the VD of a set $S$ of points in $\mathbb{R}^2$ is a planar graph. 
 Its edges are the perpendicular bisectors of the line segments of pairs of points in $S$, and its vertices are located at the centres of the circles passing through three points in $S$. 
 The VD in $\mathbb{R}^2$ can also be seen as a two-dimensional cell complex where each 2-cell is a (convex) polygon (see Figure~\ref{fig:vd2d}). 
 \begin{figure}
@@ -198,14 +196,13 @@ The relationship is the following: every triangle of the lower envelope of conv(
 The previous definitions of the VD and the DT assumed that the set $S$ of points is in general position, \ie\ the distribution of points does not create any ambiguity in the two structures. 
 For the VD/DT in $\mathbb{R}^{2}$, the degeneracies, or special cases, occur when 3 points lie on the same line and/or when 4 points are cocircular. 
 For example, in two dimensions, when four or more points in $S$ are cocircular there is an ambiguity in the definition of DT($S$). 
-As shown in Figure~\ref{fig:degeneracies},
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{degeneracies}
   \caption{The DT for four cocircular points in two dimensions is not unique (but the VD is).}%
 \label{fig:degeneracies}
 \end{marginfigure}
-the quadrilateral can be triangulated with two different diagonals, and an arbitrary choice must be made since both respect the Delaunay criterion (points should not be on the interior of a circumcircle, but more than three can lie directly on the circumcircle).
+As shown in Figure~\ref{fig:degeneracies}, the quadrilateral can be triangulated with two different diagonals, and an arbitrary choice must be made since both respect the Delaunay criterion (points should not be on the interior of a circumcircle, but more than three can lie directly on the circumcircle).
 
 This implies that in the presence of four or more cocircular points, DT($S$) is not unique. 
 Notice that even in the presence of cocircular points, VD($S$) is still unique, but it has different properties. 

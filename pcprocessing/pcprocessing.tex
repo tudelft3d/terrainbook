@@ -258,14 +258,13 @@ Two factors influence the $z$-value of a particle during the cloth falling proce
 As particles fall down, some will reach the ground and become \emph{unmovable}.
 These will potentially be neighbours to \emph{movable} ones, whose elevation will be controlled by how we define the rigidity of the cloth.
 
-As shown in Figure~\ref{fig:csf_iterations},
 \begin{marginfigure}
   \centering
   \includegraphics[width=\linewidth]{csf_iterations}
   \caption{}%
 \label{fig:csf_iterations}
 \end{marginfigure}
-the process is iterative. We first define a cloth formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
+As shown in Figure~\ref{fig:csf_iterations}, the process is iterative. We first define a cloth formed of particles, and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
 If a particle is movable (\ie\ it has not reached the ground yet), then the gravity force is applied (a vector pointing downwards; its magnitude will depend on the momentum of the particle) and afterwards the internal forces are applied.
 Notice that in Figure~\ref{fig:csf_iterations}, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) have higher $z$-values.
 
