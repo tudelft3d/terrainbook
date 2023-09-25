@@ -111,22 +111,24 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
   \sisetup{detect-weight=true,detect-inline-weight=math}
   \caption{Key characteristics of GEDI and ICESat-2 missions in comparison with a typical airborne lidar mission.}
   \centering
-  \begin{tabular}{llll}
+  \begin{tabular}{l|lll}
     \toprule
                            & ICESat-2                             & GEDI                                   & airborne lidar   \\
     \midrule
     \ type                 & discrete photon                      & full waveform                          & either           \\
-    \ objective            & cryosphere monitoring                & Ecosystems                             & ---                \\
-    \ duration             & 2019--2022                           & 2019--2021                             & single flight(s) \\
+    \ main objective       & cryosphere monitoring                & ecosystems                             & ---              \\
+    \ duration             & 2019--2023 (ongoing as of writing)   & 2019--2023                             & single flight(s) \\
     \ orbit inclination    & \ang{92}                             & \ang{51.6}                             & NA               \\
     \ laser pulse power    & \qty{175}{{\mu}J}/\qty{45}{{\mu}J}   & \qty{10000}{{\mu}J}/\qty{5000}{{\mu}J} & NA               \\
-    \ elevation            & \qty{\pm480}{km}                     & \qty{\pm420}{km}                       & \qty{0.5}{km}    \\
-    \ beam footprint       & \qty{17}{m}                          & \qty{23}{m}                            & \qty{0.05}{m}    \\
+    \ altitude             & \qty{\sim500}{km}                    & \qty{\sim420}{km}                      & \qty{0.5}{km}    \\
+    \ beam footprint       & \qty{11}{m}                          & \qty{23}{m}                            & \qty{0.05}{m}    \\
     \ along track spacing  & \qty{0.7}{m}                         & \qty{70}{m}                            & \qty{0.1}{m}     \\
     \ across track spacing & \qty{3}{km}/\qty{90}{m} between pair & \qty{0.6}{km}                          & \qty{0.1}{m}     \\
     \ swath width          & \qty{6.6}{km}                        & \qty{4.2}{km}                          & \qty{1}{km}      \\
-    \ beam frequency       & \qty{512}{nm} (green)                & \qty{1064}{nm} (near-infrared)         & either           \\
-    \ \# beams             & 6 (in 3 pairs)                       & 8                                      & 1                \\
+    \ beam frequency       & \qty{532}{nm} (green)                & \qty{1064}{nm} (near-infrared)         & either           \\
+    \ \# laser(s)          & 1                                    & 3                                      & 1                \\
+    \ \# beams             & 6                                    & 4                                      & 1                \\
+    \ \# ground tracks     & 6 (in 3 pairs)                       & 8                                      & 1                \\
     \bottomrule
   \end{tabular}%
   \label{tab:lidarcomparison}
@@ -134,11 +136,11 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
 
 %
 
-ICESat-2 lasers split into six beams, divided into three pairs, each pair \qty{90}{m} apart and the pairs \qty{3.3}{km} apart, for a total swath width of \qty{6.6}{km}.
-Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{\pm17}{m}, so each measurement overlaps.
-GEDI sensor has eight beams, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
+ICESat-2 laser split into six beams, divided into three pairs, each pair \qty{90}{m} apart and the pairs \qty{3.3}{km} apart, for a total swath width of \qty{6.6}{km}.
+Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{\sim11}{m}, so each measurement overlaps.
+GEDI instrument has three lasers, forming 4 beams and eight tracks, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
 GEDI measures a point every \qty{70}{m} along-track, with a beam footprint of \qty{23}{m}.
-Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon LiDAR at a bathymetric ``green'' wavelength of \qty{512}{nm}.
+Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon LiDAR at a bathymetric ``green'' wavelength of \qty{532}{nm}.
 
 
 %%%
@@ -158,8 +160,8 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
 \paragraph{Comparison to typical airbone lidar.}
 
 These space borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
-The altitude increase results in a wider beam footprint, from \qty{\pm0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\pm15}{m} for space platforms.
-Although much wider, it is a small increase compared to the increase in altitude, going from \qty{0.5}{km} to \qty{480}{km}.
+The altitude increase results in a wider beam footprint, from \qty{\sim0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\sim15}{m} for space platforms.
+Although much wider, it is a small increase compared to the increase in altitude, going from \qty{0.5}{km} to \qty{500}{km}.
 A comparison is given in Table~\ref{tab:lidarcomparison}.
 Airborne LiDAR often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
 While both ICESat-2 and GEDI employ instruments with multiple (split) laser beams, including the ability to point the laser away from the ground track, all to maximize coverage, this still results in very sparse and uneven coverage as shown in Figure~\ref{fig:beams}.
@@ -289,13 +291,13 @@ Datasets such as SRTM and NASADEM can be provided as \texttt{.hgt} (height) file
 
 
 \begin{floatbox}
-  \begin{kaobox-practice}[frametitle=\faCog\ Downloading gDEMs]
-    Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF\@.
-    However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
-    \\ \\
-    One such advance is Cloud Optimized GeoTIFF (COG: \url{https://www.cogeo.org}), which is a normal GeoTIFF with a specific structure that allows it to be read piecewise from the cloud.
-    Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
-  \end{kaobox-practice}
+\begin{kaobox-practice}[frametitle=\faCog\ Downloading gDEMs]
+Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF\@.
+However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
+\\ \\
+One such advance is Cloud Optimized GeoTIFF (COG: \url{https://www.cogeo.org}), which is a normal GeoTIFF with a specific structure that allows it to be read piecewise from the cloud.
+Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
+\end{kaobox-practice}
 \end{floatbox}
 
 %%%
