@@ -8,7 +8,7 @@
 \chapter{Spatial interpolation: kriging}%
 \label{chap:kriging}
 
-Kriging is a spatial interpolation method that was developed mostly by Georges Matheron based on the earlier work of Danie Krige, who created it to estimate the gold yield of mines in South Africa.
+Kriging is a spatial interpolation method that was developed mostly by Georges Matheron based on the earlier work of Danie Krige, who created it to estimate the yield of gold mines in South Africa.
 In contrast to other spatial interpolation methods, it involves creating a custom model that is fine-tuned using the statistical properties of each dataset.
 In this way, kriging takes into account the specific characteristics of a dataset, often yielding better results than other interpolation methods.
 
@@ -33,15 +33,17 @@ However, these processes are much too complex and not well-enough understood to 
 Imagine, for instance, how difficult it would be to get an accurate elevation map of the world using only the shape of the tectonic plates and some other parameters (\eg\ their direction and speed of movement).
 
 Because of this complexity, the value of complex properties, such as the elevation of a terrain, are usually treated in geostatistics as the result of what is known as a \emph{random}\marginnote{random process}\index{random process} or \emph{stochastic process}\marginnote{stochastic process}\index{stochastic process}.
-In this context, randomness can be understood as the fact that the value of a property at a location is not given by one known exact number.
-Instead, the possible values at that location can be represented using statistics using a \emph{probability distribution}\marginnote{probability distribution}\index{probability distribution}, which we can associate with a function (\ie\ a \emph{probability distribution function}) or with a set of standard statistical measures, such as the \emph{mean} and \emph{variance}.
+In this context, randomness can be understood as the fact that the value of a property at an unsampled location is not known exactly, and so we cannot assign it an exact number.
+Instead, the value at that location can be represented using statistics using a \emph{probability distribution}\marginnote{probability distribution}\index{probability distribution}, which we can associate with a function (\ie\ a \emph{probability distribution function}) or with a set of standard statistical measures, such as the mean and variance.
+
 This situation is phrased in mathematical terms by saying that the value of the elevation property \(Z\) at a location \(x\) is a \emph{random variable}\marginnote{random variable}\index{random variable} \(Z(x)\).
 For the sake of simplicity, we will usually omit the location and denote it just as \(Z\); or when working with multiple locations (\eg\ \(x_i\) and \(x_j\)), we will shorten their respective random variables (\(Z(x_i)\) and \(Z(x_j)\)) using subscripts (\(Z_i\) and \(Z_j\)).
 
-In geostatistics, the most common way to express the general shape of the probability distribution of a random variable is in terms of its \emph{mean} and its \emph{variance}.
-Here, the mean\marginnote{mean}\index{mean}, \emph{expectation} or \emph{expected value} of a random variable \(Z\) is a sort of probability-weighted average of its possible values and is denoted as \(E[z]\) or \(\mu\).
+In geostatistics, the most common way to express the general shape of the probability distribution of a random variable is in terms of its mean and its variance.
+Here, the mean\marginnote{mean}\index{mean}, \emph{expectation}\marginnote{expectation}\index{expectation} or \emph{expected value}\marginnote{expected value}\index{expected value} of a random variable \(Z\) is a sort of probability-weighted average of its possible values and is denoted as \(E[z]\) or \(\mu\).
 Meanwhile, the \emph{variance}\marginnote{variance}\index{variance} of a random variable \(Z\) is a measure of how far the values of \(Z\) will usually spread from its mean, and it is denoted as \(\mathrm{var}(Z)\) or \(\sigma^2\).
-A small variance thus means that a few random samples of \(Z\) will likely form a tight cluster around its mean, whereas a large variance will have sample values that are more spread out.
+A small variance thus means that a few random samples of \(Z\) at nearby locations will likely form a tight cluster around its mean, whereas a large variance will have sample values that are more distant from the mean value.
+
 Mathematically, the variance is defined as the expected value of the squared deviation from the expected value of \(Z\), or:
 
 \begin{align}
@@ -58,15 +60,17 @@ Conversely, a negative covariance means that the variables tend to increase/decr
 The magnitude of the covariance is related to the magnitude of this increase or decrease.
 It is thus defined mathematically as the expected product of their deviations from their (individual) expected values, or:
 
-\begin{equation}
-\label{eq:covariance}
-\mathrm{cov}(Z_i,Z_j) = E\left[\left(Z_i-E[Z_i]\right)\left(Z_j-E[Z_j]\right)\right].
-\end{equation}
+\begin{align}
+\mathrm{cov}(Z_i, Z_j) &= E\left[\left(Z_i-E[Z_i]\right) \left(Z_j-E[Z_j]\right)\right] \label{eq:covariance} \\
+&= E\left[Z_iZ_j - Z_iE\left[Z_j\right] - E\left[Z_i\right]Z_j + E\left[Z_i\right]E\left[Z_j\right]\right] \\
+&= E\left[Z_iZ_j\right] - E\left[Z_i\right]E\left[Z_j\right] - E\left[Z_i\right]E\left[Z_j\right] + E\left[Z_i\right]E\left[Z_j\right] \\
+&= E\left[Z_iZ_j\right] - E\left[Z_i\right]E\left[Z_j\right]. \label{eq:covariance2}
+\end{align}
 
 Here, it is good to note that the covariance of \(Z_i\) with itself is equivalent to its variance:
 
 \begin{equation}
-\mathrm{cov}(Z_i,Z_i) = E\left[\left(Z_i-E[Z_i]\right)^2\right] = \mathrm{var}(Z_i). \nonumber
+\mathrm{cov}(Z,Z) = E\left[\left(Z-E[Z]\right)^2\right] = \mathrm{var}(Z). \nonumber
 \end{equation}
 
 While not used further in this lesson, it is also good to know that the variance and the covariance can be used to calculate the Pearson correlation coefficient\marginnote{correlation coefficient}\index{correlation coefficient} \(\rho_{ij}\), which is one of the most common statistical measures that is applied to datasets:
@@ -77,9 +81,11 @@ While not used further in this lesson, it is also good to know that the variance
 
 Note that this is essentially just a normalised form of the covariance.
 
-\section{The standard geostatistical model}[Geostatistical model]
+\section{Geostatistics and the standard geostatistical model}[Geostatistical model]
 
-Geostatistics considers that a random variable \(Z\), which represents a spatially correlated property at a given location, can be decomposed into two related variables: (i) a non-random spatial trend that can be modelled by the \emph{expectation}\marginnote{expectation}\index{expectation} \(E[Z]\) (\eg\ using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of error or residual term and is here denoted as \(R\).
+In geostatistics, we apply the concepts covered in the previous section on general-purpose statistics to also consider spatial phenomena, where values have a location and are often spatially correlated.
+
+The model most commonly applied in geostatistics considers that a random variable \(Z\), which represents a spatially correlated property at a given location, can be decomposed into two related variables: (i) a non-random spatial trend that can be modelled by the expectation \(E[Z]\) (\eg\ using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of adjustment, error or residual term and is here denoted as \(R\).
 In the case of elevation, the former would represent the general shape of the terrain, whereas the latter would represent local differences from it.
 We therefore have:
 
@@ -96,8 +102,106 @@ First, note that since \(R = Z - E[Z] \), the variance (Equation~\ref{eq:varianc
 \mathrm{cov}(Z_i,Z_j) &= E\left[R_i \cdot R_j\right]. \label{eq:covres}
 \end{align}
 
-Also, it is important to know that in order not to introduce any bias, the expected value of the residual must be zero.
+Also, it is important to know that since the expectation is by definition the mean, in order not to introduce any bias, the expected value of the residual must be zero.
 That is, \(E\left[R\right] = 0\).
+
+\section{The variogram}%
+\index{variogram}
+
+As we saw in simple kriging, the theoretical definitions of the variance and covariance functions imply that we know the expected value (\ie\ \(E[Z]\) in Equation~\ref{eq:variance1}, and \(E[Z_i]\) and \(E[Z_j]\) in Equation~\ref{eq:covariance}), which in practice is not realistic.
+In order to avoid this problem, most other forms of kriging rely instead on what is known as a \emph{variogram}.
+The variogram \(\gamma(h)\) is a function that expresses the average dissimilarity of the value of a random variable \(Z\) between sample points at different distances.
+It is defined as:
+
+\begin{equation}
+\gamma(h) = \frac{1}{2} (Z(x+h) - Z(x))^2,
+\end{equation}
+
+where \(x\) is a sample point, \(h\) is a vector from \(x\) to another sample point and \(Z(x)\) is the value of a random variable at \(x\) (\eg\ its elevation).
+
+When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, \(|h|\) (\ie\ the magnitude of the vector \(h\)) and \(\gamma(h)\) can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
+The result of such a plot is what is known as a \emph{variogram cloud}\marginnote{variogram cloud}\index{variogram cloud} (Figure~\ref{fig:variogram_cloud}).
+
+\begin{figure*}
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/data}
+\caption{dataset}
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/variogram_cloud}
+\caption{variogram cloud}
+\end{subfigure}%
+\caption{Starting from (a) a sample dataset, (b) the variogram cloud can be computed.
+In this case, only 1\% randomly selected point pairs were used.}%
+\label{fig:variogram_cloud}
+\end{figure*}
+
+In this figure, it is possible to see some typical characteristics of a variogram cloud.
+Since nearby sample points tend to have similar values, the dissimilarity tends to increase as the distance between sample points increases.
+However, it is worth noting that since the farthest away pairs of sample points have similar values in this specific dataset, the dissimilarity also decreases at the highest distances.
+
+Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
+Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins}).
+Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the average for its dissimilarity class is computed as:
+
+\begin{equation}
+\gamma^\star(\mathfrak{h}) = \frac{1}{2n}\sum\left(z\left(x+h\right)-z\left(x\right)\right)^2 \hspace{1cm}\text{for all } h \in \mathfrak{h}
+\end{equation}
+
+where \(n\) is the number of sample point pairs in \(\mathfrak{h}\).
+
+This computation results in much smoother values for the dissimilarity, and when the results of \(|h|\) and \(\gamma^\star(h)\) are put into a scatter plot (Figure~\ref{fig:experimental_variogram}), the result is what is known as an \emph{experimental variogram}\marginnote{experimental variogram}\index{experimental variogram}.
+Experimental variograms are based on a few parameters (Figure~\ref{fig:experimental_variogram}b illustrates these): 
+\begin{itemize}
+  \item the \emph{sill}\marginnote{sill}\index{sill}, which is the upper bound of \(\gamma^\star(h)\);
+  \item the \emph{range}\marginnote{range}\index{range}, which is the value of \(|h|\) when it converges; 
+  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h| = 0\).
+\end{itemize}
+Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to half of the size of the region covered by the dataset.
+
+\begin{figure*}
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/experimental_variogram}
+\caption{experimental variogram}
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/example_variogram}
+\caption{parameters}
+\end{subfigure}%
+\caption{(a) The experimental variogram is usually described in terms of (b) its parameters.}%
+\label{fig:experimental_variogram}
+\end{figure*}
+
+Finally, the last step is to replace the experimental variogram with a \emph{theoretical variogram function}\marginnote{theoretical variogram function}\index{theoretical variogram function} that approximates it and which can be more easily evaluated for further calculations.
+Depending on the shape of the variogram, there are various functions that can be used.
+Some examples are:
+
+\begin{align}
+\gamma_\mathrm{exponential}(h) &= s \left(1 - e^\frac{-3|h|}{r}\right) + n \\
+\gamma_\mathrm{gaussian}(h) &= s \left(1 - e^\frac{-\left(3|h|\right)^2}{r^2}\right) + n \\
+\gamma_\mathrm{spherical}(h) &= \begin{cases} 
+   s \left(\frac{3|h|}{2r} - \frac{|h|^3}{2r^3}\right) + n & \text{if } |h| \leq r \\
+   s + n & \text{if } |h| > r
+  \end{cases}
+\end{align}
+
+where \(s\) is the \emph{sill}, set to roughly the value of \(\gamma^\star(h)\) when \(\gamma^\star(h)\) is  flat; \(r\) is the \emph{range}, roughly the minimum value of \(|h|\) where \(\gamma^\star(h)\) is flat, and \(n\) is the nugget, which is the starting value of \(\gamma^\star(h)\).
+Figure~\ref{fig:theoretical_variogram} shows the result of fitting the three example theoretical variogram functions, exponential, Gaussian and spherical.
+Note how the Gaussian function appears to be a better fit in this case.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{figs/theoretical_variogram}
+\caption{Three possible theoretical variogram functions}%
+\label{fig:theoretical_variogram}
+\end{figure}
+
+These functions can be used as covariance functions for simple kriging, taking into account that \(\gamma(h) = C(0) - C(h)\).
+Note that this means that the covariance is high when \(|h|\) is small and it decreases as \(|h|\) increases.
 
 \section{Simple kriging}
 
@@ -227,104 +331,6 @@ Now, the obvious remaining questions are: (i) what expectation \(E[Z]\) to use, 
 Without an external evaluation of the dataset, there are no optimal answers for either of those questions, which is the main weakness of simple kriging and the reason why it is not used widely in practice.
 That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\), and an arbitrary covariance function, such as the exponential, Gaussian and spherical functions that we discuss in the following section.
 
-\section{The variogram}%
-\index{variogram}
-
-As we saw in simple kriging, the theoretical definitions of the variance and covariance functions imply that we know the expected value (\ie\ \(E[Z]\) in Equation~\ref{eq:variance1}, and \(E[Z_i]\) and \(E[Z_j]\) in Equation~\ref{eq:covariance}), which in practice is not realistic.
-In order to avoid this problem, most other forms of kriging rely instead on what is known as a \emph{variogram}.
-The variogram \(\gamma(h)\) is a function that expresses the average dissimilarity of the value of a random variable \(Z\) between sample points at different distances.
-It is defined as:
-
-\begin{equation}
-\gamma(h) = \frac{1}{2} (Z(x+h) - Z(x))^2,
-\end{equation}
-
-where \(x\) is a sample point, \(h\) is a vector from \(x\) to another sample point and \(Z(x)\) is the value of a random variable at \(x\) (\eg\ its elevation).
-
-When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, \(|h|\) (\ie\ the magnitude of the vector \(h\)) and \(\gamma(h)\) can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
-The result of such a plot is what is known as a \emph{variogram cloud}\marginnote{variogram cloud}\index{variogram cloud} (Figure~\ref{fig:variogram_cloud}).
-
-\begin{figure*}
-\begin{subfigure}{0.5\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figs/data}
-\caption{dataset}
-\end{subfigure}%
-\begin{subfigure}{0.5\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figs/variogram_cloud}
-\caption{variogram cloud}
-\end{subfigure}%
-\caption{Starting from (a) a sample dataset, (b) the variogram cloud can be computed.
-In this case, only 1\% randomly selected point pairs were used.}%
-\label{fig:variogram_cloud}
-\end{figure*}
-
-In this figure, it is possible to see some typical characteristics of a variogram cloud.
-Since nearby sample points tend to have similar values, the dissimilarity tends to increase as the distance between sample points increases.
-However, it is worth noting that since the farthest away pairs of sample points have similar values in this specific dataset, the dissimilarity also decreases at the highest distances.
-
-Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
-Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins}).
-Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the average for its dissimilarity class is computed as:
-
-\begin{equation}
-\gamma^\star(\mathfrak{h}) = \frac{1}{2n}\sum\left(z\left(x+h\right)-z\left(x\right)\right)^2 \hspace{1cm}\text{for all } h \in \mathfrak{h}
-\end{equation}
-
-where \(n\) is the number of sample point pairs in \(\mathfrak{h}\).
-
-This computation results in much smoother values for the dissimilarity, and when the results of \(|h|\) and \(\gamma^\star(h)\) are put into a scatter plot (Figure~\ref{fig:experimental_variogram}), the result is what is known as an \emph{experimental variogram}\marginnote{experimental variogram}\index{experimental variogram}.
-Experimental variograms are based on a few parameters (Figure~\ref{fig:experimental_variogram}b illustrates these): 
-\begin{itemize}
-  \item the \emph{sill}\marginnote{sill}\index{sill}, which is the upper bound of \(\gamma^\star(h)\);
-  \item the \emph{range}\marginnote{range}\index{range}, which is the value of \(|h|\) when it converges; 
-  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h| = 0\).
-\end{itemize}
-Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to half of the size of the region covered by the dataset.
-
-\begin{figure*}
-\begin{subfigure}{0.5\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figs/experimental_variogram}
-\caption{experimental variogram}
-\end{subfigure}%
-\begin{subfigure}{0.5\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figs/example_variogram}
-\caption{parameters}
-\end{subfigure}%
-\caption{(a) The experimental variogram is usually described in terms of (b) its parameters.}%
-\label{fig:experimental_variogram}
-\end{figure*}
-
-Finally, the last step is to replace the experimental variogram with a \emph{theoretical variogram function}\marginnote{theoretical variogram function}\index{theoretical variogram function} that approximates it and which can be more easily evaluated for further calculations.
-Depending on the shape of the variogram, there are various functions that can be used.
-Some examples are:
-
-\begin{align}
-\gamma_\mathrm{exponential}(h) &= s \left(1 - e^\frac{-3|h|}{r}\right) + n \\
-\gamma_\mathrm{gaussian}(h) &= s \left(1 - e^\frac{-\left(3|h|\right)^2}{r^2}\right) + n \\
-\gamma_\mathrm{spherical}(h) &= \begin{cases} 
-   s \left(\frac{3|h|}{2r} - \frac{|h|^3}{2r^3}\right) + n & \text{if } |h| \leq r \\
-   s + n & \text{if } |h| > r
-  \end{cases}
-\end{align}
-
-where \(s\) is the \emph{sill}, set to roughly the value of \(\gamma^\star(h)\) when \(\gamma^\star(h)\) is  flat; \(r\) is the \emph{range}, roughly the minimum value of \(|h|\) where \(\gamma^\star(h)\) is flat, and \(n\) is the nugget, which is the starting value of \(\gamma^\star(h)\).
-Figure~\ref{fig:theoretical_variogram} shows the result of fitting the three example theoretical variogram functions, exponential, Gaussian and spherical.
-Note how the Gaussian function appears to be a better fit in this case.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.8\linewidth]{figs/theoretical_variogram}
-\caption{Three possible theoretical variogram functions}%
-\label{fig:theoretical_variogram}
-\end{figure}
-
-These functions can be used as covariance functions for simple kriging, taking into account that \(\gamma(h) = C(0) - C(h)\).
-Note that this means that the covariance is high when \(|h|\) is small and it decreases as \(|h|\) increases.
-
 \section{Ordinary kriging}%
 \index{ordinary kriging}
 
@@ -408,6 +414,9 @@ Finally, if we invert the matrix \(A\), the weights and the Lagrange multipliers
 \begin{equation}
 w = A^{-1}d
 \end{equation}
+
+\section{Universal kriging}%
+\index{universal kriging}
 
 %%%
 %
