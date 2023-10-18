@@ -10,7 +10,7 @@
 
 Kriging is a spatial interpolation method that was developed mostly by Georges Matheron based on the earlier work of Danie Krige, who created it to estimate the yield of gold mines in South Africa.
 In contrast to other spatial interpolation methods, it involves creating a custom model that is fine-tuned using the statistical properties of each dataset.
-In this way, kriging takes into account the specific characteristics of a dataset, often yielding better results than other interpolation methods.
+In this way, kriging can take into account the specific characteristics of a dataset, often yielding better results than other interpolation methods.
 
 Like other techniques based on geostatistical models, kriging relies on the fact that when one moves across space, values such as the gold content in rock or the elevation in a terrain have both a general spatial \emph{trend}\marginnote{trend}\index{trend} (\eg\ a flat mean value, a fitted plane or a more complex polynomial defining a surface) and a certain spatially correlated \emph{randomness} (\ie\ closer points tend to have more similar values).
 Both of these elements are modelled in kriging.
@@ -77,7 +77,7 @@ Note that this is essentially just a normalised form of the covariance.
 
 \section{Geostatistics and the standard geostatistical model}[Geostatistical model]
 
-In geostatistics, we apply the concepts covered in the previous section on general-purpose statistics to also consider spatial phenomena, where values have a location and are often spatially correlated.
+In geostatistics, we apply the concepts covered in the previous section on general-purpose statistics to consider how they work with spatial phenomena, where values have a location and are often \emph{spatially} correlated (not just correlated).
 
 The model most commonly applied in geostatistics considers that a random variable \(Z\), which represents a spatially correlated property at a given location, can be decomposed into two related variables: (i) a non-random spatial trend that can be modelled by the expectation \(E[Z]\) (\eg\ using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of adjustment, error or residual term and is here denoted as \(R\).
 In the case of elevation, the former would represent the general shape of the terrain, whereas the latter would represent local differences from it.
@@ -96,7 +96,21 @@ These are:
 \item \emph{universal kriging}, where we model the trend using a function.
 \end{itemize}
 
-There are a couple of important properties of the residual term.
+These will be described in detail later in the chapter.
+However, in order to understand how these work and when they can be applied, it is important to cover some common properties of the two terms of the standard geostatistical model.
+
+Regarding the expectation/trend, some types of kriging rely on the assumption that the expectation \(E(Z)\) is the same everywhere, which is known as the \emph{stationarity of the mean}\marginnote{stationarity of the mean}\index{stationarity of the mean}.
+In the case of a DTM, that could mean that a terrain is uneven with significant peaks and valleys, but that there is not a general trend across it (\eg\ a clear slope with higher elevations on one side and lower elevations on the opposite side).
+Mathematically, we can express that as:
+
+\begin{align}
+\label{eq:stationarityofthemean}
+E\left[Z(x+h\right)] = E\left[Z(x)\right],
+\end{align}
+
+where \(x\) is an arbitrary point in the domain (\ie\ the area we want to interpolate), \(h\) is any vector from \(x\) to another point in the domain and \(Z(x)\) is the value of a random variable at \(x\) (\eg\ its elevation).
+
+Next, there are also important properties of the residual term.
 First, note that since \(R = Z - E[Z] \), the variance (Equation~\ref{eq:variance1}) and covariance (Equation~\ref{eq:covariance}) can be defined in a simple way in terms of the residuals:
 
 \begin{align}
@@ -104,8 +118,22 @@ First, note that since \(R = Z - E[Z] \), the variance (Equation~\ref{eq:varianc
 \mathrm{cov}(Z_i,Z_j) &= E\left[R_i \cdot R_j\right]. \label{eq:covres}
 \end{align}
 
-Also, since we know that the expectation is by definition the mean, in order not to introduce any bias, the expected value of the residual must be zero.
-That is, \(E\left[R\right] = 0\).
+Then, since we know that the expectation is by definition the mean, in order not to introduce any bias, the expected value of the residual must be zero, \ie\ \(E\left[R\right] = 0\).
+When this is fulfilled, the model is said to be \emph{unbiased}\marginnote{unbiased}\index{unbiased}.
+The way that is is achieved can vary in different types of kriging.
+
+Finally, another common assumption is that the residual term at a pair of locations does not depend on the locations, but instead can be defined based only on the vector separating them.
+In the case of a DTM, this would mean that the likelihood of finding similar elevations at two points separated by a given distance and orientation does not change across the terrain.
+For instance, a terrain that goes from smooth on one side to rough on the other would not satisfy this assumption.
+Mathematically, we can express this using the covariance as:
+
+\begin{align}
+\label{eq:stationarityofthecovariance}
+\mathrm{cov}\left(Z(x+h), Z(x)\right) = C(h),
+\end{align}
+
+where \(C\) is the covariance function.
+Since both the expectation (Equation~\ref{eq:stationarityofthemean}) and the covariance (Equation~\ref{eq:stationarityofthecovariance}) are translation invariant, this pair of assumptions are together known as \emph{second-order stationarity}\marginnote{second-order stationarity}\index{second-order stationarity}.
 
 \section{Covariance, dissimilarity and the semivariogram}%
 \index{variogram}
@@ -113,7 +141,8 @@ That is, \(E\left[R\right] = 0\).
 According to the standard geostatistical model described above, the residual term is spatially correlated.
 That is, even after removing the general spatial trend from a dataset, nearby samples will tend to have more similar values than those farther apart.
 In kriging, we exploit that property by modelling it through a \emph{semivariogram} or a \emph{covariance function}.
-These are slightly different, but both attempt to measure how much spatial correlation there is as a function of distance.
+These are roughly opposites, since the semivariogram is a measure of dissimilarity and the covariance is a measure of similarity.
+However, both attempt to measure how much spatial correlation there is as a function of distance and both can be used with kriging.
 
 The semivariogram \(\gamma(h)\)\marginnote{semivariogram}\index{semivariogram}, often just called a variogram\marginnote{variogram}\index{variogram} for short, is a function that expresses the average dissimilarity of the value of a random variable \(Z\) between sample points at different distances.
 It is defined as:
@@ -150,7 +179,7 @@ Since nearby sample points tend to have similar values, the dissimilarity tends 
 However, it is worth noting that since the farthest away pairs of sample points have similar values in this specific dataset, the dissimilarity also decreases at the highest distances.
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
-Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins}).
+Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins} or \emph{lags}).
 Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the average for its dissimilarity class is computed as:
 
 \begin{equation}
@@ -159,14 +188,14 @@ Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the a
 
 where \(n\) is the number of sample point pairs in \(\mathfrak{h}\).
 
-This computation results in much smoother values for the dissimilarity, and when the results of \(|h|\) and \(\gamma^\star(h)\) are put into a scatter plot (Figure~\ref{fig:experimental_variogram}), the result is what is known as an \emph{experimental variogram}\marginnote{experimental variogram}\index{experimental variogram}.
+This computation results in much smoother values for the dissimilarity, and when the results of \(|h|\) and \(\gamma^\star(h)\) are put into a scatter plot (Figure~\ref{fig:experimental_variogram}), the result is what is known as an \emph{experimental}\marginnote{experimental variogram}\index{experimental variogram} or \emph{empirical variogram}\marginnote{empirical variogram}\index{empirical variogram}.
 Experimental variograms are based on a few parameters (Figure~\ref{fig:experimental_variogram}b illustrates these): 
 \begin{itemize}
   \item the \emph{sill}\marginnote{sill}\index{sill}, which is the upper bound of \(\gamma^\star(h)\);
   \item the \emph{range}\marginnote{range}\index{range}, which is the value of \(|h|\) when it converges; 
-  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h| = 0\).
+  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h|\) approaches 0.
 \end{itemize}
-Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to half of the size of the region covered by the dataset.
+Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to about half of the size of the region covered by the dataset.
 
 \begin{figure*}
 \begin{subfigure}{0.5\linewidth}
@@ -207,38 +236,21 @@ Note how the Gaussian function appears to be a better fit in this case.
 \label{fig:theoretical_variogram}
 \end{figure}
 
-These functions can be converted to covariance functions as well, taking into account that \(\gamma(h) = C(0) - C(h)\).
+Many other theoretical variogram functions are possible, \eg\ circular, cubic, linear, etc.
+However, the three described above are the most common found in practice.
+
+Before moving on to apply these to kriging, there are a couple of important points.
+First, note that these theoretical functions are often only applied when \(|h| > 0\), since setting \(\gamma(0) = 0\) helps to ensure that kriging passes exactly through the sample points.
+Second, all of the semivariogram-related functions seen in this section can be converted to covariance functions as well, taking into account that \(\gamma(h) = \mathrm{sill} - C(h)\).
 Note that this means that the covariance is high when \(|h|\) is small and it decreases as \(|h|\) increases.
 
 \section{Simple kriging}
 
-Simple kriging starts from the assumption that in the geostatistical model from Equation~\ref{eq:geostat}, the expectation \(E(Z)\) is the same everywhere, which is known as the \emph{stationarity of the mean}\marginnote{stationarity of the mean}\index{stationarity of the mean}, and that it is \emph{known}.
-In the case of a DTM, that would mean that a terrain might be uneven with significant peaks and valleys, but that there is not a general trend across it (\eg\ a clear slope with higher elevations on one side and lower elevations on the opposite side).
-Mathematically, we can express that as:
+Simple kriging is similar to other spatial interpolation methods that use a weighted average.
+It starts from the assumption of second-order stationarity.
+Moreover, the expectation is also known, and so the general procedure to perform it is to: (i) subtract it from the sample points to obtain residuals, (ii) use the residuals to define a function that estimates the value of the residual term at any location, and (iii) interpolate at the desired locations using the function added to the expectation.
 
-\begin{align}
-\label{eq:expectationsk}
-E\left[Z(x+h\right)] = E\left[Z(x)\right],
-\end{align}
-
-where \(x\) is an arbitrary point in the domain (\ie\ the area we want to interpolate), \(h\) is any vector from \(x\) to another point in the domain and \(Z(x)\) is the value of a random variable at \(x\) (\eg\ its elevation).
-
-Next, simple kriging also makes the assumption that the covariance between a random variable at a pair of locations does not depend on the locations, but instead can be defined based only on the vector separating them.
-In the case of a DTM, this would mean that the likelihood of finding similar elevations at two points separated by a given distance and orientation does not change across the terrain.
-For instance, a terrain that goes from smooth on one side to rough on the other would not satisfy this assumption.
-Mathematically, we can express this as:
-
-\begin{align}
-\label{eq:covariancesk}
-\mathrm{cov}\left(Z(x+h), Z(x)\right) = C(h),
-\end{align}
-
-where \(C\) is the covariance function.
-Since both the expectation (Equation~\ref{eq:expectationsk}) and the covariance (Equation~\ref{eq:covariancesk}) are translation invariant, this pair of assumptions are together known as \emph{second-order stationarity}\marginnote{second-order stationarity}\index{second-order stationarity}.
-
-Simple kriging is similar to the other spatial interpolation methods that use a weighted average.
-However, since we are assuming that the expectation is the same everywhere, we will define it as a weighted average of residuals \(R\) of the form \(Z-E[Z]\), after which the expectation needs to be added back in order to obtain the final value.
-It thus defines a function \(\hat{R}_0\) that estimates the value of the residual \(R\) of the random variable \(Z\) at a location \(x_0\) as a weighted average of its residuals at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
+Thus, simple kriging defines a function \(\hat{R}_0\) that estimates the value of the residual \(R\) of the random variable \(Z\) at a location \(x_0\) as a weighted average of its residuals at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
 We denote this as:
 
 \begin{equation}
@@ -246,9 +258,7 @@ We denote this as:
 \hat{R}_0 = \hat{Z}_0 - E[Z_0] = \sum_{i=1}^n w_i (\underbrace{Z_i-E[Z_i]}_{R_i}).
 \end{equation}
 
-Kriging has two distinguishing characteristics.
-First, that it is \emph{unbiased}\marginnote{unbiased}\index{unbiased}.
-This means that it creates a model where the expected value of the estimation at a location \(x_0\) is equal to the expected value at that location.
+Simple kriging is unbiased, and therefore the expected value of the estimation at a location \(x_0\) is equal to the expected value at that location.
 In mathematical terms, we can formulate this as:
 
 \begin{equation}
@@ -256,16 +266,16 @@ In mathematical terms, we can formulate this as:
 E\left[ \hat{Z}_0 - Z_0 \right] = 0 \hspace{1cm}\text{or}\hspace{1cm}E\left[Z_0\right] = E\left[ \hat{Z}_0 \right].
 \end{equation}
 
-In order to check this for simple kriging, we can put the weighted average from Equation~\ref{eq:wask} in this equation, which results in the following:
+% In order to check this for simple kriging, we can put the weighted average from Equation~\ref{eq:wask} in this equation, which results in the following:
 
-% TODO : why is latex complaining at \end{align} I removed \cancelto{} and it's solved
-\begin{align}
-  E\left[ Z_0 \right] &= E\left[ E[Z_0] + \sum_{i=1}^n w_i R_i \right] \nonumber \\
-  &= E[Z_0] + \sum_{i=1}^n w_i 0{E[R_i]} \nonumber \\
-  &= E[Z_0].  \nonumber
-\end{align}
+% % TODO : why is latex complaining at \end{align} I removed \cancelto{} and it's solved
+% \begin{align}
+%   E\left[ Z_0 \right] &= E\left[ E[Z_0] + \sum_{i=1}^n w_i R_i \right] \nonumber \\
+%   &= E[Z_0] + \sum_{i=1}^n w_i 0{E[R_i]} \nonumber \\
+%   &= E[Z_0].  \nonumber
+% \end{align}
 
-The second property of kriging is that it \emph{minimises the variance of the estimation error}\marginnote{minimisation of the variance}\index{minimisation of the variance}, which in this case is given by \(\mathrm{var}\left(\hat{R}_0 - R_0\right)\).
+Then, in order to derive the equations used in simple kriging, we start from the fact that it \emph{minimises the variance of the estimation error}\marginnote{minimisation of the variance}\index{minimisation of the variance}, which in this case is given by \(\mathrm{var}\left(\hat{R}_0 - R_0\right)\).
 If we use the definition of the variance from Equation~\ref{eq:variance1}, this can be instead put in terms of an expectation:
 
 \begin{equation}
@@ -287,7 +297,7 @@ If this is expanded, it results in:
 &= \sum_{i=1}^n \sum_{j=1}^n w_i w_j E\left[R_i R_j\right] - 2\sum_{i=1}^n w_i E\left[R_i R_0\right] + E\left[{R_0}^2 \right]. \nonumber
 \end{align}
 
-Here, we can use the definitions of the variance based on residuals from Equations~\ref{eq:varres} and~\ref{eq:covres} together with our covariance formula from Equation~\ref{eq:covariancesk}, which yields:
+Here, we can use the definitions of the variance based on residuals from Equations~\ref{eq:varres} and~\ref{eq:covres} together with our covariance formula from Equation~\ref{eq:stationarityofthecovariance}, which yields:
 
 \begin{align}
 \mathrm{var}\left(\hat{R}_0 - R_0\right) &= \sum_{i=1}^n \sum_{j=1}^n w_i w_j \mathrm{cov}(R_i, R_j) - 2\sum_{i=1}^n w_i \mathrm{cov}(R_i,R_0) + \mathrm{cov}(R_0, R_0) \label{eq:variancesk} \\
@@ -328,21 +338,24 @@ C(x_n-x_0) \end{array} \right)}_{d}
 \end{equation}
 
 which is known as the \emph{simple kriging system}\marginnote{simple kriging system}\index{simple kriging system}.
-Finally, if we invert the matrix \(A\), the interpolation weights are given by:
+Finally, if we invert the matrix \(A\), the weights are given by:
 
 \begin{equation}
 w = A^{-1}d.
 \end{equation}
 
-Now, the obvious remaining questions are: (i) what expectation \(E[Z]\) to use, and (ii) what covariance function \(C\) to use.
-Without an external evaluation of the dataset, there are no optimal answers for either of those questions, which is the main weakness of simple kriging and the reason why it is not used widely in practice.
-That being said, a reasonable solution could be to use the average value of \(z_i\) for all points as \(E[Z]\), and an arbitrary covariance function, such as the exponential, Gaussian and spherical functions that we discuss in the following section.
+These weights can be applied to interpolate the value of the residual term at any location as a weighted average of the sample points, where the correlation between the points is given by a covariance function, which can be obtained from the semivariogram.
+
+However, simple kriging does not tell us what value we should use for the expectation \(E[Z]\), since we start from the assumption that it is known, which is often not the case.
+As an example to show the problem, a seemingly reasonable value as average of all points can be very inaccurate if the sample points are unevenly distributed across the domain.
 
 \section{Ordinary kriging}%
 \index{ordinary kriging}
 
-Ordinary kriging is similar to simple kriging and to other spatial interpolation methods that use a weighted average (see Equation~\ref{eq:wask}).
-It thus defines a function \(\hat{Z}_0\) that estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
+Ordinary kriging is similar to simple kriging and also uses a weighted average.
+However, it does not rely on a known value for the expectation and is thus more applicable in practice.
+
+It defines a function \(\hat{Z}_0\) that estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
 We denote this as:
 
 \begin{equation}
