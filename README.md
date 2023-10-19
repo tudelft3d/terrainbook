@@ -9,7 +9,7 @@ It covers different representations of terrains (\eg\ TINs, rasters, point cloud
 
 The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
 We wanted the book to be agnostic to the programming language.
-On the website of the course for which this book was developed ([https://3d.bk.tudelft.nl/courses/geo1015]), there are assignments available (Python and/or C++ are used by the students).
+On the website of the course for which this book was developed ([https://3d.bk.tudelft.nl/courses/geo1015](https://3d.bk.tudelft.nl/courses/geo1015)), there are assignments available (Python and/or C++ are used by the students).
 
 The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
 We wanted the book to be agnostic to the programming language.
