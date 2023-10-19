@@ -3,15 +3,23 @@
 
 # Computational modelling of terrains
 
-This book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct, manipulate, and extract information from terrains.
+The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
 
-It covers different representations of terrains (eg TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as bathymetric datasets and global elevation models.
-
-This book is the bundle of the lecture notes that we ([@hugoledoux](https://github.com/hugoledoux/), [@kenohori](https://github.com/kenohori/), [@ylannl](https://github.com/ylannl/), and [@evetion](https://github.com/evetion/)) wrote for the course [Digitial terrain modelling (GEO1015)](https://3d.bk.tudelft.nl/courses/geo1015/) in the [MSc Geomatics at the Delft University of Technologies](http://geomatics.tudelft.nl) in the Netherlands.
+It covers different representations of terrains (\eg\ TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
 
 The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
 We wanted the book to be agnostic to the programming language.
-On the website of the course for which this book was developed, there are assignments in Python and in C++.
+On the website of the course for which this book was developed ([https://3d.bk.tudelft.nl/courses/geo1015]), there are assignments available (Python and/or C++ are used by the students).
+
+The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
+We wanted the book to be agnostic to the programming language.
+
+## Authors
+
+  - [@hugoledoux](https://github.com/hugoledoux/)
+  - [@kenohori](https://github.com/kenohori/)
+  - [@ylannl](https://github.com/ylannl/)
+  - [@evetion](https://github.com/evetion/) 
 
 
 ## PDF version
