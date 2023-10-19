@@ -35,6 +35,8 @@
 \usepackage{float}
 \newfloat{floatbox}{tb}{ext2}
 
+\usepackage{pdfpages}
+
 % \graphicspath{{images/}{./}} % Paths in which to look for images
 
 \makeindex[columns=3, title=Alphabetical Index, intoc] % Make LaTeX produce the files required to compile the index
@@ -128,7 +130,7 @@
 \author{Hugo Ledoux \hspace{10mm} Ken Arroyo Ohori\\ Ravi Peters \hspace{17mm} Maarten Pronk}
 \date{\texttt{v0.10.0b0}}
 
-\publishers{\vspace{15mm}\includegraphics[width=0.8\linewidth]{front-back/nl_joydivision.png}}
+% \publishers{\includegraphics[width=\linewidth]{front-back/imhof.png}}
 
 %----------------------------------------------------------------------------------------
 
@@ -153,6 +155,10 @@
 %----------------------------------------------------------------------------------------
 % COPYRIGHT PAGE
 %----------------------------------------------------------------------------------------
+
+\includepdf{cover/cover_front.pdf}
+\cleardoublepage
+
 
 \input{front-back/pre}
 
