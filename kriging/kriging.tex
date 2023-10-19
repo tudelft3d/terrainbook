@@ -92,14 +92,14 @@ The different types of kriging from this chapter model the trend in a different 
 These are:
 \begin{itemize}
 \item \emph{simple kriging}, where the trend is a known constant that we specify in the model;
-\item \emph{ordinary kriging}, where the trend is an unknown constant that we calculate in the interpolation process; and
+\item \emph{ordinary kriging}, where the trend is a local mean that we calculate in the interpolation process; and
 \item \emph{universal kriging}, where we model the trend using a function.
 \end{itemize}
 
 These will be described in detail later in the chapter.
 However, in order to understand how these work and when they can be applied, it is important to cover some common properties of the two terms of the standard geostatistical model.
 
-Regarding the expectation/trend, some types of kriging rely on the assumption that the expectation \(E(Z)\) is the same everywhere, which is known as the \emph{stationarity of the mean}\marginnote{stationarity of the mean}\index{stationarity of the mean}.
+Regarding the expectation/trend, simple kriging relies on the assumption that the expectation \(E(Z)\) is the same everywhere, which is known as the \emph{stationarity of the mean}\marginnote{stationarity of the mean}\index{stationarity of the mean}.
 In the case of a DTM, that could mean that a terrain is uneven with significant peaks and valleys, but that there is not a general trend across it (\eg\ a clear slope with higher elevations on one side and lower elevations on the opposite side).
 Mathematically, we can express that as:
 
@@ -120,7 +120,7 @@ First, note that since \(R = Z - E[Z] \), the variance (Equation~\ref{eq:varianc
 
 Then, since we know that the expectation is by definition the mean, in order not to introduce any bias, the expected value of the residual must be zero, \ie\ \(E\left[R\right] = 0\).
 When this is fulfilled, the model is said to be \emph{unbiased}\marginnote{unbiased}\index{unbiased}.
-The way that is is achieved can vary in different types of kriging.
+The way that is is achieved varies in different types of kriging.
 
 Finally, another common assumption is that the residual term at a pair of locations does not depend on the locations, but instead can be defined based only on the vector separating them.
 In the case of a DTM, this would mean that the likelihood of finding similar elevations at two points separated by a given distance and orientation does not change across the terrain.
@@ -314,22 +314,22 @@ This is:
 which yields the set of \(n\) simple kriging equations:
 
 \begin{equation}
-2 \sum_{j=1}^n w_j C(x_i-x_j) = 2C(x_i-x_0).
+\sum_{j=1}^n w_j C(x_i-x_j) = C(x_i-x_0).
 \end{equation}
 
 While these equations can be used to perform simple kriging, it is often easier to deal with these in matrix form:
 
 \begin{equation}
+\underbrace{\left(\begin{array}{c}
+w_1 \\
+\vdots \\
+w_n \end{array} \right)}_{w}
 %
 \underbrace{\left( \begin{array}{ccc}
 C(x_1-x_1) & \cdots & C(x_1-x_n) \\
 \vdots & \ddots & \vdots \\
 C(x_n-x_1) & \cdots & C(x_n-x_n) \end{array} \right)}_{A}
-%
-\underbrace{\left(\begin{array}{c}
-w_1 \\
-\vdots \\
-w_n \end{array} \right)}_{w} = 
+ = 
 %
 \underbrace{\left(\begin{array}{c}
 C(x_1-x_0) \\
@@ -347,15 +347,15 @@ w = A^{-1}d.
 These weights can be applied to interpolate the value of the residual term at any location as a weighted average of the sample points, where the correlation between the points is given by a covariance function, which can be obtained from the semivariogram.
 
 However, simple kriging does not tell us what value we should use for the expectation \(E[Z]\), since we start from the assumption that it is known, which is often not the case.
-As an example to show the problem, a seemingly reasonable value as average of all points can be very inaccurate if the sample points are unevenly distributed across the domain.
+Even a seemingly reasonable value, such as average of all points, can be very inaccurate if the sample points are unevenly distributed across the domain.
 
 \section{Ordinary kriging}%
 \index{ordinary kriging}
 
-Ordinary kriging is similar to simple kriging and also uses a weighted average.
-However, it does not rely on a known value for the expectation and is thus more applicable in practice.
+Ordinary kriging is similar to simple kriging in that it estimates values using a weighted average function with weights computed from the semivariogram/covariance based on the distance between the points. 
+However, it estimates a value at a location using only sample points in the neighbourhood of the location and relies only on \emph{local} second-order stationarity, \ie\ a constant mean within a moving neighbourhood, with a mean that is computed within the method itself.
 
-It defines a function \(\hat{Z}_0\) that estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
+Rather than relying on the residuals, it defines a function \(\hat{Z}_0\) that directly estimates the value of the random variable \(Z\) at a location \(x_0\) as a weighted average of its value at the \(n\) neighbouring sample points \(x_i\) that we will use for the interpolation (where \(1 \leq i \leq n\)).
 We denote this as:
 
 \begin{equation}
@@ -363,30 +363,8 @@ We denote this as:
 \hat{Z}_0 = \sum_{i=1}^n w_i Z_i.
 \end{equation}
 
-Like simple kriging, ordinary kriging is \emph{unbiased}.
-This means that it creates a model where the expected value of the estimation at a location \(x_0\) is equal to the expected value at that location.
-In practice, this means that if we put the weighted average from the previous equation in Equation~\ref{eq:unbiased}, it results in the following:
-
-\begin{equation}
-E\left[ Z_0 \right] = E\left[ \sum_{i=1}^n w_i Z_i\right] = \sum_{i=1}^n w_i E\left[Z_i\right].
-\end{equation}
-
-Here, \emph{ordinary kriging} also makes the assumption that the expectation is the same everywhere (stationarity of the mean).
-Therefore, \(E\left[Z_i\right]\) has the same value everywhere (\ie\ it is a constant) and we can thus move it outside of the summation:
-
-\begin{equation}
-E\left[ Z_0 \right] = E\left[Z_i\right] \sum_{i=1}^n w_i,
-\end{equation}
-
-and since also \(E\left[Z_i\right] = E\left[ Z_0 \right] \) (because of the stationarity of the mean), the two terms cancel each other out in the previous equation, which means that the unbiased property in ordinary kriging implies that the interpolation weights must add up to one:
-
-\begin{equation}
-\sum_{i=1}^n w_i = 1.
-\end{equation}
-
-Fulfilling this criterion means that we can use the variogram in ordinary kriging, which is not true for simple kriging.
-
-Like simple kriging, ordinary kriging \emph{minimises the variance of the estimation error}, which is given by \(\mathrm{var}\left(\hat{Z}_0 - Z_0\right)\).
+Like simple kriging, ordinary kriging is \emph{unbiased}, which is achieved by making sure that the interpolation weights add up to one, \ie\ \(\sum_{i=1}^n w_i = 1\).
+Ordinary kriging also \emph{minimises the variance of the estimation error}, which is given by \(\mathrm{var}\left(\hat{Z}_0 - Z_0\right)\).
 For this, we can use the same derivation as for simple kriging up to Equation~\ref{eq:variancesk} but using the variogram for the final step.
 This is:
 
@@ -458,7 +436,7 @@ If a large number of sample points are used to interpolate every point, kriging 
 The reason for this is because matrix \(A\) will be very large, and inverting a matrix is a computationally expensive process.
 However, inverting very large matrices is not really needed in practice.
 When a sample point is far from the interpolated point, its weight will be low, and it will thus have only a small influence on it.
-Because of this, it is usually best to only take into account a few sample points in the calculation, either by limiting the sample points to those within a given search radius, or by selecting only a given number of its closest sample points.
+Because of this, it is important to select a good neighbourhood for the sample points in the calculation, either by limiting the sample points to those within a given search radius, or by selecting only a given number of its closest sample points.
 However, you should note that this can cause artefacts in the final result.
 
 %%%
