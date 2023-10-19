@@ -8,6 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2023.0] - 2023-10-19
+### Modified
+- switch to https://calver.org versioning: YYYY.MINOR
+- rewrote part of the kriging chapter to better explain Ordinary Kriging and other variations
+- move some content in the Appendix: some math for the Voronoi, AHN4 information, etc.
+- remove many external dependencies, eg in visibility chapter
+- replace some figures with better ones
+- small fixes everywhere + harmonisation
+
+
 ## [0.9.2] - 2023-01-09
 ### Modified
   - improved the streaming delaunay triangulation section (Chapter 12) with improved figures and better explanation of the finaliser and spatial coherence
@@ -74,6 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - First release of the book (beta version)
 
 
+[2023.0]: https://github.com/tudelft3d/terrainbook/compare/0.9.2...2023.0
+[0.9.2]: https://github.com/tudelft3d/terrainbook/compare/0.9.1...0.9.2
 [0.9.1]: https://github.com/tudelft3d/terrainbook/compare/0.9.0...0.9.1
 [0.9.0]: https://github.com/tudelft3d/terrainbook/compare/0.8.0...0.9.0
 [0.8.0]: https://github.com/tudelft3d/terrainbook/compare/0.7.2...0.8.0
