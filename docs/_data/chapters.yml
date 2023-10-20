@@ -1,18 +1,18 @@
 
 - chapter: 1
-  title: What is a terrain
+  title: "What is a terrain"
   # video:
 
 - chapter: 2
-  title: Acquisition of elevation measurements
+  title: "Acquisition of elevation measurements"
   video: _BSuNu3Ahw0
 
 - chapter: 3
-  title: Global digital elevation models
+  title: "Global digital elevation models"
   # video:
 
 - chapter: 4
-  title: Delaunay triangulations & Voronoi diagrams
+  title: "Delaunay triangulations & Voronoi diagrams"
   video: ysLCuqcyJZA
 
 - chapter: 5
@@ -24,11 +24,11 @@
   video: ZaadzBvgE2s
 
 - chapter: 7
-  title: Conversion between terrain representations
+  title: "Conversion between terrain representations"
   video: Nqfp94KpcUA
 
 - chapter: 8
-  title: Topographic features
+  title: "Topographic properties and features"
   video: iF64Qeb_isw
 
 - chapter: 9
@@ -36,22 +36,22 @@
   video: 3HYlBogztOU
   
 - chapter: 10
-  title: Runoff modelling
+  title: "Runoff modelling"
   video: 0NzZoJATFjc
 
 - chapter: 11
-  title: "Point cloud processing"
+  title: "Processing point clouds"
   video: gGchA5fluos
 
 - chapter: 12
-  title:  Handling massive terrains  
+  title:  "Handling and processing massive terrains"  
   # video: 
 
 - chapter: 13
-  title: Spatial extent of a point cloud
+  title: "Spatial extent of a set of points"
   video: dqRb32iGZ_c
 
 - chapter: 14
-  title: Processing bathymetric data to produce hydrographic charts
+  title: "Processing bathymetric data to produce hydrographic charts"
   video: DVUm7SdzhfI
 
