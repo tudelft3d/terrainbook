@@ -9,21 +9,6 @@
 \graphicspath{{whatisterrain/}}
 
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DTM == representation of the Earth's surface
-% Dimensionality of DTM (2D, 2.5D, 2.75D, 3D)
-% DTM, DSM, DEM
-% nDSM: https://www.stadtentwicklung.berlin.de/umwelt/umweltatlas/ed610_03.htm
-% Representation of DTMs in computers
-%   - a DTM is a 2D field (object vs field discussion from GEO1002)
-%   - 6 common representations: regularly spaced sample points; irregularly spaced sample points; contour lines; rectangular cells (raster); triangulated irregular networks (TIN); planar partition with arbitrary polygons.
-%   - some are incomplete
-%   - discussion data model vs data structure?
-
-
 Defining what a `terrain' is, also called a \emph{digital terrain model} (DTM), is not a simple task because there is no universal agreement, neither among practitioners nor in the scientific literature.
 Different terms are used, often interchangeably.
 
@@ -37,21 +22,23 @@ It gives us the \emph{elevation}, which is the height above/below a certain refe
 However, the ``Earth's surface'' is also not a clear concept, since several objects on it can be present, \eg\ man-made structures like buildings, roads, power lines, and bridges, and other objects like trees.
 
 \begin{figure*}
-  \includegraphics[width=0.9\linewidth]{figs/destm}
+  \includegraphics[width=\linewidth]{figs/destm}
   \caption{The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.}%
 \label{fig:dtmdsm}
 \end{figure*}
 In this book, we use the following definitions (see Figure~\ref{fig:dtmdsm}):
 \begin{description}
-  \item[DTM] (\textbf{D}igital \textbf{T}errain \textbf{M}odel). The surface is the \emph{bare-earth}, that is no man-made objects or vegetation is present.\index{DTM}
-  \item[DSM] (\textbf{D}igital \textbf{S}urface \textbf{M}odel). The surface includes all objects and structures on the terrain.\index{DSM}
-  \item[DEM] (\textbf{D}igital \textbf{E}levation \textbf{M}odel). In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\index{DEM} 
+  \item[DTM] (\textbf{d}igital \textbf{t}errain \textbf{m}odel). The surface is the \emph{bare-earth}, without man-made objects or vegetation.\index{DTM (digital terrain model)}
+  \item[DSM] (\textbf{d}igital \textbf{s}urface \textbf{m}odel). The surface includes all objects and structures on the terrain, including vegetation.\index{DSM (digital surface model)}
+  \item[DEM] (\textbf{d}igital \textbf{e}levation \textbf{m}odel). 
+  \marginnote{DEM != grid}
+  In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\index{DEM} 
+  It should be noticed that in some countries (especially in the USA) a DEM is often synonymous with a grid of elevation.
 \end{description}
 
-It should be noticed that in some countries a DEM is often synonymous with a grid of elevation (see below).
 
 Some concepts are derived from those, for instance the \emph{normalised DSM} (\textbf{nDSM}),%
-\index{nDSM}\index{normalised DSM}\marginnote{nDSM: normalised DSM}
+\index{nDSM (normalised DSM)}\index{normalised DSM}\marginnote{nDSM: normalised DSM}
 which is defined as the difference between the DSM and the DTM\@.
 You thus obtain a value representing the height of man-made objects and trees, and zero where there are none.
 
@@ -368,7 +355,7 @@ Isolines have been traditionally used to represent the elevation in topographic 
 
 \begin{figure}
   \includegraphics[width=0.7\linewidth]{figs/contours.pdf}
-  \caption{An example of a terrain (top) and its contour lines (bottom).}%
+  \caption{An example of a terrain (top) and its contour lines at every \qty{100}{m} (bottom).}%
   \label{fig:contours}
 \end{figure}
 
@@ -396,7 +383,7 @@ As shown in Figure~\ref{fig:isoline},
 \begin{figure}
   \centering
   \includegraphics[width=0.95\textwidth]{figs/isoline}
-  \caption{Cross-section of a terrain (left), and the \qty{200}{\metre} isoline extracted from a TIN (right).} 
+  \caption{Cross-section of a terrain (left), and the \qty{200}{\metre} isoline extracted from a TIN representation of it (right).}% 
 \label{fig:isoline}
 \end{figure}
 the idea is to compute the intersection between the level value (\eg\ \qty{200}{m}) and the terrain, represented for instance with a TIN\@. 
