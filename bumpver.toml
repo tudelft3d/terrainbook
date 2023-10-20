@@ -1,6 +1,6 @@
 [bumpver]
-current_version = "0.10.0b0"
-version_pattern = "MAJOR.MINOR.PATCH[PYTAGNUM]"
+current_version = "2023.0-beta"
+version_pattern = "YYYY.MINOR[-TAG]"
 commit = false
 tag = false
 push = false
