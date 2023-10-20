@@ -120,7 +120,9 @@ The Runge's effect (also called \emph{overshoots}) are eliminated (since the deg
 
 
 The five interpolation methods discussed in this section are \emph{weighted-average methods}.
-These are methods that use a subset of the sample points, to which a weight (importance) are assigned, to estimate the value of the dependent variable. 
+These are methods that use a subset of the sample points, to which a weight (importance) 
+\marginnote{weight == importance}
+are assigned, to estimate the value of the dependent variable. 
 The interpolation function $f$ of such methods, with which we obtain an estimation $\hat{a}$ of the dependent variable $a$, have the following form:
 \begin{equation}
   f(x) = \hat{a} = \frac{\sum_{i=1}^n w_{i}(x) \, a_{i}}{\sum_{i=1}^{n} w_{i}(x)}
