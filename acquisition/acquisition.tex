@@ -33,7 +33,7 @@ This is because, as with any kind of real-world measurements, there are various 
 \section{Principles of lidar}%
 \label{sec:lidar-principles}\index{lidar}
 
-A lidar system\sidenote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. (from \href{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}{Wikipedia})} measures the distance to a target by illuminating it with pulsed laser light and measuring the reflected or \emph{backscattered}\sidenote{Backscattering is the natural phenomenon of  the reflection of (electromagnetic) waves or signals back to the direction they came from.} signal with a sensor (see Figure~\ref{fig:acqLidar}). 
+A lidar system\marginnote{While `lidar' is often treated as the acronym of \textbf{li}ght \textbf{d}etection \textbf{a}nd \textbf{r}anging, it actually originated as a portmanteau of `light' and `radar'. (from \href{https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology}{Wikipedia})} measures the distance to a target by illuminating it with pulsed laser light and measuring the reflected or \emph{backscattered}\marginnote{Backscattering is the natural phenomenon of  the reflection of (electromagnetic) waves or signals back to the direction they came from.} signal with a sensor (see Figure~\ref{fig:acqLidar}). 
 \begin{marginfigure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/lidar.png}
@@ -53,7 +53,7 @@ A typical lidar systems performs hundreds of thousands of such range measurement
 
 Lidar scanners exist in various forms. 
 They can be mounted on a static tripod (terrestrial lidar) for detailed local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also hand-held lidar systems exist, and even some of the latest smartphones  have a lidar sensor. 
-Furthermore, lidar can also be used from a satellite in space\sidenote{NASA has used space lidar \href{https://en.wikipedia.org/wiki/ICESat-2}{on Earth}, \href{https://lola.gsfc.nasa.gov}{on the Moon}, and \href{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}{on Mars}.}. 
+Furthermore, lidar can also be used from a satellite in space\marginnote{NASA has used space lidar \href{https://en.wikipedia.org/wiki/ICESat-2}{on Earth}, \href{https://lola.gsfc.nasa.gov}{on the Moon}, and \href{https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter}{on Mars}.}. 
 
 However, in the remainder of this text we will focus on airborne lidar.
 
@@ -79,7 +79,7 @@ These DGPS stations have a known position and they broadcast the difference betw
 This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from nearby DGPS stations and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
 
 To obtain the accurate orientation of the laser scanner, the INS of the aircraft is used. 
-The INS accurately measures the orientation, \ie\ the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU)\sidenote{\url{https://en.wikipedia.org/wiki/Inertial_measurement_unit}}. 
+The INS accurately measures the orientation, \ie\ the yaw, pitch  and roll angles of the aircraft, by means of an inertial measurement unit (IMU). 
 \marginnote{inertial measurement unit (IMU)}\index{inertial measurement unit (IMU)}
 Only when we accurately know the orientation of the laser scanner, can we know the direction (in a global coordinate system) in which a laser pulse is emitted from the aircraft.
 
@@ -105,8 +105,9 @@ A tree is particularly interesting because it often causes multiple echoes (one 
 With the direct detection lidar systems that we focus on in this book, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
 
 An echo can  also  be referred to as a \emph{return}. 
+For each return the return count is recorded, 
 \marginnote{return}\index{return}
-For each return the return count is recorded, \eg\ the first return is the first echo received from an emitted laser pules and the last return is the last received echo (see Figure~\ref{fig:lidar-multipulse}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
+\eg\ the first return is the first echo received from an emitted laser pules and the last return is the last received echo (see Figure~\ref{fig:lidar-multipulse}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
 
 
 %%%
@@ -166,7 +167,6 @@ Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of r
 	\end{kaobox-toread}
 \end{floatbox}
 
-% TODO : put a side-by-side with vegetation and without lidar to show DTM and DSM
 
 
 \section{Other acquisition techniques}[Other techniques]%
@@ -221,8 +221,8 @@ It is quite different from airborne lidar or photo\-gramme\-try-based acquisitio
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions. 
 As a result the speed of the radar signal is not known and the time-of-flight principle can not be used to get detailed measurements. 
 However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, accurate elevation can still be measured. 
-With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM\sidenote{\url{https://en.wikipedia.org/wiki/Shuttle_Radar_Topography_Mission}} dataset was generated with InSAR\@. 
-Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of 30 meters.
+With InSAR it is possible to cover very large regions in a short amount of time, \eg\ the global SRTM dataset was generated with InSAR (see Chapter~\ref{chap:gdem}). 
+Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, \eg\ SRTM has a pixel size of \qty{30}{m}.
 
 %%
 
@@ -423,10 +423,10 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 	\caption{Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).}%
 	\label{fig:processing}
 \end{figure*}
-Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds\sidenote{This is a topic of Chapter~\ref{chap:pcprocessing}}. 
+Or, one can attempt to detect and remove outliers caused \eg\ by multi-path effects or flocks of birds (more details in Chapter~\ref{chap:pcprocessing}). 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove `good' points if they look the same as outliers to the outlier detection algorithm (see \eg\ Figure~\ref{fig:outlier-wrong}).
-And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with\sidenote{Chapters~\ref{chap:interpol} and~\ref{chap:kriging} explore the topic of spatial interpolation in detail.}.
+And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with; Chapters~\ref{chap:interpol} and~\ref{chap:kriging} explore the topic of spatial interpolation in detail.
 
 %%
 

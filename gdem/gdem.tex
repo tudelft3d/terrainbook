@@ -191,7 +191,9 @@ Even the same product can have different versions, with different resolutions an
 
 %
 
-For example, SRTM is freely available, including its derived NASADEM, and was first introduced at \qty{90}{m}, with subsequent versions at \qty{30}{m}.
+For example, SRTM is freely available, 
+\marginnote{SRTM}\index{SRTM}
+including its derived NASADEM, and was first introduced at \qty{90}{m}, with subsequent versions at \qty{30}{m}.
 Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of \qty{\pm12}{m}.
 WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data, even has a resolution of \qty{\pm5}{m}.
 CopernicusDEM is a resampled WorldDEM---bought with your taxpayer money by ESA and freely distributed---at \qty{30}{m} resolution.
@@ -282,7 +284,7 @@ This tiling scheme results in pixels being as square as possible, but makes it h
 In this context it becomes clear that the resolution should not be discussed in terms of meters, but terms of degrees (or divisions of a degree).
 As the Earth has a circumference of \qty{\pm40000}{km} (measured around the Equator), \ang{1} of latitude is \qty{\pm111}{km} and \ang{1} of longitude is $111\cos\phi$ \unit{km} at latitude $\phi$.
 Degrees are further divided into 60 arcminutes (\lq), which themselves are divided into 60 arcseconds (\lq\lq).
-In practice, the highest resolution for SRTM (30m) is actually \ang{;;1}, and its \qty{90}{m} product has a resolution of \ang{;;3}.
+In practice, the highest resolution for SRTM (\qty{30}{m}) is actually \ang{;;1}, and its \qty{90}{m} product has a resolution of \ang{;;3}.
 DTED level 0 thus has a resolution of \ang{;;30}, while level 2 has a resolution of \ang{;;1}.
 %
 
@@ -359,7 +361,7 @@ Be aware that there is a small difference---generally less than \qty{0.5}{m}---b
 
 % MSS = Geoid + MDT
 Note that the geoid is not the same as the mean sea level (MSL),%
-\index{mean sea level}\marginnote{mean sea level (MSL)}
+\index{mean sea level (MSL)}\marginnote{mean sea level (MSL)}
 as it does not take into account the dynamic effects of temperature and currents.
 Depending on the location, the difference between the geoid and MSL can be up to \qty{1.5}{m}.
 
@@ -385,7 +387,7 @@ Space lidar is promising as a source to reconstruct gDEMs because lidar penetrat
 
 %%%%%%%%%%%%%%%%%%%%
 %
-\section{Notes \& comments}
+\section{Notes and comments}
 
 % TODO: add some papers to read here
 

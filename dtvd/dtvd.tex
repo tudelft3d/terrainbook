@@ -237,8 +237,7 @@ As Figure~\ref{fig:dualdetail} demonstrates:
   \item a Voronoi edge is dual to a Delaunay edge;
   \item a Voronoi vertex is dual to a Delaunay triangle.
 \end{enumerate}
-Observe that, as shown in Figures~\ref{fig:vd2d} and~\ref{fig:dualdetail}, the location of a Voronoi vertex $v^{\star}$, which is dual to a Delaunay triangle $\tau$, is at the centre of the circumcircle of $\tau$.
-Appendix~\ref{app:equations} describes how to obtain the location, given 3 points.
+Observe that, as shown in Figures~\ref{fig:vd2d} and~\ref{fig:dualdetail}, the location of a Voronoi vertex $v^{\star}$, which is dual to a Delaunay triangle $\tau$, is at the centre of the circumcircle of $\tau$; Appendix~\ref{app:equations} describes how to obtain the ($x,y$)-coordinates of the centre.
 \begin{figure}
   \centering
   \begin{minipage}[c]{0.4\textwidth}
@@ -631,12 +630,10 @@ Since a DT can be locally modified by adding one point (and not reconstructing t
 
 \begin{enumerate}
   \item A DT has 32 triangles and we insert a new point $p$ that falls inside one of the triangles. If we insert and update the triangulation (for Delaunay criterion), what is the number of triangles?
+  \item Given the input formed of elevation points and breaklines below (both projected to the $xy$-plane), draw both the constrained and conforming Delaunay triangulation (an approximation is fine).  {\centering{\includegraphics[width=0.95\linewidth]{cdt_exercise}}}
   \item If a given vertex $v$ in a DT has 7 incident triangles, how many vertices will its dual polygon contain?
   \item Identify the 5 infinite triangles in Figure~\ref{fig:infinite_vertex}.
   \item A DT has 6 vertices, and 3 of these are forming the convex hull. How many triangles does the DT have?
   \item Assume you have 8 points located on a circle. Draw the DT and the VD of these 8 points.
   \item When inserting points in a DT (Algorithm~\ref{algo:insert1pt}), what happens if a new point is inserted directly on an edge? Line~2 states that the triangle is split into 3 new triangles, does it still hold?
-  \item Given the input formed of elevation points and breaklines below (both projected to the $xy$-plane), draw both the constrained and conforming Delaunay triangulation (an approximation is fine).
-  \\ \\
-  \centering{\includegraphics[width=0.95\linewidth]{cdt_exercise}}
 \end{enumerate}
