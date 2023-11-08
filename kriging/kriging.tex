@@ -16,7 +16,7 @@ Like other techniques based on geostatistical models, kriging relies on the fact
 Both of these elements are modelled in kriging.
 
 More than a single method, kriging comprises a family of related methods.
-Within this chapter, we will look at three related types of kriging: simple kriging, ordinary kriging and universal kriging.
+Within this chapter, we will look at two related types of kriging: simple kriging and ordinary kriging.
 These treat the spatially correlated randomness in a similar way, but they make different assumptions about the trend in a dataset.
 
 \section{Statistical background}
@@ -91,9 +91,8 @@ Z = E\left[Z\right] + R.
 The different types of kriging from this chapter model the trend in a different way but treat the residual term in a similar way.
 These are:
 \begin{itemize}
-\item \emph{simple kriging}, where the trend is a known constant that we specify in the model;
-\item \emph{ordinary kriging}, where the trend is a local mean that we calculate in the interpolation process; and
-\item \emph{universal kriging}, where we model the trend using a function.
+\item \emph{simple kriging}, where the trend is a known constant that we specify in the model; and
+\item \emph{ordinary kriging}, where the trend is a local mean that we calculate in the interpolation process.
 \end{itemize}
 
 These will be described in detail later in the chapter.
@@ -413,16 +412,43 @@ Finally, if we invert the matrix \(A\), the weights and the Lagrange multipliers
 w = A^{-1}d
 \end{equation}
 
-\section{Universal kriging}%
-\index{universal kriging}
+%%%
+%
+\section{Other types of kriging}
+
+\begin{description}
+\item[Directional kriging] is useful when the similarity of points differs according to different directions, \eg\ north-south vs.\ east-west.
+It involves creating variograms for different directions.
+\item[Block kriging] attempts to obtain a local trend for an area around a point (rather than just at a point).
+It can be used to obtain smoother results.
+\item[Cokriging] applies kriging to multiple correlated variables.
+It is particularly useful when you want to interpolate one variable with limited sample points but there are more sample points for another correlated variable.
+\item[Indicator kriging] applies thresholds to obtain discrete values, such as presence/absence of a variable or a set of distinct classification classes.
+\item[Poisson kriging] applies kriging to data involving cummulative counts or rates.
+It is oten applied together with polygonal datasets.
+\item[Universal kriging] fits the trend using a predefined deterministic function.
+It is tricky to use in practice because it imposes conditions on the underlying variogram.
+\end{description}
 
 %%%
 %
-\section{Implementation}
+\section{Implementation details}
 
-Kriging can be directly applied to any point on the plane, yielding a result such as the one in Figure~\ref{fig:interpolation}.
+There are a few important details with respect to the implementation of kriging methods in practice.
+
+First of all, within this chapter, we have assumed that you always use all sample points to interpolate any point on the plane.
+While this is optimal in theory, if a large number of sample points are used to interpolate every point, kriging can be \emph{very slow} in practice.
+The reason for this is because matrix \(A\) will be very large, and inverting a matrix is a computationally expensive process.
+Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of its closest sample points.
+However, when the weights of far-away points are not negligible, this will cause artefacts in the final result.
+
+Another related issue is that Kriging is often said to be exact in theory, \ie\ it passes exactly through the sample points.
+However, this is only true if the nugget of the theoretical variogram function is set to zero.
+Some authors and implementations get around this by hard-coding \(\gamma(0) = 0\), but this can create a discontinuity between the value at the sample point and its immediate neighbourhood.
+
+Finally, it is worth noting that kriging can be directly applied to any point on the plane, yielding a result such as the one in Figure~\ref{fig:interpolation}.
 However, much like other interpolation methods, kriging is only reliable in the domain (\ie\ roughly the convex hull of the points).
-It can extrapolate (often with negative weights), but that does not mean that the results outside the domain are accurate.
+It can extrapolate (often by using negative weights), but that does not mean that the results outside the domain are accurate.
 
 \begin{figure}[htbp]
 \centering
@@ -430,14 +456,6 @@ It can extrapolate (often with negative weights), but that does not mean that th
 \caption{The result of using ordinary kriging to interpolate on a grid of points using the sample dataset using only the sample points within 15 units of each interpolated point.}%
 \label{fig:interpolation}
 \end{figure}
-
-Finally, it is also important to consider some computational aspects into account.
-If a large number of sample points are used to interpolate every point, kriging can be \emph{very slow}.
-The reason for this is because matrix \(A\) will be very large, and inverting a matrix is a computationally expensive process.
-However, inverting very large matrices is not really needed in practice.
-When a sample point is far from the interpolated point, its weight will be low, and it will thus have only a small influence on it.
-Because of this, it is important to select a good neighbourhood for the sample points in the calculation, either by limiting the sample points to those within a given search radius, or by selecting only a given number of its closest sample points.
-However, you should note that this can cause artefacts in the final result.
 
 %%%
 %
@@ -451,11 +469,7 @@ If you feel like your statistics background is a bit weak, you first might want 
 
 A relatively simple explanation of Kriging with agricultural examples is given by \citet{Oliver15}.
 A standard reference textbook that is good but not so easy to follow is \citet{Wackernagel03}.
-
-such as the specific spatial correlation between the points in the dataset or their highly unequal distributions of sample points
-
-
-different characteristics that are specific to a dataset, such as , anisotropy (spatial correlation that varies according to a direction), or the varying uncertainty and spatial correlation of a set of sample points (eg when measurements are taken with different instruments/techniques).
+The math covered in this chapter is partly based on the latter.
 
 Two other good Youtube videos that explain kriging:
 \begin{itemize}
