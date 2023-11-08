@@ -22,7 +22,7 @@ These treat the spatially correlated randomness in a similar way, but they make 
 \section{Statistical background}
 
 The physical processes that shape the world can be considered to be at least partly deterministic.
-In the case of a DTM, the elevation is determined by processes that we can model (more or less accurately), such as plate tectonics, volcanic activity and erosion.
+In the case of a terrain, the elevation is determined by processes that we can model (more or less accurately), such as plate tectonics, volcanic activity, and erosion.
 However, these processes are too complex and not understood well enough to use them to obtain accurate elevation values.
 Imagine, for instance, how difficult it would be to get an accurate elevation map of the world using only the shape of the tectonic plates and some other parameters (\eg\ their direction and speed of movement).
 
@@ -34,7 +34,7 @@ This situation is phrased in mathematical terms by saying that the value of the 
 For the sake of simplicity, we will usually omit the location and denote it just as \(Z\); or when working with multiple locations (\eg\ \(x_i\) and \(x_j\)), we will shorten their respective random variables (\(Z(x_i)\) and \(Z(x_j)\)) using subscripts (\(Z_i\) and \(Z_j\)).
 
 In geostatistics, the most common way to express the general shape of the probability distribution of a random variable is in terms of its mean and its variance.
-Here, the mean\marginnote{mean}\index{mean}, \emph{expectation}\marginnote{expectation}\index{expectation} or \emph{expected value}\marginnote{expected value}\index{expected value} of a random variable \(Z\) is a sort of probability-weighted average of its possible values and is denoted as \(E[Z]\) or \(\mu\).
+Here, the mean\marginnote{mean}\index{mean} (also called \emph{expectation}\marginnote{expectation}\index{expectation} or \emph{expected value}\marginnote{expected value}\index{expected value}) of a random variable \(Z\) is a sort of probability-weighted average of its possible values and is denoted as \(E[Z]\) or \(\mu\).
 Meanwhile, the \emph{variance}\marginnote{variance}\index{variance} of a random variable \(Z\) is a measure of how far the values of \(Z\) will usually spread from its mean, and it is denoted as \(\mathrm{var}(Z)\) or \(\sigma^2\).
 A small variance thus means that a few random samples of \(Z\) at nearby locations will likely form a tight cluster around its mean, whereas a large variance will have sample values that are more distant from the mean value.
 
@@ -49,7 +49,7 @@ Mathematically, the variance is defined as the expected value of the squared dev
 \end{align}
 
 Next, it is important to define the covariance\marginnote{covariance}\index{covariance}, denoted as \(\mathrm{cov}(Z_i,Z_j)\), or \(\sigma_{ij}\), which expresses the joint variability of the random variables \(Z_i\) and \(Z_j\).
-Thus, a positive covariance between \(Z_i\) and \(Z_j\) means that when one increases or decreases, the other is expected to increase/decrease in the same direction.
+Thus, a positive covariance between \(Z_i\) and \(Z_j\) means that when one increases/decreases, the other is expected to increase/decrease in the same direction.
 Conversely, a negative covariance means that the variables tend to increase/decrease in opposite directions.
 The magnitude of the covariance is related to the magnitude of this increase or decrease.
 It is thus defined mathematically as the expected product of their deviations from their (individual) expected values, or:
@@ -99,7 +99,7 @@ These will be described in detail later in the chapter.
 However, in order to understand how these work and when they can be applied, it is important to cover some common properties of the two terms of the standard geostatistical model.
 
 Regarding the expectation/trend, simple kriging relies on the assumption that the expectation \(E(Z)\) is the same everywhere, which is known as the \emph{stationarity of the mean}\marginnote{stationarity of the mean}\index{stationarity of the mean}.
-In the case of a DTM, that could mean that a terrain is uneven with significant peaks and valleys, but that there is not a general trend across it (\eg\ a clear slope with higher elevations on one side and lower elevations on the opposite side).
+In the case of a terrain, that could mean that a terrain is uneven with significant peaks and valleys, but that there is not a general trend across it (\eg\ a clear slope with higher elevations on one side and lower elevations on the opposite side).
 Mathematically, we can express that as:
 
 \begin{align}
@@ -122,7 +122,7 @@ When this is fulfilled, the model is said to be \emph{unbiased}\marginnote{unbia
 The way that is is achieved varies in different types of kriging.
 
 Finally, another common assumption is that the residual term at a pair of locations does not depend on the locations, but instead can be defined based only on the vector separating them.
-In the case of a DTM, this would mean that the likelihood of finding similar elevations at two points separated by a given distance and orientation does not change across the terrain.
+In the case of a terrain, this would mean that the likelihood of finding similar elevations at two points separated by a given distance and orientation does not change across the terrain.
 For instance, a terrain that goes from smooth on one side to rough on the other would not satisfy this assumption.
 Mathematically, we can express this using the covariance as:
 
@@ -179,6 +179,7 @@ However, it is worth noting that since the farthest away pairs of sample points 
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
 Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins} or \emph{lags}).
+\marginnote{intervals (bins)}
 Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the average for its dissimilarity class is computed as:
 
 \begin{equation}
@@ -239,7 +240,7 @@ Many other theoretical variogram functions are possible, \eg\ circular, cubic, l
 However, the three described above are the most common found in practice.
 
 Before moving on to apply these to kriging, there are a couple of important points.
-First, note that these theoretical functions are often only applied when \(|h| > 0\), since setting \(\gamma(0) = 0\) helps to ensure that kriging passes exactly through the sample points.
+First, note that these theoretical functions are often only applied when \(|h| > 0\), since setting \(\gamma(0) = 0\) helps to ensure that kriging passes exactly through the sample points (the exact property as explained in Section~\ref{sec:interpol_properties}).
 Second, all of the semivariogram-related functions seen in this section can be converted to covariance functions as well, taking into account that \(\gamma(h) = \mathrm{sill} - C(h)\).
 Note that this means that the covariance is high when \(|h|\) is small and it decreases as \(|h|\) increases.
 
@@ -467,7 +468,7 @@ How this came to be is best explained in \citet{cressie93}.
 If you have trouble following the derivations of the kriging equations or want to know more about them, \citet{Lichtenstern13} explains this well.
 If you feel like your statistics background is a bit weak, you first might want to have a look at \citet{Fewster14}, particularly Chapter~3.
 
-A relatively simple explanation of Kriging with agricultural examples is given by \citet{Oliver15}.
+A relatively simple explanation of kriging with agricultural examples is given by \citet{Oliver15}.
 A standard reference textbook that is good but not so easy to follow is \citet{Wackernagel03}.
 The math covered in this chapter is partly based on the latter.
 
