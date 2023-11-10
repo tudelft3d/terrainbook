@@ -443,7 +443,7 @@ The reason for this is because matrix \(A\) will be very large, and inverting a 
 Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of its closest sample points.
 However, when the weights of far-away points are not negligible, this will cause artefacts in the final result.
 
-Another related issue is that Kriging is often said to be exact in theory, \ie\ it passes exactly through the sample points.
+Another related issue is that kriging is often said to be exact in theory, \ie\ it passes exactly through the sample points.
 However, this is only true if the nugget of the theoretical variogram function is set to zero.
 Some authors and implementations get around this by hard-coding \(\gamma(0) = 0\), but this can create a discontinuity between the value at the sample point and its immediate neighbourhood.
 
