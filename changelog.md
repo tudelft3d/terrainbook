@@ -8,11 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [2023.0] - 2023-10-19
+## [2023.0] - 2023-11-12
 ### Modified
 - switch to https://calver.org versioning: YYYY.MINOR
 - rewrote part of the kriging chapter to better explain Ordinary Kriging and other variations
-- move some content in the Appendix: some math for the Voronoi, AHN4 information, etc.
+- move some content to the Appendix: some math for the Voronoi, AHN4 information, etc.
 - remove many external dependencies, eg in visibility chapter
 - replace some figures with better ones
 - small fixes everywhere + harmonisation
