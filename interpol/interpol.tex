@@ -463,7 +463,7 @@ Suppose we have 4 adjacent pixels, each having an elevation, as in \reffig{fig:b
 \labfig{fig:bilinear}
 \end{figure}
 Bilinear interpolation uses the 4 centres to perform the interpolation at location $p = (p_x, p_y)$; it is thus a weighted-average method because the 4 samples are used, and their weight is based on the linear interpolation, as explained below.
-We need to linearly interpolation the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values. 
+We need to linearly interpolate the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values. 
 % Observe that while we perform three linear interpolations, the resulting interpolant is not linear but quadratic.
 Also, notice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
 For the case in \reffig{fig:bilinear}, the calculation would go as follows:
