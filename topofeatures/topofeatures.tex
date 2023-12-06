@@ -451,8 +451,7 @@ for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{
 \begin{equation}  
   hillshade_{i,j} = 255 ((\cos (\pi/2 - \gamma) \cos\alpha_{i,j}) + (\sin (\pi/2 - \gamma)  \sin\alpha_{i,j} \cos (\psi - \theta_{i,j}))) 
 \end{equation}
-(all angles need to be radians)
-
+Notice that: (1) all angles need to be radians; (2) if $hillshade_{i,j} < 0$ then $hillshade_{i,j} = 0$.
 
 
 
