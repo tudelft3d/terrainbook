@@ -437,7 +437,7 @@ While it would be possible to use advanced computer graphics methods (see Chapte
 Given a regular gridded terrain, hillshading means that each cell gets a value which depicts the variation in tone, from light to dark.
 The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original grid (for convenience).
 The values computed for each cell need as input the gradient and the aspect of the terrain\@.
-The formula to compute the hillshade of a given cell $c_{ij}$ differs from software to software, and we present here one (it is used in ArcGIS for example, and surely others).
+The formula to compute the hillshade of a given cell $c_{ij}$ differs from software to software, and we present here one (it is used in QGIS and ArcGIS for example, and surely others).
 It assumes that the output hillshade value is an integer in the range $[0,255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known.
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain\@.
 As above and in Figure~\ref{fig:hillshade-params}, 
