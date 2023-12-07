@@ -437,7 +437,7 @@ While it would be possible to use advanced computer graphics methods (see Chapte
 Given a regular gridded terrain, hillshading means that each cell gets a value which depicts the variation in tone, from light to dark.
 The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original grid (for convenience).
 The values computed for each cell need as input the gradient and the aspect of the terrain\@.
-The formula to compute the hillshade of a given cell $c_{i,j}$ differs from software to software, and we present here one (it is used in ArcGIS for example, and surely others).
+The formula to compute the hillshade of a given cell $c_{ij}$ differs from software to software, and we present here one (it is used in ArcGIS for example, and surely others).
 It assumes that the output hillshade value is an integer in the range $[0,255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known.
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain\@.
 As above and in Figure~\ref{fig:hillshade-params}, 
@@ -447,12 +447,12 @@ As above and in Figure~\ref{fig:hillshade-params},
   \caption{The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).}%
 \label{fig:hillshade-params}
 \end{figure}
-for a cell $cell_{i,j}$, its gradient is $\alpha_{i,j}$, its aspect is $\theta_{i,j}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rad is the horizon, $\pi$ rad is the zenith).
-\begin{equation}  
-  hillshade_{i,j} = 255 ((\cos (\pi/2 - \gamma) \cos\alpha_{i,j}) + (\sin (\pi/2 - \gamma)  \sin\alpha_{i,j} \cos (\psi - \theta_{i,j}))) 
-\end{equation}
-Notice that: (1) all angles need to be radians; (2) if $hillshade_{i,j} < 0$ then $hillshade_{i,j} = 0$.
-
+for a cell $c_{ij}$, its gradient is $\alpha_{ij}$, its aspect is $\theta_{ij}$, the azimuth of the sun is $\psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $\gamma$ (0 rad is the horizon, $\frac{\pi}{2}$ rad is the zenith).
+\begin{multline}  
+  hillshade_{ij} = 255 \cdot \biggl[ \Big( \cos\left(\frac{\pi}{2} - \gamma\right) \cos(\alpha_{ij}) \Big) + \\
+                         \Bigl( \sin\left(\frac{\pi}{2} - \gamma\right) \sin\left(\alpha_{ij}\right) \cos(\psi - \theta_{ij}) \Bigr) \biggr]
+\end{multline}
+Notice that: (1) all angles need to be radians; (2) if $hillshade_{ij} < 0$ then $hillshade_{ij} = 0$.
 
 
 %%%
