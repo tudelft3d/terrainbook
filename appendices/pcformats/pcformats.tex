@@ -167,7 +167,7 @@ In addition, support for LAZ is typically built into point cloud reading and wri
 The LAZ format closely resembles the LAS format, \ie\ the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.
 \marginnote{LAZ creates blocks of neighbouring points}
-Each block is individually compressed, which makes it possible to partially decompress only the needed blocks from a file (instead of always needing to compress the whole file).
+Each block is individually compressed, which makes it possible to partially decompress only the needed blocks from a file (instead of always needing to decompress the whole file).
 This can save a lot of decompression computations if only a few points from a huge point cloud are needed.
 Also notice that the effectiveness of the compression algorithms depends on the similarity in information between subsequent point records.
 Typically information is quite similar for points that are close to each other in space.
