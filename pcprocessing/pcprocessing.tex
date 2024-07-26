@@ -162,65 +162,63 @@ Notice that outliers (especially those under the ground surface) may break these
 Notice that the resulting bare-earth model may thus have holes where these non-ground objects used to be.
 If needed, these holes can be filled in a subsequent processing step with for example spatial interpolation.
 
+
 %%%
 %
-\subsection{Ground filtering with TIN refinement}%
+\subsection{Ground filtering with progressive TIN densification}%
 \index{ground filtering}
 
-We will now discuss an effective ground filtering method that is based on the \emph{greedy} insertion of ground points into a TIN\@.
-Indeed, the same algorithmic paradigm of iterative TIN refinement from Section~\ref{sec:tin-simpl} is used.
-The algorithm consists of three main steps:
-\begin{enumerate}
-  \item construction of a rudimentary initial TIN (usually a Delaunay TIN);
-  \item computation of two geometric properties for each point that is not already labelled as ground;
-  \item incremental insertion of points that pass a simple and local `ground test' based on the computed geometric properties.
-\end{enumerate}
-The latter two steps are repeated until all remaining points fail the ground test.
-
-In the first step a rudimentary initial TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
-These points are found by superimposing a 2D grid over the data extent and by selecting the lowest point for each grid cell (similar to grid thinning).
-The cell-size of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
-Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \qty{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
-Each point that is inserted into the TIN is considered to be a ground point.
-
-In the second step, two geometric properties are computed for each point that is not in the TIN\@.
-These properties are based on the relation between the point $p$ and the triangle in the current TIN that intersects its vertical projection. 
-The two properties are illustrated in Figure~\ref{fig:ground-filtering:symbols}.
-\begin{marginfigure}
-  \centering
-  \begin{subfigure}[b]{0.6\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{groundfilter-symbols.pdf}
-    \caption{}\label{fig:ground-filtering:symbols}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.6\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{groundfilter-ground.pdf}
-    \caption{example ground point}\label{fig:ground-filtering:ground}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.6\linewidth}
-    \centering
-    \includegraphics[width=\textwidth]{groundfilter-nonground.pdf}
-    \caption{example non-ground point}\label{fig:ground-filtering:nonground}
-  \end{subfigure}
-  \caption{Geometric properties for a point $p$ in the method for ground filtering based on TIN refinement.}%
-\label{fig:ground-filtering}
-\end{marginfigure}
-The first property, denoted $d$, is the perpendicular distance between the $p$ and the plane spanned by the triangle.
-The second property, denoted $\alpha$, is the largest angle of the angles between the triangle and the three vectors that connect each vertex with $p$. 
-
-In the ground test of the final step, it is simply checked for each point if its $d$ is below a given threshold $d_{\max}$ and if its $\alpha$ is below a given threshold $\alpha_{\max}$.
-If this is indeed the case, the point is labelled as a ground point and inserted into the TIN\@.
-Compare Figures~\ref{fig:ground-filtering:ground} and~\ref{fig:ground-filtering:nonground}.
-
-Of course, if the triangles in the TIN change, the properties of the overlapping unclassified points need to be recomputed. 
-However, the algorithm is greedy, which means that it never ``goes back'' on operations that were previously performed, and thus when a point $p$ is inserted as the ground, it is never removed.
-When all remaining points fail the ground test, the algorithm terminates.
-% Figure~\ref{fig:ground-filtering-example} gives an example result.
+We describe in this section an effective ground filtering method that is widely used in practice since it has been integrated into different commercial software.
+It should be observed that there are several variations of this algorithm; we describe only one of these in the following.
 
 %
 
-\paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need to recompute the geometric properties of at most $n$ points.
+The main idea of the method is to first construct an initial TIN based on (known) ground points, and then densify this TIN by iteratively adding points that fulfil certain criteria.
+The method uses the same algorithmic paradigm as the iterative TIN refinement from Section~\ref{sec:tin-simpl}.
+
+%
+
+The algorithm starts by constructing a rudimentary initial TIN, usually based on the Delaunay triangulation. 
+The TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
+These points are found by superimposing a 2D grid over the data extent and selecting the lowest point for each grid cell (similar to grid thinning).
+The cellsize of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
+Thus, if the largest building has a footprint of 100mX100m, the cellsize should be a bit larger, \eg\ \qty{110}{m}, so that it is guaranteed that each grid-cell has at least a few ground points.
+
+%
+
+The densification step of the algorithm is an iterative process where the points that fulfil the two `ground filter' criteria below are inserted---one-by-one---into the TIN (and the triangulation is updated).
+Observe that if a given point is not labelled as ground when first visited, it is possible that later it will be (because other points have been inserted and the geometric configuration has changed).
+Therefore, the densification process continues until all remaining points fail the ground test.
+\begin{marginfigure}
+  \centering
+  \begin{subfigure}[b]{0.9\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{gftin.pdf}
+    \caption{The two ground filter criteria: $d$ and $\alpha$.}\label{fig:gftin_variables}
+  \end{subfigure}
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{gftin_projection.pdf}
+    \caption{Profile view of a TIN with the vertical projections (pink) and the closest distances to the plane (green) shown for 3 different points. Notice that it is possible that the closest projection falls outside the triangle, as shown for the point on the right.}\label{fig:gftin_projection}
+  \end{subfigure}
+  \caption{Ground filtering with a TIN\@.}%
+\label{fig:gftin}
+\end{marginfigure}
+As illustrated in Figure~\ref{fig:gftin}, the two criteria are based on the relation between the point $p$ and the triangle $\tau$ in the current TIN that intersects its vertical projection:
+\begin{enumerate}
+  \item \textbf{Distance $d$ between $p$ and the plane spanning $\tau$.} Notice that it is the perpendicular distance between $p$ and the plane spanned by $\tau$, and not the vertical distance (see Figure~\ref{fig:gftin_projection}).
+  \item \textbf{Max angle $\alpha$ to the vertices of $\tau$.} It is the largest angle of the angles between $\tau$ and the three vectors that connect each vertex of $\tau$ to $p$. 
+\end{enumerate}
+
+%
+
+Two thresholds must be used for the algorithm ($d_{\max}$ and $\alpha_{\max}$); if a point $p$ is under these two thresholds, then it is labelled as a ground point and is inserted in the TIN\@.
+
+Observe that the algorithm is \emph{greedy}, which means that it never ``goes back'' on operations that were previously performed, and thus when a point $p$ is inserted in the TIN, it is never removed.
+
+%
+
+% \paragraph{Time complexity.} The worst case time complexity is $\mathcal{O}(n^2)$, since the most expensive term is related to the last two steps of the algorithm; for each of the $n$ points we need to do the ground test, and after each test we need to recompute the geometric properties of at most $n$ points.
 
 
 %%%
@@ -746,31 +744,16 @@ Notice that the accumulator can be made more sensitive by choosing a finer quant
 
 \paragraph{Time complexity.}  The time complexity of the Hough transform algorithm as discussed here is $\mathcal{O}(nm)$, where $m$ is the number of elements in the accumulator.
 
-%%%%%%%%%%%%%%%%%%%%
-%
-%
-%\section{Clustering}
-%\label{sec:clustering}
-%Clustering is the task of grouping a set of points in such a way that points in the same group (called a cluster) are more similar to each other than to those in other groups (clusters).
-%It can be achieved by various algorithms that differ significantly in their understanding of what constitutes a cluster and how to efficiently find them.
-%
-%For example building object clustering from points in a particular class (building, vegetation, ...).
-%
-%\subsection{DBSCAN}
-%
-%\subsection{Connected components}
-%Stems from graph theory.
 
-
-%%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes and comments}
 
 \citet{Arge10} introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN\@.
 
-\citet{axelsson2000generation} originally proposed the greedy TIN insertion algorithm for ground filtering.
+\citet{axelsson2000generation} originally proposed the greedy TIN densification algorithm for ground filtering.
 He also describes how to handle discontinuities in the terrain such as cliffs.
-It should be said that his paper is a bit scarce on details, and if you are interested in those you are better off reading some excerpts of the work of \citet{Lin14}. 
+It should be said that his paper is scarce on details, and many variations of the algorithms have been proposed so that small/low objects are filtered out and so that it performs well in densely forested areas.
+See for instance \citet{Lin14}. 
 
 The cloth simulation filter (CSF) algorithm is from \citet{Zhang16}.
 The original paper has a somewhat complex definition that has been simplified and modified for this book.
