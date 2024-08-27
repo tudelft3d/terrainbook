@@ -1,0 +1,17 @@
+%!TEX root = ../../terrainbook.tex
+% chktex-file 46
+
+\graphicspath{{appendices/normalplane/figs/}}
+
+\chapter{Estimating the normals in a point cloud}%
+\label{app:normalplane}
+
+Given a point cloud $S$, the normal vector for a point $p \in S$ can be found by fitting a plane $P$ to the points in the local neighbourhood of $p$. 
+The vector orthogonal to this plane is the normal vector $\vec{n}$.
+
+In practice, we might want to use the 10 (or 15 or 20, depending on the resolution of $P$) nearest neighbours to $p$.
+This can be efficiently (and easily with the many implementations available) performed with a $k$d-tree, see Section~\ref{sec:knn-m}.
+
+To fit the plane, the preferred option is to use least-square fitting because it minimises the sum of squared distances between the points and the plane $P$.
+
+

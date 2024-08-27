@@ -249,12 +249,14 @@ At the end, $c$ is ($6,4$).
 To insert a new point, and to search for a nearest neighbour, the time complexity on average is $\mathcal{O}(\log n)$; this is assuming the tree is balanced, if not it could be $\mathcal{O}(n)$ in the worst-case.
 The tree stores one node per point, thus the space complexity is $\mathcal{O}(n)$.
 
-\paragraph{$m$-closest neighbours.}
+\paragraph{$m$-closest neighbours.}%
+\label{sec:knn-m}
+
 % from Wiki
 The algorithm can be extended in several ways by simple modifications. 
 It can provide the $m$ nearest neighbours to a point by maintaining $m$ current closest points instead of just one. 
 A branch is only eliminated when $m$ points have been found and the branch cannot have points closer than any of the $m$ current bests. 
-This can help improve significantly the running time of several operations described in this book: IDW with a fixed number of neighbours (Section~\ref{sec:wam_interpol}), extracting shapes from point clouds (Section~\ref{sec:shape-detection}), calculating the spatial extent (Chapter~\ref{chap:spatialextent}), are only but a few examples.
+This can help improve significantly the running time of several operations described in this book: IDW with a fixed number of neighbours (Section~\ref{sec:wam_interpol}), extracting shapes from point clouds (Section~\ref{sec:shape-detection}), estimating normals in point clouds (Appendix~\ref{app:normalplane}), calculating the spatial extent (Chapter~\ref{chap:spatialextent}), are only but a few examples.
 
 % TODO: add this for kd-tree in practice?
 % \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
