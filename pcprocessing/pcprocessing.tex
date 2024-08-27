@@ -9,9 +9,9 @@
 \label{chap:pcprocessing}
 
 Point clouds are irregularly spaced sample points (to which attributes are attached, see Appendix~\ref{app:pcformats}), that are most often acquired from lidar or obtained from the dense matching of images.
-While they are often considered as a suitable terrain representation, as explained in Section~\ref{sec:representation_others}, it should be stressed that they are not since they are 3D (\eg\ samples can represent vertical walls) and they are not continuous surfaces.
+While they are often considered as a suitable terrain representation, as explained in Section~\ref{sec:representation_others}, it should be stressed that they are technically not since they are three-dimensional (\eg\ samples can represent vertical walls) and they are not continuous surfaces (there are gaps between the points).
 
-This chapter describes algorithms and techniques to process a point cloud such as it can be used to construct a (2.5D) terrain, or to extract objects that can be used in applications related to the built environment.
+This chapter describes algorithms and techniques to process a point cloud such that it can be used to construct a (2.5D) terrain, or to extract objects that can be used in applications related to the built environment.
 
 
 
@@ -21,6 +21,7 @@ This chapter describes algorithms and techniques to process a point cloud such a
 \label{sec:thinning}%
 \index{thinning}
 
+Point clouds can be in practice very large, see Chapter~\ref{chap:massive} for more details and for spatial indexing and some practical solutions.
 A point cloud with fewer points is easier to manage and quicker to visualise and process.
 Therefore a point cloud is sometimes \emph{thinned}, which simply means that a portion of the points is discarded and not used for processing.
 Commonly encountered thinning methods in practice are:
