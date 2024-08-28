@@ -70,7 +70,7 @@ There is however no standardised way to specify the CRS in a PLY file, although 
 %%%
 %
 \section{LAS format}%
-\label{sec:lasformat}
+\label{sec:lasformat}%
 \index{LAS format}
 
 
@@ -79,32 +79,38 @@ The LAS standard, currently at version 1.4\marginnote{LAS v1.4-R15 is the latest
 \marginnote{\url{https://github.com/ASPRSorg/LAS}}
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
 LAS files are binary and unlike the PLY format the fields are prescribed, \ie\ the attributes for each point record are their types (number of bits) cannot be modified.
-Table~\ref{tab:las-record} shows the composition of the simplest record type that is available for LAS files.
+Table~\ref{tab:las-record} shows the composition of the base record type for the latest version of LAS (v1.4).
 \begin{table*}
   \centering
   \small
   \begin{tabular}{l|l|r|p{7cm}}
     % \toprule
     % \rowcolor[gray]{.9}
-    Field & Format & Length (bits) & Description\\ \midrule
-    X & int & 32 & X coordinate \\ 
-    Y & int & 32 & Y coordinate \\ 
-    Z & int & 32 & Z coordinate \\ 
-    Intensity & unsigned int & 16 & The pulse return amplitude \\ 
-    Return number & unsigned int & 3 &  The total pulse return number for a given output pulse \\ 
-    Number of returns & unsigned int & 3 & Total number of returns for a given pulse \\ 
-    Scan Direction Flag & boolean & 1 & Denotes the direction at which the scanner mirror was travelling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite).  \\ 
-    Edge of Flight Line & boolean & 1 & Has a value of 1 only when the point is at the end of a scan. It is the last point on a given scan line before it changes direction. \\ 
-    Classification & unsigned int & 5 & Classification code \\ 
-    Scan Angle Rank & int & 4 & The angle at which the laser pulse was output from the scanner including the roll of the aircraft \\ 
-    User Data & unsigned int & 4 & May be used at the user's discretion \\ 
-    Point Source ID & unsigned int & 8 & Indicates the file from which this point originated Non-zero if this point was copied from another file
+    Field & Type & Size (bits) & Description\\ \midrule
+    \texttt{X} & int & 32 & X coordinate \\ 
+    \texttt{Y} & int & 32 & Y coordinate \\ 
+    \texttt{Z} & int & 32 & Z coordinate \\ 
+    \texttt{intensity} & unsigned int & 16 & pulse return amplitude \\ 
+    \texttt{return\_number} & unsigned int & 4 & total pulse return number for a given output pulse \\ 
+    \texttt{number\_of\_returns} & unsigned int & 4 & total number of returns for a given pulse \\ 
+    \texttt{synthetic} & boolean & 1 & flag to indicate whether the point is synthetic, \ie\ if it has been artificially generated rather measured by the lidar sensor \\
+    \texttt{key\_point} & boolean & 1 & flag to mark the point that should not be removed or thinned during data processing \\
+    \texttt{overlap} & boolean & 1 & flag to identify points that are part of an overlap region between different lidar flight lines\\
+    \texttt{scanner\_channel} & unsigned int & 2 & used to distinguish between the different channels of a multi-channel lidar system, where each channel might correspond to a different laser or beam angle \\
+    \texttt{scan\_direction\_flag} & boolean & 1 & direction at which the scanner mirror was travelling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite)  \\ 
+    \texttt{edge\_of\_flight\_line} & boolean & 1 & has a value of 1 only when the point is at the end of a scan. It is the last point on a given scan line before it changes direction. \\ 
+    \texttt{classification} & unsigned int & 8 & classification code, see Table~\ref{tab:las-classes} \\ 
+    \texttt{user\_data} & unsigned int & 8 &  may be used at the user's discretion \\ 
+    \texttt{scan\_angle} & int & 16 & angle at which the laser pulse was output from the scanner including the roll of the aircraft \\ 
+    \texttt{point\_source\_id} & unsigned int & 8 & indicates the file from which this point originate, non-zero if this point was copied from another file\\
+    \texttt{gps\_time} & float & 64 & GPS time of acquisition of the point\\
     % \bottomrule
   \end{tabular}
-\caption{LAS Point Data Record Format 0}%
+\caption{LAS Point Data Record Format 6}%
 \label{tab:las-record}
 \end{table*}
-In the specifications this is referred to as the ``Format 0'', and other record types are possible (Formats 1 to 10).
+In the specifications this is referred to as the ``Format 6'', and other record types are possible (Formats 0 to 10).
+\marginnote{Different LAS formats: \url{https://laspy.readthedocs.io/en/latest/intro.html\#point-records}}
 Other record types can add for instance the RGB colour information of the point, or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table~\ref{tab:las-record}.
 While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, \eg\ if a point cloud originating from dense matching is stored in the LAS format.
 \marginnote{Unused fields take up storage} 

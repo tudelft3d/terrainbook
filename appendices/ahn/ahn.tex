@@ -19,10 +19,10 @@ The AHN dataset (\emph{Actueel Hoogtebestand Nederland} in Dutch, or ``actual he
 is a lidar dataset that contains several points per $m^2$ and covers entirely the Netherlands.
 It is an open dataset.
 
-It began in 1997, and its current version is 5 (called AHN5) (although it is not fully available online yet\footnote{As of 2024/08/27, some regions are missing: https://www.ahn.nl/tweede-deel-ahn5-beschikbaar}).
 \marginnote{AHN5 is the current version}
+It began in 1997, and its current version is 5 (called AHN5) (although it is not fully available online yet\sidenote{AHN5 status: \url{https://www.ahn.nl/tweede-deel-ahn5-beschikbaar}}.
 
-From AHN3, the AHN dataset uses the ``Point Data Record Format 1'', which contains all fields from Format 0 (Table~\ref{tab:las-record}) with the addition of the GPS time of the measurement.
+The AHN5 dataset uses the ``Point Data Record Format 6'', see Table~\ref{tab:las-record}.
 
 LAS v1.4 allows to store certain extra user-defined attributes, and in AHN4 the following 3 are also stored (but not in other versions):
 \begin{enumerate}
