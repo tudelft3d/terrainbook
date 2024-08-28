@@ -14,13 +14,26 @@ This can be efficiently (and easily with the many implementations available) per
 
 To fit the plane, the preferred option is to use least-square fitting because it minimises the sum of squared distances between the points and the plane $P$.
 
-We suggest use Principal Component Analysis (PCA) to obtain this plane $P$, and to obtain its normal.
-PCA allows us to identify the directions of maximum variance in a dataset, and it uses the \emph{eigenvalues} and \emph{eigenvectors} of the covariance matrix of a datasets.
-\marginnote{eigenvalues and eigenvectors}
+We suggest to use Principal Component Analysis (PCA) to obtain the plane $P$, and to obtain its normal $\vec{n}$.
+PCA allows us to identify the directions of maximum variance in a dataset, and it uses the \emph{eigenvalues} and \emph{eigenvectors} of the covariance matrix of a dataset.
+\marginnote{eigenvalues and eigenvectors}%
 \index{eigenvalues}\index{eigenvectors}
-The eigenvector linked with the largest eigenvalue represents the direction where the variance is the largest, and the smallest eigenvalue that where the variance is the smallest.
-For our subset of 10 or 15 points in $S$, the direction of maximum variance is the plane that best fits the data, and the normal vector is the direction of minimum variance.
+The eigenvector linked with the largest eigenvalue represents the direction where the variance is the largest, and the smallest eigenvalue where the variance is the smallest.
+
+%
+
+For our subset of 10 or 15 neighbouring points in $S$, the direction of maximum variance is the plane that best fits the data, and the normal vector is the direction of minimum variance.
 
 % Observe that if you have points on the edge of a top of a roof then the normal will point somewhere else kinda.
+
+It should also be noticed that the eigenvalues $\lambda_{1,2,3}$ (where $\lambda_1 \geq \lambda_2 \geq \lambda_3 \geq 0$) can be useful to calculate/estimate the local geometric properties such as the following:
+
+\begin{equation}
+\begin{aligned}
+\textbf{linearity:} \quad L_\lambda &= \frac{\lambda_1 - \lambda_2}{\lambda_1} \\
+\textbf{planarity:} \quad P_\lambda &= \frac{\lambda_2 - \lambda_3}{\lambda_1} \\
+\textbf{sphericity:} \quad S_\lambda &= \frac{\lambda_3}{\lambda_1} \\
+\end{aligned}
+\end{equation}
 
 
