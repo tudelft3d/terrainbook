@@ -64,6 +64,17 @@
   backgroundcolor=blueish,
   frametitlebackgroundcolor=blueish,
 ]{kaobox-info}
+\newcommand{\youtube}[2][0pt]{%
+  \marginnote[#1]{
+    \begin{kaobox}[
+      backgroundcolor=redish,
+      frametitlebackgroundcolor=redish
+    ]
+    \center{\faYoutube\ \href{https://#2}{#2}}
+    \end{kaobox}
+  }
+  \vspace{1cm}
+}
 
 %----------------------------------------
 % HL
