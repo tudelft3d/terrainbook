@@ -14,21 +14,21 @@ In this chapter we discuss three methods to handle and/or process \emph{massive}
 
 %
 
-``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 15 years ago a point cloud dataset containing 5 million elevation points was considered massive, but in 2021 it is considered a small one.%
+``Massive'' is a vague and undefined term in GIS, and it is continuously changing: 15 years ago a point cloud dataset containing 5 million elevation points was considered massive, but in 2024 it is considered a small one.%
 \index{massive datasets}
 Examples of massive datasets: 
 \begin{enumerate}
   \item the point cloud dataset of a \qty{1.5}{km^2} of Dublin\sidenote{\url{https://bit.ly/32GXiFq}} contains around 1.4 billion points (density of \qty{300}{pts/m^2}), which was collected with airborne laser scanners; 
-  \item the lidar dataset of the whole of the Netherlands (AHN) has about \qty{10}{pts/m^2} and its latest version (AHN3) has more than 700 billion points (AHN4 will contain even more points);
-  \item the global digital surface model \emph{ALOS World 3D---30m (AW3D30)}\sidenote{\url{https://www.eorc.jaxa.jp/ALOS/en/aw3d30/index.htm}} is a raster dataset with a resolution of \ang{;;1}. Thus we have about \num{8.4d11} pixels.
+  \item the lidar dataset of the whole of the Netherlands (AHN) has about \qty{10}{pts/m^2} and its latest version (AHN4) has more than 900 billion points;
+  \item the global digital surface model \emph{ALOS World 3D---30m (AW3D30)}\sidenote{\url{https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm}} is a raster dataset with a resolution of \ang{;;1}. Thus we have about \num{8.4d11} pixels.
 \end{enumerate}
 
 %
 
-We define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 16GB these days.
+We define as ``massive'' a dataset that does not fit into the main memory of a standard computer, which is usually around 24GB these days.
 This definition makes practical sense because working with data outside of the main memory of a computer is substantially slower (about 2 orders of magnitude for solid state drives and 5 for spinning hard drives), causing many standard data processing algorithms to become impractical with massive datasets.
-Keep in mind that not only the $xyz$ coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones).
-Also, in the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
+Keep in mind that not only the $xyz$ coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones, see Table~\ref{tab:las-record}).
+In the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
 
 %
 
@@ -275,8 +275,8 @@ Or if it works, it will be very slow.
 The reason for this is that the data structure for the DT (to store the points coordinates, and also the data structure for the triangles and their topological relationships) will not fully fit in the main memory.
 Therefore, part of it will be in the main memory (say 16GB of RAM) and the other part will be on the harddrive.
 The operating system controls which parts are in memory and which parts are on the harddrive, and we call \emph{swapping} the operations to transfer between them.
-\marginnote{swapping and trashing}
-The danger is that if a lot (too many operations) of swapping are performed the process stops (called \emph{trashing}).
+\marginnote{swapping}
+% The danger is that if a lot (too many operations) of swapping are performed the process stops (called \emph{trashing}).
 
 %
 
