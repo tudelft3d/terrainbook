@@ -283,7 +283,6 @@ The operating system controls which parts are in memory and which parts are on t
 One solution to this problem is to design external memory algorithms.%
 \index{external memory algorithms}\marginnote{external memory algorithms}
 These basically do not rely on the operating system to decide which parts of the data structure are stored on the disk, but improve the process by explicitly storing temporarily files and having explicit rules for the swapping of data between the disk and the memory. 
-% \citet{Agarwal05} construct massive TINs this way, and \citet{Arge06} and \citet{Agarwal08} have implemented spatial analysis functions on TINs based on that paradigm.
 The main drawbacks of this approach are that the design of such algorithms is rather complex, that for different problems different solutions have to be designed, and that for problems like the DT construction a lot of large temporary files need to be created.
 
 %
@@ -434,6 +433,8 @@ The ideas behind streaming are very useful for certain \emph{local} problems (\e
 The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (\url{https://en.wikipedia.org/wiki/K-d_tree}) and the lecture notes entitled ``kd-Trees---CMSC 420'' from Carl Kingsford (available at \url{https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf}).
 
 \citet{Vitter01} provides an overview of external algorithms.
+
+\citet{Agarwal05} construct massive TINs by designing external algorithms, and \citet{Arge06} and \citet{Agarwal08} have implemented spatial analysis functions on TINs based on that paradigm.
 
 The streaming computation of the DT algorithm is a simplification of the algorithm described in \citet{Isenburg06}, and some figures were basically redrawn.
 
