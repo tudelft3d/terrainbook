@@ -289,14 +289,24 @@ The main drawbacks of this approach are that the design of such algorithms is ra
 
 We discuss in this section an alternative approach to dealing with massive datasets: \emph{streaming}.%
 \index{streaming data}\marginnote{streaming data} 
-The streaming paradigm means here that large files can be processed without them to be fully loaded in memory.
+A \emph{stream} 
+\marginnote{\url{https://en.wikipedia.org/wiki/Stream_(computing)}}
+is a sequence of data---in theory it can be infinite!---that is available over a period of time, and ``can be thought of as items on a conveyor belt being processed one at a time rather than in large batches''.
 One concrete example is YouTube: to watch a given video one does not need to first download the whole file, she can simply start watching the video as soon as the first KB are downloaded.
-The content of the video is downloaded as one watches the video, and if the user fast-forward to for instance 5:32s then only the KB of content from where the cursor is need to be downloaded.
+The content of the video is downloaded as one watches the video, and if the user fast-forward to for instance 5:32s then only the KB of content from where the cursor is need to be downloaded to watch the video.
 At no moment is the full video downloaded to the user's device.
 
 %
 
-This idea can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
+Batch algorithms, like the incremental insertion algorithm described in Section~\ref{sec:dtconstruction},% 
+\index{batch processing}\marginnote{batch processing} 
+require to have all the points in memory to work.
+By contrast, a streaming algorithm operates only \emph{locally} and can thus, in theory, process infinitely large datasets.
+% The streaming paradigm means here that large files can be processed without them to be fully loaded in memory.
+
+%
+
+The streaming paradigm can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
 Since the First Law of Geography of Tobler stipulates that ``everything is related to everything else, but near things are more related than distant things''\marginnote{Tobler W., (1970) \emph{A computer movie simulating urban growth in the Detroit region}. Economic Geography, 46(Supplement):234–240}, if we wanted to calculate the slope at one location in a point cloud we would need to retrieve all the neighbouring points and potentially calculate locally the DT\@.
 The question is: is it possible to do this without reading the whole file and only process one part of it?
 
