@@ -47,8 +47,8 @@
 
 %-- new box environments
 \definecolor{redish}{HTML}{F7E0E0}
-\definecolor{greenish}{HTML}{DDECF1}
-\definecolor{blueish}{HTML}{A5CDFF}
+\definecolor{blueish}{HTML}{DDECF1}
+\definecolor{greenish}{HTML}{E6E6E6}
 \newmdenv[
   style=kaoboxstyle,
   backgroundcolor=redish,
@@ -56,19 +56,19 @@
 ]{kaobox-practice}
 \newmdenv[
   style=kaoboxstyle,
-  backgroundcolor=greenish,
-  frametitlebackgroundcolor=greenish,
+  backgroundcolor=blueish,
+  frametitlebackgroundcolor=blueish,
 ]{kaobox-toread}
 \newmdenv[
   style=kaoboxstyle,
-  backgroundcolor=blueish,
-  frametitlebackgroundcolor=blueish,
+  backgroundcolor=greenish,
+  frametitlebackgroundcolor=greenish,
 ]{kaobox-info}
 \newcommand{\youtube}[2][0pt]{%
   \marginnote[#1]{
     \begin{kaobox}[
-      backgroundcolor=redish,
-      frametitlebackgroundcolor=redish
+      backgroundcolor=blueish,
+      frametitlebackgroundcolor=blueish
     ]
     \center{\faYoutube\ \href{https://#2}{#2}}
     \end{kaobox}
