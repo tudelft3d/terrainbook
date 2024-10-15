@@ -1,8 +1,8 @@
 title: Open book
-logo: /assets/img/cover.png
+logo: /assets/img/cover.jpg
 description: An open book
 show_downloads: true
 theme: jekyll-theme-minimal
 
-latest_version: 2023.0
+latest_version: 2024.0
 course_url: https://3d.bk.tudelft.nl/courses/geo1015/
