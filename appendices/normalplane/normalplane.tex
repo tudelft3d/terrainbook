@@ -6,12 +6,6 @@
 \chapter{Estimating the normals in a point cloud}%
 \label{app:normalplane}
 
-\begin{marginfigure}
-  \centering
-  \includegraphics[width=\linewidth]{normal_demo.pdf}
-  \caption{Perspective view of a point cloud with 3 plane fitted and their normal vector.}%
-\label{fig:normal_demo}
-\end{marginfigure}
 
 Given a point cloud $S$, the normal vector for a point $p \in S$ can be found by fitting a plane $P$ to the points in the local neighbourhood of $p$. 
 The vector orthogonal to this plane is the normal vector $\vec{n}$ of $p$.
@@ -29,6 +23,14 @@ PCA allows us to identify the directions of maximum variance in a dataset, and i
 \marginnote{eigenvalues and eigenvectors}%
 \index{eigenvalues}\index{eigenvectors}
 The eigenvector linked with the largest eigenvalue represents the direction where the variance is the largest, and the smallest eigenvalue where the variance is the smallest.
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{normal_demo.pdf}
+  \caption{Perspective view of a point cloud with 3 plane fitted and their normal vector.}%
+\label{fig:normal_demo}
+\end{figure}
 
 %
 
