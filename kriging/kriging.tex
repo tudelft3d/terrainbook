@@ -157,7 +157,7 @@ Note that the `semi' in semivariogram comes from the \(1/2\) in Equation~\ref{eq
 When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, \(|h|\) (\ie\ the magnitude of the vector \(h\)) and \(\gamma(h)\) can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
 The result of such a plot is what is known as a \emph{variogram cloud}\marginnote{variogram cloud}\index{variogram cloud} (Figure~\ref{fig:variogram_cloud}).
 
-\begin{figure*}
+\begin{figure*}[htbp]
 \begin{subfigure}{0.5\linewidth}
 \centering
 \includegraphics[width=\linewidth]{figs/data}
@@ -178,9 +178,9 @@ Since nearby sample points tend to have similar values, the dissimilarity tends 
 However, it is worth noting that since the farthest away pairs of sample points have similar values in this specific dataset, the dissimilarity also decreases at the highest distances.
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
-Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\) can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins} or \emph{lags}).
+Mathematically, a series of averages of dissimilarities \(\gamma^\star(h)\), known as \emph{experimental semivariances}\marginnote{experimental semivariance}\index{experimental semivariance}, can be created by computing the average dissimilarities for all vectors whose lengths are within a series of specified intervals (generally known as \emph{bins} or \emph{lags}).
 \marginnote{intervals (bins)}
-Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the average for its dissimilarity class is computed as:
+Given a set \(\mathfrak{h}\) containing the vectors for a distance interval, the experimental semivariances are computed as:
 
 \begin{equation}
 \gamma^\star(\mathfrak{h}) = \frac{1}{2n}\sum\left(z\left(x+h\right)-z\left(x\right)\right)^2 \hspace{1cm}\text{for all } h \in \mathfrak{h}
@@ -188,16 +188,9 @@ Given a set \(\mathfrak{h}\) containing the vectors for a length interval, the a
 
 where \(n\) is the number of sample point pairs in \(\mathfrak{h}\).
 
-This computation results in much smoother values for the dissimilarity, and when the results of \(|h|\) and \(\gamma^\star(h)\) are put into a scatter plot (Figure~\ref{fig:experimental_variogram}), the result is what is known as an \emph{experimental}\marginnote{experimental variogram}\index{experimental variogram} or \emph{empirical variogram}\marginnote{empirical variogram}\index{empirical variogram}.
-Experimental variograms are based on a few parameters (Figure~\ref{fig:experimental_variogram}b illustrates these): 
-\begin{itemize}
-  \item the \emph{sill}\marginnote{sill}\index{sill}, which is the upper bound of \(\gamma^\star(h)\);
-  \item the \emph{range}\marginnote{range}\index{range}, which is the value of \(|h|\) when it converges; 
-  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h|\) approaches 0.
-\end{itemize}
-Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to about half of the size of the region covered by the dataset.
-
-\begin{figure*}
+This computation results in much smoother values for the dissimilarity, and the values of \(\gamma^\star(h)\) for all values of \(|h|\) are known as an \emph{experimental}\marginnote{experimental variogram}\index{experimental variogram} or \emph{empirical variogram}\marginnote{empirical variogram}\index{empirical variogram} (Figure~\ref{fig:experimental_variogram}a).
+Figure~\ref{fig:experimental_variogram}b shows the relationship between the experimental semivariances, covariances and variance.
+\begin{figure*}[htbp]
 \begin{subfigure}{0.5\linewidth}
 \centering
 \includegraphics[width=\linewidth]{figs/experimental_variogram}
@@ -205,20 +198,51 @@ Note that in order to avoid the unreliable dissimilarities that are common at la
 \end{subfigure}%
 \begin{subfigure}{0.5\linewidth}
 \centering
-\includegraphics[width=\linewidth]{figs/example_variogram}
+\includegraphics[width=\linewidth]{figs/semivariance_covariance}
 \caption{parameters}
 \end{subfigure}%
-\caption{(a) The experimental variogram is usually described in terms of (b) its parameters.}%
+\caption{(a) The experimental variogram and (b) the relationship between the experimental semivariances, covariances and variance.}%
 \label{fig:experimental_variogram}
 \end{figure*}
 
-Finally, the last step is to replace the experimental variogram with a \emph{theoretical variogram function}\marginnote{theoretical variogram function}\index{theoretical variogram function} that approximates it and which can be more easily evaluated for further calculations.
+Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to only compute the experimental variogram for distances up to about half of the size of the region covered by the dataset.
+
+From the scatterplot of the experimental variogram, it is possible to see how a few important parameters can be used to describe it (Figure~\ref{fig:example_variogram}): 
+\begin{itemize}
+  \item the \emph{sill}\marginnote{sill}\index{sill}, which is the upper bound of \(\gamma^\star(h)\);
+  \item the \emph{range}\marginnote{range}\index{range}, which is the value of \(|h|\) when it converges; 
+  \item the \emph{nugget}\marginnote{nugget}\index{nugget}, which is the value of \(\gamma^\star(h)\) when \(|h|\) approaches 0.
+\end{itemize}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figs/example_variogram}
+\caption{An experimental variogram can be described in terms of a few parameters.}%
+\label{fig:example_variogram}
+\end{figure}
+
+Finally, the last step is to use these parameters to replace the experimental variogram with a \emph{theoretical variogram function}\marginnote{theoretical variogram function}\index{theoretical variogram function} that approximates it and which can be more easily evaluated for further calculations.
 Depending on the shape of the variogram, there are various functions that can be used.
 Some examples are:
 
 \begin{align}
+\gamma_\mathrm{circular}(h) &= \begin{cases}
+  s \left(1-\frac{2}{\pi}\cos^{-1}\left(\frac{|h|}{r}\right)+\frac{2|h|}{\pi r}\sqrt{1-\frac{|h|^2}{r^2}}\right) + n & \text{if } |h| \leq r \\
+  s + n & \text{if } |h| > r
+  \end{cases}\\
+\gamma_\mathrm{cubic}(h) &= \begin{cases}
+  s \left(\frac{7|h|^2}{r^2}-\frac{8.75|h|^3}{r^3}+\frac{3.5|h|^5}{r^5}-\frac{0.75|h|^7}{r^7}\right) + n & \text{if } |h| \leq r \\
+  s + n & \text{if } |h| > r
+  \end{cases}\\
 \gamma_\mathrm{exponential}(h) &= s \left(1 - e^\frac{-3|h|}{r}\right) + n \\
 \gamma_\mathrm{gaussian}(h) &= s \left(1 - e^\frac{-\left(3|h|\right)^2}{r^2}\right) + n \\
+\gamma_\mathrm{linear}(h) &= \begin{cases}
+  \frac{s|h|}{r} + n & \text{if } |h| \leq r \\
+  s + n & \text{if } |h| > r
+  \end{cases}\\
+\gamma_\mathrm{power}(h) &= \begin{cases}
+  \frac{sr^2}{|h|^2} + n & \text{if } |h| \leq r \\
+  s + n & \text{if } |h| > r
+  \end{cases}\\
 \gamma_\mathrm{spherical}(h) &= \begin{cases} 
    s \left(\frac{3|h|}{2r} - \frac{|h|^3}{2r^3}\right) + n & \text{if } |h| \leq r \\
    s + n & \text{if } |h| > r
@@ -226,15 +250,48 @@ Some examples are:
 \end{align}
 
 where \(s\) is the \emph{sill}, set to roughly the value of \(\gamma^\star(h)\) when \(\gamma^\star(h)\) is  flat; \(r\) is the \emph{range}, roughly the minimum value of \(|h|\) where \(\gamma^\star(h)\) is flat, and \(n\) is the nugget, which is the starting value of \(\gamma^\star(h)\).
-Figure~\ref{fig:theoretical_variogram} shows the result of fitting the three example theoretical variogram functions, exponential, Gaussian and spherical.
-Note how the Gaussian function appears to be a better fit in this case.
+Figure~\ref{fig:theoretical_variogram} shows the result of fitting the example theoretical variogram functions.
+Note how the cubic and especially the Gaussian functions are a good fit in this case.
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
+\begin{subfigure}{0.33\linewidth}
 \centering
-\includegraphics[width=0.8\linewidth]{figs/theoretical_variogram}
-\caption{Three possible theoretical variogram functions}%
+\includegraphics[width=\linewidth]{figs/model_circular}
+\caption{Circular}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_cubic}
+\caption{Cubic}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_exponential}
+\caption{Exponential}
+\end{subfigure}\\
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_gaussian}
+\caption{Gaussian}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_linear}
+\caption{Linear (bounded)}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_power}
+\caption{Power (bounded)}
+\end{subfigure}\\
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/model_spherical}
+\caption{Spherical}
+\end{subfigure}%
+\caption{Some possible theoretical variogram functions}%
 \label{fig:theoretical_variogram}
-\end{figure}
+\end{figure*}
 
 Many other theoretical variogram functions are possible, \eg\ circular, cubic, linear, etc.
 However, the three described above are the most common found in practice.
