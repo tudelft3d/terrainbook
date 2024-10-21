@@ -8,6 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2024.0] - 2024-10-21
+### Modified
+- improve the definition of streaming with concrete examples
+- add eigenvalues/vectors + PCA as a metrics to analyse pointclouds
+- update the description of AHN for AHN5
+- new cover
+- improved figures in kriging chapter
+- add CHM in chapter 1
+- general improvements to template and typos fixed
+- add YouTube link to each chapter so that everyone aware that there are videos
+- make it clearer how GFTIN algo inserts points
+
+
 ## [2023.0] - 2023-11-12
 ### Modified
 - switch to https://calver.org versioning: YYYY.MINOR
@@ -84,6 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - First release of the book (beta version)
 
 
+[2024.0]: https://github.com/tudelft3d/terrainbook/compare/2023.0...2024.0
 [2023.0]: https://github.com/tudelft3d/terrainbook/compare/0.9.2...2023.0
 [0.9.2]: https://github.com/tudelft3d/terrainbook/compare/0.9.1...0.9.2
 [0.9.1]: https://github.com/tudelft3d/terrainbook/compare/0.9.0...0.9.1
