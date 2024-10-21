@@ -16,10 +16,10 @@ We wanted the book to be agnostic to the programming language.
 
 ## Authors
 
-  - [@hugoledoux](https://github.com/hugoledoux/)
-  - [@kenohori](https://github.com/kenohori/)
-  - [@ylannl](https://github.com/ylannl/)
-  - [@evetion](https://github.com/evetion/) 
+* [@hugoledoux](https://github.com/hugoledoux/)
+* [@kenohori](https://github.com/kenohori/)
+* [@ylannl](https://github.com/ylannl/)
+* [@evetion](https://github.com/evetion/) 
 
 
 ## PDF version
