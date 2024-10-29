@@ -105,6 +105,25 @@
 	year = {2021},
 	bdsk-url-1 = {https://doi.org/10.3390/rs13183581}}
 
+@article{guthRanking10Global2024,
+  title = {Ranking of 10 {{Global One-Arc-Second DEMs Reveals Limitations}} in {{Terrain Morphology Representation}}},
+  author = {Guth, Peter L. and Trevisani, Sebastiano and Grohmann, Carlos H. and Lindsay, John and Gesch, Dean and Hawker, Laurence and Bielski, Conrad},
+  year = {2024},
+  month = jan,
+  journal = {Remote Sens.},
+  volume = {16},
+  number = {17},
+  pages = {3273},
+  publisher = {Multidisciplinary Digital Publishing Institute},
+  issn = {2072-4292},
+  doi = {10.3390/rs16173273},
+  urldate = {2024-09-04},
+  abstract = {At least 10 global digital elevation models (DEMs) at one-arc-second resolution now cover Earth. Comparing derived grids, like slope or curvature, preserves surface spatial relationships, and can be more important than just elevation values. Such comparisons provide more nuanced DEM rankings than just elevation root mean square error (RMSE) for a small number of points. We present three new comparison categories: fraction of unexplained variance (FUV) for grids with continuous floating point values; accuracy metrics for integer code raster classifications; and comparison of stream channel vector networks. We compare six global DEMs that are digital surface models (DSMs), and four edited versions that use machine learning/artificial intelligence techniques to create a bare-earth digital terrain model (DTM) for different elevation ranges: full Earth elevations, under 120 m, under 80 m, and under 10 m. We find edited DTMs improve on elevation values, but because they do not incorporate other metrics in their training they do not improve overall on the source Copernicus DSM. We also rank 17 common geomorphic-derived grids for sensitivity to DEM quality, and document how landscape characteristics, especially slope, affect the results. None of the DEMs perform well in areas with low average slope compared to reference DTMs aggregated from 1 m airborne lidar data. This indicates that accurate work in low-relief areas grappling with global climate change should use airborne lidar or very high resolution image-derived DTMs.},
+  copyright = {http://creativecommons.org/licenses/by/3.0/},
+  langid = {english},
+  keywords = {Copernicus DEM,DEM,DEMIX,fraction of unexplained variance,geomorphometry},
+}
+
 @article{Schumann2018,
 	annotation = {46 citations (Crossref) [2022-01-19] ZSCC: 0000063},
 	author = {Schumann, Guy J-P. and Bates, Paul D.},
@@ -159,6 +178,51 @@
 	year = {2022},
 	bdsk-url-1 = {https://doi.org/10.1088%2F1748-9326%2Fac4d4f},
 	bdsk-url-2 = {https://doi.org/10.1088/1748-9326/ac4d4f}}
+
+@techreport{kulpCoastalDEMV30Improving,
+  title = {{{CoastalDEM}} v3.0: {{Improving}} Fully Global Coastal Elevation Predictions through a Convolutional Neural Network and Multi-Source {{DEM}} Fusion},
+  author = {Kulp, Scott A and Strauss, Benjamin H},
+  langid = {english},
+  year = {2024},
+  institution = {Climate Central},
+}
+
+@article{dusseauDiluviumDEMEnhancedAccuracy2023,
+  title = {{{DiluviumDEM}}: {{Enhanced}} Accuracy in Global Coastal Digital Elevation Models},
+  shorttitle = {{{DiluviumDEM}}},
+  author = {Dusseau, Dominick and Zobel, Zachary and Schwalm, Christopher R.},
+  year = {2023},
+  month = dec,
+  journal = {Remote Sensing of Environment},
+  volume = {298},
+  pages = {113812},
+  issn = {0034-4257},
+  doi = {10.1016/j.rse.2023.113812},
+  urldate = {2023-09-27},
+  abstract = {Accurate representation of global coastal topography is essential for numerous scientific disciplines, coastal management, and disaster risk assessment. Even with recent improvements to existing global digital elevation models (DEMs), high and persistent errors in these DEMs result in significant uncertainty when analyzing coastal processes. This results in low confidence for current sea level rise inundation risk assessments. We present DiluviumDEM, the first global DEM appropriate (i.e., the root mean square error (RMSE) is half the total water elevation in 2100 under a specific scenario) for mapping sea level rise inundation under the IPCC SSP2--4.5 and SSP5--8.5 scenarios, with an estimated RMSE of 1.13~m for coastal areas with elevations less than 2~m above mean sea level. Out of ten countries used for validation, DiluviumDEM has the lowest RMSE compared to three other DEMs analyzed, the lowest mean absolute error (MAE) for eight, and the mean error (ME) closest to zero for six. By reducing the error of the European Space Agency's Copernicus DEM using a gradient boosted decision tree model, we have created a new global coastal DEM with up to twice the accuracy compared to other global DEMs.},
+  keywords = {Digital elevation model,Global,LightGBM,Sea level rise},
+}
+
+@article{pronkDeltaDTMGlobalCoastal2024,
+  ids = {pronkDeltaDTMGlobalCoastal2024a},
+  title = {{{DeltaDTM}}: {{A}} Global Coastal Digital Terrain Model},
+  shorttitle = {{{DeltaDTM}}},
+  author = {Pronk, Maarten and Hooijer, Aljosja and Eilander, Dirk and Haag, Arjen and {de Jong}, Tjalling and Vousdoukas, Michalis and Vernimmen, Ronald and Ledoux, Hugo and Eleveld, Marieke},
+  year = {2024},
+  month = mar,
+  journal = {Sci Data},
+  volume = {11},
+  number = {1},
+  pages = {273},
+  publisher = {Nature Publishing Group},
+  issn = {2052-4463},
+  doi = {10.1038/s41597-024-03091-9},
+  urldate = {2024-03-07},
+  abstract = {Coastal elevation data are essential for a wide variety of applications, such as coastal management, flood modelling, and adaptation planning. Low-lying coastal areas (found below 10 m +Mean Sea Level (MSL)) are at risk of future extreme water levels, subsidence and changing extreme weather patterns. However, current freely available elevation datasets are not sufficiently accurate to model these risks. We present DeltaDTM, a global coastal Digital Terrain Model (DTM) available in the public domain, with a horizontal spatial resolution of 1 arcsecond ({$\sim$}30\,m) and a vertical mean absolute error (MAE) of 0.45 m overall. DeltaDTM corrects CopernicusDEM with spaceborne lidar from the ICESat-2 and GEDI missions. Specifically, we correct the elevation bias in CopernicusDEM, apply filters to remove non-terrain cells, and fill the gaps using interpolation. Notably, our classification approach produces more accurate results than regression methods recently used by others to correct DEMs, that achieve an overall MAE of 0.72 m at best. We conclude that DeltaDTM will be a valuable resource for coastal flood impact modelling and other applications.},
+  copyright = {2024 The Author(s)},
+  langid = {english},
+  keywords = {Geography,Geomorphology},
+}
 
 @article{Yang11,
 	annote = {one quote:
