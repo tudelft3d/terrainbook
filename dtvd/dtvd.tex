@@ -542,12 +542,12 @@ ConsDT is similar to the Delaunay triangulation, but the triangles in ConsDT are
 The empty circumcircle for a ConsDT is less strict: a triangle is Delaunay if its circumcircle contains no other points in $S$ that are \emph{visible} from the triangle.
 The constrained segments in $S$ act as visibility blockers. 
 Figure~\ref{fig:cdt_buildings} shows one example.
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=0.95\textwidth]{cdtbuildings}
   \caption{The ConsDT of a set of segments. On the right, the triangle whose circumcircle is green is a Delaunay (no other points in its interior) and so is the triangle whose circumcircle is in purple (there is one point in its interior, but it cannot be seen because of the constrained segment).}%
 \label{fig:cdt_buildings}
-\end{figure}
+\end{figure*}
 
 %
 
@@ -568,12 +568,29 @@ Without going into details about one potential algorithm, one way to construct a
 %
 
 Observe that the ConsDT can be used to triangulate polygons with holes (see Figure~\ref{fig:cdt_dog}), it suffices to remove the triangle outside the exterior boundary, but inside the convex hull.
-\begin{marginfigure}
+
+\begin{figure*}[b]
   \centering
-  \includegraphics[width=0.8\linewidth]{cdt_dog}
-  \caption{\textbf{(top)} One polygon with 4 holes (interior rings). \textbf{(middle)} its ConsDT\@. \textbf{(bottom)} its ConfDT (the Steiner point added is in red).}%
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=1]{cdt_dog}
+    \caption{}
+  \end{subfigure}%
+  \qquad %-- that adds some space between th 2 figures
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=2]{cdt_dog}
+    \caption{}
+  \end{subfigure}%
+  \qquad %-- that adds some space between th 2 figures
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[page=3]{cdt_dog}
+    \caption{}
+  \end{subfigure}%
+  \caption{\textbf{(a)} One polygon with 4 holes (interior rings). \textbf{(b)} its ConsDT\@. \textbf{(c)} its ConfDT (the Steiner point added is in red).}%
 \label{fig:cdt_dog}
-\end{marginfigure}
+\end{figure*}
 
 
 %%%
