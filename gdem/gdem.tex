@@ -29,7 +29,7 @@ OpenTopography (Figure~\ref{fig:dem_coverage}), we can observe that, even in 202
 
 %
 
-Global DEMs enable us to perform \emph{global} environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and floor simulations (see Chapter~\ref{chap:runoff}).
+Global DEMs enable us to perform \emph{global} environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and flow simulations (see Chapter~\ref{chap:runoff}).
 
 %
 
@@ -93,7 +93,7 @@ Most recently, NASA launched in 2018 two missions measure the elevation of the E
         Apart from terrain retrieval, ICESat-2 also measures the surface, such as canopy height, and has many other applications such as measuring bathymetry and estimating biomass.
   \item \textbf{GEDI}
         \marginnote{\url{https://gedi.umd.edu/}}\index{GEDI}
-        (Global Ecosystem Dynamics Investigation) is attached to the international space station (ISS) and its main goal is to investigate global ecosystems.
+        (Global Ecosystem Dynamics Investigation) is attached to the international space station (ISS) and its primary goal is to investigate global ecosystems.
         It does not have global coverage since it collects measurements only between \ang{51.6} N and \ang{51.6} S.
         GEDI has been combined with TanDEM-X data to produce biomass estimates and with Landsat imagery to produce a global canopy height map.
 \end{itemize}
@@ -117,10 +117,10 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
     \midrule
     \ type                 & discrete photon                      & full waveform                          & either           \\
     \ main objective       & cryosphere monitoring                & ecosystems                             & ---              \\
-    \ duration             & 2019--2023 (ongoing as of writing)   & 2019--2023                             & single flight(s) \\
+    \ duration             & 2018--2024(ongoing)   & 2019--2023, 2024-(ongoing)                             & single flight(s) \\
     \ orbit inclination    & \ang{92}                             & \ang{51.6}                             & NA               \\
-    \ laser pulse power    & \qty{175}{{\mu}J}/\qty{45}{{\mu}J}   & \qty{10000}{{\mu}J}/\qty{5000}{{\mu}J} & NA               \\
-    \ altitude             & \qty{\sim500}{km}                    & \qty{\sim420}{km}                      & \qty{0.5}{km}    \\
+    \ laser pulse power    & \qty{120}{{\mu}J}/\qty{30}{{\mu}J}   & \qty{15000}{{\mu}J}/\qty{4500}{{\mu}J} & NA               \\
+    \ altitude             & \qty{\sim480}{km}                    & \qty{\sim420}{km}                      & \qty{0.5}{km}    \\
     \ beam footprint       & \qty{11}{m}                          & \qty{23}{m}                            & \qty{0.05}{m}    \\
     \ along track spacing  & \qty{0.7}{m}                         & \qty{70}{m}                            & \qty{0.1}{m}     \\
     \ across track spacing & \qty{3}{km}/\qty{90}{m} between pair & \qty{0.6}{km}                          & \qty{0.1}{m}     \\
@@ -128,7 +128,7 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
     \ beam frequency       & \qty{532}{nm} (green)                & \qty{1064}{nm} (near-infrared)         & either           \\
     \ \# laser(s)          & 1                                    & 3                                      & 1                \\
     \ \# beams             & 6                                    & 4                                      & 1                \\
-    \ \# ground tracks     & 6 (in 3 pairs)                       & 8                                      & 1                \\
+    \ \# ground tracks     & 6 (in 3 strong/weak pairs)                       & 8 (4 strong, 4 weak)                                    & 1                \\
     \bottomrule
   \end{tabular}%
   \label{tab:lidarcomparison}
@@ -140,7 +140,7 @@ ICESat-2 laser split into six beams, divided into three pairs, each pair \qty{90
 Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{\sim11}{m}, so each measurement overlaps.
 GEDI instrument has three lasers, forming 4 beams and eight tracks, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
 GEDI measures a point every \qty{70}{m} along-track, with a beam footprint of \qty{23}{m}.
-Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon LiDAR at a bathymetric ``green'' wavelength of \qty{532}{nm}.
+Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon lidar at a bathymetric ``green'' wavelength of \qty{532}{nm}.
 
 
 %%%
@@ -163,7 +163,7 @@ These space borne lasers also differ considerably from airborne lasers, most not
 The altitude increase results in a wider beam footprint, from \qty{\sim0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\sim15}{m} for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from \qty{0.5}{km} to \qty{500}{km}.
 A comparison is given in Table~\ref{tab:lidarcomparison}.
-Airborne LiDAR often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
+Airborne lidar often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
 While both ICESat-2 and GEDI employ instruments with multiple (split) laser beams, including the ability to point the laser away from the ground track, all to maximize coverage, this still results in very sparse and uneven coverage as shown in Figure~\ref{fig:beams}.
 \begin{figure}
   \centering
@@ -245,7 +245,7 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
     \includegraphics[width=\linewidth]{copernicusdem.png}
     \caption{CopernicusDEM}\label{fig:copernicusdem}
   \end{subfigure}
-  \caption{NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how CopernicusDEM has more detail. There is $\pm$twelve years between these images.}%
+  \caption{NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how CopernicusDEM has more detail. There is $\sim$twelve years between these images.}%
   \label{fig:dem_comparison}
 \end{figure*}
 
@@ -264,7 +264,6 @@ The data collected depend on the orbit of the satellite.
 Some satellites have a polar orbit and can therefore completely measure the Earth (ICESat-2 is one example, see~\ref{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see~\ref{fig:orbit}).
 
 Similarly, while the Tandem-X mission produced a DEM with a global coverage, the SRTM DEM was measured from the Space Shuttle and only covers up to \qty{60}{\degree} latitude.
-
 
 %%
 \subsection{Format}
@@ -378,18 +377,17 @@ This is the largest source of error in gDEMS, and can considerably limit the app
 Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a \emph{pseudo DTM} (DTM$^{\prime}$).
 \marginnote{DTM$^{\prime} =$ pseudo DTM}
 While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrain still contain vegetation and/or buildings.
+Recent work has also suggested that while these datasets have improved vertical accuracy, the accuracy of derived geomorphometric parameters such as slope and curvature suffers.
 % are still far removed from a local DTM\@.
-
-%
-
-Space lidar is promising as a source to reconstruct gDEMs because lidar penetrates vegetation, and thus obtaining a DTM is an easier process.
 
 
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes and comments}
 
-% TODO: add some papers to read here
+
+Space lidar is promising as a source to reconstruct gDEMs because lidar penetrates vegetation, and thus obtaining a DTM is an easier process.
+Recently, several global \emph{coastal} pseudo DTMs---covering only areas near or below sea-level---have been produced using space lidar (to some extent): CoastalDEM~\citep{Kulp24}, DiluviumDEM~\citep{Dusseau23} and DeltaDTM~\citep{Pronk24}.
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
 
@@ -398,6 +396,7 @@ Space lidar is promising as a source to reconstruct gDEMs because lidar penetrat
 \citet{Hancock2021} investigates the requirements for a global lidar DEM\@.
 
 Further reading about DEM terminology can be found in \citet{Guth2021}, which is one of the products of the \emph{Digital Elevation Model Intercomparison eXperiment} (DEMIX) group.
+They also published a paper comparing the vertical accuracy and derived parameters of several gDEMs~\citep{guthRanking10Global2024}.
 
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (\url{https://opentopography.org}).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
@@ -417,5 +416,5 @@ Similarly, reading a user guide on any of the gDEMS is a good idea, such as the 
 \begin{enumerate}
   \item How wide is 1 degree longitude at the latitude where the city of Delft is? And at the North Pole?
   \item How old is the oldest gDEM, and what latitudes did it cover?
-  \item Assume you want to compare the elevations from AHN3 to those of CopernicusDEM\@. Which steps/conversions are needed?
+  \item Assume you want to compare the elevations from AHN5 to those of CopernicusDEM\@. Which steps/conversions are needed?
 \end{enumerate}
