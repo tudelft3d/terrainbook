@@ -327,13 +327,13 @@ Observe that a peak can be local,%
 that is one point that happens to be a few centimetres higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
 A peak is therefore on the scale of the data.
 
-The contour line through the $p$ does not exist.
+The contour line through $p$ does not exist.
 
 %%%
 \subsection{Pit}
 A point $p$ whose surrounding is formed only of points that are of higher elevation is a pit.
 The same remarks as for peak apply here.
-The contour line through the $p$ does not exist.
+The contour line through $p$ does not exist.
 
 %%%
 \subsection{Saddle point}%
@@ -345,14 +345,13 @@ From a mathematics point-of-view, it is a point for which the derivatives in ort
 %
 
 If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most point in a terrain this will be 2, except for peaks/pits where this is 0.
-Figure~\ref{fig:saddle_contour}
 \begin{marginfigure}
   \centering
   \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
   \caption{A saddle point at elevation \qty{10}{\m}, and its surrounding points. The triangulation of the area is created and used to extract the contour line segments at \qty{10}{\m} (red lines).}%
 \label{fig:saddle_contour}
 \end{marginfigure}
-shows an example for a point with an elevation of \qty{10}{\m}, the contour lines at \qty{10}{\m} is drawn by linearly interpolating along the edges of the TIN of the surrounding (see Chapter~\ref{chap:conversion}).
+Figure~\ref{fig:saddle_contour} shows an example for a point with an elevation of \qty{10}{\m}, the contour lines at \qty{10}{\m} is drawn by linearly interpolating along the edges of the TIN of the surrounding (see Chapter~\ref{chap:conversion}).
 
 
 %%%
@@ -368,7 +367,7 @@ Valleys and ridges are 1-dimensional features.
 If a terrain is represented as a TIN, we can extract the edges of the triangles that form a valley or a ridge.
 An edge $e$, incident to 2 triangles, is considered a valley-edge if the projection of the 2 normals of the triangles, projected to the $xy$-plane, point to $e$.
 If the 2 normals projected point in the opposite direction, then $e$ is a ridge.
-If they point is different directions, then $e$ is neither.
+If they point in different directions, then $e$ is neither.
 
 
 
@@ -386,7 +385,7 @@ The slope is used to calculate the flow direction at a given location, which is 
 %
 
 The slope can also be used to predict the irradiation (from the sun) that a given location at a given day/time would receive.
-This is often the input of (local) meteorological models, can be used to optimise the location of solar panels, to predict land surface temperature, 
+This is often the input of (local) meteorological models, can be used to optimise the location of solar panels or to predict land surface temperature.
 
 
 %%%
