@@ -102,13 +102,13 @@ The basic algorithm for extracting one isoline is shown in Algorithm~\ref{algo:i
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-square}
-\caption{Different cases when extracting an isoline at elevation \qty{10}{\m} for a regular grid. The grey values are the elevation of the vertices forming one regular cell, and the blue lines and vertices are the ones extracted for that cell.}%
+\caption{Different cases when extracting an isoline at elevation \qty{10}{\m} (in blue) for a regular grid. The blue lines are the ones extracted for that cell.}%
 \label{fig:rasterconfs}
 \end{figure}
 \begin{figure}
   \centering
   \includegraphics[width=0.95\linewidth]{figs/isoline-tr}
-\caption{Different cases when extracting an isoline at elevation \qty{10}{\m} for a TIN\@. The grey values are the elevation of the vertices forming one triangle, and the blue lines and vertices are the ones extracted for that triangle.}%
+\caption{Different cases when extracting an isoline at elevation \qty{10}{\m} (in blue) for a TIN\@. The blue lines are the ones extracted for that triangle.}%
 \label{fig:isoline-tr}
 \end{figure}
 Note that since the algorithm visits every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
@@ -131,7 +131,7 @@ Intersections are computed by linearly interpolating the elevations of the verte
 Figure~\ref{fig:rasterconfs} illustrates the different possible configurations. 
 The top-left case indicates the case for which there are no intersections: all vertices are either higher or lower than $z_0$. 
 
-Observe that two vertices are exactly at $z_0$, then the extraction of these is in theory not necessary because the neighbouring cell could also extract them. 
+Observe that when two vertices are exactly at $z_0$, then the extraction of these is in theory not necessary because the neighbouring cell could also extract them. 
 However, we do not want to obtain an output with duplicate line segments, and thus a simple solution to this is to only extract such line segments if they are for instance the lower and/or left segments of a given cell.
 
 The most interesting case is the bottom-left one in Figure~\ref{fig:rasterconfs}, it occurs when the two pairs of opposing points are respectively higher and lower than $z_0$.
@@ -144,13 +144,14 @@ This can be resolved by simply picking a random option or consistently choose on
 \subsection{Conversion TIN to isolines}%
 \label{sec:tin-iso}
 
-Since a triangle has one fewer vertex/edge than a square grid cell, there are less possible intersection cases (Figure~\ref{fig:isoline-tr}) and, more importantly, there is no ambiguous case. 
-The worst case to handle is when there are horizontal triangles at exactly the height of the isoline.
-Otherwise, the intersection cases are quite similar to the raster situation and they can be easily implemented.
+Since a triangle has one fewer vertices than a square grid cell, there are less possible intersection cases and, more importantly, there is no ambiguous case. 
 
-To avoid extracting twice the same line segment when 2 vertices are at $z_0$ (case on the right in Figure~\ref{fig:isoline-tr}), then we can simply look at the normal of the edge segment: if its $y$-component is positive then it can be added, if $y=0$ then only add if the $x$-component is positive.
+When one or more vertices of the triangle are at the same elevation as $z_0$, then one must be careful.
+As shown in Figure~\ref{fig:isoline-tr}, if only one vertex is at $z_0$ then nothing should be extract; if two vertices are at $z_0$ then the edge between these can be extracted; if all three vertices are at $z_0$ then the triangle is flat/horizontal and nothing should be extracted (because adjacent triangles will have edges extracted).
 
-Observe that since the algorithm is simpler than that for a raster dataset, one way to extract isolines from a raster dataset is by first triangulating it: each square cell is subdivided into 2 triangles (simply ensure that the diagonal is consistent, \eg\ from lower-left to top-right).
+To avoid extracting twice the same line segment when two vertices are at $z_0$ (case on the right in Figure~\ref{fig:isoline-tr}), then we can simply look at the normal of the edge segment: if its $y$-component is positive then it can be added, if $y=0$ then only add if the $x$-component is positive.
+
+Observe that since the algorithm is simpler than that for a raster dataset, one way to extract isolines from a raster dataset is by first triangulating it: each square cell is subdivided into two triangles (simply ensure that the diagonal is consistent, \eg\ from lower-left to top-right).
 
 
 % TODO : interval tree?
