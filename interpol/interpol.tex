@@ -56,12 +56,12 @@ The essential properties of an `ideal' interpolation method for bivariate\index{
   \item \textbf{computationally efficient}: it should be possible to implement the method and get an efficient result. Efficiency is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
   \item \textbf{automatic}: the method must require as little input as possible from the user, \ie\ it should not rely on user-defined parameters that require \emph{a priori} knowledge of the dataset.
 \end{enumerate}
-\begin{figure}
+\begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/continuity}
-  \caption{$C^0$ interpolant is a function that is continuous but the first derivative is not possible at certain locations; $C^1$ interpolant has its first derivative possible everywhere; $C^2$ interpolant has its second derivative possible everywhere (this one is more difficult to draw).}%
+  \caption{Continuity of an interpolant. \textbf{(a)} an interpolant that is not continous. \textbf{(b)} a $C^0$ interpolant is a function that is continuous but the first derivative is not possible at certain locations. \textbf{(c)} a $C^1$ interpolant has its first derivative possible everywhere. \textbf{(d)} a $C^2$ interpolant has its second derivative possible everywhere (this one is more difficult to draw).}%
 \labfig{fig:continuity}
-\end{figure}
+\end{figure*}
 
 
 
