@@ -98,14 +98,13 @@ This means in practice that for a given terrain in raster, calculating its gradi
 %%%
 \paragraph{Aspect.}
 At a given point $p$ on the terrain the gradient can be in any direction, the aspect is this direction projected to the $xy$-plane. 
-It is basically a 2D vector telling us the direction of the steepest slope at a given point.
-It is usually expressed in degrees from an arbitrary direction (most often the north).
+It is basically a 2D vector telling us the direction of the steepest slope at a given point; at a given location the aspect will always be perpendicular to the contour line.
 Observe that for the parts of the terrain that are horizontal (\eg\ a lake) the value of the aspect is unknown.
-Also observe that at a given location the aspect will always be perpendicular to the contour line.
 
-
+The aspect is usually expressed as a \emph{cartographical azimuth},
+\marginnote{cartographical azimuth}
+which is expressed in degrees, from the North, clockwise: $0^{\circ}$ means North, $90^{\circ}$ East, $180^{\circ}$ South, and $270^{\circ}$ West.
 % GDAL: % https://www.gdal.org/gdaldem.html#gdaldem_aspect
-% values between 0° and 360° representing the azimuth that slopes are facing. The definition of the azimuth is such that : 0° means that the slope is facing the North, 90° it's facing the East, 180° it's facing the South and 270° it's facing the West (provided that the top of your input raster is north oriented).
 
 
 
