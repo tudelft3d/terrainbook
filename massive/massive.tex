@@ -289,11 +289,9 @@ The main drawbacks of this approach are that the design of such algorithms is ra
 
 We discuss in this section an alternative approach to dealing with massive datasets: \emph{streaming}.%
 \index{streaming data}\marginnote{streaming data} 
-A \emph{stream} 
-\marginnote{\url{https://en.wikipedia.org/wiki/Stream_(computing)}}
-is a sequence of data---in theory it can be infinite!---that is available over a period of time, and ``can be thought of as items on a conveyor belt being processed one at a time rather than in large batches''.
-One concrete example is YouTube: to watch a given video one does not need to first download the whole file, she can simply start watching the video as soon as the first KB are downloaded.
-The content of the video is downloaded as one watches the video, and if the user fast-forward to for instance 5:32s then only the KB of content from where the cursor is need to be downloaded to watch the video.
+A \emph{stream} is a sequence of data---in theory it can be infinite!---that is available over a period of time, and ``can be thought of as items on a conveyor belt being processed one at a time rather than in large batches''\sidenote{\url{https://en.wikipedia.org/wiki/Stream_(computing)}}.
+One concrete example is YouTube: to watch a given video a user does not need to first download the whole file, she can simply start watching the video as soon as the first KB are downloaded.
+The content of the video is downloaded as she watches the video, and if she fast-forwards to, for instance, 5:32s then only the KB of content from where the cursor is need to be downloaded to watch the video.
 At no moment is the full video downloaded to the user's device.
 
 %
