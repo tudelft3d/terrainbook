@@ -89,9 +89,17 @@ What we casually refer to as `slope' has actually two components (see Figure~\re
 The gradient at a given point $p$ is the maximum rate of change in elevation. 
 It is obtained by the angle $\alpha$ between $H$ and the horizontal plane (Figure~\ref{fig:slope_aspect}).
 From a mathematical point-of-view, the gradient is the maximum value of the derivative at a point on the surface of the terrain (maximised over the direction).
-The gradient will often be expressed in degrees, or in percentage.
 
-Notice that if we calculate the gradient at every location for a terrain, then we obtain a new field since the gradient is a continuous phenomena (values from 0\% to 100\% for instance).
+The gradient will most often be expressed in degrees or in percentage.
+If a percentage is used, the following is used (see Figure~\ref{fig:slope_aspect}):
+
+\begin{equation}
+  percentage = \frac{\Delta z}{\Delta xy}
+\end{equation}
+
+which means that a hill with a gradient of 100\% is equal to $\alpha = 45^{\circ}$.
+
+Notice that if we calculate the gradient at every location for a terrain, then we obtain a new field since the gradient is a continuous phenomena (values from $0^{\circ}$ to $30^{\circ}$ for instance).
 This means in practice that for a given terrain in raster, calculating its gradient will create a new raster file that can be further processed.
 
 
