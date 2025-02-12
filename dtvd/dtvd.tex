@@ -387,9 +387,9 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 \subsection{Point location with walking}% 
 \label{sec:dtwalk}
 
-To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ since each triangle must be checked).
+To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $\mathcal{O}(n)$ or a single point location since each triangle must be checked).
 
-A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described below, to navigate from one triangle to the other. 
+A better alternative is to use the adjacency relationships between the triangles, and use a series of \Orient\ tests, as described in Section~\ref{sec:predicates}, to navigate from one triangle to the other. 
 The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are given in the Algorithm~\ref{algo:walk}.
 \begin{figure}
   \centering
@@ -429,6 +429,10 @@ The idea, called ``walking'', is shown in Figure~\ref{fig:walk} and details are 
 The idea is as follows: in a DT($S$), starting from a triangle $\tau$ (it can be any), we move to one of the adjacent triangle of $\tau$ ($\tau$ has three neighbours, we choose one neighbour $\tau_i$ such that the query point $p$ and $\tau$ are on each side of the edge shared by $\tau$ and $\tau_i$) until there is no such neighbour, then the simplex containing $p$ is the current triangle $\tau$.
 Notice that this algorithm is not affected by degenerate cases, and that if an \textrm{O}\textsc{rientation} test returns 0 (collinearity), then it is simply considered a positive result. 
 This will ensure that if the query point $p$ is located exactly at the same position as one point in $S$, then one triangle incident to $p$ will be returned.
+
+It should be mentioned that while it appears straightforward, the point location step is the biggest computational bottleneck for a DT implementation.
+For a large dataset (\eg\ a lidar point cloud, see Chapter~\ref{chap:massive} for some massive examples), if several thousands/millions of triangles must be tested to find the one containing a give point, then it will be very slow; the insertion itself with a series of flips is generally since around 4 flips will be performed for a normal distribution of points.
+In practice, because most real-world datasets will have a high \emph{spatial coherence} (in simple terms, two consecutive points in the dataset are close in reality; see Section~\ref{sec:spatial_coherence}), the time spent on walking will be minimised since most library will start the walk from the previously inserted point.
 
 
 %%%
