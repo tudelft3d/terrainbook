@@ -121,7 +121,7 @@ which is expressed in degrees, from the North, clockwise: $0^{\circ}$ means Nort
 
 Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $\tau$ containing this point, and compute the normal vector $\vec{n}$ of $\tau$ (pointing outwards). 
 The projection of $\vec{n}$ on the $xy$-plane is the aspect (this is done by simply ignore the $z$-component of the vector).
-And the gradient is obtained easily.
+And the gradient is obtained by calculating the angle $\gamma$ between $\vec{n}$ and the horizontal plane, and taking the complement of $\gamma$.
 
 If $p$ is directly on a edge of the TIN then the solution cannot be obtained directly; it is common practice to calculate the normal vector of the 2 incident triangle and average them to obtain one $\vec{n}$.
 The same is applied if $p$ is directly on a vertex $v$ of the TIN: the average of all the normal vectors of all the incident triangle to $v$ is used.
