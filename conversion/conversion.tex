@@ -407,8 +407,8 @@ The \emph{Implicit Function Theorem} is further explained in \citet{Sibson97}.
 \citet{Dakowicz03} describe in details the skeleton-based algorithm to interpolate from isolines, and show the results of using different interpolation methods.
 
 The basic algorithm to extract isolines, which is a brute-force approach, can be slow if for instance only a few isolines are extracted from a very large datasets: all the $n$ triangles/cells are visited, and most will not have any intersections.
-To avoid this, \citet{vanKreveld96} build an auxiliary data structure, the \emph{interval tree}, which allows us to find quickly which triangles will intersect a given elevation.
-It is also possible to build another auxiliary structure, the contour tree, where the triangle seeds are stored~\citep{vanKreveld97-1}.
+To avoid this, \citet{VanKreveld96} build an auxiliary data structure, the \emph{interval tree}, which allows us to find quickly which triangles will intersect a given elevation.
+It is also possible to build another auxiliary structure, the contour tree, where the triangle seeds are stored~\citep{VanKreveld97-1}.
 Such methods require more storage, but can be useful for interactive environment where the user extracts isolines interactively.
 
 \citet{Garland95} elaborate further on different aspects of TIN simplification, such as different importance measures, the differences between refinement and decimation, and the usefulness of data-dependent triangulations. 
