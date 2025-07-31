@@ -20,7 +20,7 @@ Examples of massive datasets:
 \begin{enumerate}
   \item the point cloud dataset of a \qty{1.5}{km^2} of Dublin\sidenote{\url{https://bit.ly/32GXiFq}} contains around 1.4 billion points (density of \qty{300}{pts/m^2}), which was collected with airborne laser scanners; 
   \item the lidar dataset of the whole of the Netherlands (AHN\sidenote{\url{https://www.ahn.nl/}}) has about \qty{10}{pts/m^2} and its latest version (AHN4) has more than 900 billion points;
-  \item the global digital surface model \emph{ALOS World 3D---30m (AW3D30)}\sidenote{\url{https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm}} is a raster dataset with a resolution of \ang{;;1}. Thus we have about \num{8.4d11} pixels.
+  \item the global digital surface model \emph{ALOS World 3D---30m (AW3D30)}\sidenote{\url{https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm}} is a raster dataset with a resolution of \ang{;;1}, therefore we have about \num{8.4d11} pixels.
 \end{enumerate}
 
 %
@@ -48,7 +48,7 @@ This chapter discusses one method to visualise and potentially analyse massive r
 \index{raster pyramid}
 
 Raster pyramids are a well-known, standardised, and widely used mechanism to deal with large raster terrains.
-They are also used for standard images in photography and many software support them since they optimise visualisation and thus the speed of a software dealing with large images (they are called ``tiled pyramidal images'' or ``overview images'').
+They are also used for standard images in photography and many software programmes support them since they optimise visualisation and thus the speed of a software dealing with large images (they are called ``tiled pyramidal images'' or ``overview images'').
 
 As shown in \reffig{fig:pyramids}, 
 \begin{figure}
@@ -235,10 +235,10 @@ If not, then the whole subtree can be skipped, and the algorithm continues.
 
 \reffig{fig:kdtree_nn}c shows this idea after ($1,3$) has been visited.
 $c_{temp}$ is ($5,6$), and we must decide whether the subtree right of ($2,7$) must be visited.
-In this case it must not be visited because the bounding box (light blue region) is 3.0unit from $q$, and $dist(q,c_{temp})$ is around 2.07; it is thus impossible that one point inside the subtree be closer than ($5,6$).
+In this case it must not be visited because the bounding box (light blue region) is 3.0 units from $q$, and $dist(q,c_{temp})$ is around 2.07; it is thus impossible that one point inside the subtree be closer than ($5,6$).
 
 The next step is verifying whether the subtree right of the root could contain a point closer than $c_{temp}$.
-In the \reffig{fig:kdtree_nn}d, this is possible since the bounding box is only 0.5unit from $q$, and thus the subtree must be visited.
+In the \reffig{fig:kdtree_nn}d, this is possible since the bounding box is only 0.5 unit from $q$, and thus the subtree must be visited.
 
 The algorithm continues until all subtrees have either been visited or eliminated.
 At the end, $c$ is ($6,4$).
@@ -364,7 +364,7 @@ In practice, this is performed by reading a LAS/LAZ file (or any format with poi
 %%%
 \subsection{Triangulator}
 The input of the triangulator is the output of the finaliser: a set of points with finalisation tags.
-The triangulator will triangulate the points as described in Section~\ref{sec:dtconstruction}, but will attempt to remove from memory the triangles that are \emph{final}, those that we are sure will never be modified (since it it guaranteed that no new points will fall inside their circumcircle).
+The triangulator will triangulate the points as described in Section~\ref{sec:dtconstruction}, but will attempt to remove from memory the triangles that are \emph{final}, those that we are sure will never be modified (since it is guaranteed that no new points will fall inside their circumcircle).
 This is performed with the finalisation tags and the following observation (see Figure~\ref{fig:triangulator}): 
 \begin{figure}
   \centering
