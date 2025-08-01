@@ -28,32 +28,31 @@ However, the ``Earth's surface'' is also not a clear concept, since several obje
 \end{figure*}
 In this book, we use the following definitions (see Figure~\ref{fig:dtmdsm}):
 \begin{description}
-  \item[DTM] (\textbf{d}igital \textbf{t}errain \textbf{m}odel). The surface is the \emph{bare-earth}, without man-made objects or vegetation.\index{DTM (digital terrain model)}
-  \item[DSM] (\textbf{d}igital \textbf{s}urface \textbf{m}odel). The surface includes all objects and structures on the terrain, including vegetation.\index{DSM (digital surface model)}
-  \item[DEM] (\textbf{d}igital \textbf{e}levation \textbf{m}odel). 
-  In the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\index{DEM} 
+  \item[DTM] (\textbf{d}igital \textbf{t}errain \textbf{m}odel): the surface is the \emph{bare-earth}, without man-made objects or vegetation.\index{DTM (digital terrain model)}
+  \item[DSM] (\textbf{d}igital \textbf{s}urface \textbf{m}odel): the surface includes all objects and structures on the terrain, including vegetation.\index{DSM (digital surface model)}
+  \item[DEM] (\textbf{d}igital \textbf{e}levation \textbf{m}odel): 
+  in the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM\@.\index{DEM} 
   \marginnote{DEM != grid}
-  It should be noticed that in some countries (especially in the USA) a DEM is often synonymous with a grid of elevation (but not in this book!).
+  However, it should be noticed that in some countries (especially in the USA) a DEM is often synonymous with a grid of elevation (but not in this book!).
 \end{description}
 
-
-Some concepts are derived from those, for instance the \emph{normalised DSM} (\textbf{nDSM}),%
-\index{nDSM (normalised DSM)}\index{normalised DSM}\marginnote{nDSM: normalised DSM}
-which is defined as the difference between the DSM and the DTM\@.
-You thus obtain a value representing the height of man-made objects and trees, and zero where there are none.
-Another often used concept is that of \emph{canopy height model} (\textbf{CHM}),%
-\index{CHM}\index{canopy height model}\marginnote{CHM: canopy height model}
-which is very similar to a nDSM except that we are only interested in the vegetation/trees;  we ignore the other objects (\eg\ buildings, bridges, lampposts, busstops, cars, etc.).
-The CHM is the difference between the DSM \emph{of the vegetation} and the DTM.
+Furthermore, some concepts are derived from those, for instance: 
+\begin{description}
+  \item[nDSM] (\textbf{n}ormalised DSM): the difference between the DSM and the DTM\@.
+  \index{nDSM (normalised DSM)}\index{normalised DSM}
+  We thus obtain a value representing the height of man-made objects and trees, and zero where there are none.
+  \item[CHM] (\textbf{c}anopy \textbf{h}eight \textbf{m}odel): similarly to the nDSM except that we are only interested in the vegetation/trees; we ignore the other objects (\eg\ buildings, bridges, lampposts, busstops, cars, etc.).
+  \index{CHM}\index{canopy height model}
+  The CHM is the difference between the DSM \emph{of the vegetation} and the DTM.
+\end{description}
 
 
 %%%
 %
 \section{Dimensionality of DTMs}
 
-The term ``3D'' is misleading in a DTM context, as it is in a GIS context, 
+The term ``3D'' is misleading in a DTM context---as it is in a GIS context--- because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
 \marginnote{3D is misleading}
-because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see Figure~\ref{fig:dimgis}).
 \marginnote{2.5D? 2.75D? Volumes?}
 \begin{figure*}[b]
   \centering
