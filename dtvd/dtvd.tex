@@ -104,15 +104,16 @@ Let $S$ be a set of points in $\mathbb{R}^2$, the \emph{convex hull} of $S$, den
 It is best understood with the elastic band analogy: imagine each point in $\mathbb{R}^2$ being a nail sticking out of the plane, and a rubber band stretched to contain all the nails, as shown in Figure~\ref{fig:convex_hull}. 
 When released, the rubber band will assume the shape of the convex hull of the nails. 
 Notice that conv($S$) is not only formed by the edges connecting the points (the rubber band), but all the points of $\mathbb{R}^2$ that are contained within these edges (thus the whole polygon).
+
+Observe that the number of triangles $t$ in a DT is related to the number of vertices $n$ and  the number of points $h$ on the boundary of conv($S$): $t = 2n - 2 - h$.
+Each insertion (see Figure~\ref{fig:insertion_deletion}) increases $t$ by exactly two.
+
 \begin{marginfigure}
   \centering
   \includegraphics[width=\textwidth]{convex_hull}
   \caption{The convex hull of a set of points in $\mathbb{R}^2$.}% 
 \label{fig:convex_hull}
 \end{marginfigure}
-
-Observe that the number of triangles $t$ in a DT is related to the number of vertices $n$ and  the number of points $h$ on the boundary of conv($S$): $t = 2n - 2 - h$.
-Each insertion (see Figure~\ref{fig:insertion_deletion}) increases $t$ by exactly two.
 
 %
 \subsection{Local optimality}
@@ -515,14 +516,14 @@ Observe that in practice, if only the DT is wanted (and not the constrained one,
 
 However, because it is simpler to manage triangles over arbitrary polygons (they always have exactly 3 vertices and 3 neighbours), data structures specific for triangulations have been developed and are usually used.
 
-The simplest data structure, as shown in Figure~\ref{fig:tr_ds}, 
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{tr_ds}
   \caption{The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).}%
 \label{fig:tr_ds}
 \end{figure}
-considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles. 
+
+The simplest data structure, as shown in Figure~\ref{fig:tr_ds}, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles. 
 Observe that the order in which the vertices and adjacent triangles stored correspond to each other. 
 This is an important property that allows an efficient retrieval of triangles in the Walk algorithm (Algorithm~\ref{algo:walk}) for instance.
 
