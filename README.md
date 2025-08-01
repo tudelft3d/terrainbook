@@ -3,6 +3,8 @@
 
 # Computational modelling of terrains
 
+<img src="docs/assets/img/cover.jpg" alt="Book cover" width="250">
+
 The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
 
 It covers different representations of terrains (\eg\ TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
