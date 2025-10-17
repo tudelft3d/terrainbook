@@ -191,13 +191,13 @@ Even the same product can have different versions, with different resolutions an
 
 %
 
-For example, SRTM is freely available, 
+For example, SRTM is freely available,
 \marginnote{SRTM}\index{SRTM}
 including its derived NASADEM, and was first introduced at \qty{90}{m}, with subsequent versions at \qty{30}{m}.
 Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of \qty{\pm12}{m}.
-WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data, even has a resolution of \qty{\pm5}{m}.
+WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data (as used in Tandem-X 2020), even has a resolution of \qty{\pm5}{m}.
 CopernicusDEM is a resampled WorldDEM---bought with your taxpayer money by ESA and freely distributed---at \qty{30}{m} resolution.
-The pseudo DTM FABDEM (\textbf{F}orest \textbf{A}nd \textbf{B}uilding removed), while derived from the freely available CopernicusDEM, is only free for research purposes.
+The pseudo DTMs FABDEM (\textbf{F}orest \textbf{A}nd \textbf{B}uilding removed) and FathomDEM, while derived from the freely available CopernicusDEM, are only free for research purposes.
 
 Similarly, while ALOS World3D is freely available at \qty{30}{m}, it also comes in a commercial version at \qty{5}{m} resolution.
 There is even a \qty{0.5}{m} commercial version, based on multiple optical satellites, available on request.
@@ -208,12 +208,11 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 % Maybe we should make our own table with paid products too? Like that table: \url{https://github.com/DahnJ/Awesome-DEM#summary}
 % I find it interesting to know that some products are not free, and way better
 
-
 % \usepackage{booktabs}
 \begin{table*}[]
   \begin{tabular}{@{}lclllll@{}}
     \toprule
-                  & Year released & By                 & Sensor  & Type               & License & Resolution \\
+    & Year released & By                 & Sensor  & Type               & License & Resolution \\
     \midrule
     SRTM          & 2001          & NASA               & InSAR   & DSM                & Open    & 30--90m    \\
     ASTER         & 2009          & NASA               & optical & DSM                & Open    & 30m        \\
@@ -223,7 +222,10 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
     MERIT         & 2017          & \citet{Yamazaki17} & InSAR   & DTM$^{\prime}$     & Open    & 90m        \\
     NASADEM       & 2019          & NASA               & InSAR   & DSM                & Open    & 30m        \\
     CopernicusDEM & 2020          & ESA                & InSAR   & DSM                & Open    & 30--90m    \\
+    Tandem-X 2020        & 2022          & \citet{wessel2022}   & InSAR   & DSM     & Closed  & 30m        \\
     FABDEM        & 2022          & \citet{Hawker22}   & InSAR   & DTM$^{\prime}$     & Closed  & 30m        \\
+    FathomDEM        & 2025          & \citet{uhe2025}   & InSAR   & DTM$^{\prime}$     & Closed  & 30m        \\
+    GEDTM30        & 2025          & \citet{ho2025}   & InSAR   & DTM$^{\prime}$     & Open  & 30m        \\
     \bottomrule
   \end{tabular}
   \caption{Overview of global DEMS, see Figure~\ref{fig:dem_comparison} for their lineage.}%
@@ -380,14 +382,13 @@ While these methods improve the accuracy of gDEMs considerably, they are not per
 Recent work has also suggested that while these datasets have improved vertical accuracy, the accuracy of derived geomorphometric parameters such as slope and curvature suffers.
 % are still far removed from a local DTM\@.
 
-
 %%%%%%%%%%%%%%%%%%%%
 %
 \section{Notes and comments}
 
-
 Space lidar is promising as a source to reconstruct gDEMs because lidar penetrates vegetation, and thus obtaining a DTM is an easier process.
 Recently, several global \emph{coastal} pseudo DTMs---covering only areas near or below sea-level---have been produced using space lidar (to some extent): CoastalDEM~\citep{Kulp24}, DiluviumDEM~\citep{Dusseau23} and DeltaDTM~\citep{Pronk24}.
+Likewise, the new ESA Biomass mission~\citep{quegan2019}---launched in 2025---will use P-band radar to penetrate vegetation and measure the ground below, potentially enabling a truly global DTM in the future.
 
 \citet{Yang11} provide a detailed list of applications where gDEMs (SRTM, but when the paper was written (2011) SRTM was still the main product available globally) are necessary as input.
 
