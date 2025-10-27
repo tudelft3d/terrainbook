@@ -12,6 +12,6 @@ push = false
 "docs/_config.yml" = [
     "latest_version: {version}",
 ]
-
-
-
+"CITATION.bib" = [
+  "year = {{version}}",
+]
