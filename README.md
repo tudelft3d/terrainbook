@@ -6,15 +6,12 @@
 <img src="docs/assets/img/cover.jpg" alt="Book cover" width="250">
 
 The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
-
 It covers different representations of terrains (\eg\ TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
 
-The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
-We wanted the book to be agnostic to the programming language.
-On the website of the course for which this book was developed ([https://3d.bk.tudelft.nl/courses/geo1015](https://3d.bk.tudelft.nl/courses/geo1015)), there are assignments available (Python and/or C++ are used by the students).
+The book is currently used for the course [Digital terrain modelling (GEO1015)](https://3d.bk.tudelft.nl/courses/geo1015/) in the [MSc Geomatics at the Delft University of Technology](http://geomatics.tudelft.nl) in the Netherlands.
+The course is tailored for MSc students who have already followed an introductory course in GIS and in programming.
 
-The book presents the theory and give some examples of libraries and software to perform certain tasks, but there is no code example given.
-We wanted the book to be agnostic to the programming language.
+Each chapter is a lesson in the course, and each lesson is accompanied by a video introducing the key ideas and/or explaining some parts of the lessons.
 
 ## Authors
 
@@ -42,8 +39,3 @@ Most chapters have a short YouTube video explaining the key concepts, and some c
 ## Open material
 
 This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License.
-
-
-
-
-
