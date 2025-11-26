@@ -120,7 +120,7 @@ which is expressed in degrees, from the North, clockwise: $0^{\circ}$ means Nort
 \paragraph{Slope in TINs.}
 
 Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $\tau$ containing this point, and compute the normal vector $\vec{n}$ of $\tau$ (pointing outwards). 
-The projection of $\vec{n}$ on the $xy$-plane is the aspect (this is done by simply ignore the $z$-component of the vector).
+The projection of $\vec{n}$ on the $xy$-plane is the aspect (this is done by simply ignoring the $z$-component of the vector).
 And the gradient is obtained by calculating the angle $\gamma$ between $\vec{n}$ and the horizontal plane, and taking the complement of $\gamma$.
 
 If $p$ is directly on a edge of the TIN then the solution cannot be obtained directly; it is common practice to calculate the normal vector of the 2 incident triangle and average them to obtain one $\vec{n}$.
@@ -347,18 +347,18 @@ The contour line through the $p$ does not exist.
 \index{saddle point}
 
 As shown in Figure~\ref{fig:feature_points}b, a saddle point, also called a pass, is a point whose neighbourhood is composed of higher elevations on two opposite directions, and 2 lower elevations in the other two directions.
-From a mathematics point-of-view, it is a point for which the derivatives in orthogonal directions are 0, but the point is not maximum (peak) or a minimum (pit).
+From a mathematics point-of-view, it is a point for which the derivatives in orthogonal directions are 0, but the point is not a maximum (peak) or a minimum (pit).
 
 %
 
-If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most point in a terrain this will be 2, except for peaks/pits where this is 0.
+If we consider the contour line of a saddle point $p$, then there are 4 or more contour line segments meeting at $p$; for most points in a terrain this will be 2, except for peaks/pits where this is 0.
 \begin{marginfigure}
   \centering
   \includegraphics[page=2,width=\textwidth]{figs/saddle_contour}
   \caption{A saddle point at elevation \qty{10}{\m}, and its surrounding points. The triangulation of the area is created and used to extract the contour line segments at \qty{10}{\m} (red lines).}%
 \label{fig:saddle_contour}
 \end{marginfigure}
-Figure~\ref{fig:saddle_contour} shows an example for a point with an elevation of \qty{10}{\m}, the contour lines at \qty{10}{\m} is drawn by linearly interpolating along the edges of the TIN of the surrounding (see Chapter~\ref{chap:conversion}).
+Figure~\ref{fig:saddle_contour} shows an example for a point with an elevation of \qty{10}{\m}, the contour lines at \qty{10}{\m} are drawn by linearly interpolating along the edges of the TIN of the surrounding (see Chapter~\ref{chap:conversion}).
 
 
 %%%
