@@ -152,7 +152,7 @@ To represent a terrain in a computer, and be able to manipulate it (\ie\ edit th
 %%%
 \subsection{Strategy \#1: points + global interpolation function}
 This means storing the original sample points with the parameters of the \emph{global} spatial interpolation method that is best suited to the distribution of the samples and their accuracy.
-Global methods are for instance inverse-distance to a power, natural neighbours, or kriging.
+Global methods are for instance inverse-distance to a power, natural neighbours, and kriging.
 This strategy is used because one can compactly represent a field (only the samples and a few parameters need to be stored).
 
 Notice that this strategy permits us to reconstruct the continuity of a terrain from the samples by calculating the value of the elevation, but that this value is \emph{not} persistently stored in memory.
