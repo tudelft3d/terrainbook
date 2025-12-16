@@ -79,7 +79,7 @@ We know that if we have $n$ points in $S$ (in $\mathbb{R}^3$ since the samples a
 This interpolant will be exact, continuous and smooth (at least $C^2$).
 However, it will not be local (which is problematic for terrains), and finding the polynomial of a high degree for large datasets might be impossible (or take a lot of time).
 
-The biggest concern with polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the the set $S$.
+The biggest concern with polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and `overshoot', \ie\ be (far) outside the minimum or maximum $z$ values of the set $S$.
 This is known as the Runge's phenomenon in numerical analysis,%
 \index{Runge's phenomenon }\marginnote{Runge's phenomenon}
 and is shown in \reffig{fig:polynomial}.
