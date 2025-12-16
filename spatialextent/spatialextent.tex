@@ -403,7 +403,7 @@ If $\alpha = 0$ then the $\alpha$-shape is $S$ (which is a valid $\alpha$-shape)
 
 The $\alpha$-shape is not a polygon or a region, but a complex formed of $k$-simplices, where $0 \leq k \leq 2$.
 Furthermore, it is a subcomplex of the Delaunay triangulation (DT) of $S$.
-That is, the easiest method to construct an $\alpha$-shape is by first constructing DT($S$), and then removing all edges that are shorter then $2\alpha$.
+That is, the easiest method to construct an $\alpha$-shape is by first constructing DT($S$), and then removing all edges that are longer then $2\alpha$.
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
@@ -522,5 +522,5 @@ The DBSCAN algorithm was introduced in \citet{Ester96}.
   \item If the parameter $l$ for the $\chi$-shape is equal to the $\alpha$ parameter for an $\alpha$-shape, will the resulting shapes be the same?
   \item Given an $\alpha$-shape of $S$, how to calculate how many components are part of it? 
   \item Draw what would happen if one of the 2 edges was removed in \reffig{fig:chishape}c.
-  \item What is the influence of $k$ for the moving arm algorithm (with a \emph{kdd})? Will a higher $k$ create a larger or smaller region in general?
+  \item What is the influence of $k$ for the moving arm algorithm (with a \emph{knn})? Will a higher $k$ create a larger or smaller region in general?
 \end{enumerate}
