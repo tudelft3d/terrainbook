@@ -143,7 +143,7 @@ We will look at two common options to solve this problem: modifying a DTM by fil
 The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (Figure~\ref{fig:pf}), or possibly to a set of cells that are known to be valid outlets, \eg\ lakes and oceans\@.
 \marginnote{outlet}
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
-In the best case scenario, we can imagine that the resulting DTM is one that resembles follows the terrain elevation of terrain where there is no water and the top of natural water bodies (but no artificial features as in a DEM).
+In the best case scenario, we can imagine that the resulting DTM is one that: (i) is identical to the original DTM where there is no water, but (ii) follows the top of water bodies where there is.
 
 \begin{figure}[htbp]
 \centering
