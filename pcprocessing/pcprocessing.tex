@@ -658,10 +658,10 @@ A better line parametrisation is the Hesse normal form\index{Hesse normal form}\
 r = x\cos{\phi} + y\sin{\phi}. 
 \]
 As illustrated in Figure~\ref{fig:hough-transform:a}, $(r,\phi)$ are the polar coordinates of the point on the line that is closest to the origin, \ie\ $r$ is the distance from the origin to the closest point on the line, and $\phi \in [0^\circ, 180^\circ]$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line. 
-This parametrisation has no problems with vertical lines (\ie\ $\phi=90^{\circ}$).
+This parametrisation has no problems with vertical lines (\ie\ $\phi=0^{\circ}$).
 Similarly, for plane detection we can use the parametrisation
 \[
-r = x \cos{\theta} \sin{\phi} + y \sin{\phi} \sin{\theta} + z \cos{\phi}.
+r = x \sin{\theta} \cos{\phi} + y \sin{\theta} \sin{\phi} + z \cos{\theta}.
 \]
 Where $(r, \theta, \phi)$ are the spherical coordinates of the point on the plane that is closest to the origin.
 
