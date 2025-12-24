@@ -100,7 +100,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding (see Section~\ref{sec:acquisistion-techniques}), a common issue is the occurrence of (shoals of) fish. 
+For example in case of a point cloud derived from multi-beam echo sounding (see Section~\ref{sec:mbes}), a common issue is the occurrence of (shoals of) fish. 
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to remove the relatively long edges that connect the outlier clusters to the seafloor.
@@ -315,7 +315,7 @@ The algorithm is detailed in Algorithm~\ref{algo:csf}.
 %
 
 \paragraph{Initialisation of the cloth.}
-The cloth is first initialised at an arbitrary height above the highest points are the point cloud.
+The cloth is first initialised at an arbitrary height above the highest points in the point cloud.
 The cloth is formed of particles regularly distributed according to a user-defined parameter.
 We assume that all particles have the same mass, and we define arbitrarily a first displacement vector due to the gravity (pointing downwards) (line~\ref{l:init_prev}).
 For each particle $p$, we need to define the lowest elevation it can move, once it reaches it it is labelled as unmovable (line~\ref{l:zmin}).
@@ -631,7 +631,7 @@ Other shape detection methods described in this chapter do not need point neighb
 %- segmentation that goes around a corner to include  points that still lier within the e-band
 %-/+ depends on point neighbourhood
 %+ flexible, it can work without a very explicit shape model, eg curved surfaces
-\paragraph{Time complexity.} If we assume that 
+\paragraph{Time complexity.} If we assume that
 \begin{enumerate}
 	\item the number of seeds in $L_{S}$ is linear with $n$, \ie\ the size of $P$,
 	\item the size of $S$ is at most $n$, and that
@@ -651,8 +651,8 @@ The detected shape instances are the ones that receive the highest number of vot
 To find the possible shape instances for $p$, the algorithm simply checks all possible parameter combinations that give a shape instance that fits with $p$.
 
 It is thus important to choose a good parametrisation of the shape that is to be detected.
-For instance when detecting lines one could use the slope-intercept form, \ie\ $y = mx+b$. 
-However, this particular parametrisation can not easily represent vertical lines, because $m$ would need become infinite which is computationally difficult to manage. 
+For instance when detecting lines one could use the slope-intercept form, \ie\ $y = mx+b$.
+However, this particular parametrisation can not easily represent vertical lines, because $m$ would need to become infinite which is computationally difficult to manage. 
 A better line parametrisation is the Hesse normal form\index{Hesse normal form}\marginnote{Hesse normal form} which is defined as 
 \[
 r = x\cos{\phi} + y\sin{\phi}. 
@@ -773,8 +773,8 @@ A comparison with several other ground filtering methods can be found in the wor
 % TODO : add exercices
 
 \begin{enumerate}
-   \item The LAS standard gives a global point offset in the header. What is the benefit of using such a global offset?  
-   \item What is the difference between thinning an point cloud prior to triangulation and TIN simplification?
+   \item The LAS standard gives a global point offset in the header. What is the benefit of using such a global offset?
+   \item What is the difference between thinning a point cloud prior to triangulation and TIN simplification?
   \item What is the probability that the line instance in Figure~\ref{fig:ransac:d} is detected with $k=2$ iterations?
   \item In Chapter~\ref{chap:acquisition} it is described how point density can vary based on the acquisition conditions. How could a (strongly) varying point density affect the effectiveness of the region growing algorithm?
   \item How many axes would an accumulator need for plane detection with the Hough transform?
