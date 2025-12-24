@@ -133,7 +133,7 @@ Note that this calculation can be sped up substantially by: (i) storing the accu
 
 \emph{Sinks}\marginnote{sink}\index{sink}, which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
 Some of these are natural features that are present in the terrain (\eg\ lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
-However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that easily filled (\ie\ flooded), after which water would flow out of them.
+However, they can also be artefacts of the DTM (\eg\ noise and areas without vegetation can create depressions), or they can be very small areas that are easily filled (\ie\ flooded), after which water would flow out of them.
 In the latter case, we need to implement a mechanism to route water flows out of these depressions, since otherwise our runoff model could have very large water flows stopping at even tiny depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
 
@@ -191,7 +191,7 @@ Figure from \citet{Barnes14}.}%
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=1.0\linewidth]{figs/lt.pdf}
-\caption{In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient towards from the outlet to route water out of the flat and towards the outlet.
+\caption{In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient towards the outlet to route water out of the flat.
 For this, we can iteratively assign (tiny or symbolic) elevation increases in the flat starting from the outlet until all non-draining cells in the flat have been covered.
 Figure from \citet{Barnes14}.}%
 \label{fig:lt}
