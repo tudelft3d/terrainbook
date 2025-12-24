@@ -59,7 +59,7 @@ The essential properties of an `ideal' interpolation method for bivariate\index{
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/continuity}
-  \caption{Continuity of an interpolant. \textbf{(a)} an interpolant that is not continous. \textbf{(b)} a $C^0$ interpolant is a function that is continuous but the first derivative is not possible at certain locations. \textbf{(c)} a $C^1$ interpolant has its first derivative possible everywhere. \textbf{(d)} a $C^2$ interpolant has its second derivative possible everywhere (this one is more difficult to draw).}%
+  \caption{Continuity of an interpolant. \textbf{(a)} an interpolant that is not continuous. \textbf{(b)} a $C^0$ interpolant is a function that is continuous but the first derivative is not possible at certain locations. \textbf{(c)} a $C^1$ interpolant has its first derivative possible everywhere. \textbf{(d)} a $C^2$ interpolant has its second derivative possible everywhere (this one is more difficult to draw).}%
 \labfig{fig:continuity}
 \end{figure*}
 
@@ -236,7 +236,7 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
-If the point location strategy is used to identify the triangle containing $x$ (\refsec{dtwalk}), then $\mathcal{O}(n^{1/3}$) on average is used.
+If the point location strategy is used to identify the triangle containing $x$ (\refsec{dtwalk}), then $\mathcal{O}(n^{1/3})$ on average is used.
 The interpolation itself is performed in constant time.
 
 
@@ -251,7 +251,7 @@ The idea is to define a set of criteria (instead of the empty circumcircle).
 One example is trying to minimise the change in normals for the two incident triangles of an edge.
 While such methods will yield longer and skinnier triangles, these might better approximate the shape of the terrain for some specific cases.
 One drawback of these methods is that different criteria will be required for different cases, and that computing such triangulation can be computationally expensive.
-In practice, one would need to first compute the DT, and then take each edge (and the two incident triangles), and perform a local flip based on the elevation values; the final triangulation is obtained by optimisation the wished criterion.
+In practice, one would need to first compute the DT, and then take each edge (and the two incident triangles), and perform a local flip based on the elevation values; the final triangulation is obtained by optimising the desired criterion.
 
 
 
@@ -279,7 +279,7 @@ If we subtract $p_2$ from $x$, and we use $w_2 = 1 - w_0 - w_1$, we obtain
   x - p_2 = w_0(p_0-p_2) + w_1(p_1 - p_2)
 \end{equation}
 We obtain 2 vectors ($p_0-p_2$ and $p_1-p_2$), which represent 2 edges of the triangle.
-This equation can be solved and we find that the 3 coefficients are equal of the area of the 3 triangle subdividing the original triangle (as shown in \reffig{fig:li}).
+This equation can be solved and we find that the 3 coefficients are equal to the area of the 3 triangle subdividing the original triangle (as shown in \reffig{fig:li}).
 
 
 %%%
@@ -470,7 +470,7 @@ For the case in \reffig{fig:bilinear}, the calculation would go as follows:
    \\
     r_z = \frac{p_x - n1_x}{n2_x - n1_x} \times (n2_z - n1_z) + n1_z \\
     \\
-    p_z = \frac{p_y - r_y}{q_y - r_y} * (q_z - r_z) + r_z \\
+    p_z = \frac{p_y - r_y}{q_y - r_y} \times (q_z - r_z) + r_z \\
   \end{array}
 \end{equation}
 
@@ -568,7 +568,7 @@ The differences in the lower areas (which is water) are smaller since these area
   \begin{subfigure}[b]{0.41\linewidth}
     \centering
     \includegraphics{figs/results/nn.png}
-    \caption{Nearest neighour}
+    \caption{Nearest neighbour}
   \end{subfigure}%
   \quad
   \begin{subfigure}[b]{0.41\linewidth}
@@ -645,7 +645,7 @@ It splits each triangle into 3 sub-triangles (by inserting a temporary point at 
 \citet{Dyn90} shows how to obtain a data-dependent triangulation.
 \citet{Rippa90} proves that the DT is the triangulation that minimizes the roughness of the resulting terrain, no matter what the actual elevation of the data is. 
 Here, roughness is defined as the integral of the square of the $L^2$-norm of the gradient of the terrain.
-\citet{Gudmundsson02} shows that a variation of the DT (one where $k$ vertices can be inside the circumcircle of a given triangle) can yield fewer local minima; whether it yields a ``better' terrain is an open question.
+\citet{Gudmundsson02} shows that a variation of the DT (one where $k$ vertices can be inside the circumcircle of a given triangle) can yield fewer local minima; whether it yields a ``better'' terrain is an open question.
 
 
 %%%
