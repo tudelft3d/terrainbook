@@ -35,6 +35,10 @@
 \usepackage{float}
 \newfloat{floatbox}{tb}{ext2}
 
+% -- to fix the latex compilation and "TeX capacity exceeded, sorry"
+% -- https://github.com/fmarotta/kaobook/issues/308
+\usepackage[disablepatch=caption]{tocbasic}
+
 \usepackage{pdfpages}
 
 % \graphicspath{{images/}{./}} % Paths in which to look for images
