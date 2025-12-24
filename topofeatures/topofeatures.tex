@@ -188,7 +188,7 @@ Based on the 9 elevation points, it is possible to fit a polynomial (as explaine
 
 A quadratic polynomial could for instance be defined:
 \begin{equation}
-  f(x,y) = ax^2 + by^2 + cxy + dx + ey +d
+  f(x,y) = ax^2 + by^2 + cxy + dx + ey + f
 \end{equation}
 , and thus:
 \begin{equation}
@@ -281,7 +281,7 @@ It suffices to remove the Voronoi edges incident to cells having the same label,
 The terms `roughness' and `ruggedness' are often used interchangeably and have slightly different definitions depending on the software and/or the documentation.
 We can however claim that they both refer to how ``undulating'' or ``regular'' a (part of a) terrain is.
 A terrain with a high roughness will have small local deviations, while one with low roughness will be ``smoother''.
-In other words, the normals of the surface of the terrain will deviate from each others greatly for a high roughness, and less for low roughness.
+In other words, the normals of the surface of the terrain will deviate from each other greatly for a high roughness, and less for low roughness.
 Another way to measure roughness, is to think of it as the ratio between the surface area and its projection into a plane. 
 \begin{marginfigure}
   \centering
@@ -301,7 +301,7 @@ The roughness value for one location can be one of these variations (more exist)
 It should be observed that these methods are highly influenced by the scale, \ie\ the resolution of the grid and the size of the filter will yield potentially very different results.
 
 Notice also that since the differences in the elevations are used, a terrain that would be a constant slope (\eg\ a talus) would get a roughness that is not zero (in comparison to a perfectly flat terrain).
-A solution to this would be to fit a plane with least-square adjustment to all the points involved in a filter, and then compare the differences of the elevations to plane.
+A solution to this would be to fit a plane with least-square adjustment to all the points involved in a filter, and then compare the differences of the elevations to the plane.
 
 %
 
@@ -328,7 +328,7 @@ One could recreate a TIN with the values of the vertices having the roughness, o
 \subsection{Peak}
 A point $p$ whose surrounding is formed only of points that are of lower elevation is a peak.
 The size and shape of the surrounding is dependent on the application and on the data model used to represent the terrain.
-If a grid is used, this surrounding could be the 8 neighbours; if a TIN is used they could be the vertices that of the triangles incident to $p$.
+If a grid is used, this surrounding could be the 8 neighbours; if a TIN is used they could be the vertices of the triangles incident to $p$.
 Observe that a peak can be local,%
 \marginnote{peaks and pits are local and influenced by the scale of the data}
 that is one point that happens to be a few centimetres higher than all its neighbours would be classified as a peak (the small terrain in Figure~\ref{fig:feature_points} contains several peaks), while if we consider a hill we would surely consider only the top as the peak.
@@ -433,7 +433,7 @@ This image assumes that the source of light (the sun) is located at a given posi
   \begin{kaobox-practice}[frametitle=\faCog\ Why does the sunlight come from the North-West?]
     The source of the light for hillshading is usually set at the North-West, but in reality the sun is \emph{never} located there (in the northern hemisphere).
     Why is this a common practice then?
-    The main reason is because the human brain usually assume that the light comes from above when looking at picture.
+    The main reason is because the human brain usually assumes that the light comes from above when looking at picture.
     Doing so reduces the chances of \emph{relief inversion}, \ie\ when mountains are perceived as valleys, and vice-versa.
     This \href{https://ramblemaps.com/why-does-sunlight-come-from-north}{website \faExternalLink} gives a clear example where a valley is interpreted as a mountain ridge by many if the sun is coming from the South.
   \end{kaobox-practice}
@@ -470,7 +470,7 @@ The polynomial fitting method for computing the slope is from \citet{Evans80} an
 \citet{Skidmore89} carried out a comparison of 6 methods to extract slope from regular gridded DTMs, and concluded that methods using 8 neighbours perform better than those using only 4 or the biggest height difference.
 He did not however investigate how the resolution of the grid influences the results.
 
-The formula to calculate the hillshade for one cell in a gridded DTM is from \citet{Burrough98}, and the ArcGIS manual describes it in details (\href{https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm}{link}).
+The formula to calculate the hillshade for one cell in a gridded DTM is from \citet{Burrough98}, and the ArcGIS manual describes it in detail (\href{https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm}{link}).
 
 Some algorithms have been developed to identify the features forming a DTM: \citet{Kweon94} and \citet{Schneider05} can identify simple features in DEMs (if they are pre-processed into bilinear patches); and \citet{Magillo09} and \citet{Edelsbrunner01-1} describe algorithms to perform the same, but directly on TINs.
 
