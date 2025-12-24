@@ -230,8 +230,8 @@ Let $G$ be a planar graph, as illustrated in Figure~\ref{fig:dual_graph} (black 
 \label{fig:dual_graph}
 \end{marginfigure}
 
-Observe that $G$ can also be seen as a cell complex in $\mathbb{R}^{2}$. 
-The duality mapping is as follows (also shown in details in Figure~\ref{fig:dualdetail}).
+Observe that $G$ can also be seen as a cell complex in $\mathbb{R}^{2}$.
+The duality mapping is as follows (also shown in detail in Figure~\ref{fig:dualdetail}).
 The dual graph $G^{\star}$ has a vertex for each face (polygon) in $G$, and the vertices in $G^{\star}$ are linked by an edge if and only if the two corresponding dual faces in $G$ are adjacent (in Figure~\ref{fig:dual_graph}, $G^{\star}$ is represented with dashed lines). 
 Notice also that each polygon in $G^{\star}$ corresponds to a vertex in $G$, and that each edge of $G$ is actually dual to one edge (an arc in Figure~\ref{fig:dual_graph}) of $G^{\star}$ (for the sake of simplicity the dual edges to the edges on the boundary of $G$ are not drawn).
 
@@ -279,7 +279,7 @@ This has the additional advantage of speeding up algorithms because when the VD 
 
 %
 
-While there exists different strategies to construct at DT, we focus in this book on the \emph{incremental} method since it is easier to understand and implement.
+While there exist different strategies to construct a DT, we focus in this book on the \emph{incremental} method since it is easier to understand and implement.
 An incremental algorithm is one where the structure is built incrementally; in our case this means that each point is inserted one at a time in a valid DT and the triangulation is updated, with respect to the Delaunay criterion (empty circumcircle), after each insertion. 
 Observe that the insertion of a single point $p$ in a DT modifies only \emph{locally} the DT, \ie\ only the triangles whose circumcircle contains $p$ need to be deleted and replaced by new ones respecting the Delaunay criterion (see Figure~\ref{fig:insertion_deletion} for an example). 
 \begin{marginfigure}
@@ -312,7 +312,7 @@ Figure~\ref{fig:insertion_steps} illustrates the steps of the algorithm, and Alg
   \KwIn{A DT($S$) $\mathcal{T}$, and a new point $p$ to insert}
   \KwOut{$\mathcal{T}^{p} = \mathcal{T} \cup \{p\}$ // the DT with point $p$}
   find triangle $\tau$ containing $p$\;
-  insert $p$ in $\tau$ by splitting it in to 3 new triangles (flip13)\;
+  insert $p$ in $\tau$ by splitting it into 3 new triangles (flip13)\;
   push 3 new triangles on a stack\;
   \While{stack is non-empty}
   {
@@ -382,7 +382,7 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
   \begin{kaobox-practice}[frametitle=\faCog\ How are DT created in practice?]
   Several implementations of the DT use a big triangle or the infinite vertex,  CGAL (\url{https://www.cgal.org/}) and startinpy (\url{https://github.com/hugoledoux/startinpy}) are two examples.
   Those will refer in their API to ``finite'' and ``infinite'' vertices, edges, and triangles.
-  It is therefore essential to understand the mechanism to use those librairies, even if one is not constructing the DT herself.
+  It is therefore essential to understand the mechanism to use those libraries, even if one is not constructing the DT herself.
   \end{kaobox-practice}
 \end{floatbox}
 
@@ -523,8 +523,8 @@ However, because it is simpler to manage triangles over arbitrary polygons (they
 \label{fig:tr_ds}
 \end{figure}
 
-The simplest data structure, as shown in Figure~\ref{fig:tr_ds}, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles. 
-Observe that the order in which the vertices and adjacent triangles stored correspond to each other. 
+The simplest data structure, as shown in Figure~\ref{fig:tr_ds}, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles.
+Observe that the order in which the vertices and adjacent triangles are stored correspond to each other. 
 This is an important property that allows an efficient retrieval of triangles in the Walk algorithm (Algorithm~\ref{algo:walk}) for instance.
 
 
@@ -584,13 +584,13 @@ Observe that the ConsDT can be used to triangulate polygons with holes (see Figu
     \includegraphics[page=1]{cdt_dog}
     \caption{}
   \end{subfigure}%
-  \qquad %-- that adds some space between th 2 figures
+  \qquad %-- that adds some space between the 2 figures
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[page=2]{cdt_dog}
     \caption{}
   \end{subfigure}%
-  \qquad %-- that adds some space between th 2 figures
+  \qquad %-- that adds some space between the 2 figures
   \begin{subfigure}[b]{0.3\linewidth}
     \centering
     \includegraphics[page=3]{cdt_dog}
