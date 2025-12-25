@@ -7,10 +7,18 @@ All notable changes to this book will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2025.1] - 2025-11-XX
+### Modified
+- fixed multiple typos throughout the book
+- improved clarity in sloppy sentences
+- fixed small error in curvature and Voronoi diagram figures
+- fixed LaTeX compilation issues
+
 ## [2025.0] - 2025-10-27
 ### Modified
 - fixed a few typos + improve clarity (thanks to students)
 - improved the references (especially capitalisation)
+
 
 ## [2024.0] - 2024-10-29
 ### Modified
@@ -101,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - First release of the book (beta version)
 
 
+[2025.1]: https://github.com/tudelft3d/terrainbook/compare/2025.0...2025.1
 [2025.0]: https://github.com/tudelft3d/terrainbook/compare/2024.0...2025.0
 [2024.0]: https://github.com/tudelft3d/terrainbook/compare/2023.0...2024.0
 [2023.0]: https://github.com/tudelft3d/terrainbook/compare/0.9.2...2023.0
