@@ -7,11 +7,14 @@ push = false
 
 [bumpver.file_patterns]
 "terrainbook.tex" = [
-    'v{version}',
+  'v{version}',
 ]
 "docs/_config.yml" = [
-    "latest_version: {version}",
+  "latest_version: {version}",
 ]
 "CITATION.bib" = [
-  "year = {{version}}",
+  "year = {YYYY}",
 ]
+# "front-back/pre.tex" = [
+#   ' YYYY ',
+# ]
