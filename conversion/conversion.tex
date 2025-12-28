@@ -16,7 +16,8 @@ We consider in this chapter the following four terrain representations and discu
 \end{figure}
 
 
-\begin{tabular}{>{\columncolor[gray]{0.9}}l|p{3.0cm}|p{3.0cm}|p{3.0cm}|p{3.0cm}}
+{\small
+\begin{tabular}{>{\columncolor[gray]{0.9}}l|p{3.19cm}|p{3.19cm}|p{3.19cm}|p{3.19cm}}
 \toprule
 \rowcolor[gray]{.9}
 from/to & PC & raster & TIN & isolines \\ \midrule
@@ -25,6 +26,7 @@ raster  &  keep middle points only & --- & create TIN using middle points of cel
 TIN     &  keep only vertices & interpolate at middle points of cells (\textsection\ref{sec:r-interpol}) & --- & extract from triangles (\textsection\ref{sec:tin-iso}) + structure output (\textsection\ref{sec:structuring}) \\ \hline
 isolines &  keep only vertices --- \emph{warning: `wedding cake' effect} (\textsection\ref{sec:weddingcake}) & convert lines to points + interpolate (\textsection\ref{sec:r-interpol}) --- \emph{warning: `wedding cake' effect} (\textsection\ref{sec:weddingcake}) &  create DT using points --- \emph{warning: `wedding cake' effect} (\textsection\ref{sec:weddingcake}) & --- \\ \bottomrule
 \end{tabular}
+}
 
 % \newpage
 
