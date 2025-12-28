@@ -1,6 +1,6 @@
 [bumpver]
 current_version = "2025.0"
-version_pattern = "YYYY.MINOR[-TAG]"
+version_pattern = "YYYY.INC0[-TAG]"
 commit = false
 tag = false
 push = false
@@ -15,6 +15,6 @@ push = false
 "CITATION.bib" = [
   "year = {YYYY}",
 ]
-# "front-back/pre.tex" = [
-#   ' YYYY ',
-# ]
+"front-back/pre.tex" = [
+  " YYYY % VER:YEAR",
+]
