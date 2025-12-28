@@ -275,8 +275,8 @@ The algorithm is detailed in Algorithm~\ref{algo:csf}.
   initialise the cloth $C$ at an elevation $z_0$ higher than the highest elevation \;
   \For{all $p \in C$} 
   {
-    $p_{zmin} =$ lowest possible elevation based on $S$ \nllabel{l:zmin} \;
-    $p_{zprev} = z_0 + displacement$ \nllabel{l:init_prev}\;
+    $p_{zmin} =$ lowest possible elevation based on $S$ \label{algo:csf:l:zmin} \;
+    $p_{zprev} = z_0 + displacement$ \label{algo:csf:l:init_prev}\;
     $p_{zcur} = z_0$ \;
   }
   % \tcc{initialise the cloth $C$}
@@ -317,8 +317,8 @@ The algorithm is detailed in Algorithm~\ref{algo:csf}.
 \paragraph{Initialisation of the cloth.}
 The cloth is first initialised at an arbitrary height above the highest points in the point cloud.
 The cloth is formed of particles regularly distributed according to a user-defined parameter.
-We assume that all particles have the same mass, and we define arbitrarily a first displacement vector due to the gravity (pointing downwards) (line~\ref{l:init_prev}).
-For each particle $p$, we need to define the lowest elevation it can move, once it reaches it it is labelled as unmovable (line~\ref{l:zmin}).
+We assume that all particles have the same mass, and we define arbitrarily a first displacement vector due to the gravity (pointing downwards) (line~\ref{algo:csf:l:init_prev}).
+For each particle $p$, we need to define the lowest elevation it can move, once it reaches it it is labelled as unmovable (line~\ref{algo:csf:l:zmin}).
 The lowest elevation of one particle $p$ is defined as the original elevation of the closest sample point $s$ after projecting both to the 2D-plane.
 
 %
