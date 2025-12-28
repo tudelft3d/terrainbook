@@ -84,7 +84,7 @@ The INS accurately measures the orientation, \ie\ the yaw, pitch  and roll angle
 \marginnote{inertial measurement unit (IMU)}\index{inertial measurement unit (IMU)}
 Only when we accurately know the orientation of the laser scanner, can we know the direction (in a global coordinate system) in which a laser pulse is emitted from the aircraft.
 
-By combining the global position and the global orientation of the laser scanner with the range measurement from the laser scanner, the georeferenced 3D position of  the point  on the target object that reflected the lase pulse can be computed.
+By combining the global position and the global orientation of the laser scanner with the range measurement from the laser scanner, the georeferenced 3D position of the point on the target object that reflected the laser pulse can be computed.
 
 
 %%%
@@ -93,7 +93,7 @@ By combining the global position and the global orientation of the laser scanner
 A lidar system performs ranging measurements using the time-of-flight principle that allows us to compute range from a time measurement using the known speed of light in the air. 
 The time measurement starts when the laser pulse is emitted and is completed when a backscattered echo of that signal is detected. 
 In practice one emitted pulse can even lead to multiple echoes  in the case when an object reflects part of the laser pulse, but also allows part of the pulse to continue past the object. 
-Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pules at ground level is several centimetres in diameter, which increases the likelihood of multiple echoes.
+Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pulse at ground level is several centimetres in diameter, which increases the likelihood of multiple echoes.
 
 \begin{figure}
 	\centering
@@ -106,9 +106,9 @@ A tree is particularly interesting because it often causes multiple echoes (one 
 With the direct detection lidar systems that we focus on in this book, the echoes are derived from the backscattered waveform by using a thresholding technique. This essentially means that an echo is recorded whenever the power of the waveform exceeds a fixed threshold (see Figure~\ref{fig:lidar-multipulse}b). 
 
 An echo can  also  be referred to as a \emph{return}. 
-For each return the return count is recorded, 
+For each return the return count is recorded,
 \marginnote{return}\index{return}
-\eg\ the first return is the first echo received from an emitted laser pules and the last return is the last received echo (see Figure~\ref{fig:lidar-multipulse}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
+\eg\ the first return is the first echo received from an emitted laser pulse and the last return is the last received echo (see Figure~\ref{fig:lidar-multipulse}). The return count can in some cases be used to determine if an echo was reflected on vegetation or ground (ground should then be the last return).
 
 
 %%%
@@ -129,9 +129,9 @@ In the optical part, a pulse of a particular wavelength (typically near-infrared
 It then passes through a set of  optics (lenses and mirrors) so that it leaves the scanner in an appropriate direction. 
 After the pulse interacts with the scattering medium, it is reflected back into the scanning optics which then directs the signal into a telescope. 
 The telescope converges the signal through a field diaphragm (essentially a tiny hole around the point of convergence). 
-The field diaphragm blocks stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline. 
-Next, the light signal is recollimated so that it again consists only of parallel light rays. 
-The final step of the optical part is the inference filter which blocks all wavelengths except for the wavelength of the laser source. 
+The field diaphragm blocks stray light rays (\eg\ sunlight reflected into the optics from any angle) from proceeding in the optical pipeline.
+Next, the light signal is recollimated so that it again consists only of parallel light rays.
+The final step of the optical part is the interference filter which blocks all wavelengths except for the wavelength of the laser source. 
 This is again needed to block stray light rays from distorting the measurement.
 
 The electronic part consists of a photodetector, which first transforms the light signal into an electrical current, which is then converted to a digital signal using the analogue-to-digital converter. 
@@ -150,7 +150,7 @@ As a result, most lidar systems use a wavelength in the near-infrared spectrum, 
 
 \subsection{Scanning patterns}
 In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these optical elements, \ie\  mirrors or prisms, the emitted laser pulse is guided in a cross-track direction (\ie\ perpendicular to the along-track direction in which  the aircraft moves, see Figure~\ref{fig:acqLidar}),  thereby greatly increasing the scanned ground area  per travelled meter of the aircraft.
-Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of rotating optics and shows the resulting scanning patterns. It is clear that density of points on the ground is affected by the scanning pattern. The top example for example, yields much higher densities on edges of the scanned area. In practice more uniform patterns, such  as the bottom two examples are often preferred.
+Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of rotating optics and shows the resulting scanning patterns. It is clear that density of points on the ground is affected by the scanning pattern. The top example for example, yields much higher densities on edges of the scanned area. In practice more uniform patterns, such as the bottom two examples, are often preferred.
 
 \begin{figure}
 	\centering
@@ -171,7 +171,7 @@ Figure~\ref{fig:lidar-patterns} depicts a number of possible configurations of r
 
 
 \section{Other acquisition techniques}[Other techniques]%
-\label{sec:acquisistion-techniques}
+\label{sec:acquisition-techniques}
 
 Apart from lidar there are also other sensor techniques that can be used to acquire elevation data. Some of these are  active sensors just like lidar (a signal is generated and emitted from the sensor), whereas others are passive (using the sun as light source). And like lidar, these sensors themselves only do range measurements, and need additional hardware such as a GPS receiver and an IMU to georeference the measurements. What follows is a brief description of the three other important acquisition techniques used in practice. 
 
@@ -305,7 +305,7 @@ For this reason adjacent flight strips (see Figure~\ref{fig:lidarStrips}) often 
 	\caption{Strip adjustment for lidar point clouds}%
 \label{fig:lidarStripAdj}
 \end{figure}
-If the strip adjustments process fails or is omitted, a `ghosting' effect can occur as illustrated in Figure~\ref{fig:lidarGableRoof} (top). 
+If the strip adjustment process fails or is omitted, a `ghosting' effect can occur as illustrated in Figure~\ref{fig:lidarGableRoof} (top). 
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in Figure~\ref{fig:dim}.
 \begin{figure*}
 	\centering
@@ -398,9 +398,9 @@ This effect is called \emph{multi-path} and the result is that points are measur
 \label{fig:outliers}
 \end{figure}
 
-Photogrammetry suffers from a few other problems as well, such as surfaces that have a homogeneous texture that make it impossible to find distinguishing features that can be used for matching. 
-This may also happen in poor lightning conditions, for example in the shadow parts of an image.
-%no texture (shadow), multi-path, complete absorption lightning conditions: shadow poor matching
+Photogrammetry suffers from a few other problems as well, such as surfaces that have a homogeneous texture that makes it impossible to find distinguishing features that can be used for matching.
+This may also happen in poor lighting conditions, for example in the shadow parts of an image.
+%no texture (shadow), multi-path, complete absorption lighting conditions: shadow poor matching
 
 \subsubsection{Moving objects}
 An example of moving objects are flocks of birds flying in front of the scanner. These can cause outliers high above the ground, as illustrated in Figure~\ref{fig:outliers}.

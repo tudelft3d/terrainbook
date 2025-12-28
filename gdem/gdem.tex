@@ -136,9 +136,9 @@ The characteristics of both missions are summarised in Table~\ref{tab:lidarcompa
 
 %
 
-ICESat-2 laser split into six beams, divided into three pairs, each pair \qty{90}{m} apart and the pairs \qty{3.3}{km} apart, for a total swath width of \qty{6.6}{km}.
+The ICESat-2 laser splits into six beams, divided into three pairs, each pair \qty{90}{m} apart and the pairs \qty{3.3}{km} apart, for a total swath width of \qty{6.6}{km}.
 Along-track, it can measure each \qty{0.7}{m}, while its beam footprint is \qty{\sim11}{m}, so each measurement overlaps.
-GEDI instrument has three lasers, forming 4 beams and eight tracks, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
+The GEDI instrument has three lasers, forming 4 beams and eight tracks, each \qty{600}{m} apart, for a total swath width of \qty{4.2}{km}.
 GEDI measures a point every \qty{70}{m} along-track, with a beam footprint of \qty{23}{m}.
 Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrared wavelength of \qty{1064}{nm}, ICESat-2 employs a single-photon lidar at a bathymetric ``green'' wavelength of \qty{532}{nm}.
 
@@ -147,7 +147,7 @@ Furthermore, whereas GEDI employs a full-waveform laser at a typical near-infrar
 \paragraph{Product levels.}
 The data from the ICESat-2 and GEDI missions is made publicly available in several data products, categorised in 3 levels (Level 1, 2, and 3 data products), where a higher-level is derived from a lower-level product.
 \begin{enumerate}
-  \item \textbf{Level 1} products contains the raw telemetry;
+  \item \textbf{Level 1} products contain the raw telemetry;
   \item \textbf{Level 2} products contain directly usable geolocated data to which several corrections---such as accounting for atmospheric effects---are applied.
   \item \textbf{Level 3} data are aggregated versions of Level 2 products, which are smaller in filesize and easier to process.
         ICESat-2 differentiates between a Level 3A, which are aggregated Level 2 data products per \emph{granule}, and a Level 3B, which are gridded versions of the aggregated Level 3A data products.
@@ -157,7 +157,7 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
 
 
 %%%
-\paragraph{Comparison to typical airbone lidar.}
+\paragraph{Comparison to typical airborne lidar.}
 
 These space borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
 The altitude increase results in a wider beam footprint, from \qty{\sim0.5}{m} (at \qty{500}{m}) for airborne platforms to \qty{\sim15}{m} for space platforms.
@@ -263,7 +263,7 @@ There is even a \qty{0.5}{m} commercial version, based on multiple optical satel
 \subsection{Global often means near-global}
 
 The data collected depend on the orbit of the satellite.
-Some satellites have a polar orbit and can therefore completely measure the Earth (ICESat-2 is one example, see~\ref{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see~\ref{fig:orbit}).
+Some satellites have a polar orbit and can therefore completely measure the Earth (ICESat-2 is one example, see Figure~\ref{fig:orbit}), while some will cover only certain latitudes (\eg\ GEDI, see Figure~\ref{fig:orbit}).
 
 Similarly, while the Tandem-X mission produced a DEM with a global coverage, the SRTM DEM was measured from the Space Shuttle and only covers up to \qty{60}{\degree} latitude.
 
@@ -273,7 +273,7 @@ Similarly, while the Tandem-X mission produced a DEM with a global coverage, the
 The formats used to store and exchange DEMs have historically been defined by the military, which are still used by many government agencies.
 One example is the \emph{Digital Terrain Elevation Data} (DTED) format, developed in the 1970s, which stores elevation in integers (which tells us a lot about the accuracy and precision possible 50 years ago).
 It specifies several possible \emph{levels} in terms of resolution (in arcseconds), from level 0 at \qty{\pm1}{km} to level 2 at \qty{30}{m}.
-More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing GeoTIFFs to used (which removes the integer constraint).
+More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing GeoTIFFs to be used (which removes the integer constraint).
 \marginnote{GeoTIFF}
 DGED also defines the structure and the specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
 
@@ -378,7 +378,7 @@ This is the largest source of error in gDEMS, and can considerably limit the app
 
 Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a \emph{pseudo DTM} (DTM$^{\prime}$).
 \marginnote{DTM$^{\prime} =$ pseudo DTM}
-While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrain still contain vegetation and/or buildings.
+While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrains still contain vegetation and/or buildings.
 Recent work has also suggested that while these datasets have improved vertical accuracy, the accuracy of derived geomorphometric parameters such as slope and curvature suffers.
 % are still far removed from a local DTM\@.
 

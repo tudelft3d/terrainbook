@@ -35,6 +35,10 @@
 \usepackage{float}
 \newfloat{floatbox}{tb}{ext2}
 
+% -- to fix the latex compilation and "TeX capacity exceeded, sorry"
+% -- https://github.com/fmarotta/kaobook/issues/308
+\usepackage[disablepatch=caption]{tocbasic}
+
 \usepackage{pdfpages}
 
 % \graphicspath{{images/}{./}} % Paths in which to look for images
@@ -139,7 +143,7 @@
 
 \title{Computational modelling of terrains}
 \author{Hugo Ledoux \hspace{10mm} Ken Arroyo Ohori\\ Ravi Peters \hspace{17mm} Maarten Pronk}
-\date{\texttt{v2025.0}}
+\date{\texttt{v2025.1}}
 
 % \publishers{\includegraphics[width=\linewidth]{front-back/imhof.png}}
 

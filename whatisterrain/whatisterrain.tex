@@ -61,19 +61,19 @@ The term ``3D'' is misleading in a DTM context---as it is in a GIS context--- be
     \includegraphics[page=1,width=\linewidth]{figs/dimgis}
     \caption{A terrain}\label{fig:dimgis:1}
   \end{subfigure}%
-  \qquad %-- that adds some space between th 2 figures
+  \qquad %-- that adds some space between the 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=6,width=\linewidth]{figs/dimgis}
     \caption{2.5D modelling}\label{fig:dimgis:25}
   \end{subfigure}%
-  \qquad %-- that adds some space between th 2 figures
+  \qquad %-- that adds some space between the 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=5,width=\linewidth]{figs/dimgis}
     \caption{2.75D modelling}\label{fig:dimgis:275}
   \end{subfigure}%
-  \qquad %-- that adds some space between th 2 figures
+  \qquad %-- that adds some space between the 2 figures
   \begin{subfigure}[b]{0.45\linewidth}
     \centering
     \includegraphics[page=4,width=\linewidth]{figs/dimgis}
@@ -89,10 +89,10 @@ What is usually used for modelling terrains: a surface (which is topologically a
 is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
 \marginnote{2-manifold}\index{2-manifold}
 In other words, the surface can be projected to the $xy$-plane and maintain its topology.
-In this book, when we refer to ``terrains'' we mean such a surface, unlike explicitly stated otherwise.
-This is often what is used in GIS software, and both the well-known raster/grid  is such a case.
-Observe that this restricts the real-world cases that can be modelled because, as shown in Figure~\ref{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overfolds (\eg\ the balcony of a house) and caves are impossible to represent.
-As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of building could deviate by for instance 1 degree from the vertical. 
+In this book, when we refer to ``terrains'' we mean such a surface, unless explicitly stated otherwise.
+This is often what is used in GIS software, and the well-known raster/grid is such a case.
+Observe that this restricts the real-world cases that can be modelled because, as shown in Figure~\ref{fig:dimgis}b, vertical surfaces (\eg\ walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overhangs (\eg\ the balcony of a house) and caves are impossible to represent.
+As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of a building could deviate by for instance 1 degree from the vertical. 
 
 \subsection{2.75D}%
 \index{2.75D} 
@@ -101,7 +101,7 @@ Thus, more than one $z$ value is allowed for a given location ($x,y$).
 The term '2.75D' was coined because: it is more than 2.5D, but less than 3D.
 \marginnote{2.75D}\index{2.75D}
 The surface represents the exterior of all objects/features together, and vertical walls are allowed.
-Surface modelling is popular in CAD, but in the GIS it is rather rare.
+Surface modelling is popular in CAD, but in GIS it is rather rare.
 We are not aware of any popular GIS software that allows us to model a terrain as a 2.75D and perform operations on it.
 
 \subsection[3D]{Full 3D, or volumetric modelling} 
@@ -239,7 +239,7 @@ The wide popularity of regular tessellations in terrain modelling is probably du
 Indeed, a grid is naturally stored in a computer as an array (each cell is addressed by its position in the array, and only the value of the cell is stored), and thus the spatial relationships between cells are implicit. 
 This is true for any dimensions, thus, contrary to other tessellations, grids are very easy to generalise to higher dimensions (in 3D a pixel is a \emph{voxel}).%
 \index{higher-dimensional grids}
-The algorithms to analyse and manipulate (Boolean operations such as intersection or union) are also straightforwardly implemented in a computer. 
+The algorithms to analyse and manipulate them (Boolean operations such as intersection or union) are also straightforwardly implemented in a computer. 
 
 On the other hand, grids also suffer problems.
 First, the size of a grid can become massive for data at a fine resolution; this problem gets worse in higher dimensions.
@@ -412,7 +412,7 @@ This means converting between the two data models when it is necessary (topic of
 \citet{Kumler94} carried out a 4-year comparison between TINs and rasters.
 He states that the common belief that a TIN is more space-efficient than raster is handicapped by the fact that a TIN must have \emph{at least} 3 times less points to be of equal space.
 His conclusions are also that rasters can estimate elevation more accurately than comparably-sized TINs.
-However, he still finishes with by stating: ``Yeah, well\ldots\ TINs still \emph{look} better.'' 
+However, he still finishes by stating: ``Yeah, well\ldots\ TINs still \emph{look} better.'' 
 
 \citet{Fisher97} discusses the disadvantages of rasters, in a GIS and remote sensing context.
 
@@ -421,7 +421,7 @@ However, he still finishes with by stating: ``Yeah, well\ldots\ TINs still \emph
 \citet{Tse04} coined the term `2.75D GIS' and show an example of a where a triangulation is used to represent the surface of the Earth, with holes (for tunnels), cliffs and caves. 
 The same idea is also referred to as a `2.8D GIS' by \citet{Groger05}.
 
-While more an academic exercise then something used in practice, multi-resolution triangulation have been described and used for some application by \citet{DeFloriani02}.
+While more an academic exercise than something used in practice, multi-resolution triangulation have been described and used for some application by \citet{DeFloriani02}.
 
 \citet{Akima78} shows the advantages of using higher-order functions in each region of a TIN, to construct a $C^1$ or $C^2$ field. 
 

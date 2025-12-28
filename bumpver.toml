@@ -1,17 +1,20 @@
 [bumpver]
-current_version = "2025.0"
-version_pattern = "YYYY.MINOR[-TAG]"
+current_version = "2025.1"
+version_pattern = "YYYY.INC0[-TAG]"
 commit = false
 tag = false
 push = false
 
 [bumpver.file_patterns]
 "terrainbook.tex" = [
-    'v{version}',
+  'v{version}',
 ]
 "docs/_config.yml" = [
-    "latest_version: {version}",
+  "latest_version: {version}",
 ]
 "CITATION.bib" = [
-  "year = {{version}}",
+  "year = {YYYY}",
+]
+"front-back/pre.tex" = [
+  " YYYY % VER:YEAR",
 ]
