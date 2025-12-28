@@ -35,7 +35,7 @@ As seen in \reffig{fig:examples},
 \labfig{fig:examples}  
 \end{figure*}
 this region is often in two dimensions, for example in the case of an aerial lidar datasets we may want to know where the ground is (after removing the points on the water), or in the case of the scanning of the façade of a building, we would like to obtain a polygon that represents where the wall is (omitting the windows).
-Another example is if we consider a subset of a point cloud that represents the points for a given building, we can interested in creating the polygon that represents its footprint (\reffig{fig:examples}c).
+Another example is if we consider a subset of a point cloud that represents the points for a given building, we can be interested in creating the polygon that represents its footprint (\reffig{fig:examples}c).
 
 %
 
@@ -176,7 +176,7 @@ Then for $b$, the polar angle is calculated from the line $ab$ and the $c$ is ch
 The algorithm continues this way until $a$ is visited again.
 
 If $S$ has $n$ points and conv($S$) is formed of $h$ points, then the gift wrapping algorithm has a time complexity of $\mathcal{O}(n \, h)$; each of the $h$ points are tested against all $n$ points in $S$.
-However, there exist more efficient algorithm that have a time complexity of $\mathcal{O}(n \log n)$.
+However, there exist more efficient algorithms that have a time complexity of $\mathcal{O}(n \log n)$.
 
 %
 Properties convex hull:
@@ -403,7 +403,7 @@ If $\alpha = 0$ then the $\alpha$-shape is $S$ (which is a valid $\alpha$-shape)
 
 The $\alpha$-shape is not a polygon or a region, but a complex formed of $k$-simplices, where $0 \leq k \leq 2$.
 Furthermore, it is a subcomplex of the Delaunay triangulation (DT) of $S$.
-That is, the easiest method to construct an $\alpha$-shape is by first constructing DT($S$), and then removing all edges that are shorter then $2\alpha$.
+That is, the easiest method to construct an $\alpha$-shape is by first constructing DT($S$), and then removing all edges that are shorter than $2\alpha$.
 
 In practice, all the $\alpha$-shapes of $S$ (for different values of $\alpha$) can be calculated and discretised since we know that $\alpha$ will range from the shortest edge to the longest.
 For each $k$-simplex, we can thus assign a range where it will be present.
@@ -435,7 +435,7 @@ Properties $\alpha$-shape:
 \section{Clustering algorithms}%
 \label{sec:clustering}
 
-Clustering algorithms are used widely for statistical data analysis, they allow us to group points (often in higher dimensions) that are close to each others in one group.
+Clustering algorithms are used widely for statistical data analysis, they allow us to group points (often in higher dimensions) that are close to each other in one group.
 Different notions to create clusters can be used, \eg\ distance between the points, density, intervals or particular statistical distributions.
 As \reffig{fig:clustering} shows, the result of a clustering algorithm is that each input point is assigned to a cluster (here a colour), and potentially some outliers are identified.
 \begin{marginfigure}
@@ -474,8 +474,8 @@ The algorithm stops when the centroids have converged and their locations do not
 
 %
 
-\paragraph{DBSCAN: density-based clustering.} 
-A density-based cluster is defined as an area of higher density then other points, the density being the number of points per area.
+\paragraph{DBSCAN: density-based clustering.}
+A density-based cluster is defined as an area of higher density than other points, the density being the number of points per area.
 The aim is to group points having many close neighbours.
 
 %

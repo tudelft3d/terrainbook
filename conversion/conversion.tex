@@ -193,14 +193,14 @@ This can be done by simply starting with a segment \(ab\), and searching for the
 
 %
 
-As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell \(\tau_0\) intersecting the isoline at a given elevation, `tracing' the isoline by navigating from \(\tau_0\)to the adjacent cell, and continuing until \(\tau_0\) is visited again (or the border of the dataset is reached).
+As shown in Figure~\ref{fig:isoline2}b, another solution is to find \emph{one} cell \(\tau_0\) intersecting the isoline at a given elevation, `tracing' the isoline by navigating from \(\tau_0\) to the adjacent cell, and continuing until \(\tau_0\) is visited again (or the border of the dataset is reached).
 To navigate to the adjacent cell, it suffices to identify the edge $\epsilon$ intersecting the isoline, and then navigating to the triangle/cell that is incident to $\epsilon$.
 It is possible that there is no adjacent cell, if the boundary of the convex hull is reached in a TIN for instance.
 This requires that the TIN be stored in a topological data structure in which the adjacency between the triangles is available (for a grid this is implied).
 
 The main issue is finding the starting cells (let us call them seed triangles).
 Obviously, it suffices to have one seed for each of the component of the isolines (there would be 2 seeds in Figure~\ref{fig:isoline2}b).
-An easy algorithm to extract all the components of an isoline requires visiting all the cells in a terrain, and keeping track of which triangles have been visited (simply store an Boolean attribute for each triangle, which is called a \emph{mark bit}).
+An easy algorithm to extract all the components of an isoline requires visiting all the cells in a terrain, and keeping track of which triangles have been visited (simply store a Boolean attribute for each triangle, which is called a \emph{mark bit}).
 Simply visit triangle sequentially and mark them as `visited', when one triangle has an intersection then start the tracing operation, marking triangles as visited as you trace. 
 
 
@@ -208,7 +208,7 @@ Simply visit triangle sequentially and mark them as `visited', when one triangle
 \subsection{Smoothness of the contours}%
 \label{sec:smoothness-contours}
 
-The mathematical concept of the \emph{Implicit Function Theorem} states that a contour line extracted from a field \(f\)will be no less smooth than \(f\) itself.
+The mathematical concept of the \emph{Implicit Function Theorem} states that a contour line extracted from a field \(f\) will be no less smooth than \(f\) itself.
 In other words, obtaining smooth contour lines can be achieved by smoothing the field itself.
 Robin Sibson\sidenote{\url{http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.51.63}} goes further in stating that:
 \begin{quote}
@@ -404,7 +404,7 @@ The elevation assigned to these is based on the elevations of the isolines.
 
 The \emph{Implicit Function Theorem} is further explained in \citet{Sibson97}.
 
-\citet{Dakowicz03} describe in details the skeleton-based algorithm to interpolate from isolines, and show the results of using different interpolation methods.
+\citet{Dakowicz03} describe in detail the skeleton-based algorithm to interpolate from isolines, and show the results of using different interpolation methods.
 
 The basic algorithm to extract isolines, which is a brute-force approach, can be slow if for instance only a few isolines are extracted from a very large datasets: all the $n$ triangles/cells are visited, and most will not have any intersections.
 To avoid this, \citet{VanKreveld96} build an auxiliary data structure, the \emph{interval tree}, which allows us to find quickly which triangles will intersect a given elevation.
@@ -420,9 +420,9 @@ They also show how Algorithm~\ref{algo:tin-simp:ref} can be made a lot faster by
 \section{Exercises}
 
 \begin{enumerate}
-  \item When converting isolines to a TIN, what main ``problem'' should you be aware of? Describe \emph{in details} one algorithm to convert isolines (given for instance in a \emph{shapefile}) to a TIN and avoid this problem.
+  \item When converting isolines to a TIN, what main ``problem'' should you be aware of? Describe \emph{in detail} one algorithm to convert isolines (given for instance in a \emph{shapefile}) to a TIN and avoid this problem.
   \item What would the isocontours of a 2.75D terrain look like?
-  \item In Section~\ref{sec:structuring}, it is mentioned that merging the segments will form on polygon. But how to ensure that the orientation of that resulting curve is consistent, that it is for instance having higher terrains on the right?
+  \item In Section~\ref{sec:structuring}, it is mentioned that merging the segments will form one polygon. But how to ensure that the orientation of that resulting curve is consistent, that it is for instance having higher terrains on the right?
   \item Given a raster terrain (GeoTiff format) that contains several cells with \texttt{no\_data} values, describe the methodology you would use to extract contour lines from it. As a reminder, contours lines should be closed curves, except at the boundary of the dataset.
   \item Assume you have the small terrain formed of 3 triangles below, draw the isoline in this TIN for an elevation of \qty{10}{\m}.
   \\ \\

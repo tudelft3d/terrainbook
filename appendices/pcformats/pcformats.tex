@@ -78,7 +78,7 @@ The \emph{LASer} file format (LAS) is the most widely used standard for the diss
 The LAS standard, currently at version 1.4\marginnote{LAS v1.4-R15 is the latest version}, is maintained by the American Society for Photogrammetry and Remote Sensing (ASPRS) and, as the name implies, was designed for datasets that originate from (airborne) lidar scanners.
 \marginnote{\url{https://github.com/ASPRSorg/LAS}}
 However, in practice it is also used for other types of point cloud, \eg\ those derived from dense image matching.
-LAS files are binary and unlike the PLY format the fields are prescribed, \ie\ the attributes for each point record are their types (number of bits) cannot be modified.
+LAS files are binary and unlike the PLY format the fields are prescribed, \ie\ the attributes for each point record and their types (number of bits) cannot be modified.
 Table~\ref{tab:las-record} shows the composition of the base record type for the latest version of LAS (v1.4).
 \begin{table*}
   \centering
@@ -94,7 +94,7 @@ Table~\ref{tab:las-record} shows the composition of the base record type for the
     \texttt{return\_number} & unsigned int & 4 & total pulse return number for a given output pulse \\ 
     \texttt{number\_of\_returns} & unsigned int & 4 & total number of returns for a given pulse \\ 
     \texttt{synthetic} & boolean & 1 & flag to indicate whether the point is synthetic, \ie\ if it has been artificially generated rather measured by the lidar sensor \\
-    \texttt{key\_point} & boolean & 1 & flag to mark the point that should not be removed or thinned during data processing \\
+    \texttt{key\_point} & boolean & 1 & flag to mark points that should not be removed or thinned during data processing \\
     \texttt{overlap} & boolean & 1 & flag to identify points that are part of an overlap region between different lidar flight lines\\
     \texttt{scanner\_channel} & unsigned int & 2 & used to distinguish between the different channels of a multi-channel lidar system, where each channel might correspond to a different laser or beam angle \\
     \texttt{scan\_direction\_flag} & boolean & 1 & direction at which the scanner mirror was travelling at the time of the output pulse. A bit value of 1 is a positive scan direction, and a bit value of 0 is a negative scan direction (where positive scan direction is a scan moving from the left side of the in-track direction to the right side and negative the opposite)  \\ 
@@ -166,8 +166,8 @@ It is possible to define your own classes using code ranges that are reserved fo
 \index{LAZ format}
 
 A compressed variant of the LAS format, dubbed ``LAZ'', exists.
-\marginnote{\citet{Isenburg13} describes in details the LAS format}
-While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big dataset.
+\marginnote{\citet{Isenburg13} describes in detail the LAS format}
+While it is not maintained by an `official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big datasets.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be compressed into a fraction of the storage space required for the equivalent LAS file, without any loss of information.
 This makes it more effective than simply using ZIP compression on a LAS file.
 In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression and decompression operations do take extra time).

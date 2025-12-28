@@ -79,7 +79,7 @@ For downsampling, the most common method is based on averaging the 4 pixel value
 
 %
 
-The downsamples grids are used to speed up visualisation (when a user zooms out on a lower-resolution grid is displayed) but the same principle could be applied to for processing (\eg\ the line-of-sight between 2 points in Chapter~\ref{chap:visibility} could be sped up by using this principle).
+The downsamples grids are used to speed up visualisation (when a user zooms out on a lower-resolution grid is displayed) but the same principle could be applied for processing (\eg\ the line-of-sight between 2 points in Chapter~\ref{chap:visibility} could be sped up by using this principle).
 
 \begin{floatbox}
 \begin{kaobox-practice}[frametitle=\faCog\ How does it work in practice?]
@@ -350,7 +350,7 @@ For the DT construction, as shown in Figure~\ref{fig:finaliser}, this can be rea
 \begin{figure*}
   \centering
   \includegraphics[width=\linewidth]{figs/finaliser}
-  \caption{How the finaliser modifies to input and injects finalisation tags. \textbf{Left:} 9 points and the related streams (just a list of the points with coordinates). \textbf{Right:} if a quadtree of depth 1 (in orange) is used (with 4 cells), then the stream would be augmented with finalisation tags.}%
+  \caption{How the finaliser modifies the input and injects finalisation tags. \textbf{Left:} 9 points and the related streams (just a list of the points with coordinates). \textbf{Right:} if a quadtree of depth 1 (in orange) is used (with 4 cells), then the stream would be augmented with finalisation tags.}%
 \label{fig:finaliser}
 \end{figure*}
 
@@ -450,7 +450,7 @@ The description of the $k$d-tree and the nearest neighbour query is adapted from
 
 The streaming computation of the DT algorithm is a simplification of the algorithm described in \citet{Isenburg06}, and some figures were basically redrawn.
 
-\citet{Isenburg06-1} explains in details how large rasters can be constructed with spatial interpolation by modifying the streaming pipeline of Figure~\ref{fig:streamingdt}.
+\citet{Isenburg06-1} explains in detail how large rasters can be constructed with spatial interpolation by modifying the streaming pipeline of Figure~\ref{fig:streamingdt}.
 
 
 %%%%%%%%%%%%%%%%%%%%

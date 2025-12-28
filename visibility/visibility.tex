@@ -26,7 +26,7 @@ When referring to visibility problems, we address the following two fundamental 
     \caption{Line-of-sight between $v$ and $q$; $q$ is not visible.}%
     \label{fig:overview_los}
   \end{marginfigure} 
-  \item[line-of-sight (LoS):] given a viewpoint $v$ and another point $q$, does $v$ sees $q$ (and vice-versa)? Or, in other words, does the segment $vq$ intersects the terrain? The result is either True or False.
+  \item[line-of-sight (LoS):] given a viewpoint $v$ and another point $q$, does $v$ see $q$ (and vice-versa)? Or, in other words, does the segment $vq$ intersects the terrain? The result is either True or False.
   \begin{marginfigure}
     \centering
     \includegraphics[width=\linewidth]{overview_viewshed}
@@ -75,7 +75,7 @@ Observe that objects can \emph{partially} be hidden by others, and that the valu
 
 %
 
-One often used algorithm to solving the hidden-surface determination is the \emph{depth-sort method}.
+One often used algorithm for solving the hidden-surface determination is the \emph{depth-sort method}.
 Its main idea is to define a coordinate reference system with $x$ and $y$ on the viewing plane, and $z$ perpendicular to it.
 The objects are first sorted according to their maximal $z$-values, and the objects are drawn on the viewing plane from the furthest to the closest.
 The value of a given pixel could therefore be redrawn several times, but its value will contain the colour of the closest object.
@@ -107,7 +107,7 @@ A depth order for the scene can now be obtained by a traversal of the BSP tree.
 \section{For 2.5D terrains, the problem is simpler}[2.5D terrains are simple]
 
 % Simplifying the problem by sorting the triangles
-The problem is simplified for terrains we can sort the cells (pixels or triangles) and, because a terrain is a 2.5D surface, and we can convert the problem to a 2D one.
+The problem is simplified for terrains because we can sort the cells (pixels or triangles) and, because a terrain is a 2.5D surface, we can convert the problem to a 2D one.
 We can then exploit the connectivity and adjacency between the 2D cells forming a terrain to minimise the number of objects to test (for intersections and for hidden-surface determination).
 
 
@@ -131,7 +131,7 @@ As shown in Figure~\ref{fig:los},
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{los}
-  \caption{Line-of-sight for between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.}%
+  \caption{Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.}%
 \label{fig:los}
 \end{figure}
 since the terrain is discretised into grid cells, there are 2 options to reconstruct the profile between $v$ and $q$:
@@ -195,7 +195,7 @@ Figure~\ref{fig:acyclicity} shows one simple example.
 
 %
 
-However, it has been proven that Delaunay triangulations are \emph{acyclic} for any fixed viewpoint. 
+However, it has been proven that Delaunay triangulations are \emph{acyclic} for any fixed viewpoint.
 In other words, the in-front/behind relationship for the triangles of a DT, with respect to a given viewpoint, is acyclic (see Figure~\ref{fig:ordering_triangles}).
 \begin{marginfigure}
   \centering
@@ -203,7 +203,7 @@ In other words, the in-front/behind relationship for the triangles of a DT, with
   \caption{The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.}%
   \label{fig:ordering_triangles}
 \end{marginfigure}
-Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slight the point location algorithm from Section~\ref{sec:dtwalk}.
+Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slightly the point location algorithm from Section~\ref{sec:dtwalk}.
 This operation can be performed in 2D, by projecting the triangles of the TIN to the $xy$-plane.
 
 %
