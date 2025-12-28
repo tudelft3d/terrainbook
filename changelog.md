@@ -7,12 +7,12 @@ All notable changes to this book will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2025.1] - 2025-11-XX
+## [2025.1] - 2025-12-28
 ### Modified
-- fixed multiple typos throughout the book
+- fixed multiple typos throughout the book (thanks to many students, and Claude!)
 - improved clarity in sloppy sentences
 - fixed small error in curvature and Voronoi diagram figures
-- fixed LaTeX compilation issues
+- fixed LaTeX compilation issues with new version of KOMA-script
 
 ## [2025.0] - 2025-10-27
 ### Modified
