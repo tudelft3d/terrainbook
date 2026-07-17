@@ -12,7 +12,7 @@
 //-- siunitx
 #import "@preview/unify:0.8.0": num, numrange, qty, qtyrange
 //-- icons
-#import "@preview/iconify:0.5.3": *
+#import "@preview/heroic:0.1.2": hi
 
 //-- natbib
 #let citet = cite.with(form: "prose")
@@ -97,7 +97,7 @@
   shadow: (
     offset: 2pt,
   ),
-  title: "⚙︎ " + title,
+  title: hi("cog", solid: false) + " " + title,
   body,
 )
 #let box-toread(title, body) = showybox(
@@ -113,7 +113,7 @@
   shadow: (
     offset: 2pt,
   ),
-  title: "⇧ " + title,
+  title:  hi("arrow-top-right-on-square") + " " + title,
   body,
 )
 
