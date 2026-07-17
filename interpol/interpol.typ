@@ -343,7 +343,7 @@ And then to repeat this for each of the $n$ points in $S$; each estimation is th
 
 One method (with given parameters) for a given dataset can be characterised by computing the root-mean-square error:
 #index[root-mean-square error]#note[root-mean-square error]
-$  R M S E = sqrt(frac(sum_(i = 1)^(n)(hat(z)_i - z_i)^(2), n))  $
+$ "RMSE" = sqrt(frac(sum_(i = 1)^(n)(hat(z)_i - z_i)^(2), n))  $
 
 And it is a good idea to plot the results to observe where the largest differences between the estimation and the real values are obtained, this can help in identifying which parameters should be fine-tuned.
 See for instance one example in @fig:jackknife.
