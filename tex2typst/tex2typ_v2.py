@@ -238,6 +238,8 @@ def clean_inline(s: str) -> str:
     s = re.sub(r'Figure~\\ref\{([^}]+)\}', r'Figure @\1', s)
     s = re.sub(r'Algorithm~\\ref\{([^}]+)\}', r'Algorithm @\1', s)
     s = re.sub(r'Appendix~\\ref\{([^}]+)\}', r'Appendix @\1', s)
+    s = re.sub(r'\\reffig\{([^}]+)\}', r'@\1', s)
+    s = re.sub(r'\\reftab\{([^}]+)\}', r'@\1', s)
     s = re.sub(r'\\ref\{([^}]+)\}', r'@\1', s)
     # Typst auto-adds the "Figure" supplement, so strip it to avoid
     # "Figure Figure 1" in the rendered output.
@@ -551,26 +553,30 @@ def make_kaobox_replacer(tex_src: str):
 
 def make_floatbox_replacer(tex_src: str, store: PlaceholderStore):
     def replacer(inner: str) -> str:
-        # Extract kaobox-practice inside
-        kb_match = re.search(
-            r'\\begin\{kaobox-practice\}(?:\[[^\]]*\])?\s*'
-            r'(?P<body>.*?)'
-            r'\\end\{kaobox-practice\}',
-            inner,
-            re.DOTALL,
-        )
-        if kb_match:
-            ft_match = re.search(r'\\begin\{kaobox-practice\}\[(?:.*?)frametitle=(.+?)\]', inner, re.DOTALL)
-            if ft_match:
-                title = ft_match.group(1).strip()
-                title = re.sub(r'\\faCog\s*', '\u2699\uFE0F ', title)
-                title = re.sub(r'\\url\{([^}]+)\}', r'\1', title)
-            else:
-                title = "Practice box"
-            body = kb_match.group('body').strip()
-            body = clean_inline(body)
-            return f'#box-practice("{title}")[{body}]'
-        return f'/* TODO: floatbox without kaobox-practice */\n/*\n{inner.strip()}\n*/'
+        # Check for recognised box environments
+        for box_env, box_fn, default_title, icon_re in [
+            ('kaobox-practice', 'box-practice', 'Practice box', r'\\faCog\s*'),
+            ('kaobox-toread', 'box-toread', 'To read', r'\\faExternalLink\s*'),
+        ]:
+            kb_match = re.search(
+                r'\\begin\{' + box_env + r'\}(?:\[[^\]]*\])?\s*'
+                r'(?P<body>.*?)'
+                r'\\end\{' + box_env + r'\}',
+                inner,
+                re.DOTALL,
+            )
+            if kb_match:
+                ft_match = re.search(r'\\begin\{' + box_env + r'\}\[(?:.*?)frametitle=(.+?)\]', inner, re.DOTALL)
+                if ft_match:
+                    title = ft_match.group(1).strip()
+                    title = re.sub(icon_re, '', title)
+                    title = re.sub(r'\\url\{([^}]+)\}', r'\1', title)
+                else:
+                    title = default_title
+                body = kb_match.group('body').strip()
+                body = clean_inline(body)
+                return f'#{box_fn}("{title}")[{body}]'
+        return f'/* TODO: floatbox without recognised box */\n/*\n{inner.strip()}\n*/'
     return replacer
 
 
