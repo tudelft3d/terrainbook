@@ -40,11 +40,12 @@
 
   // = Testing
 
-  Lemongrass frosted gingerbread bites banana bread orange crumbled lentils sweet potato black bean burrito green pepper springtime strawberry ginger lemongrass agave green tea smoky maple tempeh glaze enchiladas couscous. Cranberry spritzer Malaysian cinnamon pineapple salsa apples spring cherry bomb bananas blueberry pops scotch bonnet pepper spiced pumpkin chili lime eating together kale blood orange smash arugula salad. Bento box roasted peanuts pasta Sicilian pistachio pesto lavender lemonade elderberry Southern Italian citrusy mint lime taco salsa lentils walnut pesto tart quinoa flatbread sweet potato grenadillo, as you can see in \eg the figure #octicon:settings-24
+  Lemongrass frosted gingerbread bites banana bread orange crumbled lentils sweet potato black bean burrito green pepper springtime strawberry ginger lemongrass agave green tea smoky maple tempeh glaze enchiladas couscous. Cranberry spritzer Malaysian cinnamon pineapple salsa apples spring cherry bomb bananas blueberry pops scotch bonnet pepper spiced pumpkin chili lime eating together kale blood orange smash arugula salad. Bento box roasted peanuts pasta Sicilian pistachio pesto lavender lemonade elderberry Southern Italian citrusy mint lime taco salsa lentils walnut pesto tart quinoa flatbread sweet potato grenadillo, as you can see in eg the figure 
   // // Chapter @chap:whatisterrain. $cal(V)$ $bb(R)^2$
 
   #include "whatisterrain/whatisterrain.typ"
   #include "acquisition/acquisition.typ"
+  #include "interpol/interpol.typ"
   // #include "dtvd/dtvd.typ"
   // #include "runoff/runoff.typ"
   // #include "whatisterrain/whatisterrain_fixed.typ"
