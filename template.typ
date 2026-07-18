@@ -65,7 +65,7 @@
   },
 )
 
-#let minitoc(toc) = note[#showybox(
+#let minitoc(toc) = note(dy:17pt)[#showybox(
   frame: (
     body-color: gray.lighten(90%),
     inset: 5pt,
@@ -87,15 +87,15 @@
 #let box-practice(title, body) = showybox(
   frame: (
     border-color: red.darken(50%),
-    title-color: red.lighten(60%),
-    body-color: red.lighten(80%),
+    title-color: red.lighten(20%),
+    body-color: red.lighten(95%),
   ),
   title-style: (
-    color: black,
+    color: white,
     weight: "bold",
   ),
   shadow: (
-    offset: 2pt,
+    offset: 1pt,
   ),
   title: hi("cog", solid: false) + " " + title,
   body,
@@ -103,15 +103,15 @@
 #let box-toread(title, body) = showybox(
   frame: (
     border-color: blue.darken(50%),
-    title-color: blue.lighten(60%),
-    body-color: blue.lighten(80%),
+    title-color: blue.lighten(20%),
+    body-color: blue.lighten(95%),
   ),
   title-style: (
-    color: black,
+    color: white,
     weight: "bold",
   ),
   shadow: (
-    offset: 2pt,
+    offset: 1pt,
   ),
   title:  hi("arrow-top-right-on-square") + " " + title,
   body,
@@ -145,7 +145,7 @@
   //-- headings: kaobook uses *roman bold*, not sans
   show heading: set text(font: serif-fonts, weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
-  show heading.where(level: 1): it => text(font: sans-fonts, weight: "bold", 1.5em, it) + v(2em)
+  show heading.where(level: 1): it => align(right, text(font: sans-fonts, weight: "bold", 1.5em, it)) + v(2em)
   show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it
   // show heading.where(level: 2): it => pagebreak(weak: true, to: "odd") + it
   show heading.where(level: 2): it => {

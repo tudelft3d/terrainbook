@@ -1,9 +1,9 @@
 #import "../template.typ": *
 
-= Spatial interpolation:\ deterministic methods <chap:interpol>
+= Spatial interpolation: deterministic methods <chap:interpol>
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
-#v(-6mm)
+// #v(-6mm)
 
 Given a set $S$ of points $p_i$ in $bb(R)^(2)$ (also called samples or data points in the following) to which an attribute $a_i$ is attached, spatial interpolation is the procedure used to estimate the value of the attribute at an unsampled location $x$. 
 Its goal is to find a function $f(x,y)$ that fits (passes through, or close to, all the points in $S$) as well as possible. 
@@ -18,6 +18,7 @@ Extrapolating implies that more uncertainty is attached to the estimated value.
 #notefigure(
   image("figs/extrapolation.pdf", width: 100%),
   caption: [Spatial interpolation and extrapolation.],
+  dy: 20pt,
 ) <fig:extrapolation>
 
 Spatial interpolation methods are crucial in the visualisation process (eg generation of contours lines), for the conversion of data from one format to another (eg from scattered points to raster), to have a better understanding of a dataset, or simply to identify 'bad' samples. 
@@ -31,13 +32,13 @@ Spatial interpolation in 3D is also possible (but out of scope for this book), i
 
 The essential properties of an 'ideal' interpolation method for bivariate geoscientific datasets are as follows:
 #index[bivariate function] 
-+ *exact*: the interpolant must 'honour' the data points, or 'pass through' them.
-+ *continuous*: a single and unique value must be obtained at each location. This is called a $C^(0)$ interpolant#index[$C^(n)$ interpolants] in mathematics (see @fig:continuity).
-+ *smooth*: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^(1)$ and $C^(2)$ interpolants.
-+ *local*: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
-+ *adaptability*: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
-+ *computationally efficient*: it should be possible to implement the method and get an efficient result. Efficiency is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
-+ *automatic*: the method must require as little input as possible from the user, ie it should not rely on user-defined parameters that require _a priori_ knowledge of the dataset.
+/ *exact*: the interpolant must 'honour' the data points, or 'pass through' them.
+/ *continuous*: a single and unique value must be obtained at each location. This is called a $C^(0)$ interpolant#index[$C^(n)$ interpolants] in mathematics (see @fig:continuity).
+/ *smooth*: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^(1)$ and $C^(2)$ interpolants.
+/ *local*: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
+/ *adaptability*: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
+/ *computationally efficient*: it should be possible to implement the method and get an efficient result. Efficiency is of course subjective. For a student doing this course, efficiency might mean that the method generates a result in matter of minutes or an hour on a laptop, for the homework dataset. For a mapping agency, running a process for a day on a supercomputer for a whole country might be efficient. Observe that the complexity of the algorithm is measured not only on the number $n$ of points in the dataset, but how many neighbours $k$ are used to perform one location estimation.
+/ *automatic*: the method must require as little input as possible from the user, ie it should not rely on user-defined parameters that require _a priori_ knowledge of the dataset.
 
 #figure(
   image("figs/continuity.pdf", width: 100%),

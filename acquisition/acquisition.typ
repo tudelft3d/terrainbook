@@ -195,7 +195,8 @@ With InSAR it is possible to cover very large regions in a short amount of time,
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, eg SRTM has a pixel size of #qty("30", "m").
 
 #box-toread("To read or to watch")[
-  #link("https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar")[Wikipedia page about *Interferometric synthetic-aperture radar*].
+  Interferometric synthetic-aperture radar:
+  #link("https://en.wikipedia.org/wiki/Interferometric_synthetic-aperture_radar")
 ]
 
 
@@ -208,17 +209,9 @@ Single-beam and multi-beam echo sounders exist. Multi-beam systems are capable o
 For bathymetry usually a multi-beam echo sounder is used.
 
 Chapter @chap:bathymetry describes techniques to process bathymetric datasets and create terrain of the seabed.
-/* TODO: floatbox without kaobox-practice */
-/*
-\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-	  The principles of echo sounding.
-	  \\
-	  \url{https://en.wikipedia.org/wiki/Echo_sounding}
-	\end{kaobox-toread}
-*/
+
 #box-toread("To read or to watch")[
-  The principles of echo sounding.
-	\
+  The principles of echo sounding: 
 	#link("https://en.wikipedia.org/wiki/Echo_sounding")
 ]
 
