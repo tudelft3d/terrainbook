@@ -143,14 +143,19 @@
   
   // set heading(numbering: "1.1.1", supplement: none)
   show heading: set text(font: serif-fonts, weight: "bold")
-  // show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
-  // show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
+
+  show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
+
 
   show heading.where(level: 1): it => {
     set par(justify: false)
     pagebreak(weak: true, to: "odd")
-    align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it.body))
+    // place(top+right)[
+    //   #rect(fill: blue, width: 10%, height: 10%)
+    // ]
+    align(left, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it))
     // note(counter(heading).get().first())
+    // place(top, note(counter: none, side: "outer")[#text(font: sans-fonts, hyphenate: false, weight: "bold", size: 28pt, "1")])
     v(2em)
   }
   // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
@@ -255,20 +260,38 @@
     clearance: 12pt,
   )
   show: marginalia.show-frame
+  set page(
+    header: [
+      #h(1fr) _Exercise Sheet 3_
+    ],
+  )
+  // set page(
+  //   header: context if here().page() > 1 {
+  //     marginalia.header(
+  //       text-style: (size: 8pt),
+  //       // [Page #counter(page).display("1 of 1", both: true)],
+  //       [#smallcaps[Marginalia] #text(fill: luma(60%))[ledoux]],
+  //       [#counter(page).display()],
+  //     )
+  //   },
+  // )
   body
 }
 
 // Back matter: Roman numerals continuing from front matter
 #let back-matter(body) = {
-  // set page(numbering: "I")
+  set page(numbering: "1")
   set heading(numbering: "A.1", supplement: none)
   counter(heading).update(0)
   set page(
+    header: none
+  )
+  // set page(
     // top: 2.5cm,
     // bottom: 2.5cm,
     // margins: 10mm,
-    numbering: "I",
-  )
+    // numbering: "I",
+  // )
 
   body
 }

@@ -1,8 +1,9 @@
-= Preface
+
+#heading(outlined: false)[Preface]
 
 This open book presents an overview of algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
 
-It covers different representations of terrains (~TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
+It covers different representations of terrains (TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
 
 The book presents the theory and gives examples of libraries and software to perform certain tasks, but no code examples are provided. 
 We wanted the book to be language-agnostic. 
@@ -23,4 +24,4 @@ The book is written for MSc Geomatics students, but it can also be used at the B
 
 ==== Acknowledgements
 We thank the many students of the GEO1015 course over the years who have helped us by pointing—and often fixing with a pull request—the errors, typos, and weird sentences of this book. 
-A special thanks to the students of the year 2018–2019 who had to deal with the first version of this book, and to Balázs Dukai for thoroughly proofreading the first drafts of this book.
+A special thanks to the students of the year 2018–-2019 who had to deal with the first version of this book, and to Balázs Dukai for thoroughly proofreading the first drafts of this book.
