@@ -67,12 +67,12 @@
 
 #let minitoc(toc) = note(dy:17pt)[#showybox(
   frame: (
-    body-color: gray.lighten(90%),
+    body-color: red.lighten(92%),
     inset: 5pt,
     thickness: 0pt,
-    shadow: (
-      offset: 3pt,
-    ),
+    // shadow: (
+    //   offset: 3pt,
+    // ),
   ),
   {
     show outline: it => {
@@ -143,10 +143,18 @@
   
   // set heading(numbering: "1.1.1", supplement: none)
   show heading: set text(font: serif-fonts, weight: "bold")
-  show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
-  show heading.where(level: 1): it => align(right, text(font: sans-fonts, weight: "bold", 1.5em, it)) + v(2em)
-  show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it
-  // show heading.where(level: 2): it => pagebreak(weak: true, to: "odd") + it
+  // show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
+  // show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
+
+  show heading.where(level: 1): it => {
+    set par(justify: false)
+    pagebreak(weak: true, to: "odd")
+    align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it.body))
+    // note(counter(heading).get().first())
+    v(2em)
+  }
+  // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
+  // show heading.where(level: 1): it => align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
   show heading.where(level: 2): it => {
     v(3em, weak: true)
     text(font: sans-fonts, size: 14pt, weight: "bold", it)
@@ -246,7 +254,7 @@
     book: true,
     clearance: 12pt,
   )
-  // show: marginalia.show-frame
+  show: marginalia.show-frame
   body
 }
 
