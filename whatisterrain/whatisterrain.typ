@@ -16,11 +16,6 @@ It gives us the _elevation_, which is the height above/below a certain reference
 
 However, the "Earth's surface" is also not a clear concept, since several objects on it can be present, eg man-made structures like buildings, roads, power lines, and bridges, and other objects like trees.
 
-#figure(
-  image("figs/destm.pdf", width: 100%),
-  caption: [The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.],
-  placement: none,
-) <fig:dtmdsm>
 In this book, we use the following definitions (see @fig:dtmdsm):
 / DTM: (#strong[d]igital #strong[t]errain #strong[m]odel): the surface is the _bare-earth_, without man-made objects or vegetation.#index[DTM (digital terrain model)]
 / DSM: (#strong[d]igital #strong[s]urface #strong[m]odel): the surface includes all objects and structures on the terrain, including vegetation.#index[DSM (digital surface model)]
@@ -29,6 +24,7 @@ In this book, we use the following definitions (see @fig:dtmdsm):
  #note[DEM != grid]
  However, it should be noticed that in some countries (especially in the USA) a DEM is often synonymous with a grid of elevation (but not in this book!).
 
+ 
 Furthermore, some concepts are derived from those, for instance: 
 / nDSM: (#strong[n]ormalised DSM): the difference between the DSM and the DTM.
  #index[nDSM (normalised DSM)]#index[normalised DSM]
@@ -36,6 +32,14 @@ Furthermore, some concepts are derived from those, for instance:
 / CHM: (#strong[c]anopy #strong[h]eight #strong[m]odel): similarly to the nDSM except that we are only interested in the vegetation/trees; we ignore the other objects (eg buildings, bridges, lampposts, busstops, cars, etc.).
  #index[CHM]#index[canopy height model]
  The CHM is the difference between the DSM _of the vegetation_ and the DTM.
+
+#wideblock(side: "both")[
+  #figure(
+    image("figs/destm.pdf", width: 100%),
+    // placement: bottom,
+    caption: [The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.],
+   ) <fig:dtmdsm>
+]
 
 == Dimensionality of DTMs
 

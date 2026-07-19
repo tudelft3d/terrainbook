@@ -142,7 +142,6 @@
   set par(justify: true)
   
   // set heading(numbering: "1.1.1", supplement: none)
-  //-- headings: kaobook uses *roman bold*, not sans
   show heading: set text(font: serif-fonts, weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
   show heading.where(level: 1): it => align(right, text(font: sans-fonts, weight: "bold", 1.5em, it)) + v(2em)
@@ -166,6 +165,9 @@
   
   
   show figure.where(kind: image): set figure(numbering: figure-numbering)
+  show figure.caption.where(position: bottom): note.with(
+    alignment: "bottom", counter: none, shift: "avoid", keep-order: true
+  )
 
   //-- math
   show math.equation: set text(font: math-font)
@@ -244,7 +246,7 @@
     book: true,
     clearance: 12pt,
   )
-
+  // show: marginalia.show-frame
   body
 }
 

@@ -328,7 +328,13 @@ Bilinear interpolation uses the 4 centres to perform the interpolation at locati
 We need to linearly interpolate the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values.
 Also, notice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 
 For the case in @fig:bilinear, the calculation would go as follows:
-$  mat(delim: #none, q_z = frac(p_x - n 4_x, n 3_x - n 4_x) times(n 3_z - n 4_z) + n 4_z ; ; r_z = frac(p_x - n 1_x, n 2_x - n 1_x) times(n 2_z - n 1_z) + n 1_z ; ; p_z = frac(p_y - r_y, q_y - r_y) times(q_z - r_z) + r_z ;)  $
+
+$ mat(delim: #none, 
+  q_z = frac(p_x - n 4_x, n 3_x - n 4_x) times(n 3_z - n 4_z) + n 4_z ; ; 
+  r_z = frac(p_x - n 1_x, n 2_x - n 1_x) times(n 2_z - n 1_z) + n 1_z ; ; 
+  p_z = frac(p_y - r_y, q_y - r_y) times(q_z - r_z) + r_z 
+  ;)  
+$
 
 == #flex-heading[Assessing interpolation results][Assessing the results of an interpolation method and/or fine-tuning the parameters]
 
@@ -374,42 +380,49 @@ The differences in the lower areas (which is water) are smaller since these area
   #link("https://tudelft3d.github.io/terrainbook/extra/interpol/")
 ]
 
-// TODO: OVERVIEW TABLE
-// \begin{table*}
-// \begin{tabular}{@{}lccccccl@{}}
-// \toprule
-//                          & exact         & continuous & local        & adaptable & efficient & automatic \\ \midrule
-// *global function* & $t i m e s$ & $C^(2+)$ & $t i m e s$ & -- & -- & $t i m e s$ \\
-// *splines* & $t i m e s$ & $C^(2+)$ & depends & 0 & - & $t i m e s$ \ 
-// *nearest neigh.* & $c h e c k m a r k$ & $t i m e s$ & $c h e c k m a r k$ & + & ++ & $c h e c k m a r k$ \ 
-// *IDW* & $c h e c k m a r k$ & $t i m e s$ & $c h e c k m a r k$ & - & 0 & $t i m e s$ \ 
-// *TIN* & $c h e c k m a r k$ & $C^(0)$ & $c h e c k m a r k$ & + & ++ & $c h e c k m a r k$ \ 
-// *NNI* & $c h e c k m a r k$ & $C^(0)$ & $c h e c k m a r k$ & ++ & 0 & $c h e c k m a r k$ \ 
-// *NNI-c1* & $c h e c k m a r k$ & $C^(1)$ & $c h e c k m a r k$ & ++ & - & $c h e c k m a r k$ \ 
-// *Laplace* & $c h e c k m a r k$ & $C^(0)$ & $c h e c k m a r k$ & ++ & + & $c h e c k m a r k$ \ 
-// *bilinear* & $c h e c k m a r k$ & $C^(0)$ & $c h e c k m a r k$ & ++ & ++ & $c h e c k m a r k$ \ \bottomrule
-// \end{tabular}
-// \caption{Overview of the interpolation methods discussed in this chapter, with their properties (as described in \refsec{interpol_properties}).}
-// \label{tab:results_interpol}
-// \end{table*}
+#wideblock(side: "right")[
+  #figure(
+    placement: auto,
+    caption: [Details concerning the datasets used for the experiments.],
+    table(
+      stroke: none,
+      columns: 7,
+      align: (left, center, center, center, center, center, center),
+      table.hline(),
+      table.header[][exact][continuous \ smooth][local][adaptable][efficient][automatic],
+      table.hline(),
+      [*global function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
+      [*splines*], [#sym.crossmark], [$C^(2+)$], [depends], [0], [--], [#sym.crossmark],
+      [*nearest neigh.*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
+      [*IDW*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [--], [0], [#sym.crossmark] , 
+      [*TIN*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
+      [*NNI*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [0], [#sym.checkmark] , 
+      [*NNI-c1*], [#sym.checkmark], [$C^(1)$], [#sym.checkmark], [++], [--], [#sym.checkmark] , 
+      [*Laplace*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [+], [#sym.checkmark] , 
+      [*bilinear*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [++], [#sym.checkmark] ,
+      
+      table.hline(),
+    ) 
+  ) <tab:results_interpol>
+]
 
-/* TODO: verify subfigure layout */
 
-// #wideblock(
+
+#wideblock(side: "both")[
 #subfigure(
-  figure(image("figs/results/nn.png", width: 90%), caption: [Nearest neighbour]),
-  figure(image("figs/results/idw_r1500_p2.png", width: 90%), caption: [IDW (radius=#num(1500))]),
-  figure(image("figs/results/idw_r1500_p4.png", width: 90%), caption: [IDW (radius=#num(1500))]),
-  figure(image("figs/results/tin.png", width: 90%), caption: [TIN (linear)]),
-  figure(image("figs/results/tin_c1.png", width: 90%), caption: [TIN ($C^(1)$)]),
-  figure(image("figs/results/nni.png", width: 90%), caption: [Natural neighbours]),
-  figure(image("figs/results/nni_c1.png", width: 90%), caption: [Natural neighbours ($C^(1)$)]),
-  figure(image("figs/results/laplace.png", width: 90%), caption: [Laplace]),
+  figure(image("figs/results/nn.png", width: 75%), caption: [Nearest neighbour]),
+  figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500))]),
+  figure(image("figs/results/idw_r1500_p4.png", width: 75%), caption: [IDW (radius=#num(1500))]),
+  figure(image("figs/results/tin.png", width: 75%), caption: [TIN (linear)]),
+  figure(image("figs/results/tin_c1.png", width: 75%), caption: [TIN ($C^(1)$)]),
+  figure(image("figs/results/nni.png", width: 75%), caption: [Natural neighbours]),
+  figure(image("figs/results/nni_c1.png", width: 75%), caption: [Natural neighbours ($C^(1)$)]),
+  figure(image("figs/results/laplace.png", width: 75%), caption: [Laplace]),
   columns: (1fr, 1fr),
   caption: [Results of a few interpolation methods for the same dataset; the samples are shown on the surface (red dots).],
   label: <fig:results_interpol>,
 ) 
-// )
+]
 
 == Notes and comments
 
