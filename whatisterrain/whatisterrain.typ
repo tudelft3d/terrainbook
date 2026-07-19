@@ -200,7 +200,7 @@ The most known examples of the use of irregular tessellations in terrain modelli
 As shown in @fig:tin, a TIN refers to an irregular tessellation of the $x y$-plane into non-overlapping triangles (whose vertices are formed by three sample points), and to the use of a linear interpolation function for each triangle. 
 #notefigure(
   image("figs/tin.pdf", width: 100%),
-  caption: [A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, \ie\ their circumcircle (green) is empty of any other points in the plane.],
+  caption: [A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, ie their circumcircle (green) is empty of any other points in the plane.],
 ) <fig:tin>
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $x y$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
