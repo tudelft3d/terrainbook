@@ -56,6 +56,7 @@
 
 #let note = note.with(counter: none, text-style: (size: 8pt, style: "normal", weight: "regular"))
 #let notefigure = notefigure.with(
+  // dy: 20pt,
   show-caption: (number, caption) => {
     text(size: 8pt, style: "normal", weight: "regular")[
       #number
@@ -179,7 +180,7 @@
   
   show figure.where(kind: image): set figure(numbering: figure-numbering)
   show figure.caption.where(position: bottom): note.with(
-    alignment: "bottom", counter: none, shift: "avoid", keep-order: true
+     counter: none, shift: "avoid", keep-order: true
   )
 
   //-- math
@@ -209,8 +210,9 @@
 
   //-- figure caption in the margin + Figure 1.2: in bold
   set figure(gap: 0.55em) // neccessary in both cases
-  set figure.caption(position: bottom)
+  // set figure.caption(position: bottom)
   show figure.caption: it => note(
+    dy: -15pt,
     alignment: "bottom",
     counter: none,
     shift: "avoid",
