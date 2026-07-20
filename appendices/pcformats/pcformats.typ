@@ -67,21 +67,26 @@ The LAS standard, currently at version 1.4#note[LAS v1.4-R15 is the latest versi
 #note[#link("https://github.com/ASPRSorg/LAS")]
 However, in practice it is also used for other types of point cloud, eg those derived from dense image matching.
 LAS files are binary and unlike the PLY format the fields are prescribed, ie the attributes for each point record and their types (number of bits) cannot be modified.
-Table @tab:las-record shows the composition of the base record type for the latest version of LAS (v1.4).
+@tab:las-record shows the composition of the base record type for the latest version of LAS (v1.4).
 
+//-- TODO: figures in appendix not numbered
 #wideblock(side: "right")[
 #figure(
   {
   set text(size: 8pt)
   table(
-    columns: 4,
+    columns: (auto, auto, auto, auto),
     stroke: none,
-    align: (left,left,right,left,),
+    // stroke: (y: none),
+    table.vline(x: 1, start: 1),
+    table.vline(x: 2, start: 1),
+    table.vline(x: 3, start: 1),
+    align: (left, left, right, left),
     table.header([Field], [Type], [Size (bits)], [Description],),
     table.hline(),
-    [`X`], [int], [32], [X coordinate],
-    [`Y`], [int], [32], [Y coordinate],
-    [`Z`], [int], [32], [Z coordinate],
+    [`X`], [int], [32], [X-coordinate (not real value, see below)],
+    [`Y`], [int], [32], [Y-coordinate (not real value, see below)],
+    [`Z`], [int], [32], [Z-coordinate (not real value, see below)],
     [`intensity`], [unsigned int], [16], [pulse return amplitude],
     [`return_number`], [unsigned int], [4], [total pulse return number
     for a given output pulse],
@@ -108,7 +113,7 @@ Table @tab:las-record shows the composition of the base record type for the late
     the point is at the end of a scan. It is the last point on a given
     scan line before it changes direction.],
     [`classification`], [unsigned int], [8], [classification code, see
-    Table~@tab:las-classes],
+    @tab:las-classes],
     [`user_data`], [unsigned int], [8], [may be used at the user’s
     discretion],
     [`scan_angle`], [int], [16], [angle at which the laser pulse was
@@ -121,8 +126,8 @@ Table @tab:las-record shows the composition of the base record type for the late
   )} )<tab:las-record>]
 
 In the specifications this is referred to as the "Format 6", and other record types are possible (Formats 0 to 10).
-#note[Different LAS formats: link("https://laspy.readthedocs.io/en/latest/intro.html\#point-records")]
-Other record types can add for instance the RGB colour information of the point, or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in Table @tab:las-record.
+#note[Different LAS formats: #link("https://laspy.readthedocs.io/en/latest/intro.html#point-records")]
+Other record types can add for instance the RGB colour information of the point, or the GPS time (the time a point was measured by the scanner), but all records types include at least the fields shown in @tab:las-record.
 While the LAS standard clearly specifies that all these fields are required, some of the fields are very specific to lidar acquisition and they are sometimes ignored in practice, eg if a point cloud originating from dense matching is stored in the LAS format.
 #note[Unused fields take up storage] 
 It is important to notice that unused fields will still take up storage space in each record (a default value is then assigned, such as 0.0 for floats or 0 for integers).
@@ -132,14 +137,18 @@ The CRS of the point cloud can be stored in the header of a LAS file, together w
 The X, Y, and Z fields are stored as 32-bit integers. 
 To convert these values to the actual coordinates on the ground, they need to be multiplied by a scaling factor and added to an offset value, ie :
 #math.equation(block: true, numbering: none)[
-  $ X_("coordinate") = (X_("record") * X_("scale")) + X_("offset") \ Y_("coordinate") = (Y_("record") * Y_("scale")) + Y_("offset") \ Z_("coordinate") = (Z_("record") * Z_("scale")) + Z_("offset") $
+  $ 
+    X_("coordinate") = (X * X_("scale")) + X_("offset") \ 
+    Y_("coordinate") = (Y * Y_("scale")) + Y_("offset") \ 
+    Z_("coordinate") = (Z * Z_("scale")) + Z_("offset") 
+  $
 ]
 The scaling factors $X_"scale"$, $Y_"scale"$, $Z_"scale"$ and the offsets $X_"offset"$, $Y_"offset"$, $Z_"offset"$ are also listed in the header. 
 #note[Scaling factors and offsets are stored in the LAS header]
 Notice that the scaling factor determines the number of decimals that can be stored, eg the factors $0.1$, $0.01$, and $0.001$ would give us $1$, $2$, and $3$ decimals respectively.
 
 ==== Classification
-The LAS standard defines several classification codes, as listed in Table @tab:las-classes.
+The LAS standard defines several classification codes, as listed in @tab:las-classes.
 #notefigure(
   table(
     columns: 2,
