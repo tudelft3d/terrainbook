@@ -38,10 +38,7 @@
 #pagebreak()
 #main-matter[
 
-  // = Testing
-
-  Lemongrass frosted gingerbread bites banana bread orange crumbled lentils sweet potato black bean burrito green pepper springtime strawberry ginger lemongrass agave green tea smoky maple tempeh glaze enchiladas couscous. Cranberry spritzer Malaysian cinnamon pineapple salsa apples spring cherry bomb bananas blueberry pops scotch bonnet pepper spiced pumpkin chili lime eating together kale blood orange smash arugula salad. Bento box roasted peanuts pasta Sicilian pistachio pesto lavender lemonade elderberry Southern Italian citrusy mint lime taco salsa lentils walnut pesto tart quinoa flatbread sweet potato grenadillo, as you can see in eg the figure 
-  // // Chapter @chap:whatisterrain. $cal(V)$ $bb(R)^2$
+  //-- main chapters
 
   #include "whatisterrain/whatisterrain.typ"
   #include "acquisition/acquisition.typ"
@@ -54,13 +51,21 @@
   // #include "spatialextent/spatialextent.typ"
   // #include "dtvd/dtvd_fixed.typ"
   // #include "runoff/runoff_fixed.typ"
+
+  //-- Appendices
+  #set heading(numbering: "A.1")
+  #counter(heading).update(0)
+  #include "./appendices/pcformats/pcformats.typ"     //-- A
+  #include "./appendices/ahn/ahn.typ"                 //-- B
+  // #include "./appendices/normalplane/normalplane.typ" //-- C
+  // #include "./appendices/equations/equations.typ"     //-- D
+
 ]
 
 
 //-- back-matter
 // must take page breaks into account, may need to be offset by +1 or -1
 // #context counter(page).update(counter(page).at(<front-matter>).first())
-// #set heading(numbering: "A.1")
 // #counter(heading).update(0)
 // #let sub-figure-numbering = (super, sub) => numbering("A.1a", counter(heading).get().first(), super, sub)
 // #let figure-numbering = super => numbering("A.1", counter(heading).get().first(), super)
