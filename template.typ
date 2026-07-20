@@ -50,7 +50,9 @@
 //-- default for pseudo-code/lovelace
 #let my-lovelace-defaults = (
   booktabs: true,
-  booktabs-stroke: 1pt + black,
+  booktabs-stroke: 0.4pt + black,
+  hooks: .5em, 
+  line-gap: 0.6em,
 )
 #let pseudocode-list = pseudocode-list.with(..my-lovelace-defaults)
 
@@ -115,6 +117,22 @@
     offset: 1pt,
   ),
   title:  hi("arrow-top-right-on-square") + " " + title,
+  body,
+)
+#let box-info(title, body) = showybox(
+  frame: (
+    border-color: gray.darken(50%),
+    title-color: gray.lighten(20%),
+    body-color: gray.lighten(95%),
+  ),
+  title-style: (
+    color: white,
+    weight: "bold",
+  ),
+  shadow: (
+    offset: 1pt,
+  ),
+  title: hi("information-circle", solid: false) + " " + title,
   body,
 )
 
@@ -198,6 +216,8 @@
   
   // show link: set text(blue)
 
+  set table.hline(stroke: 0.4pt)
+  set table.vline(stroke: 0.4pt)
   
   set list(indent: 1em, tight: true)
   show list: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)
@@ -261,7 +281,7 @@
     book: true,
     clearance: 12pt,
   )
-  show: marginalia.show-frame
+  // show: marginalia.show-frame
   set page(
     header: [
       #h(1fr) _Exercise Sheet 3_
