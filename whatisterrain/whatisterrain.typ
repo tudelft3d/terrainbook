@@ -33,7 +33,7 @@ Furthermore, some concepts are derived from those, for instance:
  #index[CHM]#index[canopy height model]
  The CHM is the difference between the DSM _of the vegetation_ and the DTM.
 
-#wideblock(side: "both")[
+#wideblock(side: "outer")[
   #figure(
     image("figs/destm.pdf", width: 100%),
     // placement: bottom,
@@ -238,12 +238,15 @@ Indeed, the size of a quadtree is not dependent on the number of cells, but on t
 The quadtree of a 2D grid having no two adjacent cells with the same value (eg a checkers board) contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
 Another disadvantage is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
 
-=== Other common terrain representations used in GIS <sec:representation_others>
+// #wideblock(side: "outer")[
+  #figure(
+    image("figs/reps.pdf"),
+    caption: [Four most common data models for terrains.],
+    placement: top,
+  ) <fig:reps>
+// ]
 
-#notefigure(
-  image("figs/reps.pdf", width: 75%),
-  caption: [Four most common data models for terrains.],
-) <fig:reps>
+=== Other common terrain representations used in GIS <sec:representation_others>
 
 In the GIS literature, besides the ones above, different representations for terrains are often listed, the two most relevant being:
 + irregularly spaced sample points, such a point cloud;
