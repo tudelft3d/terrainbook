@@ -38,19 +38,54 @@
 #pagebreak()
 #main-matter[
 
-  //-- main chapters
+  // = Testing 1 2 testing
 
-  #include "whatisterrain/whatisterrain.typ"
-  #include "acquisition/acquisition.typ"
-  #include "interpol/interpol.typ"
-  // #include "dtvd/dtvd.typ"
-  // #include "runoff/runoff.typ"
-  // #include "whatisterrain/whatisterrain_fixed.typ"
-  // #include "visibility/visibility.typ"
-  // #include "conversion/conversion.typ"
-  // #include "spatialextent/spatialextent.typ"
-  // #include "dtvd/dtvd_fixed.typ"
-  // #include "runoff/runoff_fixed.typ"
+  // #qty("0.7", "m")
+
+  // #qty(92, "degree")
+  // // #angle(92.0degree)
+  
+  // #qty(1, "arcsec")
+
+  // #notefigure(
+  //   grid(
+  //     image("./dtvd/figs/local.pdf", width: 100%, page: 1),
+  //     image("./dtvd/figs/local.pdf", width: 100%, page: 2),
+  //   ),
+  //   caption: [A quadrilateral that can be triangulated in two different ways. Only the top configuration is Delaunay. #strong[(top)] $sigma$ is locally Delaunay. #strong[(bottom)] $sigma$ is not locally Delaunay.],
+  // ) 
+
+  // #smallcaps[Orient]
+
+  // #table(
+  //   columns: 3,
+  //   stroke: none,
+  //   align: (left, center, left),
+  //   table.header([DT], [], [VD]),
+  //   table.hline(),
+  //   [#text(color.rgb("#c9f6c8"))[*face*]], [#sym.arrow.l.r], [#text(color.rgb("#2e8b58"))[*vertex*]],
+  //   [#text(color.rgb("#000080"))[*vertex*]], [#sym.arrow.l.r], [#text(color.rgb("#d6ecf3"))[*face*]],
+  //   [#text(color.rgb("#e6793d"))[*edge*]], [#sym.arrow.l.r], [#text(color.rgb("#ffd602"))[*edge*]],
+  //   table.hline(),
+  // ),
+  
+  // #pagebreak()
+
+  //-- main chapters
+  #include "whatisterrain/whatisterrain.typ" //-- 01
+  // #include "acquisition/acquisition.typ"     //-- 02
+  #include "gdem/gdem.typ"                   //-- 03
+  // #include "dtvd/dtvd.typ"                   //-- 04
+  // #include "interpol/interpol.typ"           //-- 05
+  // #include "kriging/kriging.typ"             //-- 06
+  // #include "conversion/conversion.typ"       //-- 07
+  // #include "topofeatures/topofeatures.typ"   //-- 08
+  // #include "visibility/visibility.typ"       //-- 09
+  // #include "runoff/runoff.typ"               //-- 10
+  // #include "pcprocessing/pcprocessing.typ"   //-- 11
+  // #include "massive/massive.typ"             //-- 12
+  // #include "spatialextent/spatialextent.typ" //-- 13
+  // #include "bathymetry/bathymetry.typ"       //-- .typ14
 
   //-- Appendices
   #set heading(numbering: "A.1")
@@ -58,7 +93,7 @@
   #include "./appendices/pcformats/pcformats.typ"     //-- A
   #include "./appendices/ahn/ahn.typ"                 //-- B
   // #include "./appendices/normalplane/normalplane.typ" //-- C
-  // #include "./appendices/equations/equations.typ"     //-- D
+  #include "./appendices/equations/equations.typ"     //-- D
 
 ]
 

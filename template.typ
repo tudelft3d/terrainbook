@@ -10,7 +10,7 @@
 //-- pseudo-code
 #import "@preview/lovelace:0.3.0": *
 //-- siunitx
-#import "@preview/unify:0.8.0": num, numrange, qty, qtyrange
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
 //-- icons
 #import "@preview/heroic:0.1.2": hi
 
