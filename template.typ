@@ -70,7 +70,7 @@
 
 #let minitoc(toc) = note(dy:17pt)[#showybox(
   frame: (
-    body-color: red.lighten(92%),
+    body-color: red.lighten(94%),
     inset: 5pt,
     thickness: 0pt,
     // shadow: (
@@ -232,7 +232,7 @@
   set figure(gap: 0.55em) // neccessary in both cases
   // set figure.caption(position: bottom)
   show figure.caption: it => note(
-    dy: -15pt,
+    // dy: 45pt,
     alignment: "bottom",
     counter: none,
     shift: "avoid",
@@ -281,10 +281,10 @@
     book: true,
     clearance: 12pt,
   )
-  // show: marginalia.show-frame
+  show: marginalia.show-frame
   set page(
     header: [
-      #h(1fr) _Exercise Sheet 3_
+      #h(1fr) TODO: make a good header!
     ],
   )
   // set page(

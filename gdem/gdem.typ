@@ -156,6 +156,7 @@ The pseudo DTMs FABDEM (#strong[F]orest #strong[A]nd #strong[B]uilding removed) 
 Similarly, while ALOS World3D is freely available at #qty("30", "m"), it also comes in a commercial version at #qty("5", "m") resolution.
 There is even a #qty("0.5", "m") commercial version, based on multiple optical satellites, available on request.
 
+// #wideblock(side: "right")[
 #figure(
   placement: auto,
   caption: [Overview of global DEMS, see Figure~\ref{fig:dem_comparison} for their lineage.],
@@ -166,7 +167,7 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
     columns: (auto, auto, auto, auto, auto, auto, auto),
     align: (left, left, left, left, left, left, left),
     table.hline(),
-    table.header[][Year][By][Sensor][Type][License][Resolution],
+    table.header[][Release year][By][Sensor][Type][License][Resolution],
     table.hline(),
     [SRTM]          ,[2001], [NASA],                 [InSAR],   [DSM],      [Open],    [30--90m],    
     [ASTER]         ,[2009], [NASA],                 [optical], [DSM],      [Open],    [30m],        
@@ -184,11 +185,14 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
   )
  } 
 ) <tab:gdem_overview>
+// ]
 
-//-- TODO MISSING FIGURE
 #subfigure(
-  columns: (1fr,),
-  caption: [NASADEM],
+  figure(image("./figs/nasadem.png", width: 100%), caption: []),
+  figure(image("./figs/copernicusdem.png", width: 100%), caption: []),
+  columns: (1fr, 1fr),
+  caption: [NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how
+  CopernicusDEM has more detail. There is ∼12 years between these images.],
   placement: none,
   label: <fig:nasadem>,
 )
@@ -211,7 +215,7 @@ More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defin
 #note[GeoTIFF]
 DGED also defines the structure and the specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
 Most of the gDEMS are tiled in a similar way.
-CopernicusDEM---adhering to the DGED level 3 standard---has tiles of 3601$t i m e s$3601 pixels on the equator, but 3600$t i m e s$2400 (height, width) pixels at #qty("50", "degree") latitude, 3600$t i m e s$1800 at #qty("60", "degree") latitude, 3600$t i m e s$1200 at #qty("70", "degree") latitude, becoming as small as 3600$t i m e s$360 for the last 5 degrees of latitude.
+CopernicusDEM---adhering to the DGED level 3 standard---has tiles of $3601 times 3601$ pixels on the equator, but $3600 times 2400$ (height, width) pixels at #qty("50", "degree") latitude, $3600 times 1800$ at #qty("60", "degree") latitude, $3600 times 1200$ at #qty("70", "degree") latitude, becoming as small as $3600 times 360$ for the last 5 degrees of latitude.
 This tiling scheme results in pixels being as square as possible, but makes it hard to work with tiles from different latitudes.
 
 In this context it becomes clear that the resolution should not be discussed in terms of meters, but terms of degrees (or divisions of a degree).
@@ -225,7 +229,7 @@ Datasets such as SRTM and NASADEM can be provided as `.hgt` (height) files, whic
 #box-practice("Downloading gDEMs")[
   Most of the gDEMS are available in a standard and easily accessible format, such as GeoTIFF.
   However, for broad compatibility, recent advances such as new compression techniques and tiling strategies are not yet widely used.
-  \ \\
+  \ \
   One such advance is Cloud Optimized GeoTIFF (COG: #link("https://www.cogeo.org")), which is a normal GeoTIFF with a specific structure that allows it to be read piecewise from the cloud.
   Without such a structure, a GeoTIFF has to be downloaded in its entirety---even if one is only interested in a small part of it---before it can be read.
 ]
@@ -296,11 +300,12 @@ They also published a paper comparing the vertical accuracy and derived paramete
 
 Arguably the best place to download DEMs (gDEMS, local ones, lidar datasets, etc.) is OpenTopography (#link("https://opentopography.org")).
 Otherwise each gDEM has its own download portal, with its own registration systems and its specific ways of searching and downloading the data.
-In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as `.tar` (archives) for \ang{1}$t i m e s$\ang{1} tiles via FTP, in folders for each continent and then country.
+In case of the most recent gDEMS, such as CopernicusDEM, the data must be downloaded as `.tar` (archives) for #qty(1, "deg") #sym.crossmark #qty(1, "deg") tiles via FTP, in folders for each continent and then country.
 Data is duplicated for the border areas, totalling #qty("2", "TB").
 
 To learn more about the DGED format, read #link("https://dgiwg.org/documents/dgiwg-standards").
-Similarly, reading a user guide on any of the gDEMS is a good idea, such as the one for \href{https://spacedata.copernicus.eu/documents/20126/0/GEO1988-CopernicusDEM-SPE-002_ProductHandbook_I3.0+
+Similarly, reading a user guide on any of the gDEMS is a good idea, such as the one for #link("https://spacedata.copernicus.eu/documents/20126/0/GEO1988-CopernicusDEM-SPE-002_ProductHandbook_I3.0+")[CopernicusDEM Product
+Handbook].
 
 #citet(<Hawker22>) give the details how the vegetation and buildings are removed from CopernicusDEM to create FABDEM.
 

@@ -45,6 +45,7 @@ The essential properties of an 'ideal' interpolation method for bivariate geosci
   caption: [Continuity of an interpolant. #strong[(a)] an interpolant that is not continuous. #strong[(b)] a $C^(0)$ interpolant is a function that is continuous but the first derivative is not possible at certain locations. #strong[(c)] a $C^(1)$ interpolant has its first derivative possible everywhere. #strong[(d)] a $C^(2)$ interpolant has its second derivative possible everywhere (this one is more difficult to draw).],
 ) <fig:continuity>
 
+
 == Fitting polynomials
 
 === One global function
@@ -58,10 +59,13 @@ The biggest concern with polynomials is probably that while the interpolant is e
 This is known as the Runge's phenomenon in numerical analysis,
 #index[Runge's phenomenon ]#note[Runge's phenomenon]
 and is shown in @fig:polynomial.
+
+#wideblock(side: "outer")[
 #figure(
   image("figs/polynomial.pdf", width: 100%),
   caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and the Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
 ) <fig:polynomial>
+]
 
 === Splines: piecewise polynomials
 
@@ -278,10 +282,14 @@ The resulting interpolant is $C^(1)$, and @fig:comp_nni shows an example.
 
 The Laplace interpolant, or non-Sibsonian interpolation, is a computationally faster variant of the natural neighbour interpolation method.
 It is faster because no (stolen) areas need to be computed, instead the lengths of the Delaunay and the Voronoi edges are used.
+
 #notefigure(
   image("figs/laplace.pdf", width: 100%, page: 3),
+  dy: 150pt,
   caption: [The weight for the Laplace interpolant for one neighbour ($p_6$.)],
+  placement: auto,
 ) <fig:laplace>
+
 For a given interpolation location $x$, the natural neighbours $p_i$ of $x$ are used for the Laplace interpolant.
 The weight $w_i$ of a $p_i$ is obtained, as shown in the @fig:laplace, by:
 $  w_i(x) = frac(|"edge"_i (cal(V)^(+)_x)|, | x p_i|)  $ <eq-laplace>
@@ -408,7 +416,7 @@ The differences in the lower areas (which is water) are smaller since these area
 
 
 
-#wideblock(side: "both")[
+#wideblock(side: "outer")[
 #subfigure(
   figure(image("figs/results/nn.png", width: 75%), caption: [Nearest neighbour]),
   figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500))]),
