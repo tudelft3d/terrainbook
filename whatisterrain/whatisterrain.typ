@@ -137,7 +137,7 @@ In general, we classify the tessellations of space into three categories (as sho
 #index[tessellation]
 
 #notefigure(
-  image("figs/tesstype.pdf", width: 70%),
+  image("figs/tesstype.pdf", width: 55%),
   caption: [Type of tessellations.],
 ) <fig:tesstypes>
 
