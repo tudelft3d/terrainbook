@@ -304,7 +304,7 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 
 To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $cal(O) (n)$ or a single point location since each triangle must be checked).
 
-A better alternative is to use the adjacency relationships between the triangles, and use a series of /* TODO: \Orient */ tests, as described in Section @sec:predicates, to navigate from one triangle to the other. 
+A better alternative is to use the adjacency relationships between the triangles, and use a series of #Orient tests, as described in Section @sec:predicates, to navigate from one triangle to the other. 
 The idea, called "walking", is shown in @fig:walk and details are given in the Algorithm @algo:walk.
 #figure(
   image("./figs/walk.pdf", width: 70%),
@@ -397,7 +397,6 @@ However, because it is simpler to manage triangles over arbitrary polygons (they
 #figure(
   image("./figs/tr_ds.pdf", width: 100%),
   caption: [The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).],
-  placement: none,
 ) <fig:tr_ds>
 
 The simplest data structure, as shown in @fig:tr_ds, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles.
@@ -415,8 +414,7 @@ We are mostly interested in the _constrained Delaunay triangulation_ (ConsDT) an
   caption: [#strong[(top)] A set $S$ of points and straight-line segments. #strong[(middle)] Constrained DT of $S$. #strong[(bottom)] Conforming DT of $S$; the Steiner points added are in red.],
 ) <fig:cdt_example>
 
-==== Constrained DT (ConsDT).
-
+==== Constrained DT (ConsDT)
 Given a set $S$ of points and straight-line segments in $bb(R)^(2)$, the ConsDT permits us to decompose the convex hull of $S$ into non-overlapping triangles, and every segment of $S$ appears as an edge in ConsDT($S$). 
 ConsDT is similar to the Delaunay triangulation, but the triangles in ConsDT are not necessarily Delaunay (ie their circumcircle might contain other points from $S$). 
 The empty circumcircle for a ConsDT is less strict: a triangle is Delaunay if its circumcircle contains no other points in $S$ that are _visible_ from the triangle.
@@ -451,8 +449,7 @@ Observe that the ConsDT can be used to triangulate polygons with holes (see @fig
   label: <fig:cdt_dog>,
 )
 
-==== Conforming DT (ConfDT).
-
+==== Conforming DT (ConfDT)
 A ConfDT adds new points to the input $S$ (called _Steiner_ points) to ensure that the input segments are present in the triangulation.
 #index[Steiner point]#note[Steiner point]
 As Figures @fig:cdt_example and @fig:cdt_dog show, the input straight-line segments will be potentially split into several collinear segments. 
