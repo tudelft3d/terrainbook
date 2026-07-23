@@ -137,8 +137,13 @@
 )
 
 #let tbtemplate(
-  title: "",
-  author: "",
+  title: "Computational modelling of terrains",
+  authors: (
+    "Hugo Ledoux",
+    "Ken Arroyo Ohori",
+    "Ravi Peters",
+    "Maarten Pronk",
+  ),
   version: "",
   body,
 ) = {
@@ -152,7 +157,7 @@
   let serif-fonts = ("TeX Gyre Pagella", "Palatino", "New Computer Modern") //-- https://www.1001fonts.com/tex-gyre-pagella-font.html
   let sans-fonts = ("TeX Gyre Heros", "Source Sans Pro", "Calibri") //-- https://www.1001fonts.com/texgyreheros-font.html + https://github.com/adobe-fonts/source-sans-pro
   let math-font = ("Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
-  let mono-font = "Consolas"
+  let mono-font = ("Consolas", "Monaco") //-- Input Mono Condensed
 
   set text(
     font: serif-fonts,
@@ -211,7 +216,7 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  show link: it => text(fill: rgb("#3087b3"), it)
+  show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
   show ref: set text(blue)
   
   // show link: set text(blue)
@@ -245,13 +250,21 @@
       #set page(numbering: none)
       #counter(page).update(0)
       #align(center)[
-        #set text(size: 20pt)
-        #title \
-        #set text(size: 12pt)
-        #author \
-        #raw(version)
+        #v(5cm)
+        #text(font: sans-fonts, size: 20pt, weight: "bold", title)
+        // #title \
+        #grid(
+          columns: (5cm, 5cm),
+          inset: 5pt,
+          text(1.2em, "Hugo Ledoux"),
+          text(1.2em, "Ken Arroyo Ohori"),
+          text(1.2em, "Ravi Peters"),
+          text(1.2em, "Maarten Pronk"),
+        )
+        #v(5mm)
+        #text(font: mono-font, size: 10pt, version)
       ]
-      #pagebreak()
+      // #pagebreak()
     ]
   }
   body
@@ -302,8 +315,8 @@
 
 // Back matter: Roman numerals continuing from front matter
 #let back-matter(body) = {
-  set page(numbering: "1")
-  set heading(numbering: "A.1", supplement: none)
+  set page(numbering: none)
+  set heading(numbering: none)
   counter(heading).update(0)
   set page(
     header: none

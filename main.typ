@@ -1,8 +1,6 @@
 #import "template.typ": *
 
 #show: doc => tbtemplate(
-  title: "Computational modelling of terrains",
-  author: "Hugo Ledoux et al.",
   version: "v2026.0beta1",
   doc,
 )
@@ -74,9 +72,10 @@
   //-- main chapters
   #include "whatisterrain/whatisterrain.typ" //-- 01
   // #include "acquisition/acquisition.typ"     //-- 02
-  #include "gdem/gdem.typ"                   //-- 03
+  // #include "gdem/gdem.typ"                   //-- 03
   // #include "dtvd/dtvd.typ"                   //-- 04
   // #include "interpol/interpol.typ"           //-- 05
+
   // #include "kriging/kriging.typ"             //-- 06
   // #include "conversion/conversion.typ"       //-- 07
   // #include "topofeatures/topofeatures.typ"   //-- 08
@@ -119,5 +118,13 @@
   = Index
   #columns(3)[
     #make-index(title: none)
+  ]
+
+  #pagebreak()
+
+  #align(bottom)[
+    This document was typeset using #link("https://typst.app")[Typst]; its source code is freely available at #link("https://github.com/tudelft3d/terrainbook/").
+    // The main font is Palatino.
+    // The figures and diagrams were mostly drawn using IPE, PGF/Ti\emph{k}z and Omnigraffle.
   ]
 ]

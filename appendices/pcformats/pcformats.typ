@@ -45,7 +45,7 @@ The biggest downside is that they are not standardised, ie the type, order, and 
 
 #figure(
   image("./figs/ply_header.pdf", width: 100%),
-  caption: [A simple PLY file with 1 additional user-defined attribute of type integer (\texttt{int}). It contains 7 points.],
+  caption: [A simple PLY file with 1 additional user-defined attribute of type integer (`int`). It contains 7 points.],
   placement: none,
 ) <fig:ply>
 The PLY format can be considered a standardised ASCII format.
