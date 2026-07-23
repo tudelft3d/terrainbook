@@ -9,12 +9,19 @@
 #front-matter[
   #include "front-back/pre.typ"
   #include "front-back/preface.typ"
-  
+
+  //-- outlines
+  //-- remove the filling with dots for level=1
+  #show outline.entry.where(level: 1): it => {
+    show repeat: none
+    it
+  }
+
   #[
     #show outline.entry.where(
       level: 1,
     ): it => {
-      v(12pt, weak: true)
+      v(22pt, weak: true)
       strong(it)
     }
     #outline(depth: 2, indent: auto)

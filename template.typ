@@ -21,6 +21,7 @@
 
 //-- for outlines
 #let in-outline = state("in-outline", false)
+// #set outline.entry(fill: none)
 #show outline: it => {
   in-outline.update(true)
   it
