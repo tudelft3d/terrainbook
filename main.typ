@@ -78,10 +78,10 @@
 
   //-- main chapters
   #include "whatisterrain/whatisterrain.typ" //-- 01
-  // #include "acquisition/acquisition.typ"     //-- 02
-  // #include "gdem/gdem.typ"                   //-- 03
-  // #include "dtvd/dtvd.typ"                   //-- 04
-  // #include "interpol/interpol.typ"           //-- 05
+  #include "acquisition/acquisition.typ"     //-- 02
+  #include "gdem/gdem.typ"                   //-- 03
+  #include "dtvd/dtvd.typ"                   //-- 04
+  #include "interpol/interpol.typ"           //-- 05
 
   // #include "kriging/kriging.typ"             //-- 06
   // #include "conversion/conversion.typ"       //-- 07
