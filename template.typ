@@ -171,18 +171,56 @@
 
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
 
-
   show heading.where(level: 1): it => {
     set par(justify: false)
     pagebreak(weak: true, to: "odd")
-    // place(top+right)[
-    //   #rect(fill: blue, width: 10%, height: 10%)
-    // ]
-    align(left, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it))
-    // note(counter(heading).get().first())
-    // place(top, note(counter: none, side: "outer")[#text(font: sans-fonts, hyphenate: false, weight: "bold", size: 28pt, "1")])
-    v(2em)
+    block(
+      width: 100%,
+      // height: 4em,
+      // above: 2em,
+      below: 2em,
+      // inset: 1em,
+      // fill: luma(97%),
+      grid(
+        columns: (120mm, 5mm, 1fr),
+        align: (right, center, left),
+        place(
+          bottom+right,
+  			  text(
+            size: 1.8em,
+  					it.body,
+  			  )
+        ),
+        // place(bottom+center, 
+        //   line(stroke: 0.6pt, start: (0mm, 0mm), end: none, angle: 90deg, length: 100%), 
+        // ),
+        move(dy:3mm, line(stroke: 0.6pt, start: (0mm, 20mm), end: (0mm, -50mm))), 
+        place(
+          bottom+left,
+          text(
+    				size: 6em,
+    				weight: "semibold",
+    				style: "italic",
+    				fill: luma(25%),
+    				counter(heading).display(),
+    			)
+        )
+      )
+    )
   }
+  
+  // show heading.where(level: 1): it => {
+  //   set par(justify: false)
+  //   pagebreak(weak: true, to: "odd")
+  //   // place(top+right)[
+  //   //   #rect(fill: blue, width: 10%, height: 10%)
+  //   // ]
+  //   align(left, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it))
+  //   // note(counter(heading).get().first())
+  //   // place(top, note(counter: none, side: "outer")[#text(font: sans-fonts, hyphenate: false, weight: "bold", size: 28pt, "1")])
+  //   v(2em)
+  // }
+  
   // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
   // show heading.where(level: 1): it => align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
   show heading.where(level: 2): it => {
@@ -218,9 +256,9 @@
 
   // Set link style
   show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
+  // show link: set text(blue)
   show ref: set text(blue)
   
-  // show link: set text(blue)
 
   set table.hline(stroke: 0.4pt)
   set table.vline(stroke: 0.4pt)
@@ -295,12 +333,14 @@
     book: true,
     clearance: 12pt,
   )
-  show: marginalia.show-frame
-  set page(
-    header: [
-      #h(1fr) TODO: make a good header!
-    ],
-  )
+  //--
+  // show: marginalia.show-frame
+  //--
+  // set page(
+  //   header: [
+  //     #h(1fr) TODO: make a good header!
+  //   ],
+  // )
   // set page(
   //   header: context if here().page() > 1 {
   //     marginalia.header(
