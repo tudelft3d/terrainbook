@@ -238,7 +238,17 @@
 
   //-- figure caption in the margin + Figure 1.2: in bold
   set figure(gap: 0.55em) // neccessary in both cases
-  // set figure.caption(position: bottom)
+  set figure.caption(position: bottom)
+  //--
+  // show figure.caption.where(position: bottom): note.with(
+  //   alignment: "bottom", 
+  //   counter: none, 
+  //   shift: "avoid", 
+  //   keep-order: true,
+  //   // text-style: (size: 10pt, weight: "bold"),
+  // )
+  //-- OR
+  set figure.caption(position: bottom)
   show figure.caption: it => note(
     // dy: 45pt,
     alignment: "bottom",
@@ -246,6 +256,7 @@
     shift: "avoid",
     keep-order: true,
   )[*#it.supplement #it.counter.display(it.numbering)*: #it.body]
+  //-- 
 
   // Title page: unnumbered, and reset counter so next page is I
   if title != none {
