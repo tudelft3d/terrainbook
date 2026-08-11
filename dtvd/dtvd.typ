@@ -59,10 +59,10 @@ The VD has many interesting properties, what follows is a list of the most relev
 Let $cal(D)$ be the VD of a set $S$ of points in $bb(R)^(2)$. 
 Since VD($S$) is a planar graph, it has a dual graph, and let $cal(T)$ be this dual graph obtained by drawing straight edges between two points $p,q in S$ if and only if $cal(V)_p$ and $cal(V)_q$ are adjacent in $cal(D)$. 
 Because the vertices in $cal(D)$ are of degree 3 (3 edges connected to it), the graph $cal(T)$ is a triangulation. 
-$cal(T)$ is actually called the Delaunay triangulation (DT) of $S$, and, as shown in Figure~\ref{fig:dt2da}, 
+$cal(T)$ is actually called the Delaunay triangulation (DT) of $S$, and, as shown in @fig:dt2da, 
 #figure(
   image("./figs/vd2d.pdf", width: 100%, page: 4),
-  caption: [The DT of a set of points in the plane (same point set as Figure \ref{fig:vd2d}). The green circles show 2 examples of empty circumcircles.],
+  caption: [The DT of a set of points in the plane (same point set as @fig:vd2d). The green circles show 2 examples of empty circumcircles.],
   // placement: none,
 ) <fig:dt2da>
 partitions the plane into triangles---where the vertices of the triangles are the points in $S$ generating each Voronoi cell---that satisfy the _empty circumcircle_ test (a circle is said to be _empty_ when no points are in its interior). 
@@ -267,7 +267,7 @@ The DT of a set $S$ of points subdivides conv($S$), which means in practice that
 
 #notefigure(
   image("./figs/big_tr.pdf", width: 100%),
-  caption: [The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.],
+  caption: [The set $S$ of points is contained by a _big triangle_ formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.],
 ) <fig:big_tr>
 #notefigure(
   image("./figs/infinite_vertex.pdf", width: 60%),
