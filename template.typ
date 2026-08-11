@@ -211,10 +211,11 @@
 
   //-- math
   show math.equation: set text(font: math-font)
-  show heading.where(level: 1): it => {
-    counter(math.equation).update(0)
-    it
-  }
+  set math.equation(numbering: "(1)")
+  // show heading.where(level: 1): it => {
+  //   counter(math.equation).update(0)
+  //   it
+  // }
   //-- raw font
   show raw: set text(font: mono-font)
 
@@ -222,7 +223,7 @@
   show link: it => text(fill: rgb("#3087b3"), font: serif-fonts, it)
   // show link: set text(blue)
   show ref: set text(blue)
-  
+
 
   set table.hline(stroke: 0.4pt)
   set table.vline(stroke: 0.4pt)
