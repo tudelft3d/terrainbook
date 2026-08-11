@@ -3,7 +3,6 @@
 = Spatial interpolation: deterministic methods <chap:interpol>
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
-// #v(-6mm)
 
 Given a set $S$ of points $p_i$ in $bb(R)^(2)$ (also called samples or data points in the following) to which an attribute $a_i$ is attached, spatial interpolation is the procedure used to estimate the value of the attribute at an unsampled location $x$. 
 Its goal is to find a function $f(x,y)$ that fits (passes through, or close to, all the points in $S$) as well as possible. 
@@ -105,7 +104,7 @@ This data point gets a weight of exactly 1.0.
   caption: [#strong[(a)] Nearest neighbour: the estimated value at $x$ is that of the closest data point. #strong[(b)] the Voronoi diagram can be used. #strong[(c)] Ambiguity because $p_1$, $p_2$, and $p_3$ are equidistant from $x$; this causes discontinuities in the resulting surface.],
 ) <fig:cn>
 
-Given a set $S$ of data points, if interpolation is performed with this method at many locations close to each other, the result is the Voronoi diagram (VD) of $S$ (see Section @sec:vd), where all the points inside a Voronoi cell have the same value.
+Given a set $S$ of data points, if interpolation is performed with this method at many locations close to each other, the result is the Voronoi diagram (VD) of $S$ (see @sec:vd), where all the points inside a Voronoi cell have the same value.
 
 Although the method possesses many of the desirable properties (it is exact, local and can handle anisotropic data distributions), the reconstruction of continuous fields can not realistically be done using it since it fails lamentably properties 2 and 3. 
 The interpolation function is indeed discontinuous at the border of cells; if the location $x$ is directly on an edge or vertex of the VD($S$), then which value should be returned?
@@ -113,7 +112,7 @@ The interpolation function is indeed discontinuous at the border of cells; if th
 The implementation of the method sounds easy: simply find the closest data point and assign its value to the interpolation location. 
 The difficulty lies in finding an efficient way to get the closest data point. 
 The simplest way consists of measuring the distance for each of the $n$ points in the dataset, but this yields a $cal(O) (n)$ behaviour for each interpolation, which is too slow for large datasets. 
-To speed up this brute-force algorithm, auxiliary data structures that will spatially index the points must be used, see for instance the $k$d-tree in Section @sec:kdtree.
+To speed up this brute-force algorithm, auxiliary data structures that will spatially index the points must be used, see for instance the $k$d-tree in @sec:kdtree.
 This would speed up each query to $cal(O) (log n)$.
 
 === Inverse distance weighting (IDW)
@@ -144,22 +143,27 @@ This method has many flaws when the data distribution varies greatly in one data
 The major problem with the method comes from the fact that the criterion, for both selecting data points and assigning them a weight, is one-dimensional and therefore does not take into account the spatial distribution of the data points close to the interpolation location.
 
 IDW is exact, local, and can be implemented in an efficient manner.
-However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see Section @sec:kdtree) otherwise each interpolation requires $cal(O) (n)$ operations.
+However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see @sec:kdtree) otherwise each interpolation requires $cal(O) (n)$ operations.
 Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
 
-==== IDW variations.
-
+==== IDW variations
 IDW is a _family_ of spatial interpolation methods, and its simplest form to select the neighbours is as described above: with a searching circle.
 However, other variations exist (see @fig:idwvar):
-#notefigure(
-  image("figs/idwvar.pdf", width: 60%, page: 1),
-  caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). (green=neighbours used; red=not). #strong[(b)] 4-nearest neighbours. #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
-) <fig:idwvar>
-
 / k-nearest neighbours:: the $k$-nearest neighbours can be used (for instance $k=8$), irrespective of how far they are. This ensures that IDW will yield a continuous surface. (@fig:idwvar\b)
 / search ellipse:: instead of a circle (define by its radius), one can use an oriented ellipse, with $r_1$ and $r_2$ used to define the size of the ellipse, and $t h e t a$ its orientation. (@fig:idwvar\c)
 / $k$-per-quadrant:: to ensure that the neighbours used in the interpolation process are not all in one direction (eg the location on the left of @fig:idw\c), one can use _quadrants_ and take the $k$-nearest per quadrant. This makes IDW automatic and continuous. (@fig:idwvar\d)
 / combinations of above:: it would for example be possible to use quadrants but restrict the search to a given radius, ie sample points that are farther than the radius are not considered.
+
+#subfigure(
+  figure(image("figs/idwvar.pdf", width: 100%, page: 1), caption: []), <fig:idwvar:1>,
+  figure(image("figs/idwvar.pdf", width: 100%, page: 2), caption: []), <fig:idwvar:2>,
+  figure(image("figs/idwvar.pdf", width: 100%, page: 3), caption: []), <fig:idwvar:3>,
+  figure(image("figs/idwvar.pdf", width: 100%, page: 4), caption: []), <fig:idwvar:4>,
+  columns: (1fr, 1fr, 1fr, 1fr),
+  caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). (green=neighbours used; red=not). #strong[(b)] 4-nearest neighbours. #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
+  placement: none,
+  label: <fig:idwvar>,
+)
 
 === Linear interpolation in triangulation (TIN)
 
@@ -182,7 +186,7 @@ If the point location strategy is used to identify the triangle containing $x$ (
 The interpolation itself is performed in constant time.
 
 ==== Data-dependent triangulations
-It was shown in Chapter @chap:dtvd and in @fig:whydt that, for terrain modelling, the Delaunay triangulation is preferred over other triangulations because it favours triangles that are as equilateral as possible.
+It was shown in @chap:dtvd and in @fig:whydt that, for terrain modelling, the Delaunay triangulation is preferred over other triangulations because it favours triangles that are as equilateral as possible.
 However, it should be noticed that the elevation of the vertices are _not_ taken into account to obtain the DT, ie if we changed the elevation of the samples we would always get the same triangulation.
 One might therefore wonder whether the DT best approximates the morphology of a terrain.
 
@@ -253,7 +257,7 @@ The points used to estimate the value of an attribute at location $x$ are the na
 
 The natural neighbour interpolant possesses all the wished properties from above, except that the first derivative is undefined at the data points. 
 Its main disadvantage is that its implementation is rather complex, and obtaining an efficient one is not simple and involves complex manipulation of the VD.
-From Section @sec:dtconstruction we know that one insertion of a single point $p$ in a DT can be done in $cal(O) (log n)$, but the deletion of a point is a more complex operation (outside the scope of this book).
+From @sec:dtconstruction we know that one insertion of a single point $p$ in a DT can be done in $cal(O) (log n)$, but the deletion of a point is a more complex operation (outside the scope of this book).
 
 ==== Higher-order function  (NNI-c1)
 The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant (see @fig:nni1d}).
@@ -391,7 +395,7 @@ The differences in the lower areas (which is water) are smaller since these area
 #wideblock(side: "right")[
   #figure(
     placement: auto,
-    caption: [Details concerning the datasets used for the experiments.],
+    caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
     table(
       stroke: none,
       columns: 7,
@@ -399,7 +403,7 @@ The differences in the lower areas (which is water) are smaller since these area
       table.hline(),
       table.header[][exact][continuous \ smooth][local][adaptable][efficient][automatic],
       table.hline(),
-      [*global function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
+      [*global\ function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
       [*splines*], [#sym.crossmark], [$C^(2+)$], [depends], [0], [--], [#sym.crossmark],
       [*nearest neigh.*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
       [*IDW*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [--], [0], [#sym.crossmark] , 
