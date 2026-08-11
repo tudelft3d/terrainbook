@@ -184,7 +184,7 @@ As @fig:dualdetail demonstrates:
 + a Voronoi cell is dual to a Delaunay vertex;
 + a Voronoi edge is dual to a Delaunay edge;
 + a Voronoi vertex is dual to a Delaunay triangle.
-Observe that, as shown in Figures @fig:vd2d and @fig:dualdetail, the location of a Voronoi vertex $v^(star )$, which is dual to a Delaunay triangle $tau$, is at the centre of the circumcircle of $tau$; Appendix @app:equations describes how to obtain the ($x,y$)-coordinates of the centre.
+Observe that, as shown in Figures @fig:vd2d and @fig:dualdetail, the location of a Voronoi vertex $v^(star )$, which is dual to a Delaunay triangle $tau$, is at the centre of the circumcircle of $tau$; @app:equations[Appendix] describes how to obtain the ($x,y$)-coordinates of the centre.
 
 #notefigure(
   grid(
