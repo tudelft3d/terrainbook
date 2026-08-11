@@ -145,7 +145,7 @@ Observe that the line segments will not be consistently oriented to form one pol
 This can be done by simply starting with a segment $a b$, and searching for the other segment having $b$ as either start or end vertex, and continue until a component is formed (a polygon is formed), or until no segment can be found (the border of the dataset is reached, as shown in @fig:isoline2a).
 #figure(
   image("figs/isoline2.pdf", width: 100%),
-  caption: [#strong[(a)] The isoline segments extracted with Algorithm \ref{algo:iso} do not have a consistent orientation. #strong[(b)] Algorithm \ref{algo:iso} can be sped up by starting at a seed triangle and 'tracing' the isoline; the order is shown by the blue arrows.],
+  caption: [#strong[(a)] The isoline segments extracted with @algo:iso do not have a consistent orientation. #strong[(b)] @algo:iso can be sped up by starting at a seed triangle and 'tracing' the isoline; the order is shown by the blue arrows.],
   placement: none,
 ) <fig:isoline2>
 
