@@ -229,7 +229,7 @@ That hinders their use for some applications where new data coming from a sensor
 
 The incremental insertion algorithm, and the other well-known algorithms, can all construct the DT of $n$ points randomly distributed in the Euclidean plane in $cal(O) (n log n)$.
 
-@fig:insertion_steps illustrates the steps of the algorithm, and Algorithm @algo:insert1pt its pseudo-code. 
+@fig:insertion_steps illustrates the steps of the algorithm, and @algo:insert1pt its pseudo-code. 
 #figure(
   image("./figs/insertion_steps.pdf", width: 90%),
   caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
@@ -305,7 +305,7 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 To find the triangle containing the newly inserted point $p$, we can use the point-in-polygon test for every triangle (the standard GIS operation), but that brute-force operation would be very slow (complexity would be $cal(O) (n)$ or a single point location since each triangle must be checked).
 
 A better alternative is to use the adjacency relationships between the triangles, and use a series of #Orient tests, as described in Section @sec:predicates, to navigate from one triangle to the other. 
-The idea, called "walking", is shown in @fig:walk and details are given in the Algorithm @algo:walk.
+The idea, called "walking", is shown in @fig:walk and details are given in the @algo:walk.
 #figure(
   image("./figs/walk.pdf", width: 70%),
   caption: [The Walk algorithm for a DT in two dimensions. The query point is $p$.],
@@ -401,7 +401,7 @@ However, because it is simpler to manage triangles over arbitrary polygons (they
 
 The simplest data structure, as shown in @fig:tr_ds, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles.
 Observe that the order in which the vertices and adjacent triangles are stored correspond to each other. 
-This is an important property that allows an efficient retrieval of triangles in the Walk algorithm (Algorithm @algo:walk) for instance.
+This is an important property that allows an efficient retrieval of triangles in the Walk algorithm (@algo:walk) for instance.
 
 == #flex-heading[Constraints in DT][Constrained and Conforming Delaunay Triangulations]
 
@@ -412,6 +412,7 @@ We are mostly interested in the _constrained Delaunay triangulation_ (ConsDT) an
 #notefigure(
   image("./figs/cdt_example.pdf", width: 85%),
   caption: [#strong[(top)] A set $S$ of points and straight-line segments. #strong[(middle)] Constrained DT of $S$. #strong[(bottom)] Conforming DT of $S$; the Steiner points added are in red.],
+  dy: 200pt,
 ) <fig:cdt_example>
 
 ==== Constrained DT (ConsDT)
@@ -426,12 +427,12 @@ The constrained segments in $S$ act as visibility blockers.
   placement: none,
 ) <fig:cdt_buildings>
 
-Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see @fig:cdt_steps):
 #figure(
   image("./figs/cdt_steps.pdf", width: 95%),
   caption: [Steps to construct a ConsDT.],
   placement: none,
 ) <fig:cdt_steps>
+Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see @fig:cdt_steps):
 + construct DT($S^(p)$), where $S^(p)$ is the set containing all the points in $S$ and the end points of the line segments (@fig:cdt_stepsb)
 + insert each line segment, each insertion will remove edges from DT($S^(p)$). In @fig:cdt_stepsc 3 edges are removed.
 + this creates 2 polygons that need to be retriangulated, in @fig:cdt_stepsd there is a blue and a green one.
@@ -496,4 +497,4 @@ Since a DT can be locally modified by adding one point (and not reconstructing t
 + Identify the 5 infinite triangles in @fig:infinite_vertex.
 + A DT has 6 vertices, and 3 of these are forming the convex hull. How many triangles does the DT have?
 + Assume you have 8 points located on a circle. Draw the DT and the VD of these 8 points.
-+ When inserting points in a DT (Algorithm @algo:insert1pt), what happens if a new point is inserted directly on an edge? Line 2 states that the triangle is split into 3 new triangles, does it still hold?
++ When inserting points in a DT (@algo:insert1pt), what happens if a new point is inserted directly on an edge? Line 2 states that the triangle is split into 3 new triangles, does it still hold?
