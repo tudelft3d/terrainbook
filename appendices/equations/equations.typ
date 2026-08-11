@@ -12,6 +12,7 @@
 
 #notefigure(
   image("./figs/circle.pdf", width: 100%),
+  dy: 80pt,
 )
 
 Given the 3 points $a$, $b$, and $c$ in the plane, we can determine the unique circle passing through those 3 points by solving the following determinant equation:

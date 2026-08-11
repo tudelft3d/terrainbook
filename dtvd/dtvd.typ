@@ -267,11 +267,11 @@ The DT of a set $S$ of points subdivides conv($S$), which means in practice that
 
 #notefigure(
   image("./figs/big_tr.pdf", width: 100%),
-  caption: [],
+  caption: [The set $S$ of points is contained by a \emph{big triangle} formed by the vertices $o_1$, $o_2$ and $o_3$. Many triangles outside conv($S$) are created.],
 ) <fig:big_tr>
 #notefigure(
   image("./figs/infinite_vertex.pdf", width: 60%),
-  caption: [],
+  caption: [The infinite vertex ($infinity$) is used to ensure that the triangles in DT($S$) are always adjacent to exactly 3 triangles. This DT contains 7 finite triangles and 5 infinite triangles.],
 ) <fig:infinite_vertex>
 Because it is convenient to store and manipulate triangles having exactly 3 neighbours, in practice most DT construction algorithms will use one of these two "tricks":
 
