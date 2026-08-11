@@ -19,7 +19,7 @@ OpenTopography (@fig:dem_coverage), we can observe that, even in 2022, local ele
   caption: [OpenTopography coverage with some European datasets added in pink; there are in fact more European datasets but there is no global registry for them.],
 ) <fig:dem_coverage>
 
-Global DEMs enable us to perform _global_ environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and flow simulations (see Chapter @chap:runoff).
+Global DEMs enable us to perform _global_ environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and flow simulations (see @chap:runoff).
 
 While gDEMs are elevation models like local ones (and can be modelled with essentially the same formats and tools as local ones), they have several properties and characteristics that apply only to them, and we report in this chapter on the main ones.
 

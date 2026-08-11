@@ -288,7 +288,7 @@ First, since an edge is always guaranteed to be shared by two triangles, point l
 Second, when a single point $p$ needs to be inserted in DT($S$), this guarantees that $p$ is always inside an existing triangle; we thus do not have to deal explicitly with vertices added outside the convex hull. 
 Third, identifying the vertices that bounds conv($S$) is easy: they have one incident triangle that has one or more of the big triangle vertices (or it contains the infinite vertex).
 Fourth, the Voronoi cells of the points that bounds conv($S$) will be bounded, since the only unbounded cells will be the ones of the 3 points of $tau_"big"$. 
-This can help for some of the spatial analysis operations, for instance interpolation based on the VD (see Chapter @chap:interpol).
+This can help for some of the spatial analysis operations, for instance interpolation based on the VD (see @chap:interpol).
 
 The main disadvantage is that more triangles than needed are constructed. 
 For example in @fig:big_tr only the shaded triangles would be part of DT($S$). 
@@ -343,7 +343,7 @@ Notice that this algorithm is not affected by degenerate cases, and that if an "
 This will ensure that if the query point $p$ is located exactly at the same position as one point in $S$, then one triangle incident to $p$ will be returned.
 
 It should be mentioned that while it appears straightforward, the point location step is the biggest computational bottleneck for a DT implementation.
-For a large dataset (eg a lidar point cloud, see Chapter @chap:massive for some massive examples), if several thousands/millions of triangles must be tested to find the one containing a give point, then it will be very slow; the insertion itself with a series of flips is generally fast since around 4 flips will be performed for a normal distribution of points.
+For a large dataset (eg a lidar point cloud, see @chap:massive for some massive examples), if several thousands/millions of triangles must be tested to find the one containing a give point, then it will be very slow; the insertion itself with a series of flips is generally fast since around 4 flips will be performed for a normal distribution of points.
 In practice, because most real-world datasets will have a high _spatial coherence_ (in simple terms, two consecutive points in the dataset are close in reality; see Section @sec:spatial_coherence), the time spent on walking will be minimised since most library will start the walk from the previously inserted point.
 
 === Flips

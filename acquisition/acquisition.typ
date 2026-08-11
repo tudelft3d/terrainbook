@@ -191,7 +191,7 @@ It is quite different from airborne lidar or photo\-gramme\-try-based acquisitio
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions. 
 As a result the speed of the radar signal is not known and the time-of-flight principle can not be used to get detailed measurements. 
 However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, accurate elevation can still be measured. 
-With InSAR it is possible to cover very large regions in a short amount of time, eg the global SRTM dataset was generated with InSAR (see Chapter @chap:gdem). 
+With InSAR it is possible to cover very large regions in a short amount of time, eg the global SRTM dataset was generated with InSAR (see @chap:gdem). 
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, eg SRTM has a pixel size of #qty("30", "m").
 
 #box-toread("To read or to watch")[
@@ -208,7 +208,7 @@ Similar to lidar, it uses the time-of-flight principle to compute distance, but 
 Single-beam and multi-beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately. 
 For bathymetry usually a multi-beam echo sounder is used.
 
-Chapter @chap:bathymetry describes techniques to process bathymetric datasets and create terrain of the seabed.
+@chap:bathymetry describes techniques to process bathymetric datasets and create terrain of the seabed.
 
 #box-toread("To read or to watch")[
   The principles of echo sounding: 
@@ -334,7 +334,7 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
   placement: none,
   label: <fig:voidfill>,
 )
-Or, one can attempt to detect and remove outliers caused eg by multi-path effects or flocks of birds (more details in Chapter @chap:pcprocessing). 
+Or, one can attempt to detect and remove outliers caused eg by multi-path effects or flocks of birds (more details in @chap:pcprocessing). 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove 'good' points if they look the same as outliers to the outlier detection algorithm (see eg @fig:outlier-wrong).
 And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with; Chapters @chap:interpol and @chap:kriging explore the topic of spatial interpolation in detail.

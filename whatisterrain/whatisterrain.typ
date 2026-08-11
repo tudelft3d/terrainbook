@@ -58,7 +58,7 @@ The term "3D" is misleading in a DTM context---as it is in a GIS context--- beca
   label: <fig:dimgis>,
 )
 
-=== 2.5D
+=== 2.5D 
 
 #index[2.5D] 
 What is usually used for modelling terrains: a surface (which is topologically a 2D object; also called a 2-manifold) 
@@ -89,7 +89,7 @@ Notice for instance in @fig:dimgis:3 that each building is represented with a so
 The volume of buildings can therefore be calculated (since the ground floor of buildings would be modelled for instance), while with the other variations it is not possible. 
 Such a representation is usually done with a 2.5D terrain (although a 2.75D could also be used) and a set of buildings/objects that are connected to the terrain.
 
-== 2.5D terrain == field
+== 2.5D terrain == field 
 
 In the context of this course, we assume that a terrain is a 2.5D object, and therefore a terrain can be considered as a _field_.
 #index[field]#note[field]
@@ -104,15 +104,15 @@ First, fields are continuous functions, and, by contrast, computers are discrete
 Fields must therefore be _discretised_, ie broken into finite parts.
 #index[discretisation]#note[discretisation]
 Second, in practice it is usually impossible to measure continuous phenomena everywhere, and we have to resort to collecting samples at some finite locations and reconstructing fields from these samples.
-The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in Chapter @chap:acquisition).
+The discretisation task therefore begins at the acquisition phase, and is affected by the acquisition tools and techniques (more about this in @chap:acquisition).
 This fact is aggravated for fields as found in GIS-related disciplines because, unlike disciplines like medicine or engineering, we seldom have direct and easy access to the whole object of interest.
 
-=== What is needed to represent a field/terrain?
+=== What is needed to represent a field/terrain? 
 
 To represent a terrain in a computer, and be able to manipulate it (ie edit the terrain and extract information such as slope), two things are needed:
-+ a set of samples that were collected to study the terrain, for instance a point cloud obtained from airborne laserscanning or photogrammetry (see Chapter @chap:acquisition for details).
++ a set of samples that were collected to study the terrain, for instance a point cloud obtained from airborne laserscanning or photogrammetry (see @chap:acquisition for details).
 + a set of rules to obtain one and only one elevation value at any location ($x,y$); in other words, to reconstruct the continuity of the surface from the discrete samples.
- This operation is referred to as spatial interpolation (Chapters @chap:interpol and @chap:kriging).
+ This operation is referred to as spatial interpolation (@chap:interpol and @chap:kriging).
 
 === Strategy \#1: points + global interpolation function
 
@@ -204,7 +204,7 @@ As shown in @fig:tin, a TIN refers to an irregular tessellation of the $x y$-pla
 ) <fig:tin>
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $x y$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
-While not a requirement, the triangulation is usually a _Delaunay triangulation_ (more about this in Chapter @chap:dtvd).
+While not a requirement, the triangulation is usually a _Delaunay triangulation_ (more about this in @chap:dtvd).
 #index[Delaunay triangulation]
 The main reason is that Delaunay triangles are as "fat" as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
 As can be seen in @fig:whydt,
@@ -221,7 +221,7 @@ TINs are the most popular alternatives to 2D grids for modelling elevation; both
 
 A TIN in which a linear interpolation function is used yields a $C^(0)$ piecewise representation, ie it is a continuous function but at the edges of the triangles the first derivative is not possible.
 It is possible to use higher-order functions in each triangle of a TIN, to construct a $C^(1)$ or $C^(2)$ field, ie where the first and second derivative of the surface can be obtained. 
-Chapter @chap:interpol gives more details about spatial interpolation and continuity.
+@chap:interpol gives more details about spatial interpolation and continuity.
 
 === Hierarchical tessellations
 
@@ -254,15 +254,15 @@ In the GIS literature, besides the ones above, different representations for ter
 It should be noticed that these two are however _incomplete_: the set of rules to reconstruct the surface at unsampled locations is not explicitly given, they are not continuous surfaces.
 Conceptually speaking, these should therefore not be considered valid representations of a terrain.
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
-In Chapter @chap:pcprocessing we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
+In @chap:pcprocessing we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
 
 We will nevertheless consider these in the course; the four representations we will use are shown in @fig:reps.
 
-==== Contour lines.
+==== Contour lines
+Given a bivariate field $f(x,y) = z$, an _isoline_ (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, where $z_0$ is a constant. 
 
 #index[isolines]#index[contour lines]
 
-Given a bivariate field $f(x,y) = z$, an _isoline_ (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, where $z_0$ is a constant. 
 Isolines have been traditionally used to represent the elevation in topographic maps and the depth in bathymetric maps for navigation at sea.
 
 #figure(
@@ -294,7 +294,7 @@ As shown in @fig:isoline,
 ) <fig:isoline>
 the idea is to compute the intersection between the level value (eg #qty("200", "m")) and the terrain, represented for instance with a TIN. 
 Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
-Chapter @chap:conversion gives more details.
+@chap:conversion gives more details.
 
 == #flex-heading[TIN versus raster][TIN versus raster for modelling terrains]
 
@@ -305,7 +305,7 @@ A data model will be judged more _efficient_ than another if it represents a sur
 This of course depends on the data structure used to store that data model.
 
 It should be said that both TIN and raster have advantages and disadvantages (as we will see during this course), and in practice one should choose the most appropriate model for the task at hand.
-This means converting between the two data models when it is necessary (topic of Chapter @chap:conversion).
+This means converting between the two data models when it is necessary (topic of @chap:conversion).
 
 == Notes and comments
 

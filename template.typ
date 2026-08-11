@@ -297,7 +297,8 @@
 #let main-matter(body) = {
   set page(numbering: "1")
   counter(page).update(1)
-  set heading(numbering: "1.1.1", supplement: none)
+  set heading(numbering: "1.1.1")
+  show heading.where(level: 1): set heading(supplement: [Chapter])
   show: marginalia.setup.with(
     inner: (far: 10mm, width: 5mm, sep: 5mm),
     outer: (far: 10mm, width: 55mm, sep: 5mm),
