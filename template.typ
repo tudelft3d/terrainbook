@@ -295,13 +295,38 @@
 
 // Main matter: Arabic numerals from 1
 #let main-matter(body) = {
-  set page(numbering: "1")
+  set page(header: context {
+    if calc.odd(here().page()) {
+      if hydra(1) != none {
+        // place(
+          // dx: 100mm, // negative = move left, toward the outside edge
+          // dy: 1cm,
+          // align(left, emph(hydra(1)))
+        // )
+        // move(dy: 3mm, line(stroke: 0.6pt, start: (173mm, 20mm), end: (173mm, -50mm)))
+        // place(right, emph(hydra(1) + " • " + counter(page).display() + [🚀]))
+        // marginalia.header(text-style: (size: 10pt), align(right, emph(hydra(2))), [hugo],  counter(page).display())
+        marginalia.header(text-style: (size: 10pt, style: "italic"), [], align(right, hydra(1)), align(right, counter(page).display()))
+        // marginalia.header(text-style: (size: 10pt), [a], [b], align(right, emph(hydra(2) + h(1cm) + counter(page).display())))
+      }
+      // align(right, emph(hydra(1) + " | " + counter(page).display()))
+    } else {
+      marginalia.header(text-style: (size: 10pt, style: "italic"), [], align(left, hydra(2)), align(left, counter(page).display()))
+      // move(dy: 3mm, line(stroke: 0.6pt, start: (-53mm, 20mm), end: (-53mm, -50mm)))
+      // marginalia.header(text-style: (size: 10pt), [], [], align(left, counter(page).display() + h(1cm) + emph(hydra(1))))
+    }
+    // line(length: 100%)
+  })
+  // set page(numbering: "1")
+  set page(numbering: "1", number-align: top+right)
   counter(page).update(1)
   set heading(numbering: "1.1.1")
   show heading.where(level: 1): set heading(supplement: [Chapter])
   show: marginalia.setup.with(
+    // A4: 210mm x 297mm
     inner: (far: 10mm, width: 5mm, sep: 5mm),
     outer: (far: 10mm, width: 55mm, sep: 5mm),
+    // main text is 120mm
     // inner: (far: 15mm, width: 0mm, sep: 5mm),
     // outer: (far: 15mm, width: 50mm, sep: 5mm),
     top: 2.5cm,
@@ -346,21 +371,16 @@
       )
     )
   }
-  //--
+  // --
   // show: marginalia.show-frame
   //--
-  // set page(
-  //   header: [
-  //     #h(1fr) TODO: make a good header!
-  //   ],
-  // )
   // set page(
   //   header: context if here().page() > 1 {
   //     marginalia.header(
   //       text-style: (size: 8pt),
   //       // [Page #counter(page).display("1 of 1", both: true)],
-  //       [#smallcaps[Marginalia] #text(fill: luma(60%))[ledoux]],
-  //       [#counter(page).display()],
+  //       // [#smallcaps[Marginalia] #text(fill: luma(60%))[ledoux]],
+  //       [#counter(page).display() --- ],
   //     )
   //   },
   // )
