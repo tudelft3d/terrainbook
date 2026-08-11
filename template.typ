@@ -10,7 +10,7 @@
 //-- pseudo-code
 #import "@preview/lovelace:0.3.0": *
 //-- siunitx
-#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange
+#import "@preview/unify:0.8.1": num, numrange, qty, qtyrange, unit
 //-- icons
 #import "@preview/heroic:0.1.2": hi
 
@@ -219,7 +219,7 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
+  show link: it => text(fill: rgb("#3087b3"), font: serif-fonts, it)
   // show link: set text(blue)
   show ref: set text(blue)
   
