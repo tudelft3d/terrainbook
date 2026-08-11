@@ -60,22 +60,22 @@ ICESat was the first Earth-based lidar satellite, launched in 2003, with the pri
 It had an elevation accuracy of several cm and was operational for five years.
 Most recently, NASA launched in 2018 two missions to measure the elevation of the Earth globally with lidar instruments:
 
-/ *ICESat-2*: (Ice, Cloud, and Land Elevation Satellite-2) is in a low Earth and polar orbit to investigate ice sheets, it covers the Earth between \ang{-88} and \ang{88} latitude.
-#note[#link("https://icesat-2.gsfc.nasa.gov/")]#index[ICESat-2]
+/ *ICESat-2*: (Ice, Cloud, and Land Elevation Satellite-2) is in a low Earth and polar orbit to investigate ice sheets, it covers the Earth between #qty[-88][deg] and #qty[88][deg] latitude.
+#note(dy:-5em)[#link("https://icesat-2.gsfc.nasa.gov/")]#index[ICESat-2]
 Its instrument to measure altimetry is called _Advanced Topographic Laser Altimeter System_ (ATLAS).
 Apart from terrain retrieval, ICESat-2 also measures the surface, such as canopy height, and has many other applications such as measuring bathymetry and estimating biomass.
 / *GEDI*: (Global Ecosystem Dynamics Investigation) is attached to the international space station (ISS) and its primary goal is to investigate global ecosystems.
-#note[#link("https://gedi.umd.edu/")]#index[GEDI]
-It does not have global coverage since it collects measurements only between \ang{51.6} N and \ang{51.6} S.
+#note(dy: -5em)[#link("https://gedi.umd.edu/")]#index[GEDI]
+It does not have global coverage since it collects measurements only between #qty[51.6][deg] N and #qty[51.6][deg] S.
 GEDI has been combined with TanDEM-X data to produce biomass estimates and with Landsat imagery to produce a global canopy height map.
 
 #figure(
   image("./figs/orbit.pdf", width: 100%),
-  caption: [Ground tracks for three successive orbits of ICESat-2 and GEDI. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond \ang{51.6} latitude for GEDI.],
+  caption: [Ground tracks for three successive orbits of ICESat-2 and GEDI. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond #qty[51.6][deg] latitude for GEDI.],
   placement: none,
 ) <fig:orbit>
 
-The characteristics of both missions are summarised in Table @tab:lidarcomparison
+The characteristics of both missions are summarised in @tab:lidarcomparison
 
 #wideblock(side: "right")[
   #figure(
@@ -128,7 +128,7 @@ These space borne lasers also differ considerably from airborne lasers, most not
 The altitude increase results in a wider beam footprint, from #qty("0.5", "m") (at #qty("500", "m")) for airborne platforms to #qty("15", "m") for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from #qty("0.5", "km") to #qty("500", "km").
 A comparison is given in Table @tab:lidarcomparison.
-Airborne lidar often focuses on maximizing coverage (\unit{points/m^2}) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
+Airborne lidar often focuses on maximizing coverage (#unit[pt/m^2]) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
 While both ICESat-2 and GEDI employ instruments with multiple (split) laser beams, including the ability to point the laser away from the ground track, all to maximize coverage, this still results in very sparse and uneven coverage as shown in @fig:beams.
 #figure(
   image("./figs/tracks.pdf", width: 80%),
@@ -148,18 +148,18 @@ Even the same product can have different versions, with different resolutions an
 For example, SRTM is freely available,
 #note[SRTM]#index[SRTM]
 including its derived NASADEM, and was first introduced at #qty("90", "m"), with subsequent versions at #qty("30", "m").
-Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of #qty("+-12", "m").
-WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data (as used in Tandem-X 2020), even has a resolution of #qty("+-5", "m").
+Tandem-X, and its derived WorldDEM, is a commercial product, with a resolution of #"~"#qty("12", "m").
+WorldDEM-NEO, a newer version of WorldDEM with more Tandem-X data (as used in Tandem-X 2020), even has a resolution of #"~"#qty("5", "m").
 CopernicusDEM is a resampled WorldDEM---bought with your taxpayer money by ESA and freely distributed---at #qty("30", "m") resolution.
 The pseudo DTMs FABDEM (#strong[F]orest #strong[A]nd #strong[B]uilding removed) and FathomDEM, while derived from the freely available CopernicusDEM, are only free for research purposes.
 
 Similarly, while ALOS World3D is freely available at #qty("30", "m"), it also comes in a commercial version at #qty("5", "m") resolution.
 There is even a #qty("0.5", "m") commercial version, based on multiple optical satellites, available on request.
 
-// #wideblock(side: "right")[
+// #wideblock(side: "right")[ 
 #figure(
   placement: auto,
-  caption: [Overview of global DEMS, see Figure~\ref{fig:dem_comparison} for their lineage.],
+  caption: [Overview of global DEMS, see @fig:gdem_inheritance for their lineage.],
   {
   set text(size: 8pt)
   table(
@@ -210,7 +210,7 @@ Similarly, while the Tandem-X mission produced a DEM with a global coverage, the
 
 The formats used to store and exchange DEMs have historically been defined by the military, which are still used by many government agencies.
 One example is the _Digital Terrain Elevation Data_ (DTED) format, developed in the 1970s, which stores elevation in integers (which tells us a lot about the accuracy and precision possible 50 years ago).
-It specifies several possible _levels_ in terms of resolution (in arcseconds), from level 0 at #qty("+-1", "km") to level 2 at #qty("30", "m").
+It specifies several possible _levels_ in terms of resolution (in arcseconds), from level 0 at #"~"#qty("1", "km") to level 2 at #qty("30", "m").
 More recently, in 2016, the Defence Gridded Elevation Data (DGED) has been defined, specifying more levels to higher resolutions and allowing GeoTIFFs to be used (which removes the integer constraint).
 #note[GeoTIFF]
 DGED also defines the structure and the specific tiling of the data at higher latitudes, as resolutions in arcseconds become smaller near the poles.
@@ -219,7 +219,7 @@ CopernicusDEM---adhering to the DGED level 3 standard---has tiles of $3601 times
 This tiling scheme results in pixels being as square as possible, but makes it hard to work with tiles from different latitudes.
 
 In this context it becomes clear that the resolution should not be discussed in terms of meters, but terms of degrees (or divisions of a degree).
-As the Earth has a circumference of #qty("+-40000", "km") (measured around the Equator), #qty(1, "deg") of latitude is #qty("+-111", "km") and #qty(1, "deg") of longitude is $111 cos phi$ km at latitude $phi$.
+As the Earth has a circumference of #"~"#qty("40000", "km") (measured around the Equator), #qty(1, "deg") of latitude is #"~"#qty("111", "km") and #qty(1, "deg") of longitude is $111 cos phi$ km at latitude $phi$.
 Degrees are further divided into 60 arcminutes, which themselves are divided into 60 arcseconds.
 In practice, the highest resolution for SRTM (#qty("30", "m")) is actually #qty(1, "arcsecond"), and its #qty("90", "m") product has a resolution of #qty(3, "arcsecond").
 DTED level 0 thus has a resolution of #qty(30, "arcsecond"), while level 2 has a resolution of #qty(1, "arcsecond").
@@ -241,7 +241,7 @@ The DTED and DGED specifications differentiate between horizontal and vertical a
 Relative accuracy describes the consistency of the measurements, specified as the random error component of the uncertainty between two DEM pixels.
 Absolute accuracy describes the total error of a measurement compared to a reference.
 
-The DGED standard specifies a relative vertical accuracy of less than #qty("12", "m") for level 2 (resolution of \qty(1, "arcsecond") or #qty("+-30", "m")) and an absolute accuracy (goal) of #qty("18", "m").
+The DGED standard specifies a relative vertical accuracy of less than #qty("12", "m") for level 2 (resolution of #qty[1][arcsecond] or #"~"#qty("30", "m")) and an absolute accuracy (goal) of #qty("18", "m").
 CopernicusDEM reports a mean error of less than #qty("2", "m") for 65% of its tiles, and another 19% with an error of less than #qty("5", "m") in terms of absolute accuracy.
 
 === Errors
@@ -278,7 +278,7 @@ In contrast to local DEMs, which are often provided as either a classified point
 The current measurement techniques will measure the top of canopy and buildings, and not the ground below.
 This is the largest source of error in gDEMS, and can considerably limit the applicability of the data.
 
-Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a _pseudo DTM_ (DTM${}^(prime )$).
+Several attempts have been made to correct gDEMS for vegetation and buildings, leading to what we denote as a _pseudo DTM_ (DTM$prime$).
 #note[DTM' = pseudo DTM]
 While these methods improve the accuracy of gDEMs considerably, they are not perfect, and resulting terrains still contain vegetation and/or buildings.
 Recent work has also suggested that while these datasets have improved vertical accuracy, the accuracy of derived geomorphometric parameters such as slope and curvature suffers.
