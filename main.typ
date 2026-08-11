@@ -84,7 +84,7 @@
   #include "interpol/interpol.typ"           //-- 05
 
   // #include "kriging/kriging.typ"             //-- 06
-  // #include "conversion/conversion.typ"       //-- 07
+  #include "conversion/conversion.typ"       //-- 07
   // #include "topofeatures/topofeatures.typ"   //-- 08
   // #include "visibility/visibility.typ"       //-- 09
   // #include "runoff/runoff.typ"               //-- 10
