@@ -98,7 +98,7 @@
   #counter(heading).update(0)
   #include "./appendices/pcformats/pcformats.typ"     //-- A
   #include "./appendices/ahn/ahn.typ"                 //-- B
-  // #include "./appendices/normalplane/normalplane.typ" //-- C
+  #include "./appendices/normalplane/normalplane.typ" //-- C
   #include "./appendices/equations/equations.typ"     //-- D
 
 ]
