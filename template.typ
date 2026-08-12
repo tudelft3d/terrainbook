@@ -161,24 +161,23 @@
     body,
   )
 ]
-#let box-info(title, body) = figure(placement: auto)[
-  #showybox(
-    frame: (
-      border-color: gray.darken(50%),
-      title-color: gray.lighten(20%),
-      body-color: gray.lighten(95%),
-    ),
-    title-style: (
-      color: white,
-      weight: "bold",
-    ),
-    shadow: (
-      offset: 1pt,
-    ),
-    title: hi("information-circle", solid: false) + " " + title,
-    body,
-  )
-]
+#let box-info(title, body) = showybox(
+  frame: (
+    border-color: gray.darken(50%),
+    title-color: gray.lighten(20%),
+    body-color: gray.lighten(95%),
+  ),
+  title-style: (
+    color: white,
+    weight: "bold",
+  ),
+  shadow: (
+    offset: 1pt,
+  ),
+  title: hi("information-circle", solid: false) + " " + title,
+  body,
+)
+
 
 #let tbtemplate(
   title: "Computational modelling of terrains",
