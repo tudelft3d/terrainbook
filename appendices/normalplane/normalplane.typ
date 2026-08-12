@@ -43,6 +43,10 @@ For buildings, we usually prefer to have the normal pointing outwards/up, and th
 
 ==== Local geometric features.
 
+#import "@preview/fleck:0.1.0": *
+#coffee-b(where: center + horizon, angle: 95deg, opacity: 50%)
+#coffee-d(where: right + bottom, angle: 95deg, opacity: 50%)
+
 It should also be noticed that the eigenvalues $lambda _(1,2,3)$ (where $lambda_1 >= lambda_2 >= lambda_3 >= 0$) can be useful to calculate/estimate the local geometric properties around $p$, such as the following:
 
 $  *l i n e a r i t y :* quad L_"lambda"& = frac(lambda_1 - lambda_2, lambda_1) \ *p l a n a r i t y :* quad P_"lambda"& = frac(lambda_2 - lambda_3, lambda_1) \ *s p h e r i c i t y :* quad S_"lambda"& = frac(lambda_3, lambda_1) \  $
