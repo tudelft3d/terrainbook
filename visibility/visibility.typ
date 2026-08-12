@@ -2,7 +2,7 @@
 
 = Visibility queries on terrains <chap:visibility>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/3HYlBogztOU")
 
 Several applications using terrains involve _visibility queries_, ie given a viewpoint, which area of the surrounding terrain is visible?
 Examples of such applications are many: optimal position of telecommunication towers, path planning for hiking (to ensure the nicest views), estimation of the view for scenic drives, estimation of visual damage when trees in a forest are cut, etc.

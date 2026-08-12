@@ -2,7 +2,7 @@
 
 = Runoff modelling <chap:runoff>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/0NzZoJATFjc")
 
 Many interesting DTM operations are based on runoff modelling, ie the computation of the flow and accumulation of water on a terrain.
 Examples include: knowing where streams will form in the case of heavy rainfall, finding the areas that will be affected by a waterborne pollutant, tracing the areas that could become submerged by floodwater, or calculating the rate of erosion or sedimentation in a given area.

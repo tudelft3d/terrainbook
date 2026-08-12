@@ -2,7 +2,8 @@
 
 = Topographic properties and features <chap:topofeatures>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/iF64Qeb_isw")
+
 
 While a terrain is a (2.5D) surface, it can also be conceptualised as an aggregation of many _topographic features_ that are inter-related.
 #index[topographic feature]

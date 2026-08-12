@@ -6,7 +6,7 @@
 
 = Delaunay triangulations \& Voronoi diagrams <chap:dtvd>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/ysLCuqcyJZA")
 
 Delaunay triangulations (DT) and Voronoi diagrams (VD) are fundamental data structures for terrains, both for their representation and for their processing (eg interpolation and several operations on terrains and point clouds are based on one of these structures).
 

@@ -2,7 +2,7 @@
 
 = Spatial interpolation: deterministic methods <chap:interpol>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/8H84AoSXkJs")
 
 Given a set $S$ of points $p_i$ in $bb(R)^(2)$ (also called samples or data points in the following) to which an attribute $a_i$ is attached, spatial interpolation is the procedure used to estimate the value of the attribute at an unsampled location $x$. 
 Its goal is to find a function $f(x,y)$ that fits (passes through, or close to, all the points in $S$) as well as possible. 

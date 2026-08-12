@@ -2,7 +2,7 @@
 
 = Acquisition of elevation measurements <chap:acquisition>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/_BSuNu3Ahw0")
 
 The very first step in the process of terrain modelling is the acquisition of elevation measurements. 
 Nowadays, these measurements are usually collected in large quantities using some form of remote sensing, ie sensors that measure---in our case---the distance to the Earth's surface from an airborne or even a spaceborne platform. 

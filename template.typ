@@ -69,24 +69,61 @@
   },
 )
 
-#let minitoc(toc) = note(dy:17pt)[#showybox(
-  frame: (
-    body-color: red.lighten(94%),
-    inset: 5pt,
-    thickness: 0pt,
-    // shadow: (
-    //   offset: 3pt,
-    // ),
-  ),
-  {
-    show outline: it => {
-      [#in-outline.update(true)]
-      it
-      [#in-outline.update(false)]
-    }
-    toc
-  },
-)]
+#let minitoc(toc, youtube: none) = note(dy:17pt)[
+  #showybox(
+    frame: (
+      body-color: blue.lighten(94%),
+      inset: 5pt,
+      thickness: 0pt,
+      // shadow: (
+      //   offset: 3pt,
+      // ),
+    ),
+    {
+      show outline: it => {
+        [#in-outline.update(true)]
+        it
+        [#in-outline.update(false)]
+      }
+      toc
+    },
+  )
+  #if youtube != none {
+    showybox(
+      frame: (
+        body-color: red.lighten(90%),
+        inset: 5pt,
+        thickness: 0pt,
+        // shadow: (
+        //   offset: 3pt,
+        // ),
+      ),
+      {
+        rect(stroke:none)[
+          #box(
+            height: 9pt,
+            baseline: (shift: 0.22em),
+            image("./misc/youtube.svg"),
+          )
+          #link(youtube)
+        ]
+      },
+    )
+    // rect(
+    //   // width: 35%, 
+    //   // fill: blue, 
+    //   // stroke: 0.5pt,
+    //   fill: red.lighten(84%),
+    //   radius: 0.4em)[
+    //   #box(
+    //     height: 9pt,
+    //     baseline: (shift: 0.22em),
+    //     image("./misc/youtube.svg"),
+    //   )
+    //   #link(youtube)
+    // ]
+  }
+]
 
 #let box-practice(title, body) = figure(placement: auto)[
   #showybox(

@@ -2,7 +2,7 @@
 
 = Conversions between terrain representations <chap:conversion>
 
-#minitoc(suboutline(depth: 1, indent: 0pt))
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/youtu.be/Nqfp94KpcUA")
 
 We consider in this chapter the following four terrain representations and discuss the conversions between them:
 
