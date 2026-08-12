@@ -337,6 +337,7 @@
   )
   show heading.where(level: 1): it => {
     set par(justify: false)
+    counter(figure.where(kind: image)).update(0)
     pagebreak(weak: true, to: "odd")
     block(
       width: 100%,
