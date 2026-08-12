@@ -320,7 +320,7 @@
           text(1.2em, "Maarten Pronk"),
         )
         #v(5mm)
-        #text(font: mono-font, size: 10pt, version)
+        #text(font: mono-font, size: 10pt, [v#version])
       ]
       // #pagebreak()
     ]

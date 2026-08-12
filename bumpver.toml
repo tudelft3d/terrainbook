@@ -9,6 +9,9 @@ push = false
 "terrainbook.tex" = [
   'v{version}',
 ]
+"main.typ" = [
+  'version: "{version}",',
+]
 "docs/_config.yml" = [
   "latest_version: {version}",
 ]
@@ -17,4 +20,7 @@ push = false
 ]
 "front-back/pre.tex" = [
   " YYYY % VER:YEAR",
+]
+"front-back/pre.typ" = [
+  " YYYY Hugo",
 ]
