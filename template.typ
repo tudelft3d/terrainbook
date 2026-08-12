@@ -88,54 +88,60 @@
   },
 )]
 
-#let box-practice(title, body) = showybox(
-  frame: (
-    border-color: red.darken(50%),
-    title-color: red.lighten(20%),
-    body-color: red.lighten(95%),
-  ),
-  title-style: (
-    color: white,
-    weight: "bold",
-  ),
-  shadow: (
-    offset: 1pt,
-  ),
-  title: hi("cog", solid: false) + " " + title,
-  body,
-)
-#let box-toread(title, body) = showybox(
-  frame: (
-    border-color: blue.darken(50%),
-    title-color: blue.lighten(20%),
-    body-color: blue.lighten(95%),
-  ),
-  title-style: (
-    color: white,
-    weight: "bold",
-  ),
-  shadow: (
-    offset: 1pt,
-  ),
-  title:  hi("arrow-top-right-on-square") + " " + title,
-  body,
-)
-#let box-info(title, body) = showybox(
-  frame: (
-    border-color: gray.darken(50%),
-    title-color: gray.lighten(20%),
-    body-color: gray.lighten(95%),
-  ),
-  title-style: (
-    color: white,
-    weight: "bold",
-  ),
-  shadow: (
-    offset: 1pt,
-  ),
-  title: hi("information-circle", solid: false) + " " + title,
-  body,
-)
+#let box-practice(title, body) = figure(placement: auto)[
+  #showybox(
+    frame: (
+      border-color: red.darken(50%),
+      title-color: red.lighten(20%),
+      body-color: red.lighten(95%),
+    ),
+    title-style: (
+      color: white,
+      weight: "bold",
+    ),
+    shadow: (
+      offset: 1pt,
+    ),
+    title: hi("cog", solid: false) + " " + title,
+    body,
+  )
+]
+#let box-toread(title, body) = figure(placement: auto)[
+  #showybox(
+    frame: (
+      border-color: blue.darken(50%),
+      title-color: blue.lighten(20%),
+      body-color: blue.lighten(95%),
+    ),
+    title-style: (
+      color: white,
+      weight: "bold",
+    ),
+    shadow: (
+      offset: 1pt,
+    ),
+    title:  hi("arrow-top-right-on-square") + " " + title,
+    body,
+  )
+]
+#let box-info(title, body) = figure(placement: auto)[
+  #showybox(
+    frame: (
+      border-color: gray.darken(50%),
+      title-color: gray.lighten(20%),
+      body-color: gray.lighten(95%),
+    ),
+    title-style: (
+      color: white,
+      weight: "bold",
+    ),
+    shadow: (
+      offset: 1pt,
+    ),
+    title: hi("information-circle", solid: false) + " " + title,
+    body,
+  )
+]
 
 #let tbtemplate(
   title: "Computational modelling of terrains",
@@ -212,10 +218,11 @@
   //-- math
   show math.equation: set text(font: math-font)
   set math.equation(numbering: "(1)")
-  // show heading.where(level: 1): it => {
-  //   counter(math.equation).update(0)
-  //   it
-  // }
+  show heading.where(level: 1): it => {
+    counter(math.equation).update(0)
+    it
+  }
+  
   //-- raw font
   show raw: set text(font: mono-font)
 
@@ -372,7 +379,7 @@
         )
       )
     )
-  }
+  }  
   // --
   // show: marginalia.show-frame
   //--
@@ -397,12 +404,6 @@
   set page(
     header: none
   )
-  // set page(
-    // top: 2.5cm,
-    // bottom: 2.5cm,
-    // margins: 10mm,
-    // numbering: "I",
-  // )
 
   body
 }
