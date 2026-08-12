@@ -1,6 +1,6 @@
 [bumpver]
-current_version = "2025.1"
-version_pattern = "YYYY.INC0[-TAG]"
+current_version = "2026.0-beta2"
+version_pattern = "YYYY.INC0[-TAGNUM]"
 commit = false
 tag = false
 push = false

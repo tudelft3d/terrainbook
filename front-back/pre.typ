@@ -3,7 +3,7 @@
 #align(bottom)[
   
 
-© 2025 Hugo Ledoux, Ken Arroyo Ohori, Ravi Peters, and Maarten Pronk
+© 2026 Hugo Ledoux, Ken Arroyo Ohori, Ravi Peters, and Maarten Pronk
 
 #v(1cm)
 
