@@ -266,7 +266,6 @@ Photogrammetry knows a similar process called aerial triangulation, in which cam
 Many commonly occurring artefacts happen due to properties of the target surface. We distinguish three classes.
 
 ==== Geometry
-
 The shape of the target surfaces in relation to the sensor position has a great effect on 1) local point densities and 2) occlusion. As you can see from @fig:lidarAcquisitionConditions:a,
 #notefigure(
   image("figs/lidarAcq.pdf", width: 100%, page: 2),
@@ -280,7 +279,7 @@ As a result there will be gaps in the point coverage, also visible in @fig:lidar
 Notice how some steep surfaces and some of the adjacent ground are not registered at all by the scanner because it simply could not 'see' these parts.
 
 The severity of both effects mostly depends on the geometry of the target objects and flight parameters such as the flying altitude and the amount of overlap between flight strips.
-However, regardless of what flight parameters are chosen for a survey both effects are almost always visible somewhere in the resulting dataset, see for example @fig:pcd for different lidar datasets for the same area.
+However, regardless of what flight parameters are chosen for a survey both effects are almost always visible somewhere in the resulting dataset, see for example @fig:pcd:ahn1 for different lidar datasets for the same area.
 
 /* TODO: verify subfigure layout */
 #subfigure(
@@ -295,12 +294,12 @@ However, regardless of what flight parameters are chosen for a survey both effec
 )
 
 ==== Material properties
-
 Depending on material properties of a target surface, signals may be reflected in a way that makes it impossible to compute the correct distance. 
 Surfaces that act like a mirror are especially problematic, @fig:lidarAcquisitionConditions:b illustrates this. 
 #notefigure(
   image("figs/lidarAcq.pdf", width: 100%, page: 1),
   caption: [Reflection and multi-path],
+  dy: 150pt,
 ) <fig:lidarAcquisitionConditions:b>
 First, it may happen that a pulse is reflected away from the sensor, eg from a water surface, resulting in no distance measurement for that pulse. 
 Or, in the case of photogrammetry, we will observe a different reflection in each image which heavily distorts the matching process, sometimes resulting in extreme outliers for water surfaces. 
@@ -317,11 +316,9 @@ Photogrammetry suffers from a few other problems as well, such as surfaces that 
 This may also happen in poor lighting conditions, for example in the shadow parts of an image.
 
 ==== Moving objects
-
 An example of moving objects are flocks of birds flying in front of the scanner. These can cause outliers high above the ground, as illustrated in @fig:outliers.
 
 === Processing
-
 It is common to perform some kind of process after acquisition in order to fix errors caused by the reasons mentioned above. 
 In most cases such processes are largely successful. 
 For instance, one can attempt to fill the void regions, sometimes referred to as _no-data_ regions, that are for instance due to pools of rainwater or occlusion, using an interpolation method (@fig:voidfill).
@@ -344,7 +341,7 @@ And void-filling is only effective if the void area is not too large, since inte
 	This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM. 
 	It shows that even when artefacts seem to be under control, both techniques may measure different elevations 
 
-	// TODO\fullcite{Ressl16}
+	// TODO \fullcite{Ressl16}
 	#link("https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf")  
 ]
 
