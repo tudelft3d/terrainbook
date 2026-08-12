@@ -80,11 +80,6 @@ We describe here how both LoS and viewshed queries can be implemented for grids;
 A LoS query, between a viewpoint $v$ and another point $q$, implies reconstructing the profile of the terrain along the vertical projection of $v q$ (let us call it $v q_"xy"$).
 It then suffices to follow $v q$ and verify whether the elevation at any ($x,y$) location along the profile is higher than that of $v q$.
 As shown in @fig:los, 
-#figure(
-  image("./figs/los.pdf", width: 100%),
-  caption: [Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.],
-  placement: none,
-) <fig:los>
 since the terrain is discretised into grid cells, there are 2 options to reconstruct the profile between $v$ and $q$:
 + identify all the cells intersected by $v q_"xy"$, and assign the centre of each cell by projecting it to the terrain profile. This is what is done in @fig:los.
 + consider the edges of the cells, collect all the edges that are intersected by $v q_"xy"$, and linearly interpolate the elevations. This is far more expensive to compute, and therefore less used in practice.
@@ -94,19 +89,27 @@ Start at $v$, and for each pixel $c$ encountered along $v q_"xy"$, verify whethe
 If it is, then continue to the next pixel; if not, then there is an intersection and thus the visibility is False.
 If the pixel containing $q$ is reached without detecting an intersection, then the visibility is True.
 
-==== Viewshed
-As shown in @fig:viewshed,
-computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
-The result of a viewshed is a binary grid; in @fig:overview_viewshed, True/visible pixels are green, and False/invisible ones are dark grey.
-#figure(
+#wideblock[
+  #figure(
+    image("./figs/los.pdf", width: 100%),
+    caption: [Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.],
+    placement: none,
+  ) <fig:los>
+]
+#wideblock[#figure(
   image("./figs/viewshed.pdf", width: 100%),
   caption: [Viewshed for the point $v$; the blue circle is the radius of the horizon (#qty("5000", "m") in this case).],
-  placement: none,
-) <fig:viewshed>
+    placement: none,
+  ) <fig:viewshed>
+]
+
+==== Viewshed
+As shown in @fig:viewshed, computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
+The result of a viewshed is a binary grid; in @fig:overview_viewshed, True/visible pixels are green, and False/invisible ones are dark grey.
 
 While this brute-force approach will work, several redundant computations will be made, since several of the rays from $v$ will intersect the same grid cells.
 Furthermore, depending on the resolution, the number of cells in a #qty("5", "km") radius (a reasonable value where humans can see) can become _very_ large.
-As an example, with the AHN3 gridded version (#qty("50", "cm") resolution), this means roughly 400 million queries ($(frac(5000 times 2, 0.5))^(2)$).
+As an example, with the AHN5 gridded version (#qty("50", "cm") resolution), this means roughly 400 million queries ($(frac(5000 times 2, 0.5))^(2)$).
 
 One alternative solution is shown in @fig:viewshed\b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $v q_i$ as we 'walk' from $v$.
 Observe that, along $v q_i$, it is possible that a point far from $v$ is visible, while several closer points are not; @fig:viewshed\c gives an example.
@@ -128,6 +131,7 @@ Using the depth-sort algorithm for arbitrary triangles would require using a BSP
 #notefigure(
   image("./figs/acyclicity.pdf", width: 100%),
   caption: [The 3 triangles $tau_1$, $tau_2$, and $tau_3$ form a cycle when viewed from the viewpoint $v$, and it is not possible to sort them from furthest to closest (without decomposing them).],
+  dy: -100pt,
 ) <fig:acyclicity>
 
 However, it has been proven that Delaunay triangulations are _acyclic_ for any fixed viewpoint.
@@ -136,7 +140,7 @@ In other words, the in-front/behind relationship for the triangles of a DT, with
   image("./figs/ordering_triangles.pdf", width: 100%),
   caption: [The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.],
 ) <fig:ordering_triangles>
-Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slightly the point location algorithm from Section @sec:dtwalk.
+Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slightly the point location algorithm from @sec:dtwalk.
 This operation can be performed in 2D, by projecting the triangles of the TIN to the $x y$-plane.
 
 This means that visibility queries in TINs---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in @fig:depthsort_issues).
@@ -151,6 +155,7 @@ The description here is inspired by that of #citet(<DeFloriani99-1>).
 #citet(<Newell72>) first proposed the depth-sorting algorithm and the decomposition necessary when polygons in the scene cannot be sorted from furthest to closest.
 
 #citet(<Edelsbrunner90>) proved that Delaunay triangulations, in any dimensions, are acyclic.
+
 
 == Exercises
 
