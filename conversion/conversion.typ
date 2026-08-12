@@ -74,8 +74,8 @@ The basic algorithm for extracting one isoline is shown in @algo:iso.
   pseudocode-list(
     title: [#smallcaps[OneIsoline] ($E$, $z_0$)]
   )[
-    + *Input:* a planar partition $E$ formed of cells (either rectangular or triangular cells); the elevation value $z_0$ \
-      *Output:* a list of unstructured line segments representing the contour lines at $z_0$
+    + *Input:* a planar partition $E$ formed of cells (either rectangular or triangular cells); the elevation value $z_0$
+    + *Output:* a list of unstructured line segments representing the contour lines at $z_0$
     + _segmentList_ = []
     + *for* $e in E$
       + *if* $z_0$ intersects $e$ *then*
@@ -222,8 +222,8 @@ It is also possible to insert only a certain percentage of the number of input p
   pseudocode-list(
     title: [#smallcaps[TINRefinement]]
   )[
-    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ \
-      *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
+    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
+    + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + Construct an initial triangulation $cal(T)$ that covers the 2D bbox of $S$
     + $epsilon  <-  infinity$
     + *while* $epsilon > epsilon_(max)$
@@ -254,8 +254,8 @@ Algorithm @algo:tin-simp:dec shows the pseudo-code for the TIN decimation algori
   pseudocode-list(
     title: [#smallcaps[TINDecimation]]
   )[
-    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ \
-      *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
+    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
+    + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + $cal(T)  <-$ a triangulation of $S$
     + $epsilon  <- 0$ \;
     + *while* $epsilon < epsilon_(max)$

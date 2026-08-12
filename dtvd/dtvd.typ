@@ -243,8 +243,8 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
   pseudocode-list(
     title: smallcaps[Insert1pt]
   )[
-    + *Input:* A DT($S$) $cal(T)$, and a new point $p$ to insert \
-      *Output:* $cal(T) ^(p) = cal(T)  union  {p}$ \//-- the DT with point $p$
+    + *Input:* A DT($S$) $cal(T)$, and a new point $p$ to insert 
+    + *Output:* $cal(T) ^(p) = cal(T)  union  {p}$ \//-- the DT with point $p$
     + find triangle $tau$ containing $p$
     + insert $p$ in $tau$ by splitting it into 3 new triangles (flip13)\;
     + push 3 new triangles on a stack\;
@@ -319,8 +319,8 @@ The idea, called "walking", is shown in @fig:walk and details are given in the @
   pseudocode-list(
     title: [#smallcaps[Walk] ($cal(T)$, $tau$, $p$)]
   )[
-    + *Input:* A DT($S$) $cal(T)$, a starting triangle $tau$, and a query point $p$ \
-      *Output:* $tau_r$: the triangle in $cal(T)$ containing $p$
+    + *Input:* A DT($S$) $cal(T)$, a starting triangle $tau$, and a query point $p$ 
+    + *Output:* $tau_r$: the triangle in $cal(T)$ containing $p$
     + $tau_r$ = None
     + *while* $tau_r$ == None
       + visitededges = 0
