@@ -262,23 +262,26 @@ From @sec:dtconstruction we know that one insertion of a single point $p$ in a D
 ==== Higher-order function  (NNI-c1)
 The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant (see @fig:nni1d}).
 
-#notefigure(
-  image("figs/nni-1d.pdf", width: 100%),
-  caption: [#strong[Top:] The NNI interpolant in 1D is equivalent to a linear interpolation. #strong[Bottom:] If the gradient at each sample points are calculated/estimated, then it is possible to modify the weights so that a $C^(1)$ interpolant is obtained.],
-) <fig:nni1d>
+#subfigure(
+  image("figs/nni-1d.pdf", width: 100%, page: 1),
+  image("figs/nni-1d.pdf", width: 100%, page: 2),
+  columns: (1fr, 1fr),
+  caption: [*(Left):* The NNI interpolant in 1D is equivalent to a linear interpolation. *(Right):* If the gradient at each sample points are calculated/estimated, then it is possible to modify the weights so that a $C^(1)$ interpolant is obtained.],
+  label: <fig:nni1d>
+) 
 
 It can be modified so that the first derivative is possible everywhere, including at the data points.
 This is achieved by modifying the weights so that they are not linear anymore.
 The gradient of the surface at each sample point is taken into account, ie for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this book.
 The resulting interpolant is $C^(1)$, and @fig:comp_nni shows an example.
-/* TODO: verify subfigure layout */
-#subfigure(
-  figure(image("figs/nni.png", width: 100%), caption: [NNI]),
-  figure(image("figs/nni_c1.png", width: 100%), caption: [NNI ($C^(1)$)]),
-  columns: (1fr, 1fr),
-  caption: [Notice how the #strong[NNI] interpolant creates "inverted cups" around each sample point, and how #strong[NNI-c1] results in a more rounded surface.],
-  label: <fig:nni>,
-)
+  #subfigure(
+    figure(image("figs/nni.png", width: 100%), caption: [NNI]),
+    figure(image("figs/nni_c1.png", width: 100%), caption: [NNI ($C^(1)$)]),
+    columns: (1fr, 1fr),
+    caption: [Notice how the NNI interpolant creates "inverted cups" around each sample point, and how NNI-c1 results in a more rounded surface.],
+    // placement: bottom,
+    label: <fig:nni>,
+  )
 
 === Laplace interpolant <sec:laplace>
 
