@@ -72,12 +72,14 @@ LAS files are binary and unlike the PLY format the fields are prescribed, ie the
 //-- TODO: figures in appendix not numbered
 #wideblock(side: "right")[
 #figure(
+  caption: [LAS Point Data Record Format 6.],
   {
   set text(size: 8pt)
   table(
     columns: (auto, auto, auto, auto),
     stroke: none,
     // stroke: (y: none),
+    inset: 3pt,
     table.vline(x: 1, start: 1),
     table.vline(x: 2, start: 1),
     table.vline(x: 3, start: 1),
@@ -123,7 +125,9 @@ LAS files are binary and unlike the PLY format the fields are prescribed, ie the
     another file],
     [`gps_time`], [float], [64], [GPS time of acquisition of the point],
     table.hline(),
-  )} )<tab:las-record>]
+  )} 
+  )<tab:las-record>
+]
 
 In the specifications this is referred to as the "Format 6", and other record types are possible (Formats 0 to 10).
 #note[Different LAS formats: #link("https://laspy.readthedocs.io/en/latest/intro.html#point-records")]
@@ -153,6 +157,7 @@ The LAS standard defines several classification codes, as listed in @tab:las-cla
   table(
     columns: 2,
     stroke: none,
+    inset: 3pt,
     align: (right,left,),
     table.header([Code], [Meaning],),
     table.hline(),

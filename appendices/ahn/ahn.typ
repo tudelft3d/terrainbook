@@ -33,10 +33,35 @@ It should be noticed that in AHN5 the class 6/`building` is for the roofs of the
 This is in contrast to previous versions, and the current version, in which all points representing a building were classified as 6/`building`.
 
 Observe also that in AHN the points representing vegetation are not classified as such, and vegetation is never explicitly classified.
-#note[vegetation is classified as $1$/`unclassified`]
+#note[⚠️ vegetation is classified as $1$/`unclassified`]
 This is because the aim of the AHN project is mostly to model dikes and to protect us from floods, and vegetation is not very important for this use-case.
 The class $1$ is thus used for vegetation, but other objects such as street furniture (eg lampposts) or cars are also classified as $1$.
 
 Certain tiles contain the classification 14/`high-voltage pylons and cables`, but not all of them. 
-#note[class=14 for pylons+cables (for some tiles only)]
+// #note[class=14 for pylons+cables (for some tiles only)]
 If 14 is not used, the pylons and cables are in class 26/`kunstwerk`.
+
+#figure(
+  table(
+    columns: 2,
+    // stroke: none,
+    // inset: 3pt,
+    align: (right,left),
+    table.header([Code], [Meaning],),
+    table.hline(),
+    [0], [never classified],
+    [1], [unclassified],
+    [2], [ground],
+    [3], [low vegetation],
+    [4], [medium vegetation],
+    [5], [high vegetation],
+    [6], [building],
+    [7], [low point (noise)],
+    [9], [water],
+    [14], [high-voltage pylons and cables],
+    [26], [civil structure (_kunstwerk_)],
+    table.hline(),
+  ),
+  caption: [The LAS classification codes and their meanings.],
+  placement: none,
+) <tab:ahn-classes>
