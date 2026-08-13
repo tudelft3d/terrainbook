@@ -87,9 +87,7 @@ However, there exist more efficient algorithms that have a time complexity of $c
 
 Properties convex hull: \
 #table(
-  stroke: none,
   columns: 2,
-  inset: 3pt,
   align: (left, left),
   table.hline(),
   [*P1*], [The sole polygon is guaranteed to be regular (and convex)],
@@ -158,9 +156,7 @@ Each query in a $k$d-tree takes $cal(O) (log n)$ on average, but we need to stor
 
 Properties moving arm:
 #table(
-  stroke: none,
   columns: 2,
-  inset: 3pt,
   align: (left, left),
   table.hline(),
   [*P1*], [The sole polygon could be degenerate (self-intersection)],
@@ -192,9 +188,7 @@ The number of edges in a DT of $n$ points is roughly $3n$ (thus $cal(O) (n)$), a
 
 Properties $chi$-shape:
 #table(
-  stroke: none,
   columns: 2,
-  inset: 3pt,
   align: (left, left),
   table.hline(),
   [*P1*], [The sole polygon is guaranteed to be regular],
@@ -244,9 +238,7 @@ A DT can be constructed in $cal(O) (n log n)$ time, and the algorithm only requi
 
 Properties $alpha$-shape:
 #table(
-  stroke: none,
   columns: 2,
-  inset: 3pt,
   align: (left, left),
   table.hline(),
   [*P1*], [A complex of $k$-simplices],
@@ -294,16 +286,6 @@ A cluster is formed by recursively finding all the neighbouring points of a give
 
 The properties listed in Section @sec:properties are taken, and slightly adapted, from #citet(<Galton06>). 
 
-The _Quickhull_ algorithm is the most known and used convex hull algorithm, and it is valid in any dimensions. See #citet(<Barber96>) for the details, and link("http://www.qhull.org/") for implementations.
-
-The gift wrapping algorithm to compute the convex hull of a set of points in $bb(R)^(2)$ is from #citet(<Jarvis73>).
-
-The moving arm with a length is presented and described in #citet(<Galton06>), and the adaptative one in #citet(<Moreira07>).
-
-== Notes and comments
-
-The properties listed in Section @sec:properties are taken, and slightly adapted, from #citet(<Galton06>). 
-
 The _Quickhull_ algorithm is the most known and used convex hull algorithm, and it is valid in any dimensions. See #citet(<Barber96>) for the details, and #link("http://www.qhull.org") for implementations.
 
 The gift wrapping algorithm to compute the convex hull of a set of points in $bb(R)^(2)$ is from #citet(<Jarvis73>).
@@ -323,5 +305,5 @@ The DBSCAN algorithm was introduced in #citet(<Ester96>).
 + What are the disadvantages of the $chi$-shape compared with the $alpha$-shape?
 + If the parameter $l$ for the $chi$-shape is equal to the $alpha$ parameter for an $alpha$-shape, will the resulting shapes be the same?
 + Given an $alpha$-shape of $S$, how to calculate how many components are part of it?
-+ Draw what would happen if one of the 2 edges was removed in @fig:chishapec.
++ Draw what would happen if one of the 2 edges was removed in @fig:chishape\c.
 + What is the influence of $k$ for the moving arm algorithm (with a _knn_)? Will a higher $k$ create a larger or smaller region in general?
