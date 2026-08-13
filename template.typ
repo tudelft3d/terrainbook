@@ -212,6 +212,13 @@
   show heading: set text(font: serif-fonts, weight: "bold")
 
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
+  //-- tables
+  set table(
+    inset: 3pt,
+    stroke: none,
+  )
+  set table.hline(stroke: 0.5pt)
+  set table.vline(stroke: 0.5pt)
 
 
   
@@ -268,8 +275,7 @@
   show ref: set text(blue)
 
 
-  set table.hline(stroke: 0.4pt)
-  set table.vline(stroke: 0.4pt)
+
   
   set list(indent: 1em, tight: true)
   show list: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)

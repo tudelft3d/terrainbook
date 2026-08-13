@@ -397,7 +397,7 @@ The differences in the lower areas (which is water) are smaller since these area
     placement: auto,
     caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
     table(
-      stroke: none,
+      // stroke: none,
       columns: 7,
       align: (left, center, center, center, center, center, center),
       table.hline(),
