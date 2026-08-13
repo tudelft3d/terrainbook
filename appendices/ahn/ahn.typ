@@ -1,4 +1,5 @@
 #import "../../template.typ": *
+#import "@preview/fleck:0.1.0": *
 
 = Extra information about the AHN datasets <app:ahn>
 
@@ -40,6 +41,9 @@ The class $1$ is thus used for vegetation, but other objects such as street furn
 Certain tiles contain the classification 14/`high-voltage pylons and cables`, but not all of them. 
 // #note[class=14 for pylons+cables (for some tiles only)]
 If 14 is not used, the pylons and cables are in class 26/`kunstwerk`.
+
+#coffee-b(where: center + horizon, angle: 95deg, opacity: 50%)
+#coffee-d(where: right + bottom, angle: 95deg, opacity: 50%)
 
 #figure(
   table(
