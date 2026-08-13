@@ -173,8 +173,27 @@
 #let tbtemplate(
   title: "Computational modelling of terrains",
   version: "",
+  cover: false,
   body,
 ) = {
+
+  if cover == true {
+    page(
+      width: 210mm,
+      height: 297mm,
+      margin: 0pt,
+    )[
+      #image(
+        "./cover/cover_front.pdf",
+        page: 1,
+        width: 100%,
+        height: 100%,
+        fit: "contain",
+      )
+    ]
+    pagebreak()
+    pagebreak()
+  }
   
   set page(
     numbering: "i",
@@ -310,6 +329,22 @@
     ]
   }
   body
+
+  if cover == true {
+    page(
+      width: 210mm,
+      height: 297mm,
+      margin: 0pt,
+    )[
+      #image(
+        "./cover/cover_back.pdf",
+        page: 1,
+        width: 100%,
+        height: 100%,
+        fit: "contain",
+      )
+    ]
+  }
 }
 
 // Front matter: Roman numerals, remember last page via metadata
