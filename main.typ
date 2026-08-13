@@ -1,7 +1,17 @@
+// TODOs
+// [x] figure numbers in Appendices are back at 1.1...
+// [x] table numbers are not reset at 1 each new chapter :\
+// [x] index at the end has ugly large headers... remove
+// [ ] references have DOIs: remove?
+// [ ] @app:ahn[Appendix]
+
+
+
 #import "template.typ": *
 
 #show: doc => tbtemplate(
   version: "2026.0-beta2",
+  cover: true,
   doc,
 )
 
@@ -131,8 +141,10 @@
   #bibliography("./refs/tb.bib", style: "./refs/apa-annotated-bibliography_modified-HL.csl")
 
   = Index
-  #columns(3)[
-    #make-index(title: none)
+  #columns(2)[
+    #make-index(
+      section-title: (letter, counter) => v(1.5em),
+    )
   ]
 
   #pagebreak()
