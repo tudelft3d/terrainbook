@@ -424,19 +424,20 @@ The differences in the lower areas (which is water) are smaller since these area
 
 
 #wideblock(side: "outer")[
-#subfigure(
-  figure(image("figs/results/nn.png", width: 75%), caption: [Nearest neighbour]),
-  figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500))]),
-  figure(image("figs/results/idw_r1500_p4.png", width: 75%), caption: [IDW (radius=#num(1500))]),
-  figure(image("figs/results/tin.png", width: 75%), caption: [TIN (linear)]),
-  figure(image("figs/results/tin_c1.png", width: 75%), caption: [TIN ($C^(1)$)]),
-  figure(image("figs/results/nni.png", width: 75%), caption: [Natural neighbours]),
-  figure(image("figs/results/nni_c1.png", width: 75%), caption: [Natural neighbours ($C^(1)$)]),
-  figure(image("figs/results/laplace.png", width: 75%), caption: [Laplace]),
-  columns: (1fr, 1fr),
-  caption: [Results of a few interpolation methods for the same dataset; the samples are shown on the surface (red dots).],
-  label: <fig:results_interpol>,
-) 
+  #subfigure(
+    figure(image("figs/results/nn.png", width: 75%), caption: [Nearest neighbour]),
+    figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500))]),
+    figure(image("figs/results/idw_r1500_p4.png", width: 75%), caption: [IDW (radius=#num(1500))]),
+    figure(image("figs/results/tin.png", width: 75%), caption: [TIN (linear)]),
+    figure(image("figs/results/tin_c1.png", width: 75%), caption: [TIN ($C^(1)$)]),
+    figure(image("figs/results/nni.png", width: 75%), caption: [Natural neighbours]),
+    figure(image("figs/results/nni_c1.png", width: 75%), caption: [Natural neighbours ($C^(1)$)]),
+    figure(image("figs/results/laplace.png", width: 75%), caption: [Laplace]),
+    columns: (1fr, 1fr),
+    caption: [Results of a few interpolation methods for the same dataset; the samples are shown on the surface (red dots).],
+    placement: auto,
+    label: <fig:results_interpol>,
+  ) 
 ]
 
 == Notes and comments
@@ -468,7 +469,7 @@ It splits each triangle into 3 sub-triangles (by inserting a temporary point at 
 Here, roughness is defined as the integral of the square of the $L^(2)$-norm of the gradient of the terrain.
 #citet(<Gudmundsson02>) shows that a variation of the DT (one where $k$ vertices can be inside the circumcircle of a given triangle) can yield fewer local minima; whether it yields a "better" terrain is an open question.
 
-#pagebreak()
+// #pagebreak()
 == Exercises
 
 + Given a triangle $t a u$ with coordinates (20.0, 72.0, 21.0), (116.0, 104.0, 32.0), and (84.0, 144.0, 26.0), estimate the elevation at $x$ = (92.0, 112.0) with linear interpolation in the triangle (both by finding the equation of the plane and with barycentric coordinates).
