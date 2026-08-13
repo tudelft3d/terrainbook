@@ -445,7 +445,7 @@
     )
   }  
   // --
-  show: marginalia.show-frame
+  // show: marginalia.show-frame
   //--
   // set page(
   //   header: context if here().page() > 1 {
