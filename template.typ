@@ -5,6 +5,8 @@
 #import "@preview/showybox:2.0.4": showybox
 //-- headers
 #import "@preview/hydra:0.6.2": hydra
+//-- helper for numbering of figures and tables
+#import "@preview/headcount:0.1.1": dependent-numbering, reset-counter
 //-- subfigure
 #import "@preview/subpar:0.2.2"
 //-- pseudo-code
@@ -35,8 +37,6 @@
 }
 
 
-
-
 //-- https://github.com/tingerrr/subpar/issues/16
 #let sub-figure-numbering = (super, sub) => numbering("1.1a", counter(heading).get().first(), super, sub)
 #let figure-numbering = super => numbering("1.1", counter(heading).get().first(), super)
@@ -47,6 +47,9 @@
     text(size: 8pt, style: "normal", weight: "regular")[#caption]
   },
 )
+
+
+
 
 //-- default for pseudo-code/lovelace
 #let my-lovelace-defaults = (
@@ -109,19 +112,6 @@
         ]
       },
     )
-    // rect(
-    //   // width: 35%, 
-    //   // fill: blue, 
-    //   // stroke: 0.5pt,
-    //   fill: red.lighten(84%),
-    //   radius: 0.4em)[
-    //   #box(
-    //     height: 9pt,
-    //     baseline: (shift: 0.22em),
-    //     image("./misc/youtube.svg"),
-    //   )
-    //   #link(youtube)
-    // ]
   }
 ]
 
@@ -181,19 +171,11 @@
 
 #let tbtemplate(
   title: "Computational modelling of terrains",
-  authors: (
-    "Hugo Ledoux",
-    "Ken Arroyo Ohori",
-    "Ravi Peters",
-    "Maarten Pronk",
-  ),
   version: "",
   body,
 ) = {
+  
   set page(
-    // top: 2.5cm,
-    // bottom: 2.5cm,
-    // margin: auto,
     numbering: "i",
   )
 
@@ -201,27 +183,15 @@
   let sans-fonts = ("TeX Gyre Heros", "Source Sans Pro", "Calibri") //-- https://www.1001fonts.com/texgyreheros-font.html + https://github.com/adobe-fonts/source-sans-pro
   let math-font = ("Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
   let mono-font = ("Consolas", "Monaco") //-- Input Mono Condensed
-
   set text(
     font: serif-fonts,
     size: 10pt,
   )
   set par(justify: true)
-  
-  // set heading(numbering: "1.1.1", supplement: none)
+
   show heading: set text(font: serif-fonts, weight: "bold")
-
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
-  //-- tables
-  set table(
-    inset: 3pt,
-    stroke: none,
-  )
-  set table.hline(stroke: 0.5pt)
-  set table.vline(stroke: 0.5pt)
-
-
-  
+  show heading.where(level: 1): it => counter(figure.where(kind: table)).update(0) + it
   show heading.where(level: 1): it => {
     set par(justify: false)
     pagebreak(weak: true, to: "odd")
@@ -233,9 +203,6 @@
     // place(top, note(counter: none, side: "outer")[#text(font: sans-fonts, hyphenate: false, weight: "bold", size: 28pt, "1")])
     v(2em)
   }
-  
-  // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
-  // show heading.where(level: 1): it => align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
   show heading.where(level: 2): it => {
     v(3em, weak: true)
     text(font: sans-fonts, size: 14pt, weight: "bold", it)
@@ -251,20 +218,32 @@
     v(1em)
     strong(title + ".") + h(0.8em)
   }
-  
-  
-  show figure.where(kind: image): set figure(numbering: figure-numbering)
+
+  //-- figures
+  // show figure.where(kind: image): set figure(numbering: figure-numbering)
   show figure.caption.where(position: bottom): note.with(
      counter: none, shift: "avoid", keep-order: true
   )
-
+  
+  //-- tables
+  set table(
+    inset: 3pt,
+    stroke: none,
+  )
+  set table.hline(stroke: 0.5pt)
+  set table.vline(stroke: 0.5pt)
+ 
+  
+  // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
+  // show heading.where(level: 1): it => align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
+  
   //-- math
   show math.equation: set text(font: math-font)
   set math.equation(numbering: "(1)")
-  show heading.where(level: 1): it => {
-    counter(math.equation).update(0)
-    it
-  }
+  // show heading.where(level: 1): it => {
+  //   counter(math.equation).update(0)
+  //   it
+  // }
   
   //-- raw font
   show raw: set text(font: mono-font)
@@ -275,8 +254,6 @@
   show ref: set text(blue)
 
 
-
-  
   set list(indent: 1em, tight: true)
   show list: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)
   set enum(indent: 1em, tight: true)
@@ -345,6 +322,7 @@
 
 // Main matter: Arabic numerals from 1
 #let main-matter(body) = {
+  //-- header
   set page(header: context {
     if calc.odd(here().page()) {
       if hydra(1) != none {
@@ -367,11 +345,22 @@
     }
     // line(length: 100%)
   })
-  // set page(numbering: "1")
-  set page(numbering: "1", number-align: top+right)
+  set page(numbering: "1")
+  // set page(numbering: "1", number-align: top+right)
+  
   counter(page).update(1)
-  set heading(numbering: "1.1.1")
+  set heading(numbering: "1.1")
+  set figure(numbering: dependent-numbering("1.1"))
+  show heading: reset-counter(
+    counter(figure.where(kind: image)),
+  )
+  show heading: reset-counter(
+    counter(figure.where(kind: table)),
+  )
+  counter(heading).update(0)
+
   show heading.where(level: 1): set heading(supplement: [Chapter])
+  
   show: marginalia.setup.with(
     // A4: 210mm x 297mm
     inner: (far: 10mm, width: 5mm, sep: 5mm),
@@ -387,14 +376,11 @@
   show heading.where(level: 1): it => {
     set par(justify: false)
     counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
     pagebreak(weak: true, to: "odd")
     block(
       width: 100%,
-      // height: 4em,
-      // above: 2em,
       below: 2em,
-      // inset: 1em,
-      // fill: luma(97%),
       grid(
         columns: (120mm, 5mm, 1fr),
         align: (right, center, left),
@@ -423,7 +409,7 @@
     )
   }  
   // --
-  // show: marginalia.show-frame
+  show: marginalia.show-frame
   //--
   // set page(
   //   header: context if here().page() > 1 {
@@ -441,8 +427,8 @@
 // Back matter: Roman numerals continuing from front matter
 #let back-matter(body) = {
   set page(numbering: none)
-  set heading(numbering: none)
-  counter(heading).update(0)
+  // set heading(numbering: none)
+  // counter(heading).update(0)
   set page(
     header: none
   )

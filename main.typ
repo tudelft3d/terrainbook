@@ -96,6 +96,13 @@
 
   //-- Appendices
   #set heading(numbering: "A.1")
+  #set figure(numbering: dependent-numbering("A.1"))
+  #show heading: reset-counter(
+    counter(figure.where(kind: image)),
+  )
+  #show heading: reset-counter(
+    counter(figure.where(kind: table)),
+  )
   #counter(heading).update(0)
   #include "./appendices/pcformats/pcformats.typ"     //-- A
   #include "./appendices/ahn/ahn.typ"                 //-- B
