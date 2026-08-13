@@ -32,7 +32,7 @@ Spatial interpolation in 3D is also possible (but out of scope for this book), i
 The essential properties of an 'ideal' interpolation method for bivariate geoscientific datasets are as follows:
 #index[bivariate function] 
 / *exact*: the interpolant must 'honour' the data points, or 'pass through' them.
-/ *continuous*: a single and unique value must be obtained at each location. This is called a $C^(0)$ interpolant#index[$C^(n)$ interpolants] in mathematics (see @fig:continuity).
+/ *continuous*: a single and unique value must be obtained at each location. This is called a $C^(0)$ interpolant#index[interpolants] in mathematics (see @fig:continuity).
 / *smooth*: it is desirable for some applications to have a function for which the first or second derivative is possible everywhere; such functions are respectively referred to as $C^(1)$ and $C^(2)$ interpolants.
 / *local*: the interpolation function uses only some neighbouring samples to estimate the value at a given location. This ensures that a sample with a gross error will not propagate its error to the whole interpolant.
 / *adaptability*: the function should give realistic results for anisotropic data distributions and/or for datasets where the data density varies greatly from one location to another.
