@@ -1,5 +1,6 @@
 
 #import "@preview/marginalia:0.3.1" as marginalia: note, notefigure, wideblock
+//-- index at the end
 #import "@preview/in-dexter:0.7.2": *
 #import "@preview/suboutline:0.3.0": suboutline
 #import "@preview/showybox:2.0.4": showybox
