@@ -207,7 +207,10 @@
     font: serif-fonts,
     size: 10pt,
   )
-  set par(justify: true)
+  set par(
+    justify: true,
+    leading: 0.53em,
+  )
 
   show heading: set text(font: serif-fonts, weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
