@@ -231,6 +231,7 @@ There is a loss of information, since the exact location of the meaningful point
   However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
   Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
 \end{kaobox-practice}
+  However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?) or represents the whole cell.
 \end{floatbox}
 
 %
@@ -298,7 +299,10 @@ Chapter~\ref{chap:interpol} gives more details about spatial interpolation and c
 %%%
 \subsection{Hierarchical tessellations}
 
-Hierarchical tessellations attempt to reduce the number of cells in a tessellation by merging the neighbouring cells having the same value (thus yielding cells of different sizes).
+Hierarchical tessellations store cells at multiple resolutions, with cells at higher levels encompassing lower level cells. % or some form of relationship?
+
+One possible advantage of such a hierarchy is compression, reducing the number of cells in a tessellation by merging the neighbouring cells having the same value (thus yielding cells of different sizes).
+
 While both regular and irregular tessellations can be hierarchical, in the context of the representation of terrains, the former is more relevant and is sometimes used in practice.
 
 % Irregular hierarchical tessellations, usually triangulations, are used for obtaining multi-resolution models, or act as a spatial index for efficiently accessing triangles.
@@ -319,6 +323,12 @@ Indeed, the size of a quadtree is not dependent on the number of cells, but on t
 The quadtree of a 2D grid having no two adjacent cells with the same value (\eg\ a checkers board) contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
 Another disadvantage is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
 
+%
+However, a regular tessellation like a grid cannot accurately fit a sphere which is problematic for global (geographic) datasets.
+Therefore---even with their disadvantages---global hierarchical tessellations or discrete global grid systems (DGGS) are becoming more popular.
+\index{discrete global grid system (DGGS)}\marginnote{dggs}
+Well known examples are Google's S2, the H3 grid system developed by Uber and HEALPix.
+More recent advances combine efficient indexing schemes (fast neighbour lookup) with optimal (equal area) cell properties.
 
 %%%
 \subsection{Other common terrain representations used in GIS}%
