@@ -2,6 +2,8 @@
 // [ ] references have DOIs: remove?
 // [ ] @app:ahn[Appendix]
 // [ ] headers + page numbering at the bottom to fix
+// [ ] harmonise Algorithms for...do etc
+// [ ] eg + ie
 // [x] figure numbers in Appendices are back at 1.1...
 // [x] table numbers are not reset at 1 each new chapter :\
 // [x] index at the end has ugly large headers... remove
