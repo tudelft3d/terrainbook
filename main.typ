@@ -2,8 +2,9 @@
 // [ ] references have DOIs: remove?
 // [ ] @app:ahn[Appendix]
 // [ ] headers + page numbering at the bottom to fix
-// [ ] harmonise Algorithms for...do etc
+// [ ] empty page at first have page numbering
 // [ ] eg + ie
+// [x] harmonise Algorithms for...do etc
 // [x] figure numbers in Appendices are back at 1.1...
 // [x] table numbers are not reset at 1 each new chapter :\
 // [x] index at the end has ugly large headers... remove
@@ -65,37 +66,37 @@
 
 
 //-- main-matter
-#pagebreak()
 // #pagebreak()
+#pagebreak()
 #main-matter[
 
   // #pagebreak()
 
   //-- main chapters
   #include "whatisterrain/whatisterrain.typ" //-- 01
-  // #include "acquisition/acquisition.typ"     //-- 02
-  // #include "gdem/gdem.typ"                   //-- 03
-  // #include "dtvd/dtvd.typ"                   //-- 04
-  // #include "interpol/interpol.typ"           //-- 05
+  #include "acquisition/acquisition.typ"     //-- 02
+  #include "gdem/gdem.typ"                   //-- 03
+  #include "dtvd/dtvd.typ"                   //-- 04
+  #include "interpol/interpol.typ"           //-- 05
 
-  // #include "kriging/kriging.typ"               //-- 06
-  // #include "conversion/conversion.typ"       //-- 07
-  // #include "topofeatures/topofeatures.typ"   //-- 08
-  // #include "visibility/visibility.typ"       //-- 09
-  // #include "runoff/runoff.typ"               //-- 10
+  #include "kriging/kriging.typ"               //-- 06
+  #include "conversion/conversion.typ"       //-- 07
+  #include "topofeatures/topofeatures.typ"   //-- 08
+  #include "visibility/visibility.typ"       //-- 09
+  #include "runoff/runoff.typ"               //-- 10
   #include "pcprocessing/pcprocessing.typ"   //-- 11
   #include "massive/massive.typ"             //-- 12
-  // #include "spatialextent/spatialextent.typ" //-- 13
-  // #include "bathymetry/bathymetry.typ"       //-- 14
+  #include "spatialextent/spatialextent.typ" //-- 13
+  #include "bathymetry/bathymetry.typ"       //-- 14
 
-  // //-- Appendices
-  // #set heading(numbering: "A.1")
-  // #set figure(numbering: dependent-numbering("A.1"))
-  // #counter(heading).update(0)
-  // #include "./appendices/pcformats/pcformats.typ"     //-- A
-  // #include "./appendices/ahn/ahn.typ"                 //-- B
-  // #include "./appendices/normalplane/normalplane.typ" //-- C
-  // #include "./appendices/equations/equations.typ"     //-- D
+  //-- Appendices
+  #set heading(numbering: "A.1")
+  #set figure(numbering: dependent-numbering("A.1"))
+  #counter(heading).update(0)
+  #include "./appendices/pcformats/pcformats.typ"     //-- A
+  #include "./appendices/ahn/ahn.typ"                 //-- B
+  #include "./appendices/normalplane/normalplane.typ" //-- C
+  #include "./appendices/equations/equations.typ"     //-- D
 
 ]
 
