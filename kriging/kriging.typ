@@ -145,16 +145,11 @@ Note that the 'semi' in semivariogram comes from the $1/2$ in @eq:semivariogram.
 When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, $|h|$ (ie the magnitude of the vector $h$) and $gamma(h)$ can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
 The result of such a plot is what is known as a _variogram cloud_#note[variogram cloud]#index[variogram cloud] (@fig:variogram_cloud).
 
-#wideblock[
-  #subfigure(
-    figure(image("figs/data.pdf", width: 100%), caption: []),
-    figure(image("figs/variogram_cloud.pdf", width: 100%), caption: []),
-    columns: (1fr, 1fr),
-    caption: [Starting from #strong[(a)] a sample dataset, #strong[(b)] the variogram cloud can be computed. In this case, only 1% randomly selected point pairs were used.],
-    placement: none,
-    label: <fig:variogram_cloud>,
-  )
-]
+#figure(
+  image("figs/variogram_cloud.pdf", width: 100%),
+  caption: [Starting from the sample dataset (@fig:trend_residual\a), the variogram cloud can be computed. In this case, only 1% randomly selected point pairs were used.],
+  placement: none,
+) <fig:variogram_cloud>
 
 In this figure, it is possible to see some typical characteristics of a variogram cloud.
 Since nearby sample points tend to have similar values, the dissimilarity tends to increase as the distance between sample points increases.
