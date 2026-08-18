@@ -151,7 +151,7 @@ Mathematically, a series of averages of dissimilarities $gamma^star(h)$, known a
 #note[intervals (bins)]
 Given a set $frak(h)$ containing the vectors for a distance interval, the experimental semivariances are computed as:
 
-$ gamma^star(frak(h)) = 1/(2n) sum (z(x + h) - z(x))^2 quad "for all" h in frak(h) $
+$ gamma^star(frak(h)) = 1/(2n) sum_(h in frak(h)) (z(x + h) - z(x))^2 $
 
 where $n$ is the number of sample point pairs in $frak(h)$.
 
