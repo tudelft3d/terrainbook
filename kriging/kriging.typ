@@ -344,7 +344,7 @@ $ w = A^(-1) d $
 == Other types of kriging
 
 / Directional kriging: is useful when the similarity of points differs according to different directions, eg north-south versus east-west. It involves creating variograms for different directions.
-/ Block kriging: attempts to obtain a local trend for an area around a point (rather than just at a point). It can be used to obtain smoother results.
+/ Block kriging: estimates the average value over an area (a block) rather than at a single point. It can be used to obtain smoother results.
 / Cokriging: applies kriging to multiple correlated variables. It is particularly useful when you want to interpolate one variable with limited sample points but there are more sample points for another correlated variable.
 / Indicator kriging: applies thresholds to obtain discrete values, such as presence/absence of a variable or a set of distinct classification classes.
 / Poisson kriging: applies kriging to data involving cumulative counts or rates. It is often applied together with polygonal datasets.
