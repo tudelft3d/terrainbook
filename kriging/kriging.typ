@@ -231,6 +231,7 @@ $ gamma_"circular"(h) &= cases(
   ) $
 
 where $s$ is the _partial sill_#note[partial sill]#index[partial sill], set to roughly the difference between the value of $gamma^star(h)$ when it is flat and the nugget; $r$ is the _range_, roughly the minimum value of $|h|$ where $gamma^star(h)$ is flat; and $n$ is the nugget, which is the starting value of $gamma^star(h)$. Together, the partial sill and the nugget make up the (total) _sill_, $s + n$, which is the value at which $gamma^star(h)$ becomes flat.
+Note that the exponential and Gaussian functions only approach the sill asymptotically; for these, the 3 in the formulas is chosen so that $gamma(r)$ is approximately 95% of the way to the sill, and $r$ is therefore known as a _practical range_#note[practical range]#index[practical range].
 @fig:theoretical_variogram shows the result of fitting the example theoretical variogram functions.
 Note how the cubic and especially the Gaussian functions fit well in this case.
 Unlike the other functions, the power model is usually unbounded: $gamma(h) = c |h|^a$ grows without limit as $|h|$ increases, and therefore has no sill or range. The bounded version above is used here so that it can be compared with the other models.
