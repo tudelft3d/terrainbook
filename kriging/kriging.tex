@@ -377,15 +377,15 @@ which yields the set of \(n\) simple kriging equations:
 While these equations can be used to perform simple kriging, it is often easier to deal with these in matrix form:
 
 \begin{equation}
-\underbrace{\left(\begin{array}{c}
-w_1 \\
-\vdots \\
-w_n \end{array} \right)}_{w}
-%
 \underbrace{\left( \begin{array}{ccc}
 C(x_1-x_1) & \cdots & C(x_1-x_n) \\
 \vdots & \ddots & \vdots \\
 C(x_n-x_1) & \cdots & C(x_n-x_n) \end{array} \right)}_{A}
+%
+\underbrace{\left(\begin{array}{c}
+w_1 \\
+\vdots \\
+w_n \end{array} \right)}_{w}
  = 
 %
 \underbrace{\left(\begin{array}{c}

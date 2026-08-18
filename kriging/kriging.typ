@@ -292,7 +292,7 @@ $ sum_(j=1)^(n) w_j C(x_i - x_j) = C(x_i - x_0). $
 
 While these equations can be used to perform simple kriging, it is often easier to deal with these in matrix form:
 
-$ underbrace(mat(w_1; dots.v; w_n), w) underbrace(mat(C(x_1 - x_1) & dots.c & C(x_1 - x_n); dots.v & dots.down & dots.v; C(x_n - x_1) & dots.c & C(x_n - x_n)), A) = underbrace(mat(C(x_1 - x_0); dots.v; C(x_n - x_0)), d) $
+$ underbrace(mat(C(x_1 - x_1) & dots.c & C(x_1 - x_n); dots.v & dots.down & dots.v; C(x_n - x_1) & dots.c & C(x_n - x_n)), A) underbrace(mat(w_1; dots.v; w_n), w) = underbrace(mat(C(x_1 - x_0); dots.v; C(x_n - x_0)), d) $
 
 which is known as the _simple kriging system_#note[simple kriging system]#index[simple kriging system].
 Finally, if we invert the matrix $A$, the weights are given by:
