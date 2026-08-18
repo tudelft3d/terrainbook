@@ -373,6 +373,18 @@ However, when the weights of far-away points are not negligible, this will cause
 Another related issue is that kriging is often said to be exact in theory, ie it passes exactly through the sample points.
 However, this is only true if the nugget of the theoretical variogram function is set to zero.
 Some authors and implementations get around this by hard-coding $gamma(0) = 0$, but this can create a discontinuity between the value at the sample point and its immediate neighbourhood.
+@fig:nugget_exactness illustrates this: with a zero nugget the interpolant passes exactly through the sample points (a), whereas with a large nugget it smooths the data (b).
+
+#wideblock[
+  #subfigure(
+    figure(image("figs/nugget_exact.pdf", width: 100%), caption: []),
+    figure(image("figs/nugget_smooth.pdf", width: 100%), caption: []),
+    columns: (1fr, 1fr),
+    caption: [The effect of the nugget on ordinary kriging along a horizontal transect through the sample dataset. #strong[(a)] With a zero nugget, the interpolant passes exactly through the sample points. #strong[(b)] With a large nugget, the interpolant smooths the data, and the values in the neighbourhood of the sample points no longer coincide with them.],
+    placement: none,
+    label: <fig:nugget_exactness>,
+  )
+]
 
 Finally, it is worth noting that kriging can be directly applied to any point on the plane, yielding a result such as the one in @fig:interpolation.
 However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points).
@@ -402,6 +414,9 @@ If you feel like your statistics background is a bit weak, you first might want 
 A relatively simple explanation of kriging with agricultural examples is given by #citet(<Oliver15>).
 A standard reference textbook that is good but not so easy to follow is #citet(<Wackernagel03>).
 The mathematics covered in this chapter is partly based on the latter.
+
+Strictly speaking, ordinary kriging evaluated at a location that coincides exactly with a sample point reproduces the sample value even when the nugget is larger than zero, since by definition $gamma(0) = 0$.
+The effect of a large nugget is therefore to smooth the interpolant in the neighbourhood of the sample points, rather than to change the value at the sample points themselves (see @fig:nugget_exactness).
 
 Pyinterpolate#note[#link("https://pyinterpolate.readthedocs.io/")] is a good Python library to perform kriging and is used to generate some of the example figures from this chapter.
 
