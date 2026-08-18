@@ -382,12 +382,19 @@ Some authors and implementations get around this by hard-coding $gamma(0) = 0$, 
 Finally, it is worth noting that kriging can be directly applied to any point on the plane, yielding a result such as the one in @fig:interpolation.
 However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points).
 It can extrapolate (often by using negative weights), but that does not mean that the results outside the domain are accurate.
+The kriging variance shown in @fig:kriging_variance gives a quantitative picture of this: it is lowest close to the sample points and increases with the distance from them, becoming particularly large outside the domain.
 
 #figure(
   image("figs/interpolation.pdf", width: 100%),
   caption: [The result of using ordinary kriging to interpolate on a grid of points using the sample dataset using only the sample points within 15 units of each interpolated point.],
   placement: none,
 ) <fig:interpolation>
+
+#figure(
+  image("figs/kriging_variance.pdf", width: 100%),
+  caption: [The ordinary kriging variance for the sample dataset, computed with a spherical variogram function (sill 1250, range 150) and the 20 nearest sample points. The variance is lowest close to the sample points and grows with the distance from them, in particular outside the domain; the white polygon shows the convex hull of the sample points.],
+  placement: none,
+) <fig:kriging_variance>
 
 == Notes and comments
 
