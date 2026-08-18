@@ -81,10 +81,10 @@
   #include "topofeatures/topofeatures.typ"   //-- 08
   #include "visibility/visibility.typ"       //-- 09
   #include "runoff/runoff.typ"               //-- 10
-  // #include "pcprocessing/pcprocessing.typ"   //-- 11
+  // // #include "pcprocessing/pcprocessing.typ"   //-- 11
   #include "massive/massive.typ"             //-- 12
   #include "spatialextent/spatialextent.typ" //-- 13
-  // #include "bathymetry/bathymetry.typ"       //-- 14
+  #include "bathymetry/bathymetry.typ"       //-- 14
 
   //-- Appendices
   #set heading(numbering: "A.1")
