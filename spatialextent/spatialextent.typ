@@ -135,8 +135,8 @@ Both versions of the algorithm will work in most cases, but there is no guarante
     image("figs/movingarm.pdf", width: 100%, page: 4),
     image("figs/movingarm.pdf", width: 100%, page: 5),
   ),
-  caption: [First four steps of the \emph{moving arm algorithm} (with a length $l$) to compute the spatial extent.],
-) <fig:movingarm:kdd>
+  caption: [Moving arm with knn when $k=4$. *(a)* When the point $e$ is being processed, $f$ is the next one chosen. *(b)* From $f$, no other points can be chosen since the resulting region would be self-intersecting.],
+) <fig:movingarm_kdd>
 In this case, a solution to this problem would be to either choose another $k$, or to rotate counter-clockwise instead of clockwise, which will in practice yield different results.
 
 ==== Different clusters?

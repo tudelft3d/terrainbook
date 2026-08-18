@@ -247,8 +247,8 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
     + *Output:* $cal(T) ^(p) = cal(T)  union  {p}$ \//-- the DT with point $p$
     + find triangle $tau$ containing $p$
     + insert $p$ in $tau$ by splitting it into 3 new triangles (flip13)\;
-    + push 3 new triangles on a stack\;
-    + *while* stack is non-empty
+    + push 3 new triangles on a stack
+    + *while* stack is non-empty *do*
       + $tau = {p,a,b} <-$ pop from stack
       + $tau_a = {a,b,c} <-$ get adjacent triangle of $tau$ having the edge $a b$
       + *if* $c$ is inside circumcircle of $tau$ *then*

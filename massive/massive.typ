@@ -107,7 +107,7 @@ The tree in @fig:kdtree2 is balanced, but if for instance ($1,3$) had been selec
 
 The median point is the one whose value for the splitting dimension is the median of all the points involved in the operation.
 This implies that to construct the $k$d-tree of a set $S$ of $n$ points, as a first step $n$ values need to be sorted, which is a rather slow operation ($cal(O) (n log n)$).
-In practice, most software libraries will not sort $n$ values, but rather sample randomly a subset of them (say 1\
+In practice, most software libraries will not sort $n$ values, but rather sample randomly a subset of them (say 1%), and then use the median of this subset as the splitting node in the graph.
 While this does not guarantee a balanced tree, in practice the tree should be close to balanced.
 
 The tree is built incrementally, ie points are added in the tree one after the other, and after each insertion the tree is updated.
