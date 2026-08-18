@@ -229,8 +229,8 @@ Note how the cubic and especially the Gaussian functions are a good fit in this 
   )
 ]
 
-Many other theoretical variogram functions are possible, eg circular, cubic, linear, etc.
-However, the three described above are the most common found in practice.
+Many other theoretical variogram functions are possible, eg Matérn or the pure nugget model.
+However, of the ones described above, the spherical, exponential and Gaussian are the most common found in practice.
 
 Before moving on to apply these to kriging, there are a couple of important points.
 First, note that these theoretical functions are often only applied when $|h| > 0$, since setting $gamma(0) = 0$ helps to ensure that kriging passes exactly through the sample points (the exact property as explained in @sec:interpol_properties).
