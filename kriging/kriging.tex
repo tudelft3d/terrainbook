@@ -130,6 +130,24 @@ E\left[Z(x+h\right)] = E\left[Z(x)\right],
 \end{align}
 
 where \(x\) is an arbitrary point in the domain (\ie\ the area we want to interpolate), \(h\) is any vector from \(x\) to another point in the domain and \(Z(x)\) is the value of a random variable at \(x\) (\eg\ its elevation).
+Figure~\ref{fig:stationarity} illustrates this assumption: (a) a terrain profile with peaks and valleys but no general trend, where the expectation is the same everywhere, and (b) a terrain profile with a clear slope, where the expectation changes across the domain.
+
+\begin{figure*}[htbp]
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/stationary}
+\caption{no general trend}
+\end{subfigure}%
+\begin{subfigure}{0.5\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/nonstationary}
+\caption{clear slope}
+\end{subfigure}%
+\caption{The stationarity of the mean.
+(a) A terrain profile with peaks and valleys but no general trend: the expectation (dashed line) is the same everywhere.
+(b) The same local variation superimposed on a clear slope: the expectation changes across the domain, and so the assumption does not hold.}%
+\label{fig:stationarity}
+\end{figure*}
 
 Next, there are also important properties of the residual term.
 First, note that since \(R = Z - E[Z] \), the variance (Equation~\ref{eq:variance1}) and covariance (Equation~\ref{eq:covariance}) can be defined in a simple way in terms of the residuals:
