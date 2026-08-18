@@ -174,6 +174,7 @@ The LAS standard defines several classification codes, as listed in @tab:las-cla
     [13–31], [user-defined],
     table.hline(),
   ),
+  dy: 150pt,
   caption: [The LAS classification codes and their meanings.],
   placement: auto,
 ) <tab:las-classes>
