@@ -381,7 +381,7 @@ The kriging variance shown in @fig:kriging_variance gives a quantitative picture
 
 #figure(
   image("figs/interpolation.pdf", width: 100%),
-  caption: [The result of using ordinary kriging to interpolate on a grid of points using the sample dataset using only the sample points within 15 units of each interpolated point.],
+  caption: [The result of using ordinary kriging to interpolate on a grid using the sample dataset and the 20 nearest sample points of each location, with a spherical variogram function (sill 1250, range 150).],
   placement: none,
 ) <fig:interpolation>
 
