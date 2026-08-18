@@ -171,7 +171,7 @@ There is a loss of information, since the exact location of the meaningful point
 #box-practice("Concrete example: a 2D grid")[
   A 2D grid, stored for instance with the GeoTIFF format, is thus a piecewise representation of a 2D field: a regular tessellation where each cell has a constant function.
   The value assigned to each cell is an estimation previously obtained by spatial interpolation.
-  However, for a given grid, it is usually unclear if the value of a cell is for its centre, or for one of its vertices (and if it is the case, for which one?).
+  However, for a given grid, it is usually unclear if the value of a cell is for its centre, for one of its vertices (and if it is the case, for which one?) or represents the whole cell.
   Different formats have different rules, and converting a field represented with one format to another one (while retaining the same cell resolution and spatial extent) can shift the value from the centre to the top-left corner for instance.
 ]
 
@@ -224,8 +224,9 @@ It is possible to use higher-order functions in each triangle of a TIN, to const
 
 === Hierarchical tessellations
 
-Hierarchical tessellations attempt to reduce the number of cells in a tessellation by merging the neighbouring cells having the same value (thus yielding cells of different sizes).
-While both regular and irregular tessellations can be hierarchical, in the context of the representation of terrains, the former is more relevant and is sometimes used in practice.
+
+Hierarchical tessellations store cells at multiple resolutions, with cells at higher levels encompassing lower level cells. // or some form of relationship?
+One possible advantage of such a hierarchy is compression, reducing the number of cells in a tessellation by merging the neighbouring cells having the same value (thus yielding cells of different sizes).
 
 A commonly used hierarchical structure in two dimensions is the _quadtree_, which is a generic term for a family of tessellations that recursively subdivide the plane into four quadrants.
 #index[quadtree]#note[quadtree]
@@ -237,13 +238,18 @@ Indeed, the size of a quadtree is not dependent on the number of cells, but on t
 The quadtree of a 2D grid having no two adjacent cells with the same value (eg a checkers board) contains the same number of cells as the grid, and its size would most likely be worse because of the overhead to manage the tree.
 Another disadvantage is that the notion of neighbours, which is straightforward in regular tessellations, is less trivial.
 
-// #wideblock(side: "outer")[
-  #figure(
-    image("figs/reps.pdf"),
-    caption: [Four most common data models for terrains.],
-    placement: top,
-  ) <fig:reps>
-// ]
+#figure(
+  image("figs/dggs.png"),
+  caption: [Six DGGS systems as provided in DiscreteGlobalGrids.jl.],
+  placement: top,
+) <fig:dggs>
+
+However, a regular tessellation like a grid cannot accurately fit a sphere which is problematic for global (geographic) datasets.
+Therefore---even with their disadvantages---global hierarchical tessellations or discrete global grid systems (DGGS) are becoming more popular.
+#index[dggs]#note[discrete global grid system (DGGS)]
+Well known examples are Google's S2, the H3 grid system developed by Uber and HEALPix, as shown in @fig:dggs.
+More recent advances combine efficient indexing schemes (fast neighbour lookup) with optimal (equal area) cell properties.
+
 
 === Other common terrain representations used in GIS <sec:representation_others>
 
@@ -254,6 +260,14 @@ It should be noticed that these two are however _incomplete_: the set of rules t
 Conceptually speaking, these should therefore not be considered valid representations of a terrain.
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
 In @chap:pcprocessing we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
+
+// #wideblock(side: "outer")[
+  #figure(
+    image("figs/reps.pdf"),
+    caption: [Four most common data models for terrains.],
+    // placement: top,
+  )<fig:reps>
+// ]
 
 We will nevertheless consider these in the course; the four representations we will use are shown in @fig:reps.
 
