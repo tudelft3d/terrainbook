@@ -365,6 +365,16 @@ Finally, if we invert the matrix $A$, the weights and the Lagrange multiplier ar
 
 $ w = A^(-1) d. $
 
+Here, the first $n$ entries of $w$ are the interpolation weights, which can be substituted into @eq:waok to estimate the value at $x_0$ as a weighted average of the values at the $n$ sample points used for the interpolation.
+The last entry, the Lagrange multiplier $mu(x_0)$, is not used in the estimate itself, but rather to compute the kriging variance below.
+Note also that the vector $d$ depends on the interpolation location $x_0$, and thus the system needs to be solved anew for every location at which we want to interpolate.
+
+Substituting the ordinary kriging equations into the estimation variance above gives its minimum value, which is known as the _kriging variance_#note[kriging variance]#index[kriging variance]:
+
+$ sigma^2(x_0) = sum_(i=1)^(n) w_i gamma(x_i - x_0) + mu(x_0). $ <eq:krigingvariance>
+
+The kriging variance can be computed at every location where we interpolate, and a map of it is useful to identify where the interpolated values are least reliable (see @fig:kriging_variance and @sec:kriging_impl).
+
 == Other types of kriging
 
 / Directional kriging: is useful when the similarity between points depends on the direction, eg north-south versus east-west. It involves creating variograms for different directions.
@@ -404,7 +414,7 @@ Because of this, some authors and implementations instead treat the nugget as me
 Finally, it is worth noting that kriging can be directly applied to any point on the plane, yielding a result such as the one in @fig:interpolation.
 However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points).
 It can extrapolate (often by using negative weights), but that does not mean that the results outside the domain are accurate.
-The kriging variance shown in @fig:kriging_variance gives a quantitative picture of this: it is lowest close to the sample points and increases with the distance from them, becoming particularly large outside the domain.
+The kriging variance (@eq:krigingvariance) shown in @fig:kriging_variance gives a quantitative picture of this: it is lowest close to the sample points and increases with the distance from them, becoming particularly large outside the domain.
 
 #figure(
   image("figs/interpolation.pdf", width: 100%),
