@@ -321,8 +321,8 @@ Ordinary kriging also _minimises the variance of the estimation error_, which is
 For this, we can use the same derivation as for simple kriging up to @eq:variancesk but using the variogram for the final step.
 This is:
 
-$ "var"(hat(R)_0 - R_0) &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j "cov"(R_i, R_j) - 2 sum_(i=1)^(n) w_i "cov"(R_i, R_0) + "cov"(R_0, R_0) \
-  &= - sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j gamma(x_i - x_j) + 2 sum_(i=1)^(n) w_i gamma(x_i - x_0) - gamma(x_0 - x_0). $
+$ "var"(hat(Z)_0 - Z_0) &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j "cov"(Z_i, Z_j) - 2 sum_(i=1)^(n) w_i "cov"(Z_i, Z_0) + "cov"(Z_0, Z_0) \
+  &= - sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j gamma(x_i - x_j) + 2 sum_(i=1)^(n) w_i gamma(x_i - x_0). $
 
 Using the previous equation and the unbiased criterion from @eq:unbiased, we can apply the minimisation method known as Lagrange multipliers#footnote[#link("https://en.wikipedia.org/wiki/Lagrange_multiplier")] and arrive at the set of $n+1$ ordinary kriging equations:
 

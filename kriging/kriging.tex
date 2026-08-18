@@ -426,8 +426,8 @@ For this, we can use the same derivation as for simple kriging up to Equation~\r
 This is:
 
 \begin{align}
-\mathrm{var}\left(\hat{R}_0 - R_0\right) &= \sum_{i=1}^n \sum_{j=1}^n w_i w_j \mathrm{cov}(R_i, R_j) - 2\sum_{i=1}^n w_i \mathrm{cov}(R_i,R_0) + \mathrm{cov}(R_0, R_0) \nonumber \\
-&= -\sum_{i=1}^n \sum_{j=1}^n w_i w_j \gamma(x_i-x_j) + 2\sum_{i=1}^n w_i \gamma(x_i-x_0) - \gamma(x_0-x_0).
+\mathrm{var}\left(\hat{Z}_0 - Z_0\right) &= \sum_{i=1}^n \sum_{j=1}^n w_i w_j \mathrm{cov}(Z_i, Z_j) - 2\sum_{i=1}^n w_i \mathrm{cov}(Z_i,Z_0) + \mathrm{cov}(Z_0, Z_0) \nonumber \\
+&= -\sum_{i=1}^n \sum_{j=1}^n w_i w_j \gamma(x_i-x_j) + 2\sum_{i=1}^n w_i \gamma(x_i-x_0).
 \end{align}
 
 Using the previous equation and the unbiased criterion from Equation~\ref{eq:unbiased}, we can apply the minimisation method known as Lagrange multipliers\footnote{\url{https://en.wikipedia.org/wiki/Lagrange_multiplier}} and arrive at the set of \(n+1\) ordinary kriging equations:
