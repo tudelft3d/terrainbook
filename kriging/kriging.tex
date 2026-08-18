@@ -240,7 +240,7 @@ Some examples are:
   s + n & \text{if } |h| > r
   \end{cases}\\
 \gamma_\mathrm{power}(h) &= \begin{cases}
-  \frac{sr^2}{|h|^2} + n & \text{if } |h| \leq r \\
+  \frac{s|h|^2}{r^2} + n & \text{if } |h| \leq r \\
   s + n & \text{if } |h| > r
   \end{cases}\\
 \gamma_\mathrm{spherical}(h) &= \begin{cases} 
@@ -433,8 +433,8 @@ This is:
 Using the previous equation and the unbiased criterion from Equation~\ref{eq:unbiased}, we can apply the minimisation method known as Lagrange multipliers\footnote{\url{https://en.wikipedia.org/wiki/Lagrange_multiplier}} and arrive at the set of \(n+1\) ordinary kriging equations:
 
 \begin{align}
-\sum_{j=1}^n w_i \gamma(x_i-x_j) + \mu(x_0) &= \gamma(x_i - x_0) \hspace{1cm} \text{for all } 1 \leq i \leq n \nonumber \\
-\sum_{j=1}^n w_i &= 1 
+\sum_{j=1}^n w_j \gamma(x_i-x_j) + \mu(x_0) &= \gamma(x_i - x_0) \hspace{1cm} \text{for all } 1 \leq i \leq n \nonumber \\
+\sum_{i=1}^n w_i &= 1 
 \end{align}
 
 where \(\mu(x_0)\) is a Lagrange parameter that was used in the minimisation process.

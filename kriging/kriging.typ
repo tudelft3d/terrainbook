@@ -201,7 +201,7 @@ $ gamma_"circular"(h) &= cases(
     s + n & "if" |h| > r,
   ) \
   gamma_"power"(h) &= cases(
-    (s r^2)/(|h|^2) + n & "if" |h| <= r,
+    (s |h|^2)/(r^2) + n & "if" |h| <= r,
     s + n & "if" |h| > r,
   ) \
   gamma_"spherical"(h) &= cases(
@@ -326,8 +326,8 @@ $ "var"(hat(R)_0 - R_0) &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j "cov"(R_i, R_j) -
 
 Using the previous equation and the unbiased criterion from @eq:unbiased, we can apply the minimisation method known as Lagrange multipliers#footnote[#link("https://en.wikipedia.org/wiki/Lagrange_multiplier")] and arrive at the set of $n+1$ ordinary kriging equations:
 
-$ sum_(j=1)^(n) w_i gamma(x_i - x_j) + mu(x_0) &= gamma(x_i - x_0) quad "for all" 1 <= i <= n \
-  sum_(j=1)^(n) w_i &= 1 $
+$ sum_(j=1)^(n) w_j gamma(x_i - x_j) + mu(x_0) &= gamma(x_i - x_0) quad "for all" 1 <= i <= n \
+  sum_(i=1)^(n) w_i &= 1 $
 
 where $mu(x_0)$ is a Lagrange parameter that was used in the minimisation process.
 
