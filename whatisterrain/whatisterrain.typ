@@ -222,8 +222,8 @@ A TIN in which a linear interpolation function is used yields a $C^(0)$ piecewis
 It is possible to use higher-order functions in each triangle of a TIN, to construct a $C^(1)$ or $C^(2)$ field, ie where the first and second derivative of the surface can be obtained. 
 @chap:interpol gives more details about spatial interpolation and continuity.
 
-=== Hierarchical tessellations
 
+=== Hierarchical tessellations
 
 Hierarchical tessellations store cells at multiple resolutions, with cells at higher levels encompassing lower level cells. // or some form of relationship?
 One possible advantage of such a hierarchy is compression, reducing the number of cells in a tessellation by merging the neighbouring cells having the same value (thus yielding cells of different sizes).
@@ -244,11 +244,11 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
   placement: top,
 ) <fig:dggs>
 
-However, a regular tessellation like a grid cannot accurately fit a sphere which is problematic for global (geographic) datasets.
-Therefore---even with their disadvantages---global hierarchical tessellations or discrete global grid systems (DGGS) are becoming more popular.
-#index[dggs]#note[discrete global grid system (DGGS)]
-Well known examples are Google's S2, the H3 grid system developed by Uber and HEALPix, as shown in @fig:dggs.
-More recent advances combine efficient indexing schemes (fast neighbour lookup) with optimal (equal area) cell properties.
+However, a regular tessellation like a grid cannot accurately fit a sphere, this is problematic for global (geographic) datasets.
+Therefore---even with their disadvantages---global hierarchical tessellations and _discrete global grid systems_ (DGGS), are becoming more popular.
+#index[DGGS]#note[discrete global grid system (DGGS)]
+Well-known examples are Google's S2, the H3 grid system developed by Uber, and HEALPix, as shown in @fig:dggs.
+More recent advances combine efficient indexing schemes (fast neighbour lookup, see @sec:knn) with optimal (equal area) cell properties.
 
 
 === Other common terrain representations used in GIS <sec:representation_others>
