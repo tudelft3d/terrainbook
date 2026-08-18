@@ -73,6 +73,20 @@ We therefore have:
 
 $ Z = E[Z] + R. $ <eq:geostat>
 
+For a sample dataset, this decomposition is shown in @fig:trend_residual: (a) the samples, (b) a quadratic surface fitted to the samples as the trend, and (c) the residuals, ie the local differences from the trend.
+
+#wideblock[
+  #subfigure(
+    figure(image("figs/trend_data.pdf", width: 100%), caption: []),
+    figure(image("figs/trend_surface.pdf", width: 100%), caption: []),
+    figure(image("figs/trend_residuals.pdf", width: 100%), caption: []),
+    columns: (1fr, 1fr, 1fr),
+    caption: [#strong[(a)] A sample dataset can be decomposed into #strong[(b)] a spatial trend (a quadratic surface fitted to the samples) and #strong[(c)] the residuals (ie the local differences from the trend).],
+    placement: none,
+    label: <fig:trend_residual>,
+  )
+]
+
 The different types of kriging from this chapter model the trend in a different way but treat the residual term in a similar way.
 These are:
 - _simple kriging_, where the trend is a known constant that we specify in the model; and

@@ -88,6 +88,28 @@ We therefore have:
 Z = E\left[Z\right] + R.
 \end{equation}
 
+For a sample dataset, this decomposition is shown in Figure~\ref{fig:trend_residual}: (a) the samples, (b) a quadratic surface fitted to the samples as the trend, and (c) the residuals, \ie\ the local differences from the trend.
+
+\begin{figure*}[htbp]
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/trend_data}
+\caption{data}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/trend_surface}
+\caption{trend}
+\end{subfigure}%
+\begin{subfigure}{0.33\linewidth}
+\centering
+\includegraphics[width=\linewidth]{figs/trend_residuals}
+\caption{residuals}
+\end{subfigure}%
+\caption{(a) A sample dataset can be decomposed into (b) a spatial trend (a quadratic surface fitted to the samples) and (c) the residuals (\ie\ the local differences from the trend).}%
+\label{fig:trend_residual}
+\end{figure*}
+
 The different types of kriging from this chapter model the trend in a different way but treat the residual term in a similar way.
 These are:
 \begin{itemize}
