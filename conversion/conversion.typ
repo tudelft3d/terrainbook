@@ -38,7 +38,7 @@ We consider in this chapter the following four terrain representations and discu
 
 #figure(
   image("figs/r-interpolation.pdf", width: 100%),
-  caption: [#strong[(a)] input sample points. #strong[(b)] size/location of output raster. #strong[(c)] 9 interpolations must be performed (at locations marked with $d e g r e e$): at the middle of each cell. #strong[(d)] the convex hull of the sample points show that 2 estimations are outside, thus no interpolation. #strong[(e)] the resulting raster.],
+  caption: [#strong[(a)] input sample points. #strong[(b)] size/location of output raster. #strong[(c)] 9 interpolations must be performed (at the locations marked with blue disks): in the middle of each cell. #strong[(d)] the convex hull of the sample points show that 2 estimations are outside, thus no interpolation. #strong[(e)] the resulting raster.],
   placement: none,
 ) <fig:r-interpolation>
 
@@ -150,7 +150,7 @@ This can be done by simply starting with a segment $a b$, and searching for the 
 ) <fig:isoline2>
 
 As shown in @fig:isoline2\b, another solution is to find _one_ cell $tau_0$ intersecting the isoline at a given elevation, 'tracing' the isoline by navigating from $tau_0$ to the adjacent cell, and continuing until $tau_0$ is visited again (or the border of the dataset is reached).
-To navigate to the adjacent cell, it suffices to identify the edge $e p s i l o n$ intersecting the isoline, and then navigating to the triangle/cell that is incident to $e p s i l o n$.
+To navigate to the adjacent cell, it suffices to identify the edge $epsilon$ intersecting the isoline, and then navigating to the triangle/cell that is incident to $epsilon$.
 It is possible that there is no adjacent cell, if the boundary of the convex hull is reached in a TIN for instance.
 This requires that the TIN be stored in a topological data structure in which the adjacency between the triangles is available (for a grid this is implied).
 

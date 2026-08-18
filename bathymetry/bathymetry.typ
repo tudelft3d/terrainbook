@@ -176,7 +176,7 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 
 === The smoothing operator <chap:myapproach:smoothing>
 
-The smoothing operator basically estimates, with the Laplace interpolant (see Section @sec:laplace on page \pageref{sec:laplace}), the depth of each vertex in a dataset by considering its natural neighbours (see @fig:1Dsmoothop).
+The smoothing operator basically estimates, with the Laplace interpolant (see @sec:laplace), the depth of each vertex in a dataset by considering its natural neighbours (see @fig:1Dsmoothop).
 If this depth is shallower, then the vertex is assigned this value; if it is deeper then nothing is done.
 Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths upwards (if at all). 
 /* TODO: verify subfigure layout */

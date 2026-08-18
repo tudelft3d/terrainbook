@@ -63,17 +63,18 @@ What we casually refer to as 'slope' has actually two components (see @fig:slope
 
 ==== Gradient
 The gradient at a given point $p$ is the maximum rate of change in elevation. 
-It is obtained by the angle $a l p h a$ between $H$ and the horizontal plane (@fig:slope_aspect).
+It is obtained by the angle $alpha$ between $H$ and the horizontal plane (@fig:slope_aspect).
 From a mathematical point-of-view, the gradient is the maximum value of the derivative at a point on the surface of the terrain (maximised over the direction).
 
 The gradient will most often be expressed in degrees or in percentage.
 If a percentage is used, the following is used (see @fig:slope_aspect):
 
-$  p e r c e n t a g e = frac(Delta z, Delta x y)  $
+$ "percentage" = frac(Delta z, Delta x y) $
 
-which means that a hill with a gradient of 100\
+which means that a hill with a gradient of 100% is equal to $alpha = qty("45", "degree")$.
 
-Notice that if we calculate the gradient at every location for a terrain, then we obtain a new field since the gradient is a continuous phenomena (values from $0^(degree )$ to $30^(degree )$ for instance).
+
+Notice that if we calculate the gradient at every location for a terrain, then we obtain a new field since the gradient is a continuous phenomena (values from $qty("0", "degree")$ to $qty("30", "degree")$ for instance).
 This means in practice that for a given terrain in raster, calculating its gradient will create a new raster file that can be further processed.
 
 ==== Aspect
@@ -83,7 +84,7 @@ Observe that for the parts of the terrain that are horizontal (eg a lake) the va
 
 The aspect is usually expressed as a _cartographical azimuth_,
 #note[cartographical azimuth]
-which is expressed in degrees, from the North, clockwise: $0^(degree)$ means North, $90^(degree)$ East, $180^(degree)$ South, and $270^(degree)$ West.
+which is expressed in degrees, from the North, clockwise: $qty("0", "degree")$ means North, $qty("90", "degree")$ East, $qty("180", "degree")$ South, and $qty("270", "degree")$ West.
 
 ==== Slope in TINs
 Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $tau$ containing this point, and compute the normal vector $arrow(n)$ of $tau$ (pointing outwards). 
@@ -122,7 +123,7 @@ $  tan alpha = sqrt((frac(partial z, partial x))^(2) +(frac(partial z, partial y
 and the aspect as:
 $  tan theta = frac(frac(partial z, partial x), frac(partial z, partial y))  $
 
-The value of $t h e t a$ should be resolved for the correct trigonometric quadrant, and if $frac(partial z, partial y) = 0$ then it means the aspect should be handled differently (considering only the variation in the south-north direction). 
+The value of $theta$ should be resolved for the correct trigonometric quadrant, and if $frac(partial z, partial y) = 0$ then it means the aspect should be handled differently (considering only the variation in the south-north direction). 
 
 For the case in @fig:slope_grid, the gradient would be #qty("39.5", "degree") and the aspect would be #qty("194.0", "degree").
 

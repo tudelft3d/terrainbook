@@ -150,7 +150,7 @@ Also, as mentioned above, there are cases where IDW might not yield a continuous
 IDW is a _family_ of spatial interpolation methods, and its simplest form to select the neighbours is as described above: with a searching circle.
 However, other variations exist (see @fig:idwvar):
 / k-nearest neighbours:: the $k$-nearest neighbours can be used (for instance $k=8$), irrespective of how far they are. This ensures that IDW will yield a continuous surface. (@fig:idwvar\b)
-/ search ellipse:: instead of a circle (define by its radius), one can use an oriented ellipse, with $r_1$ and $r_2$ used to define the size of the ellipse, and $t h e t a$ its orientation. (@fig:idwvar\c)
+/ search ellipse:: instead of a circle (define by its radius), one can use an oriented ellipse, with $r_1$ and $r_2$ used to define the size of the ellipse, and $theta$ its orientation. (@fig:idwvar\c)
 / $k$-per-quadrant:: to ensure that the neighbours used in the interpolation process are not all in one direction (eg the location on the left of @fig:idw\c), one can use _quadrants_ and take the $k$-nearest per quadrant. This makes IDW automatic and continuous. (@fig:idwvar\d)
 / combinations of above:: it would for example be possible to use quadrants but restrict the search to a given radius, ie sample points that are farther than the radius are not considered.
 
@@ -472,7 +472,7 @@ Here, roughness is defined as the integral of the square of the $L^(2)$-norm of 
 // #pagebreak()
 == Exercises
 
-+ Given a triangle $t a u$ with coordinates (20.0, 72.0, 21.0), (116.0, 104.0, 32.0), and (84.0, 144.0, 26.0), estimate the elevation at $x$ = (92.0, 112.0) with linear interpolation in the triangle (both by finding the equation of the plane and with barycentric coordinates).
++ Given a triangle $tau$ with coordinates (20.0, 72.0, 21.0), (116.0, 104.0, 32.0), and (84.0, 144.0, 26.0), estimate the elevation at $x$ = (92.0, 112.0) with linear interpolation in the triangle (both by finding the equation of the plane and with barycentric coordinates).
 + What happens when the search distance is very large for inverse distance weighting interpolation (IDW)?
 + For grids, can IDW or others be used instead of bilinear? If yes, how does that work?
 + The 15 elevation samples below have been collected. You want to interpolate at two locations:

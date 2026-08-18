@@ -462,7 +462,7 @@ If 2 segments are nearly parallel, many points could be necessary (for $m$ segme
 == Notes and comments <sec:notes>
 
 The DT and the VD have been discovered, rediscovered and studied many times and in many different fields, see #citet(<Okabe00>) for a complete history.
-The VD can be traced back to 1644, when Descartes used Voronoi-like structures in Part III of his _Principia Philosophi\ae_. 
+The VD can be traced back to 1644, when Descartes used Voronoi-like structures in Part III of his _Principia Philosophiæ_. 
 The VD was used by #citet(<Dirichlet50>) to study quadratic forms---this is why the VD is sometimes referred to as _Dirichlet tessellation_---but was formalised and defined by #citet(<Voronoi08>). 
 The first use of the VD in a geographical context is due to #citet(<Thiessen11>), who used it in climatology to better estimate the precipitation average around observations sites; the DT was formalised by #citet(<Delaunay34>). 
 

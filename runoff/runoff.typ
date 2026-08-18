@@ -47,7 +47,7 @@ For this reason, it is also known as the _eight flow directions (D8)_ approach.
 
 On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
-For instance, in a square grid, the errors can be of up to $22.5^(degree)$ (because the method is forced to choose a neighbouring cell in increments of $45^(degree)$).
+For instance, in a square grid, the errors can be of up to $qty("22.5", "degree")$ (because the method is forced to choose a neighbouring cell in increments of $qty("45", "degree")$).
 This method can therefore easily create artefacts in certain geometric configurations (@fig:d8).
 
 #figure(

@@ -135,14 +135,12 @@ In order to improve the capacity to quickly scan large areas, a number of rotati
   placement: none,
 ) <fig:lidar-patterns>
 
-/* TODO: floatbox without kaobox-practice */
-/*
-\begin{kaobox-toread}[frametitle=\faExternalLink\ To read or to watch]
-		This YouTube video explains the principles of an aerial lidar system:
-		\\
-		\url{https://youtu.be/EYbhNSUnIdU}
-	\end{kaobox-toread}
-*/
+
+#box-toread("To read or to watch")[
+	This YouTube video explains the principles of an aerial lidar system:
+  
+  #link("https://youtu.be/EYbhNSUnIdU")
+]
 
 == #flex-heading[Other techniques][Other acquisition techniques] <sec:acquisition-techniques>
 

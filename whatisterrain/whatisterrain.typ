@@ -43,10 +43,9 @@ Furthermore, some concepts are derived from those, for instance:
 
 == Dimensionality of DTMs
 
-The term "3D" is misleading in a DTM context---as it is in a GIS context--- because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see @fig:dimgis).
 #note[3D is misleading]
+The term "3D" is misleading in a DTM context---as it is in a GIS context--- because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see @fig:dimgis).
 #note[2.5D? 2.75D? Volumes?]
-/* TODO: verify subfigure layout */
 #subfigure(
   figure(image("figs/dimgis.pdf", width: 100%, page: 1), caption: [A terrain]), <fig:dimgis:1>,
   figure(image("figs/dimgis.pdf", width: 100%, page: 6), caption: [2.5D modelling]), <fig:dimgis:25>,
