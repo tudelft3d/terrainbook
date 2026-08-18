@@ -13,7 +13,7 @@
 #import "template.typ": *
 
 #show: doc => tbtemplate(
-  version: "2026.0-beta2",
+  version: "2026.0-beta3",
   // cover: true,
   doc,
 )
@@ -41,16 +41,16 @@
     #outline(depth: 2, indent: auto)
   ]
 
-  // TODO: remove list of tables/algorithms
-  #outline(
-    title: [List of tables],
-    target: figure.where(kind: table),
-  )
+  // // TODO: remove list of tables/algorithms
+  // #outline(
+  //   title: [List of tables],
+  //   target: figure.where(kind: table),
+  // )
   
-  #outline(
-    title: [List of algorithms],
-    target: figure.where(kind: "algorithm"),
-  )
+  // #outline(
+  //   title: [List of algorithms],
+  //   target: figure.where(kind: "algorithm"),
+  // )
 ]
 
 //-- put in red chapter errors (instead of not being able to compile)
@@ -73,29 +73,29 @@
 
   //-- main chapters
   #include "whatisterrain/whatisterrain.typ" //-- 01
-  #include "acquisition/acquisition.typ"     //-- 02
-  #include "gdem/gdem.typ"                   //-- 03
-  #include "dtvd/dtvd.typ"                   //-- 04
-  #include "interpol/interpol.typ"           //-- 05
+  // #include "acquisition/acquisition.typ"     //-- 02
+  // #include "gdem/gdem.typ"                   //-- 03
+  // #include "dtvd/dtvd.typ"                   //-- 04
+  // #include "interpol/interpol.typ"           //-- 05
 
-  #include "kriging/kriging.typ"               //-- 06
-  #include "conversion/conversion.typ"       //-- 07
-  #include "topofeatures/topofeatures.typ"   //-- 08
-  #include "visibility/visibility.typ"       //-- 09
-  #include "runoff/runoff.typ"               //-- 10
-  // // #include "pcprocessing/pcprocessing.typ"   //-- 11
+  // #include "kriging/kriging.typ"               //-- 06
+  // #include "conversion/conversion.typ"       //-- 07
+  // #include "topofeatures/topofeatures.typ"   //-- 08
+  // #include "visibility/visibility.typ"       //-- 09
+  // #include "runoff/runoff.typ"               //-- 10
+  #include "pcprocessing/pcprocessing.typ"   //-- 11
   #include "massive/massive.typ"             //-- 12
-  #include "spatialextent/spatialextent.typ" //-- 13
-  #include "bathymetry/bathymetry.typ"       //-- 14
+  // #include "spatialextent/spatialextent.typ" //-- 13
+  // #include "bathymetry/bathymetry.typ"       //-- 14
 
-  //-- Appendices
-  #set heading(numbering: "A.1")
-  #set figure(numbering: dependent-numbering("A.1"))
-  #counter(heading).update(0)
-  #include "./appendices/pcformats/pcformats.typ"     //-- A
-  #include "./appendices/ahn/ahn.typ"                 //-- B
-  #include "./appendices/normalplane/normalplane.typ" //-- C
-  #include "./appendices/equations/equations.typ"     //-- D
+  // //-- Appendices
+  // #set heading(numbering: "A.1")
+  // #set figure(numbering: dependent-numbering("A.1"))
+  // #counter(heading).update(0)
+  // #include "./appendices/pcformats/pcformats.typ"     //-- A
+  // #include "./appendices/ahn/ahn.typ"                 //-- B
+  // #include "./appendices/normalplane/normalplane.typ" //-- C
+  // #include "./appendices/equations/equations.typ"     //-- D
 
 ]
 
