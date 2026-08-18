@@ -125,7 +125,7 @@ It is defined as:
 
 $ gamma(h) = 1/2 E[(Z(x + h) - Z(x))^2], $ <eq:semivariogram>
 
-where $x$ is a sample point, $h$ is a vector from $x$ to another sample point and $Z(x)$ is the value of a random variable at $x$ (eg its elevation).
+where $x$ is a point in the domain, $h$ is any vector from $x$ to another point in the domain and $Z(x)$ is the value of a random variable at $x$ (eg its elevation).
 Note that the 'semi' in semivariogram comes from the $1/2$ in @eq:semivariogram.
 
 When this is done with every possible pair of sample points in a dataset, or with a representative subset in order to speed up the process as it is usually done in practice, $|h|$ (ie the magnitude of the vector $h$) and $gamma(h)$ can be put into a scatter plot to show how the average dissimilarity of a value changes with the distance between the sample points.
