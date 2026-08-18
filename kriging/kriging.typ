@@ -32,7 +32,7 @@ For the sake of simplicity, we will usually omit the location and denote it just
 In geostatistics, the most common way to express the general shape of the probability distribution of a random variable is in terms of its mean and its variance.
 Here, the _mean_#note[mean]#index[mean] (also called _expectation_#note[expectation]#index[expectation] or _expected value_#note[expected value]#index[expected value]) of a random variable $Z$ is a sort of probability-weighted average of its possible values and is denoted as $E[Z]$ or $mu$.
 Meanwhile, the _variance_#note[variance]#index[variance] of a random variable $Z$ is a measure of how far the values of $Z$ will usually spread from its mean, and it is denoted as $"var"(Z)$ or $sigma^2$.
-A small variance thus means that a few random samples of $Z$ at nearby locations will likely form a tight cluster around its mean, whereas a large variance will have sample values that are more distant from the mean value.
+A small variance thus means that a few random samples of $Z$ will likely form a tight cluster around its mean, whereas a large variance means that the samples will be more distant from the mean value.
 
 Mathematically, the variance is defined as the expected value of the squared deviation from the expected value of $Z$, or:
 
@@ -65,9 +65,9 @@ Note that this is essentially just a normalised form of the covariance.
 
 == #flex-heading[Geostatistical model][Geostatistics and the standard geostatistical model]
 
-In geostatistics, we apply the concepts covered in the previous section on general-purpose statistics to consider how they work with spatial phenomena, where values have a location and are often _spatially_ correlated (not just correlated).
+In geostatistics, we apply the concepts covered in the previous section on general-purpose statistics to consider how they work with spatial phenomena, where values have a location and are often _spatially_ correlated, ie the similarity between two values depends on the distance between their locations.
 
-The model most commonly applied in geostatistics considers that a random variable $Z$, which represents a spatially correlated property at a given location, can be decomposed into two related variables: (i) a non-random spatial trend that can be modelled by the expectation $E[Z]$ (eg using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of adjustment, error or residual term and is here denoted as $R$.
+The model most commonly applied in geostatistics considers that a random variable $Z$, which represents a spatially correlated property at a given location, can be decomposed into two components: (i) a non-random spatial trend that can be modelled by the expectation $E[Z]$ (eg using a constant, a polynomial, a spline, etc.); and (ii) a random but spatially correlated deviation from this trend that is considered as a sort of adjustment, error or residual term and is here denoted as $R$.
 In the case of elevation, the former would represent the general shape of the terrain, whereas the latter would represent local differences from it.
 We therefore have:
 
@@ -108,7 +108,7 @@ Mathematically, we can express this using the covariance as:
 $ "cov"(Z(x + h), Z(x)) = C(h), $ <eq:stationarityofthecovariance>
 
 where $C$ is the covariance function.
-Since both the expectation (@eq:stationarityofthemean) and the covariance (@eq:stationarityofthecovariance) are translation invariant, this pair of assumptions are together known as _second-order stationarity_#note[second-order stationarity]#index[second-order stationarity].
+Since both the expectation (@eq:stationarityofthemean) and the covariance (@eq:stationarityofthecovariance) are translation invariant, this pair of assumptions is together known as _second-order stationarity_#note[second-order stationarity]#index[second-order stationarity].
 
 == Covariance, dissimilarity and the semivariogram
 
@@ -233,7 +233,7 @@ Many other theoretical variogram functions are possible, eg Matérn or the pure 
 However, of the ones described above, the spherical, exponential and Gaussian are the most common found in practice.
 
 Before moving on to apply these to kriging, there are a couple of important points.
-First, note that these theoretical functions are often only applied when $|h| > 0$, since setting $gamma(0) = 0$ helps to ensure that kriging passes exactly through the sample points (the exact property as explained in @sec:interpol_properties).
+First, note that these theoretical functions are often only applied when $|h| > 0$, since setting $gamma(0) = 0$ helps to ensure that kriging passes exactly through the sample points (the exactness property, as explained in @sec:interpol_properties and discussed further in @sec:kriging_impl).
 Second, all of the semivariogram-related functions seen in this section can be converted to covariance functions as well, taking into account that $gamma(h) = "sill" - C(h)$.
 Note that this means that the covariance is high when $|h|$ is small and it decreases as $|h|$ increases.
 
@@ -265,7 +265,7 @@ If we use the definition of the variance from @eq:variance1, this can be instead
 
 $ "var"(hat(R)_0 - R_0) = E[((hat(R)_0 - R_0) - E[hat(R)_0 - R_0])^2] $
 
-However, we know from the unbiased criterion from @eq:unbiased that $E[hat(R)_0 - R_0] = 0$, and so we can simplify the previous equation as:
+However, we know from the unbiased criterion in @eq:unbiased that $E[hat(R)_0 - R_0] = 0$, and so we can simplify the previous equation as:
 
 $ "var"(hat(R)_0 - R_0) = E[(hat(R)_0 - R_0)^2]. $
 
@@ -329,7 +329,7 @@ Using the previous equation and the unbiased criterion from @eq:unbiased, we can
 $ sum_(j=1)^(n) w_j gamma(x_i - x_j) + mu(x_0) &= gamma(x_i - x_0) quad "for all" 1 <= i <= n \
   sum_(i=1)^(n) w_i &= 1 $
 
-where $mu(x_0)$ is a Lagrange parameter that was used in the minimisation process.
+where $mu(x_0)$ is a Lagrange multiplier that was used in the minimisation process.
 
 Like with simple kriging, these equations can be used to perform ordinary kriging, but it is often easier to deal with these in matrix form:
 
@@ -350,14 +350,14 @@ $ w = A^(-1) d $
 / Poisson kriging: applies kriging to data involving cumulative counts or rates. It is often applied together with polygonal datasets.
 / Universal kriging: fits the trend using a predefined deterministic function. It is tricky to use in practice because it imposes conditions on the underlying variogram.
 
-== Implementation details
+== Implementation details <sec:kriging_impl>
 
 There are a few important details with respect to the implementation of kriging methods in practice.
 
 First of all, within this chapter, we have assumed that you always use all sample points to interpolate any point on the plane.
 While this is optimal in theory, if a large number of sample points are used to interpolate every point, kriging can be _very slow_ in practice.
 The reason for this is because matrix $A$ will be very large, and inverting a matrix is a computationally expensive process.
-Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of its closest sample points.
+Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of the closest sample points.
 However, when the weights of far-away points are not negligible, this will cause artefacts in the final result.
 
 Another related issue is that kriging is often said to be exact in theory, ie it passes exactly through the sample points.
@@ -376,7 +376,7 @@ It can extrapolate (often by using negative weights), but that does not mean tha
 
 == Notes and comments
 
-#citet(<Krige51>) is the original publication by Danie Krige, which was later formalised by Georges Matheron /* TODO: split \citep{Matheron62,Matheron65} */ #citep(<Matheron62>) #citep(<Matheron65>).
+#citet(<Krige51>) is the original publication by Danie Krige; the method was later formalised by Georges Matheron #citep(<Matheron62>) #citep(<Matheron65>).
 How this came to be is best explained in #citet(<Cressie93>).
 
 If you have trouble following the derivations of the kriging equations or want to know more about them, #citet(<Lichtenstern13>) explains this well.
