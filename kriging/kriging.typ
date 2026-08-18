@@ -81,7 +81,7 @@ These are:
 These will be described in detail later in the chapter.
 However, in order to understand how these work and when they can be applied, it is important to cover some common properties of the two terms of the standard geostatistical model.
 
-Regarding the expectation/trend, simple kriging relies on the assumption that the expectation $E(Z)$ is the same everywhere, which is known as the _stationarity of the mean_#note[stationarity of the mean]#index[stationarity of the mean].
+Regarding the expectation/trend, simple kriging relies on the assumption that the expectation $E[Z]$ is the same everywhere, which is known as the _stationarity of the mean_#note[stationarity of the mean]#index[stationarity of the mean].
 In the case of a terrain, that could mean that a terrain is uneven with significant peaks and valleys, but that there is not a general trend across it (eg a clear slope with higher elevations on one side and lower elevations on the opposite side).
 Mathematically, we can express that as:
 
