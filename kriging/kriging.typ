@@ -123,7 +123,7 @@ However, both attempt to measure how much spatial correlation there is as a func
 The semivariogram $gamma(h)$#note[semivariogram]#index[semivariogram], often just called a variogram#note[variogram]#index[variogram] for short, is a function that expresses the average dissimilarity of the value of a random variable $Z$ between sample points at different distances.
 It is defined as:
 
-$ gamma(h) = 1/2 (Z(x + h) - Z(x))^2, $ <eq:semivariogram>
+$ gamma(h) = 1/2 E[(Z(x + h) - Z(x))^2], $ <eq:semivariogram>
 
 where $x$ is a sample point, $h$ is a vector from $x$ to another sample point and $Z(x)$ is the value of a random variable at $x$ (eg its elevation).
 Note that the 'semi' in semivariogram comes from the $1/2$ in @eq:semivariogram.
