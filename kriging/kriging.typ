@@ -173,7 +173,7 @@ Note that in order to avoid the unreliable dissimilarities that are common at la
 
 From the scatterplot of the experimental variogram, it is possible to see how a few important parameters can be used to describe it (@fig:example_variogram):
 - the _sill_#note[sill]#index[sill], which is the upper bound of $gamma^star(h)$;
-- the _range_#note[range]#index[range], which is the value of $|h|$ when it converges;
+- the _range_#note[range]#index[range], which is the value of $|h|$ at which $gamma^star(h)$ levels off (reaches the sill);
 - the _nugget_#note[nugget]#index[nugget], which is the value of $gamma^star(h)$ when $|h|$ approaches 0.
 
 #figure(
