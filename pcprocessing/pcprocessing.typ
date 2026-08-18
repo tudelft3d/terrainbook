@@ -182,9 +182,7 @@ The algorithm is detailed in Algorithm @algo:csf.
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [CSF algorithm.],
-  pseudocode-list(
-    title: smallcaps[CSF]
-  )[
+  pseudocode-list[
     + *Input:* A set $S$ of sample points from a point cloud; resolution $r$ of the cloth grid; tolerance $epsilon_"zmax"$ to stop the iterations; tolerance $epsilon_"ground"$ to classify points in $S$
     + *Output:* The points in $S$ are classified as ground/non-ground
     + invert $S$
@@ -324,9 +322,7 @@ The whole process from picking a minimal set to computing the consensus set and 
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [RANSAC algorithm.],
-  pseudocode-list(
-    title: smallcaps[RANSAC]
-  )[
+  pseudocode-list[
     + *Input:* An input point cloud $P$, the error threshold $epsilon$, the minimal number of points needed to uniquely construct the shape of interest $n$, and the number of iterations $k$
     + *Output:* the detected shape instance $cal(I)_"best"$
     + $s_"best" <- 0$

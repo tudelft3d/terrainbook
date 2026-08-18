@@ -71,13 +71,11 @@ The basic algorithm for extracting one isoline is shown in @algo:iso.
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [Simple extraction of one isoline],
-  pseudocode-list(
-    title: [#smallcaps[OneIsoline] ($E$, $z_0$)]
-  )[
+  pseudocode-list[
     + *Input:* a planar partition $E$ formed of cells (either rectangular or triangular cells); the elevation value $z_0$
     + *Output:* a list of unstructured line segments representing the contour lines at $z_0$
     + _segmentList_ = []
-    + *for* $e in E$
+    + *for* $e in E$ *do*
       + *if* $z_0$ intersects $e$ *then*
         + \// See @fig:rasterconfs and @fig:isoline-tr
         + extract intersection $chi$ of $z_0$ with $e$
@@ -219,17 +217,15 @@ It is also possible to insert only a certain percentage of the number of input p
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [TIN simplification by refinement],
-  pseudocode-list(
-    title: [#smallcaps[TINRefinement]]
-  )[
+  pseudocode-list[
     + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
     + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + Construct an initial triangulation $cal(T)$ that covers the 2D bbox of $S$
     + $epsilon  <-  infinity$
-    + *while* $epsilon > epsilon_(max)$
+    + *while* $epsilon > epsilon_(max)$ *do*
       + $epsilon <- 0$
       + $q <-$ nil 
-      + *for* $p in S$
+      + *for* $p in S$ *do*
         + $tau  <-$ the triangle in $cal(T)$ that contains $p$ 
         + $epsilon_(tau ) <-$ the vertical error of $p$ with respect to $tau$
         + *if* $epsilon _(tau ) > epsilon$ *then*
@@ -251,17 +247,15 @@ Algorithm @algo:tin-simp:dec shows the pseudo-code for the TIN decimation algori
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [TIN simplification by decimation],
-  pseudocode-list(
-    title: [#smallcaps[TINDecimation]]
-  )[
+  pseudocode-list[
     + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
     + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + $cal(T)  <-$ a triangulation of $S$
     + $epsilon  <- 0$ \;
-    + *while* $epsilon < epsilon_(max)$
+    + *while* $epsilon < epsilon_(max)$ *do*
       + $epsilon <- 0$
       + $q <-$ nil 
-      + *for* $p in cal(T)$
+      + *for* $p in cal(T)$ *do*
         + remove $p$ from $cal(T)$
         + $epsilon_(tau ) <-$ the vertical error of $p$ with respect to $tau$
         + *if* $epsilon_(tau ) < epsilon$ *then*

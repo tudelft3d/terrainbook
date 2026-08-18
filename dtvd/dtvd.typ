@@ -240,9 +240,7 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [Algorithm to insert one point in a DT],
-  pseudocode-list(
-    title: smallcaps[Insert1pt]
-  )[
+  pseudocode-list[
     + *Input:* A DT($S$) $cal(T)$, and a new point $p$ to insert 
     + *Output:* $cal(T) ^(p) = cal(T)  union  {p}$ \//-- the DT with point $p$
     + find triangle $tau$ containing $p$
@@ -316,21 +314,19 @@ The idea, called "walking", is shown in @fig:walk and details are given in the @
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [Algorithm to walk in a DT],
-  pseudocode-list(
-    title: [#smallcaps[Walk] ($cal(T)$, $tau$, $p$)]
-  )[
+  pseudocode-list[
     + *Input:* A DT($S$) $cal(T)$, a starting triangle $tau$, and a query point $p$ 
     + *Output:* $tau_r$: the triangle in $cal(T)$ containing $p$
     + $tau_r$ = None
     + *while* $tau_r$ == None
       + visitededges = 0
-      + *for* i in [0..2]
+      + *for* i in [0..2] *do*
         + $sigma_i <-$ get edge opposite to vertex $i$ in $tau$
-        + *if* $#Orient (sigma_i, p) < 0$ 
+        + *if* $#Orient (sigma_i, p) < 0$ *then*
           + $tau <-$ get neighbouring triangle of $tau$ incident to $sigma_i$
           + break
         + $"visitededges" = "visitededges" + 1$
-      + *if* $"visitededges" == 3$
+      + *if* $"visitededges" == 3$ *then*
         + \//-- all the edges of $tau$ have been tested
         + $tau_r$ = $tau$
     + Return $tau_r$
