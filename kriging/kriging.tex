@@ -434,7 +434,9 @@ Finally, if we invert the matrix \(A\), the weights are given by:
 w = A^{-1}d.
 \end{equation}
 
-These weights can be applied to interpolate the value of the residual term at any location as a weighted average of the sample points, where the correlation between the points is given by a covariance function, which can be obtained from the semivariogram.
+These weights can be substituted into Equation~\ref{eq:wask} to estimate the value of the residual term at a given location \(x_0\) as a weighted average of the residuals at the \(n\) sample points used for the interpolation; adding the expectation \(E[Z]\) then yields the estimated value \(\hat{Z}_0\) at that location.
+Since the vector \(d\) depends on the location \(x_0\), the weights need to be recomputed for every location at which we want to interpolate.
+The correlation between the points is given by a covariance function, which can be obtained from the semivariogram.
 
 However, simple kriging does not tell us what value we should use for the expectation \(E[Z]\), since we start from the assumption that it is known, which is often not the case.
 Even a seemingly reasonable value, such as the average of all sample points, can be very inaccurate if the sample points are unevenly distributed across the domain.
@@ -507,7 +509,7 @@ w = A^{-1}d.
 
 Here, the first \(n\) entries of \(w\) are the interpolation weights, which can be substituted into Equation~\ref{eq:waok} to estimate the value at \(x_0\) as a weighted average of the values at the \(n\) sample points used for the interpolation.
 The last entry, the Lagrange multiplier \(\mu(x_0)\), is not used in the estimate itself, but rather to compute the kriging variance below.
-Note also that the vector \(d\) depends on the interpolation location \(x_0\), and thus the system needs to be solved anew for every location at which we want to interpolate.
+As in simple kriging, the vector \(d\) depends on the interpolation location \(x_0\), and thus the system needs to be solved anew for every location at which we want to interpolate.
 
 Substituting the ordinary kriging equations into the estimation variance above gives its minimum value, which is known as the \emph{kriging variance}\marginnote{kriging variance}\index{kriging variance}:
 
