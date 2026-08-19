@@ -5,7 +5,7 @@
 #minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/0NzZoJATFjc")
 
 Many interesting DTM operations are based on runoff modelling, ie the computation of the flow and accumulation of water on a terrain.
-Examples include: knowing where streams will form in the case of heavy rainfall, finding the areas that will be affected by a waterborne pollutant, tracing the areas that could become submerged by floodwater, or calculating the rate of erosion or sedimentation in a given area.
+These include knowing where streams will form in the case of heavy rainfall, finding the areas that will be affected by a waterborne pollutant, tracing the areas that could become submerged by floodwater, and calculating the rate of erosion or sedimentation in a given area.
 
 In hydrology, runoff modelling can be very complex (@fig:hydrology).
 Hydrological models usually consider different precipitation scenarios, model various types of overland and subsurface flows, and take into account many location- and time-dependent factors, such as the depth of the water table and the permeability of the soil.
@@ -18,7 +18,7 @@ Such models can be quite accurate, but they require high-resolution data that is
 ) <fig:hydrology>
 
 By contrast, the simpler _GIS models of runoff_ can be performed automatically in large areas with only a DTM.
-These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter.
+These models mostly use gridded raster terrains, and so we will generally refer to this representation throughout this chapter.
 The methods described here can be adapted to work on other representations, but the flow computation on a TIN is different enough that we discuss it separately at the end of this chapter.
 In order for the GIS models of runoff to achieve their results, two big assumptions are usually made:
 
@@ -48,7 +48,7 @@ For this reason, it is also known as the _eight flow directions (D8)_ approach.
 
 On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
-For instance, in a square grid, the errors can be of up to $qty("22.5", "degree")$ (because the method is forced to choose a neighbouring cell in increments of $qty("45", "degree")$).
+For instance, in a square grid, the errors can be of up to #qty("22.5", "degree") (because the method is forced to choose a neighbouring cell in increments of #qty("45", "degree")).
 This method can therefore easily create artefacts in certain geometric configurations (@fig:d8).
 
 #figure(
@@ -57,7 +57,7 @@ This method can therefore easily create artefacts in certain geometric configura
   placement: none,
 ) <fig:d8>
 
-Many of these artefacts can be eliminated by using the rho8 ($rho 8$) method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
+Many of these artefacts can be reduced by using the rho8 ($rho 8$) method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
 #note[rho8 ($rho 8$)]#index[$rho 8$]#index[rho8]
 However, it produces non-deterministic results, which is often a sufficient reason not to use it.
 
@@ -112,7 +112,7 @@ Note that this calculation can be sped up substantially by: (i) storing the accu
 == Solving issues with sinks <se:sinks>
 
 _Sinks_#note[sink]#index[sink], which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain, ie from which no path of non-increasing elevation leads to the boundary of the DTM.
-Some of these are natural features that are present in the terrain (eg lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
+Some of these are natural features that are present in the terrain (eg lakes and dry lakebeds), towards which water would flow and stagnate in reality, and are thus not a problem for runoff modelling.
 However, they can also be artefacts of the DTM (eg noise and vegetation removal can create depressions), or they can be very small areas that are easily filled (ie flooded), after which water would flow out of them.
 In the latter case, we need to implement a mechanism to route water flows out of these depressions, since otherwise our runoff model could have very large water flows stopping at even tiny depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
@@ -152,7 +152,7 @@ The flow direction of the cells along this path is then set towards the outlet, 
 _Flats_ are areas in a DTM that have the same elevation.
 #note[flat]#index[flat]
 They therefore do not have a well-defined flow direction, which causes problems for many water routing algorithms.
-Flats can sometimes occur naturally, but they are more often the result of precision limits, noise removal, or sink filling algorithms.
+Flats are common in real terrain (eg lakes, floodplains and salt flats), but they are more often the result of precision limits, noise removal, or sink filling algorithms.
 
 It is thus often necessary to apply a method that assigns a flow direction to flats, either by: (i) modifying the DTM to eliminate them, and then assigning them a flow direction in the usual way, or (ii) assigning them a flow direction directly.
 
