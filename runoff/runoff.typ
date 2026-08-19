@@ -92,11 +92,14 @@ The most widely used modern method to do so is the D∞ (#citet(<Tarborton97>)) 
 The resulting flow direction is continuous, ie it is not restricted to the 8 grid directions, and the flow is split between the two neighbouring cells that bracket this direction, in proportions that depend on the angles.
 D∞ thus avoids both the quantisation of the flow direction inherent to D8 and the strong dispersion of the earlier MFD methods.
 
-#figure(
-  image("figs/dispersion.pdf", width: 95%),
-  caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Figure from #citet(<Tarborton97>).],
+#subfigure(
+  figure(image("figs/dispersion_d8.pdf", width: 100%), caption: [D8]),
+  figure(image("figs/dispersion_quinn.pdf", width: 100%), caption: [Quinn]),
+  columns: (1fr, 1fr),
+  caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Based on #citet(<Tarborton97>).],
   placement: none,
-) <fig:dispersion>
+  label: <fig:dispersion>,
+)
 
 == #flex-heading[Flow accumulation][Computing the flow accumulation] <se:accumulation>
 
