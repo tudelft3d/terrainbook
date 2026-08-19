@@ -18,7 +18,8 @@ Such models can be quite accurate, but they require high-resolution data that is
 ) <fig:hydrology>
 
 By contrast, the simpler _GIS models of runoff_ can be performed automatically in large areas with only a DTM.
-These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter, but the methods described here mostly work just as well with other representations (eg a TIN).
+These models mostly use gridded raster terrains, and so we will generally refer to these in this chapter.
+The methods described here can be adapted to work on other representations, but the flow computation on a TIN is different enough that we discuss it separately at the end of this chapter.
 In order for the GIS models of runoff to achieve their results, two big assumptions are usually made:
 
 + that all water flow is _overland_, thus ignoring all subsurface flows and dismissing factors such as evaporation and infiltration; and
@@ -186,6 +187,31 @@ The lines that separate adjacent drainage basins are _drainage divides_#note[dra
   placement: none,
 ) <fig:oceans>
 
+== Runoff on TINs
+
+All the methods described so far assume a gridded raster DTM.
+The same computations can be performed on a TIN, but the approach is somewhat different, because the surface is continuous and there are no cells to accumulate flow into.
+
+In a TIN, water flows over each triangular facet in the direction of its steepest descent, which is the projection of the facet's normal onto the horizontal plane.
+When a flow line reaches an edge shared by two triangles, it continues on the adjacent facet in its steepest-descent direction, which means that the flow lines follow the edges of the TIN.
+The flow direction is thus continuous, like in the D∞ method, but it is determined geometrically rather than being discretised to the neighbouring cells.
+
+A continuous TIN surface has no flats and no interior sinks in the sense of @se:sinks: within a facet the surface is planar, so the gradient is well defined everywhere, and the special handling described there is not needed.
+This does not mean that water never accumulates, however.
+Every point has a well-defined downhill direction except at the vertices, and a vertex is a local minimum when all the facets incident to it slope away from it.
+Water therefore genuinely collects in such vertices, just as it would in a real depression or a raster sink.
+Some of these local minima are real terrain features, but others are artefacts of the triangulation, and a TIN must be built with care: a poor triangulation can, for instance, make the flow lines cycle instead of reaching an outlet.
+
+As with rasters, when a local minimum is a triangulation artefact (or a depression we wish to drain), water must be routed out of it.
+The TIN analogue of filling a sink is to remove the offending vertex: the vertex is deleted and the polygon formed by its neighbours is re-triangulated, which eliminates the local minimum.
+The alternative, closer in spirit to the least-cost paths of @se:sinks, is to allow water to escape over the lowest point of the rim of the local minimum, ie along the shortest path of least elevation gain to a point that drains.
+Both operations change the surface and can create new artefacts elsewhere, so they require care.
+#citet(<Palacios86>) describes such a TIN-based approach to basin delineation.
+
+To compute the flow accumulation at a point, one traces the flow line backwards from it, accumulating the area of every facet that drains into it.
+Unlike in a raster, the facets of a TIN are not all the same size, so each one contributes its own (horizontal) area, in the same way that the cell area $a_0$ appears in the accumulation equation of @se:accumulation.
+Because the flow lines are not aligned to a grid, they cannot be accumulated cell by cell as in a raster; the usual approach is to trace each flow line and distribute the drained area along it.
+
 == Notes and comments
 
 #citet(<Beven12>) is a good reference book on hydrology.
@@ -198,6 +224,9 @@ It covers how to make much more complex runoff models than the ones described he
 
 #citet(<Barnes14a>) describes how to fill in sinks, while #citet(<Metz11>) describes how to use a variation of $A^(*)$ search algorithm to route water out of them.
 #citet(<Barnes14>) describes how to assign the drainage direction over flats.
+
+#citet(<Jones90>) is a classic reference for the computation of runoff on TINs.
+#citet(<Palacios86>) is another early reference that handles the delineation of rivers, ridges and basins, including the treatment of pits, on TINs.
 
 == Exercises
 
