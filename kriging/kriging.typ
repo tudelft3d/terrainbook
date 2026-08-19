@@ -325,7 +325,7 @@ $ sum_(j=1)^(n) w_j C(x_i - x_j) = C(x_i - x_0). $
 
 While these equations can be solved directly, it is often easier to work with them in matrix form:
 
-$ underbrace(mat(C(x_1 - x_1) & dots.c & C(x_1 - x_n); dots.v & dots.down & dots.v; C(x_n - x_1) & dots.c & C(x_n - x_n)), A) underbrace(mat(w_1; dots.v; w_n), w) = underbrace(mat(C(x_1 - x_0); dots.v; C(x_n - x_0)), d) $
+$ underbrace(mat(C(x_1 - x_1), dots.c, C(x_1 - x_n); dots.v, dots.down, dots.v; C(x_n - x_1), dots.c, C(x_n - x_n)), A) underbrace(mat(w_1; dots.v; w_n), w) = underbrace(mat(C(x_1 - x_0); dots.v; C(x_n - x_0)), d) $
 
 which is known as the _simple kriging system_#note[simple kriging system]#index[simple kriging system].
 Finally, if we invert the matrix $A$, the weights are given by:
@@ -370,7 +370,7 @@ where $mu(x_0)$ is a Lagrange multiplier that was used in the minimisation proce
 
 Like with simple kriging, these equations can be used to perform ordinary kriging, but it is often easier to deal with these in matrix form:
 
-$ underbrace(mat(gamma(x_1 - x_1) & dots.c & gamma(x_1 - x_n) & 1; dots.v & dots.down & dots.v & 1; gamma(x_n - x_1) & dots.c & gamma(x_n - x_n) & 1; 1 & dots.c & 1 & 0), A) underbrace(mat(w_1; dots.v; w_n; mu(x_0)), w) = underbrace(mat(gamma(x_1 - x_0); dots.v; gamma(x_n - x_0); 1), d) $
+$ underbrace(mat(gamma(x_1 - x_1), dots.c, gamma(x_1 - x_n), 1; dots.v, dots.down, dots.v, 1; gamma(x_n - x_1), dots.c, gamma(x_n - x_n), 1; 1, dots.c, 1, 0), A) underbrace(mat(w_1; dots.v; w_n; mu(x_0)), w) = underbrace(mat(gamma(x_1 - x_0); dots.v; gamma(x_n - x_0); 1), d) $
 
 which is known as the _ordinary kriging system_#note[ordinary kriging system]#index[ordinary kriging system].
 
