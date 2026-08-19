@@ -71,7 +71,7 @@ and they usually use a variation of this equation:
 
 $  F_i = frac((L_i tan alpha_i)^(x), sum_(j = 1)^(n)(L_j tan alpha_j)^(x))  $
 
-where $F_i$ is the flow towards the i-th neighbouring cell, $L_i$ is the flow width (@fig:quinn), $alpha_i$ is the gradient towards the i-th neighbouring cell (and so $tan (alpha_i)$ is the slope), $x$ is an exponent that controls the dispersion, and $n$ is the number of neighbours of the cell.
+where $F_i$ is the flow towards the i-th neighbouring cell, $L_i$ is the flow width (@fig:quinn), $alpha_i$ is the gradient towards the i-th neighbouring cell (and so $tan (alpha_i)$ is the slope), $x$ is an exponent that controls the dispersion, and $n$ is the number of lower neighbours of the cell, ie the ones that receive flow.
 
 #notefigure(
   image("figs/quinn.pdf", width: 100%),
@@ -99,14 +99,14 @@ In practical terms, the flow accumulation is defined based on a recursive operat
 
 $  A_0 = a_0 + sum_(i = 1)^(n) p_i A_i  $
 
-where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p$ is the proportion of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, $n$ is the total number of the neighbouring cells.
+where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_i$ is the proportion of the flow of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, $n$ is the number of neighbouring cells.
 Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when $p_i = 0$.
 
 == Solving issues with sinks
 
-_Sinks_#note[sink]#index[sink], which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain.
+_Sinks_#note[sink]#index[sink], which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain, ie from which no path of non-increasing elevation leads to the boundary of the DTM.
 Some of these are natural features that are present in the terrain (eg lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
-However, they can also be artefacts of the DTM (eg noise and areas without vegetation can create depressions), or they can be very small areas that are easily filled (ie flooded), after which water would flow out of them.
+However, they can also be artefacts of the DTM (eg noise and vegetation removal can create depressions), or they can be very small areas that are easily filled (ie flooded), after which water would flow out of them.
 In the latter case, we need to implement a mechanism to route water flows out of these depressions, since otherwise our runoff model could have very large water flows stopping at even tiny depressions.
 We will look at two common options to solve this problem: modifying a DTM by filling in (certain) sinks, and implementing a flow routing algorithm that allows water to flow out of sinks.
 
@@ -128,7 +128,7 @@ In the best case scenario, we can imagine that the resulting DTM is one that: (i
 One efficient method to fill in sinks is the priority-flood algorithm #citep(<Barnes14a>).
 It works by keeping: (i) a list of DTM cells that are known to drain, which is kept sorted by elevation; and (ii) a raster marking whether each cell of the DTM is known to drain yet.
 The list is initialised with the cells on the boundary of the DTM (which are assumed to be able to drain outwards), as well as other specially marked cells (eg those forming part of a lake or a large river).
-Then, it iteratively: (i) removes the lowest cell from the sorted list of cells that are known to drain, (ii) increases the elevation of its neighbours that are not yet known to drain to the level of the cell, (iii) adds the neighbours that are not yet known to drain to the list.
+Then, it iteratively: (i) removes the lowest cell from the sorted list of cells that are known to drain, (ii) raises the elevation of its neighbours that are not yet known to drain and that are lower than the cell to the level of the cell (leaving those that are higher unchanged), (iii) adds the neighbours that are not yet known to drain to the list.
 Note that implicit in this last step is the fact that the neighbour cells are deemed to be able to drain through the current (lowest) cell.
 
 === Least-cost (drainage) paths
@@ -136,8 +136,9 @@ Note that implicit in this last step is the fact that the neighbour cells are de
 An alternative to modifying a DTM to eliminate sinks is to implement a more complex water routing algorithm that allows water to flow out of sinks.
 For this, the usual approach is to implement a variation of the $A^(\*)$ search algorithm, which in this context is known as the least-cost paths (LCP)#note[least-cost paths (LCP)]#index[least-cost paths]#index[LCP] algorithm #citep(<Metz11>).
 
-The LCP algorithm is similar to priority-flood in that it keeps a sorted list of DTM cells that are known to drain, which is also initialised to the boundary pixels (and possibly other cells).
-Then, it iteratively: (i) removes the lowest cell from this list, (ii) sets the drainage direction of its neighbours that are not yet known to drain towards itself, (iii) adds the neighbours that are not yet known to drain to the list.
+For each sink, the LCP algorithm finds the least-cost path to route its water out towards a cell that is already known to drain.
+The cost of moving from one cell to another is typically based on the difference in elevation between them, so that the search finds the path that requires the least elevation gain, ie the one that crosses the rim of the sink at its lowest point.
+The flow direction of the cells along this path is then set towards the outlet, effectively breaching the rim of the sink.
 
 == #flex-heading[Flow direction in flats][Assigning flow direction in flats]
 
@@ -167,7 +168,7 @@ After all flats in a DTM have been identified and their extent is known, algorit
 
 Interpreting DTM cells as nodes and the flow direction as directed edges connecting them yields the _drainage network_#note[drainage network]#index[drainage network] of a DTM.
 However, it is usually best to filter out the least important parts of the network using a flow accumulation threshold.
-A good rule of thumb for this threshold is the mean flow accumulation in the DTM, but an exact value is usually set by trial and error until the desired parts of the network are kept.
+A common starting point for this threshold is the mean flow accumulation in the DTM, but the exact value is usually set by trial and error until the desired parts of the network are kept.
 
 Based on a computed drainage network, it is then possible to extract the _drainage basins_#note[drainage basin]#index[drainage basin]#index[basin] of a DTM by considering the areas that are drained by one or more nodes of the network (@fig:oceans).
 This operation can be performed in many different places, such as the end node of a river (yielding its river basin), the nodes just before junctions in the network (yielding the drainage basins of the tributaries of a river), or the end nodes of a selected part of the network (yielding the drainage basin of a sea or ocean).
