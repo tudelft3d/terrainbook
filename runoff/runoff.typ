@@ -51,11 +51,14 @@ On the other hand, it can have significant errors in the flow direction, and it 
 For instance, in a square grid, the errors can be of up to #qty("22.5", "degree") (because the method is forced to choose a neighbouring cell in increments of #qty("45", "degree")).
 This method can therefore easily create artefacts in certain geometric configurations (@fig:d8).
 
-#figure(
-  image("figs/d8.pdf", width: 95%),
-  caption: [The D8 method creates artefacts when water is draining from a circular cone. Figure from #citet(<Tarborton97>).],
+#subfigure(
+  figure(image("figs/d8_dinf.pdf", width: 100%), caption: [D-infinity]),
+  figure(image("figs/d8_d8.pdf", width: 100%), caption: [D8]),
+  columns: (1fr, 1fr),
+  caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Figure from #citet(<Tarborton97>).],
   placement: none,
-) <fig:d8>
+  label: <fig:d8>,
+)
 
 Many of these artefacts can be reduced by using the rho8 ($rho 8$) method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
 #note[rho8 ($rho 8$)]#index[$rho 8$]#index[rho8]

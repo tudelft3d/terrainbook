@@ -68,10 +68,19 @@ For instance, in a square grid, the errors can be of up to \(22.5^\circ{}\) (bec
 This method can therefore easily create artefacts in certain geometric configurations (Figure~\ref{fig:d8}).
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\linewidth]{figs/d8.pdf}
-\caption{The D8 method creates artefacts when water is draining from a circular cone. Figure from \citet{Tarborton97}.}%
-\label{fig:d8}
+  \centering
+  \begin{subfigure}{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/d8_dinf.pdf}
+    \caption{D-infinity}
+  \end{subfigure}
+  \begin{subfigure}{0.45\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/d8_d8.pdf}
+    \caption{D8}
+  \end{subfigure}
+  \caption{Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every \(45^\circ{}\), while D-infinity gives a smooth pattern. Figure from \citet{Tarborton97}.}%
+  \label{fig:d8}
 \end{figure}
 
 Many of these artefacts can be reduced by using the rho8 (\(\rho8\))\marginnote{rho8 (\(\rho8\))}\index{\(\rho8\)}\index{rho8} method, which modifies D8 to assign the flow direction to one of its lower neighbours randomly with probability proportional to the slope.
