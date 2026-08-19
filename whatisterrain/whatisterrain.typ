@@ -245,7 +245,7 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
 ) <fig:dggs>
 
 However, a regular tessellation like a grid cannot accurately fit a sphere, this is problematic for global (geographic) datasets.
-Therefore---even with their disadvantages---global hierarchical tessellations and _discrete global grid systems_ (DGGS), are becoming more popular.
+Therefore---even with their disadvantages---global hierarchical tessellations, also called _discrete global grid systems_ (DGGS), are becoming more popular.
 #index[DGGS]#note[discrete global grid system (DGGS)]
 Well-known examples are Google's S2, the H3 grid system developed by Uber, and HEALPix, as shown in @fig:dggs.
 More recent advances combine efficient indexing schemes (fast neighbour lookup, see @sec:knn) with optimal (equal area) cell properties.
