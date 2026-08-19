@@ -83,6 +83,11 @@ D8 does not disperse the flow, but the path is constrained to the 8 possible gri
 By contrast, #citet(<Quinn91>) (an MFD method) can model the flow direction in a way that matches the topography better, but it also introduces substantial dispersion.
 More modern approaches try to combine some of the advantages of both approaches.
 
+The most widely used modern method to do so is the D∞ (#citet(<Tarborton97>)) method, which computes, for each cell, the direction of the steepest descent within the triangular facets formed by the cell and pairs of its neighbouring cells.
+#note[D∞ ($D^infinity$)]#index[$D^infinity$]#index[D∞]
+The resulting flow direction is continuous, ie it is not restricted to the 8 grid directions, and the flow is split between the two neighbouring cells that bracket this direction, in proportions that depend on the angles.
+D∞ thus avoids both the quantisation of the flow direction inherent to D8 and the strong dispersion of the earlier MFD methods.
+
 #figure(
   image("figs/dispersion.pdf", width: 95%),
   caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Figure from #citet(<Tarborton97>).],
@@ -92,6 +97,7 @@ More modern approaches try to combine some of the advantages of both approaches.
 == #flex-heading[Flow accumulation][Computing the flow accumulation] <se:accumulation>
 
 After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in all of them.
+Note that this assumes that the flow directions are well defined in every cell, which is not always the case; we discuss how to handle the problematic cases (sinks and flats) in @se:sinks and @se:flats.
 As stated in the assumptions we make for GIS models of runoff, the flow accumulation at a given DTM cell can be estimated by the area that drains to it.
 Note that in the case of a square grid, it is simply the number of cells that drain to it.
 
@@ -102,7 +108,7 @@ $  A_0 = a_0 + sum_(i = 1)^(n) p_i A_i  $
 where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_i$ is the proportion of the flow of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, $n$ is the number of neighbouring cells.
 Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when $p_i = 0$.
 
-== Solving issues with sinks
+== Solving issues with sinks <se:sinks>
 
 _Sinks_#note[sink]#index[sink], which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain, ie from which no path of non-increasing elevation leads to the boundary of the DTM.
 Some of these are natural features that are present in the terrain (eg lakes and dry lakebeds) and where water would flow towards (and stagnate) in reality, and are thus not a problem for runoff modelling.
@@ -140,7 +146,7 @@ For each sink, the LCP algorithm finds the least-cost path to route its water ou
 The cost of moving from one cell to another is typically based on the difference in elevation between them, so that the search finds the path that requires the least elevation gain, ie the one that crosses the rim of the sink at its lowest point.
 The flow direction of the cells along this path is then set towards the outlet, effectively breaching the rim of the sink.
 
-== #flex-heading[Flow direction in flats][Assigning flow direction in flats]
+== #flex-heading[Flow direction in flats][Assigning flow direction in flats] <se:flats>
 
 _Flats_ are areas in a DTM that have the same elevation.
 #note[flat]#index[flat]
@@ -188,7 +194,7 @@ It covers how to make much more complex runoff models than the ones described he
 #citet(<OCallaghan84>) was the original paper to describe the D8 method.
 #citet(<Fairfield91>) modify D8 into the stochastic rho8 method.
 #citet(<Quinn91>) describes the original MFD method.
-#citet(<Tarborton97>) describes the alternative ($D^(infinity)$) MFD method and contains nice figures comparing multiple methods.
+#citet(<Tarborton97>) describes the D∞ MFD method and contains nice figures comparing multiple methods.
 
 #citet(<Barnes14a>) describes how to fill in sinks, while #citet(<Metz11>) describes how to use a variation of $A^(*)$ search algorithm to route water out of them.
 #citet(<Barnes14>) describes how to assign the drainage direction over flats.
