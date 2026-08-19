@@ -284,12 +284,14 @@ In mathematical terms, we can formulate this as:
 
 $ E[hat(Z)_0 - Z_0] = 0 quad "or" quad E[Z_0] = E[hat(Z)_0]. $ <eq:unbiased>
 
-// In order to check this for simple kriging, we can put the weighted average from
-// Equation @eq:wask in this equation, which results in the following:
-// // TODO: why is latex complaining at \end{align} I removed \cancelto{} and it's solved
-// E[Z_0] &= E[E[Z_0] + sum_(i=1)^n w_i R_i] \
-//   &= E[Z_0] + sum_(i=1)^n w_i 0 E[R_i] \
-//   &= E[Z_0].
+In order to check this for simple kriging, we can substitute the weighted average from @eq:wask into @eq:unbiased, which results in the following:
+
+$ E[hat(Z)_0] &= E[E[Z_0] + sum_(i=1)^(n) w_i R_i] \
+  &= E[Z_0] + sum_(i=1)^(n) w_i E[R_i] \
+  &= E[Z_0] + sum_(i=1)^(n) w_i dot 0 \
+  &= E[Z_0]. $
+
+Note that this holds whatever the values of the weights $w_i$ are: the unbiasedness of simple kriging follows directly from the fact that $E[R_i] = 0$, and so it does not constrain the weights.
 
 Then, in order to derive the equations used in simple kriging, we impose the criterion that it _minimises the variance of the estimation error_#note[minimisation of the variance]#index[minimisation of the variance], which in this case is given by $"var"(hat(R)_0 - R_0)$.
 If we use the definition of the variance from @eq:variance1, this can be instead put in terms of an expectation:

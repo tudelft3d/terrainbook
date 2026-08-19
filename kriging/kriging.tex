@@ -365,14 +365,16 @@ In mathematical terms, we can formulate this as:
 E\left[ \hat{Z}_0 - Z_0 \right] = 0 \hspace{1cm}\text{or}\hspace{1cm}E\left[Z_0\right] = E\left[ \hat{Z}_0 \right].
 \end{equation}
 
-% In order to check this for simple kriging, we can put the weighted average from Equation~\ref{eq:wask} in this equation, which results in the following:
+In order to check this for simple kriging, we can substitute the weighted average from Equation~\ref{eq:wask} into Equation~\ref{eq:unbiased}, which results in the following:
 
-% % TODO : why is latex complaining at \end{align} I removed \cancelto{} and it's solved
-% \begin{align}
-%   E\left[ Z_0 \right] &= E\left[ E[Z_0] + \sum_{i=1}^n w_i R_i \right] \nonumber \\
-%   &= E[Z_0] + \sum_{i=1}^n w_i 0{E[R_i]} \nonumber \\
-%   &= E[Z_0].  \nonumber
-% \end{align}
+\begin{align}
+E\left[\hat{Z}_0\right] &= E\left[E[Z_0] + \sum_{i=1}^n w_i R_i\right] \nonumber \\
+&= E[Z_0] + \sum_{i=1}^n w_i E[R_i] \nonumber \\
+&= E[Z_0] + \sum_{i=1}^n w_i \cdot 0 \nonumber \\
+&= E[Z_0]. \nonumber
+\end{align}
+
+Note that this holds whatever the values of the weights \(w_i\) are: the unbiasedness of simple kriging follows directly from the fact that \(E[R_i] = 0\), and so it does not constrain the weights.
 
 Then, in order to derive the equations used in simple kriging, we impose the criterion that it \emph{minimises the variance of the estimation error}\marginnote{minimisation of the variance}\index{minimisation of the variance}, which in this case is given by \(\mathrm{var}\left(\hat{R}_0 - R_0\right)\).
 If we use the definition of the variance from Equation~\ref{eq:variance1}, this can be instead put in terms of an expectation:
