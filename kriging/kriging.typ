@@ -204,6 +204,11 @@ From the scatterplot of the experimental variogram, it is possible to see how a 
 ) <fig:example_variogram>
 
 The last step is to use these parameters to replace the experimental variogram with a _theoretical variogram function_#note[theoretical variogram function]#index[theoretical variogram function] that approximates it and which can be more easily evaluated for further calculations.
+However, not every function that fits the experimental variogram can be used.
+The covariances that the model assigns to every pair of sample points determine the variance of any weighted average of the sample values.
+Since a variance can never be negative, this variance must be non-negative for any weights and any configuration of the sample points.
+A model that guarantees this is said to be _valid_#note[valid model]#index[valid model].
+As we will see in the next sections, this is also what guarantees that the kriging system has a unique solution with a non-negative estimation variance.
 Depending on the shape of the variogram, there are various functions that can be used.
 Some examples are:
 
@@ -235,6 +240,9 @@ Note that the exponential and Gaussian functions only approach the sill asymptot
 @fig:theoretical_variogram shows the result of fitting the example theoretical variogram functions.
 Note how the cubic and especially the Gaussian functions fit well in this case.
 Unlike the other functions, the power model is usually unbounded: $gamma(h) = c |h|^a$ grows without limit as $|h|$ increases, and therefore has no sill or range. The bounded version above is used here so that it can be compared with the other models.
+The bounded linear model also deserves a caveat: it is a valid model only in one dimension.
+In two dimensions (the usual case for terrains), using it can therefore yield a kriging system without a unique solution and even negative estimation variances.
+The circular model is essentially its valid two-dimensional counterpart.
 
 #wideblock[
   #subfigure(
