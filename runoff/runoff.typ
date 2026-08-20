@@ -134,7 +134,7 @@ In the best case scenario, we can imagine that the resulting DTM is one that: (i
 
 #figure(
   image("figs/pf.pdf", width: 80%),
-  caption: [A vertical cross-section of a DTM with filled sinks. The dashed line represents the original terrain, whereas the thicker solid line represents the filled terrain. From #citet(<Barnes14a>).],
+  caption: [A vertical cross-section of a DTM with a filled sink. The dashed line is the original terrain and the thicker solid line is the filled terrain; the shaded area is the material added to fill the sink. Based on #citet(<Barnes14a>).],
   placement: none,
 ) <fig:pf>
 
