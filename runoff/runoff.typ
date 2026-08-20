@@ -55,7 +55,7 @@ This method can therefore easily create artefacts in certain geometric configura
   figure(image("figs/d8_dinf.pdf", width: 100%), caption: [D-infinity]),
   figure(image("figs/d8_d8.pdf", width: 100%), caption: [D8]),
   columns: (1fr, 1fr),
-  caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Figure from #citet(<Tarborton97>).],
+  caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Based on #citet(<Tarborton97>).],
   placement: none,
   label: <fig:d8>,
 )
