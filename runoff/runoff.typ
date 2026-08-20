@@ -46,7 +46,7 @@ The method is known as the _single flow direction (SFD)_ approach, and when appl
 For this reason, it is also known as the _eight flow directions (D8)_ approach.
 #note[D8 flow direction]#index[D8 flow direction]#index[eight flow directions]
 
-On one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
+On the one hand, the method is very fast and easy to implement, and it avoids dispersing the water flow between multiple cells.
 On the other hand, it can have significant errors in the flow direction, and it does not allow for divergent flows.
 For instance, in a square grid, the errors can be of up to #qty("22.5", "degree") (because the method is forced to choose a neighbouring cell in increments of #qty("45", "degree")).
 This method can therefore easily create artefacts in certain geometric configurations (@fig:d8).
@@ -79,7 +79,7 @@ where $F_i$ is the flow towards the i-th neighbouring cell, $L_i$ is the flow wi
 
 #notefigure(
   image("figs/quinn.pdf", width: 100%),
-  caption: [The flow width $L$ can be computed using the geometry of the DTM cells. In the case of a square grid with spacing $d$, it is $frac(sqrt(2), 4)d$ for the diagonals ($L_2$) and $1/2d$ for the adjacencies ($L_1$), where $d$ is the grid spacing. Based on #citet(<Quinn91>).],
+  caption: [The flow width $L$ can be computed using the geometry of the DTM cells. In the case of a square grid with spacing $d$, it is $frac(sqrt(2), 4)d$ for the diagonals ($L_2$) and $frac(1, 2)d$ for the adjacencies ($L_1$). Based on #citet(<Quinn91>).],
 ) <fig:quinn>
 
 As shown in @fig:dispersion, MFD methods show characteristically wider flows compared to SFD methods.
@@ -106,13 +106,13 @@ D∞ thus avoids both the quantisation of the flow direction inherent to D8 and 
 After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in all of them.
 Note that this assumes that the flow directions are well defined in every cell, which is not always the case; we discuss how to handle the problematic cases (sinks and flats) in @se:sinks and @se:flats.
 As stated in the assumptions we make for GIS models of runoff, the flow accumulation at a given DTM cell can be estimated by the area that drains to it.
-Note that in the case of a square grid, it is simply the number of cells that drain to it.
+Note that in the case of a square grid, it is simply the number of cells that drain to it, including the cell itself.
 
 In practical terms, the flow accumulation is defined based on a recursive operation:
 
 $  A_0 = a_0 + sum_(i = 1)^(n) p_i A_i  $
 
-where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_i$ is the proportion of the flow of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, $n$ is the number of neighbouring cells.
+where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_i$ is the proportion of the flow of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, and $n$ is the number of neighbouring cells that drain to the cell.
 Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when $p_i = 0$.
 
 == Solving issues with sinks <se:sinks>
