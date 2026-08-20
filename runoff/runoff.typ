@@ -189,8 +189,8 @@ This operation can be performed in many different places, such as the end node o
 The lines that separate adjacent drainage basins are _drainage divides_#note[drainage divide]#index[drainage divide], which form topographical ridges.
 
 #figure(
-  image("figs/Ocean_drainage.png", width: 100%),
-  caption: [The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them. Note the endorheic basins that drain to none of these cells. These actually form sinks in the DTM. From Wikimedia Commons.],
+  image("figs/Ocean_drainage.pdf", width: 100%),
+  caption: [The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them. Note the endorheic basins that drain to none of these cells. These actually form sinks in the DTM. Based on an image from Wikimedia Commons.],
   placement: none,
 ) <fig:oceans>
 
