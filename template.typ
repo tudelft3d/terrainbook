@@ -22,6 +22,14 @@
 #let citep = cite
 
 
+//-- for wideblocks (to detect captions of wide figures)
+#let in-wideblock = state("in-wideblock", false)
+#let wideblock(side: auto, body) = {
+  in-wideblock.update(true)
+  marginalia.wideblock(side: side, body)
+  in-wideblock.update(false)
+}
+
 //-- for outlines
 #let in-outline = state("in-outline", false)
 // #set outline.entry(fill: none)
@@ -289,24 +297,22 @@
   //-- figure caption in the margin + Figure 1.2: in bold
   set figure(gap: 0.55em) // neccessary in both cases
   set figure.caption(position: bottom)
-  //--
-  // show figure.caption.where(position: bottom): note.with(
-  //   alignment: "bottom", 
-  //   counter: none, 
-  //   shift: "avoid", 
-  //   keep-order: true,
-  //   // text-style: (size: 10pt, weight: "bold"),
-  // )
-  //-- OR
-  set figure.caption(position: bottom)
-  show figure.caption: it => note(
-    // dy: 45pt,
-    alignment: "bottom",
-    counter: none,
-    shift: "avoid",
-    keep-order: true,
-  )[*#it.supplement #it.counter.display(it.numbering)*: #it.body]
-  //-- 
+  //-- captions of wide figures (inside #wideblock) are placed under the figure (in flow),
+  //-- because the figure occupies the margin where the note would be placed
+  show figure.caption: it => context {
+    if in-wideblock.get() {
+      align(center, text(size: 8pt, style: "normal", weight: "regular")[
+        *#it.supplement #it.counter.display(it.numbering)*: #it.body
+      ])
+    } else {
+      note(
+        alignment: "bottom",
+        counter: none,
+        shift: "avoid",
+        keep-order: true,
+      )[*#it.supplement #it.counter.display(it.numbering)*: #it.body]
+    }
+  }
 
   // Title page: unnumbered, and reset counter so next page is I
   if title != none {
