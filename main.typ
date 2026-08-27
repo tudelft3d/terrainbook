@@ -15,7 +15,7 @@
 
 #show: doc => tbtemplate(
   version: "2026.0-beta3",
-  // cover: true,
+  cover: true,
   doc,
 )
 

@@ -207,12 +207,13 @@
     numbering: "i",
   )
 
-  let serif-fonts = ("TeX Gyre Pagella", "Palatino", "New Computer Modern") //-- https://www.1001fonts.com/tex-gyre-pagella-font.html
-  let sans-fonts = ("TeX Gyre Heros", "Source Sans Pro", "Calibri") //-- https://www.1001fonts.com/texgyreheros-font.html + https://github.com/adobe-fonts/source-sans-pro
+  let serif-font = ("TeX Gyre Pagella", "Palatino", "New Computer Modern") //-- https://www.1001fonts.com/tex-gyre-pagella-font.html
+  let sans-font = ("TeX Gyre Heros", "Source Sans Pro", "Calibri") //-- https://www.1001fonts.com/texgyreheros-font.html + https://github.com/adobe-fonts/source-sans-pro
   let math-font = ("Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
+  // let math-font = ("TeX Gyre Pagella Math", "Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
   let mono-font = ("Consolas", "Monaco") //-- Input Mono Condensed
   set text(
-    font: serif-fonts,
+    font: serif-font,
     size: 10pt,
   )
   set par(
@@ -220,7 +221,7 @@
     leading: 0.53em,
   )
 
-  show heading: set text(font: serif-fonts, weight: "bold")
+  show heading: set text(font: serif-font, weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
   show heading.where(level: 1): it => counter(figure.where(kind: table)).update(0) + it
   show heading.where(level: 1): it => {
@@ -229,19 +230,19 @@
     // place(top+right)[
     //   #rect(fill: blue, width: 10%, height: 10%)
     // ]
-    align(left, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it))
+    align(left, text(font: sans-font, hyphenate: false, weight: "bold", size: 18pt, it))
     // note(counter(heading).get().first())
-    // place(top, note(counter: none, side: "outer")[#text(font: sans-fonts, hyphenate: false, weight: "bold", size: 28pt, "1")])
+    // place(top, note(counter: none, side: "outer")[#text(font: sans-font, hyphenate: false, weight: "bold", size: 28pt, "1")])
     v(2em)
   }
   show heading.where(level: 2): it => {
     v(3em, weak: true)
-    text(font: sans-fonts, size: 14pt, weight: "bold", it)
+    text(font: sans-font, size: 14pt, weight: "bold", it)
     v(2em, weak: true)
   }
   show heading.where(level: 3): it => {
     v(3em, weak: true)
-    text(font: sans-fonts, size: 11pt, it)
+    text(font: sans-font, size: 11pt, it)
     v(1.5em, weak: true)
   }
   show heading.where(level: 4): it => {
@@ -266,7 +267,7 @@
  
   
   // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
-  // show heading.where(level: 1): it => align(right, text(font: sans-fonts, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
+  // show heading.where(level: 1): it => align(right, text(font: sans-font, hyphenate: false, weight: "bold", size: 18pt, it)) + v(2em)
   
   //-- math
   show math.equation: set text(font: math-font)
@@ -280,7 +281,8 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  show link: it => text(fill: rgb("#3087b3"), font: serif-fonts, it)
+  // show link: it => text(fill: rgb("#3087b3"), font: serif-font, it)
+  show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
   // show link: set text(blue)
   show ref: set text(blue)
 
@@ -301,8 +303,8 @@
   //-- because the figure occupies the margin where the note would be placed
   show figure.caption: it => context {
     if in-wideblock.get() {
-      align(center, text(size: 8pt, style: "normal", weight: "regular")[
-        *#it.supplement #it.counter.display(it.numbering)*: #it.body
+      align(left, text(size: 8pt, style: "normal", weight: "regular")[
+        *#it.supplement #it.counter.display(it.numbering)*: #it.body 
       ])
     } else {
       note(
@@ -321,7 +323,7 @@
       #counter(page).update(0)
       #align(center)[
         #v(5cm)
-        #text(font: sans-fonts, size: 20pt, weight: "bold", title)
+        #text(font: sans-font, size: 20pt, weight: "bold", title)
         // #title \
         #grid(
           columns: (5cm, 5cm),

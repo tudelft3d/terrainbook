@@ -118,11 +118,14 @@ Notice here that maximising the minimum angle is not the same as minimising the 
 
 In the context of modelling terrains, the max-min angle optimality ensures that a surface approximated with the set of lifted (Delaunay) triangles will be close to the original surface.
 @fig:notdelaunay shows two examples of a hill, the left surface is a random triangulation of some sample points of the surface, and the right one is the Delaunay triangulation of the same set of points.
+
+#wideblock[
 #figure(
   image("./figs/notdelaunay/notdelaunay.png", width: 90%),
   caption: [The same set of sample points of a hill is triangulated on the left with a random triangulation (non-Delaunay) and right with a Delaunay triangulation. The shape of the triangles is shown at the bottom by projecting them to the $x y$-plane.],
-  placement: none,
-) <fig:notdelaunay>
+    placement: none,
+  ) <fig:notdelaunay>
+]
 
 === Lifting on the paraboloid <sec:parabolic_lifting>
 
@@ -154,6 +157,7 @@ For example, in two dimensions, when four or more points in $S$ are cocircular t
 #notefigure(
   image("./figs/degeneracies.pdf", width: 100%),
   caption: [The DT for four cocircular points in two dimensions is not unique (but the VD is).],
+  dy: 120pt,
 ) <fig:degeneracies>
 As shown in @fig:degeneracies, the quadrilateral can be triangulated with two different diagonals, and an arbitrary choice must be made since both respect the Delaunay criterion (points should not be on the interior of a circumcircle, but more than three can lie directly on the circumcircle).
 
