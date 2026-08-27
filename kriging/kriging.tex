@@ -562,6 +562,18 @@ The reason for this is that matrix \(A\) will be very large, and inverting a mat
 Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of the closest sample points.
 However, when the excluded far-away points would have had non-negligible weights, this causes artefacts in the final result.
 
+Apart from deciding which sample points to use, the parameters of the theoretical variogram function (\ie\ the partial sill, the range and the nugget) also need to be estimated from the experimental variogram, in a process known as \emph{fitting}\marginnote{fitting}\index{fitting}.
+In practice, this is often still done manually: a few candidate functions are plotted over the experimental variogram and their parameters are adjusted until the fit looks right.
+This is less arbitrary than it may sound, because the variogram fit is not a goal in itself---what matters is the quality of the interpolated values, and this is usually not very sensitive to small changes in the parameters.
+Kriging is also forgiving with respect to the choice of the model: as long as the chosen function is valid and its sill, range and nugget are roughly right, switching from one theoretical function to a similar one (\eg\ from spherical to exponential) usually has only a modest effect on the interpolated values.
+
+Fitting can also be automated.
+The most common approach is \emph{weighted least squares}\marginnote{weighted least squares}\index{weighted least squares}, in which the parameters are adjusted so as to minimise the squared differences between the values of the theoretical function and the experimental semivariances.
+The weights make it possible to account for the fact that the experimental semivariances are not equally reliable: lags with many point pairs (typically the shorter ones) are more trustworthy than lags with only a few, so the latter are largely ignored, which is consistent with the earlier recommendation to compute the experimental variogram only up to about half of the extent of the domain.
+A more statistically rigorous alternative is \emph{maximum likelihood}\marginnote{maximum likelihood}\index{maximum likelihood}, which treats the parameters as unknowns to be estimated from the joint probability distribution of the sample values, but it is computationally more demanding and requires assumptions (\eg\ that the values follow a multivariate normal distribution) that are difficult to verify in practice.
+Finally, whichever fitting approach is used, it is wise to check the fitted model against the only thing that really matters: the quality of the interpolated values.
+A simple way to do this is \emph{leave-one-out cross-validation}\marginnote{leave-one-out cross-validation}\index{cross-validation}, in which each sample point is removed in turn, estimated from the others using the fitted model, and compared with its known value.
+
 Another related issue is that kriging is often said to be exact in theory, \ie\ it passes exactly through the sample points.
 Strictly speaking, this exactness follows from using \(\gamma(0) = 0\) in the kriging system, and it holds even when the fitted theoretical variogram function has a nugget.
 However, a nugget larger than zero has a noticeable effect around the sample points: since \(\gamma(h)\) is already large for very small \(|h|\), the interpolant is smoothed in the neighbourhood of each sample point, reaching the sample value only exactly at the sample point itself, which creates a discontinuity.
@@ -618,6 +630,8 @@ A relatively simple explanation of kriging with agricultural examples is given b
 A standard reference textbook that is good but not so easy to follow is \citet{Wackernagel03}.
 The mathematics covered in this chapter is partly based on the latter.
 
+For the fitting of theoretical variogram functions, the classical reference on the weighted least squares approach is \citet{Cressie85}.
+
 \texttt{Pyinterpolate}\marginnote{\url{https://pyinterpolate.readthedocs.io/}} is a good Python library to perform kriging and is used to generate some of the example figures from this chapter.
 
 Two other good Youtube videos that explain kriging:
@@ -635,4 +649,24 @@ Two other good Youtube videos that explain kriging:
 \item If kriging generally provides better results than other interpolation methods, why would you use something else (eg IDW)?
 \item What does a nugget of zero say about a dataset? What about a large nugget?
 \item What kind of dataset would yield a flat variogram (\ie\ a horizontal line)?
+\item An experimental variogram keeps increasing over all of the computed lags, without ever levelling off. Which of the theoretical variogram functions from this chapter could you still fit to it, and what does this behaviour suggest about the trend in the dataset?
+\item Two interpolated locations can have exactly the same kriging variance even if one of the two estimates is accurate and the other is completely wrong. Explain how this is possible.
+\item Consider three sample points on a line: \(x_1 = 0\) with \(z_1 = 6\), \(x_2 = 10\) with \(z_2 = 8\), and \(x_3 = 20\) with \(z_3 = 4\), and suppose that we want to interpolate at \(x_0 = 5\) using a linear semivariogram \(\gamma(h) = |h|\) (which is a valid model here because the points lie on a line).
+(a) Set up the ordinary kriging system, \ie\ write down the matrix \(A\) and the vector \(d\).
+(b) Solve the system for the weights and the Lagrange multiplier.
+(c) Compute the interpolated value and the kriging variance at \(x_0\).
+(d) Point \(x_3\) receives a weight of 0; explain why.
+% Answer to the last exercise (kept commented out; uncomment to use):
+% (a) With \(\gamma(h) = |h|\), the semivariances between the sample points are \(\gamma(x_1, x_2) = 10\), \(\gamma(x_1, x_3) = 20\) and \(\gamma(x_2, x_3) = 10\), and those towards \(x_0\) are \(\gamma(x_1, x_0) = 5\), \(\gamma(x_2, x_0) = 5\) and \(\gamma(x_3, x_0) = 15\).
+% The ordinary kriging system \(A w = d\) is:
+% \(10 w_2 + 20 w_3 + \lambda = 5\)
+% \(10 w_1 + 10 w_3 + \lambda = 5\)
+% \(20 w_1 + 10 w_2 + \lambda = 15\)
+% \(w_1 + w_2 + w_3 = 1\)
+% (b) Subtracting the second equation from the first gives \(w_1 = w_2 + w_3\), which together with the last equation gives \(w_1 = 1/2\).
+% Substituting this into the third equation gives \(\lambda = 5 - 10 w_2\).
+% Substituting this into the first equation then gives \(w_3 = 0\), and therefore \(w_2 = 1/2\) and \(\lambda = 0\).
+% (c) The interpolated value is \(\hat{Z}_0 = \frac{1}{2} \cdot 6 + \frac{1}{2} \cdot 8 + 0 \cdot 4 = 7\), and the kriging variance is \(\sigma^2(x_0) = \frac{1}{2} \cdot 5 + \frac{1}{2} \cdot 5 + 0 \cdot 15 + \lambda = 5\).
+% (d) Since \(x_2\) lies on the line between \(x_1\) and \(x_3\) and the semivariogram is linear, the ordinary kriging system reduces to that of linear interpolation: only the two sample points that bracket \(x_0\) (here \(x_1\) and \(x_2\)) receive weight, and points outside this interval receive zero weight.
+% Note that the weights do not depend on the measured values \(z_i\), only on the geometry of the sample points and on the variogram.
 \end{enumerate}
