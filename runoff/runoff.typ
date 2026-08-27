@@ -17,10 +17,10 @@ Such models can be quite accurate, but they require high-resolution data that is
   placement: none,
 ) <fig:hydrology>
 
-By contrast, the simpler _GIS models of runoff_ can be performed automatically in large areas with only a DTM.
+By contrast, the simpler _GIS models of runoff_ can be computed automatically over large areas with only a DTM.
 These models mostly use gridded raster terrains, and so we will generally refer to this representation throughout this chapter.
 The methods described here can be adapted to work on other representations, but the flow computation on a TIN is different enough that we discuss it separately at the end of this chapter.
-In order for the GIS models of runoff to achieve their results, two big assumptions are usually made:
+For the GIS models of runoff to achieve their results, two important simplifying assumptions are usually made:
 
 + that all water flow is _overland_, thus ignoring all subsurface flows and dismissing factors such as evaporation and infiltration; and
 + that a good estimate for the total flow at any point is the drainage area upstream from it, ie the area from which water drains through that point, which is equivalent to assuming that rain falls evenly over the whole terrain.
@@ -34,14 +34,14 @@ We look at a few different methods to compute these values in the next two secti
 
 == #flex-heading[Flow direction][Computing the flow direction] <se:direction>
 
-Theoretically, the flow direction of a point is the direction with the steepest descent at that location, which does correspond to the direction towards which water would naturally flow.
+Theoretically, the flow direction of a point is the direction with the steepest descent at that location, which corresponds to the direction towards which water would naturally flow.
 However, the discretisation of a terrain into DTM cells means that some kind of an approximation needs to be made.
 There are two broad approaches that can be followed to do this: computing a single flow direction, which assumes that all the water in a DTM cell flows to one other cell, or multiple flow directions, which assumes that the water in a DTM cell can flow towards multiple other cells.
 
 === Single flow direction
 
-The earliest and simplest method to compute the flow direction of a cell is to compute the slope between the centre of the cell and the centre of all its neighbouring cells (using the distance between the centres and the difference in elevation), then assign the flow direction towards the neighbour with the steepest descent.
-The method is known as the _single flow direction (SFD)_ approach, and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals). 
+The earliest and simplest way to compute the flow direction of a cell is to calculate the slope between the centre of the cell and the centre of each of its neighbouring cells, then assign the flow direction towards the neighbour with the steepest descent.
+This is known as the _single flow direction (SFD)_ approach, and when applied to a raster grid, it usually considers that there are eight neighbours to each pixel (left, right, up, down and the diagonals).
 #note[single flow direction (SFD)]#index[single flow direction]#index[SFD]
 For this reason, it is also known as the _eight flow directions (D8)_ approach.
 #note[D8 flow direction]#index[D8 flow direction]#index[eight flow directions]
@@ -55,7 +55,7 @@ This method can therefore easily create artefacts in certain geometric configura
   figure(image("figs/d8_dinf.pdf", width: 100%), caption: [D-infinity]),
   figure(image("figs/d8_d8.pdf", width: 100%), caption: [D8]),
   columns: (1fr, 1fr),
-  caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Based on #citet(<Tarborton97>).],
+  caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Based on #citet(<Tarboton97>).],
   placement: none,
   label: <fig:d8>,
 )
@@ -68,8 +68,8 @@ Despite its age and limitations, the SFD method is still widely used and availab
 
 === Multiple flow directions
 
-In an attempt to overcome the limitations of the SFD method, a variety of methods assign the flow direction of a DTM cell fractionally to some or all of its lower neighbouring cells according to some criteria.
-These methods are collectively known as multiple flow directions (MFD), 
+In an attempt to overcome the limitations of the SFD method, a variety of other approaches assign the flow direction of a DTM cell fractionally to some or all of its lower neighbouring cells according to some criteria.
+These are collectively known as multiple flow directions (MFD),
 #note[multiple flow directions (MFD)]#index[multiple flow directions]#index[MFD]
 and they usually use a variation of this equation:
 
@@ -89,7 +89,7 @@ By contrast, the original MFD method can model the flow direction in a way that 
 More modern approaches try to combine some of the advantages of both approaches.
 
 The most widely used modern method to do so is the D∞ method, which computes, for each cell, the direction of the steepest descent within the triangular facets formed by the cell and pairs of its neighbouring cells.
-#note[D∞ ($D^infinity$)]#index[$D^infinity$]#index[D∞]
+#note[D∞]#index[D∞]
 The resulting flow direction is continuous, ie it is not restricted to the 8 grid directions, and the flow is split between the two neighbouring cells that bracket this direction, in proportions that depend on the angles.
 D∞ thus avoids both the quantisation of the flow direction inherent to D8 and the strong dispersion of the earlier MFD methods.
 
@@ -97,26 +97,26 @@ D∞ thus avoids both the quantisation of the flow direction inherent to D8 and 
   figure(image("figs/dispersion_d8.pdf", width: 100%), caption: [D8]),
   figure(image("figs/dispersion_quinn.pdf", width: 100%), caption: [Quinn]),
   columns: (1fr, 1fr),
-  caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Based on #citet(<Tarborton97>).],
+  caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Based on #citet(<Tarboton97>).],
   placement: none,
   label: <fig:dispersion>,
 )
 
 == #flex-heading[Flow accumulation][Computing the flow accumulation] <se:accumulation>
 
-After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in all of them.
+After the flow directions in all the cells of a DTM have been computed, the usual next step is to use this information to compute the flow accumulation in every cell.
 Note that this assumes that the flow directions are well defined in every cell, which is not always the case; we discuss how to handle the problematic cases (sinks and flats) in @se:sinks and @se:flats.
 As stated in the assumptions we make for GIS models of runoff, the flow accumulation at a given DTM cell can be estimated by the area that drains to it.
-Note that in the case of a square grid, it is simply the number of cells that drain to it, including the cell itself.
+Note that in the case of a square grid with single flow directions, it is simply the number of cells that drain to it, including the cell itself, whereas with multiple flow directions each of those cells contributes only the fraction of its flow that is directed at the cell.
 
 In practical terms, the flow accumulation is defined based on a recursive operation:
 
-$  A_0 = a_0 + sum_(i = 1)^(n) p_i A_i  $
+$  A_0 = a_0 + sum_(j = 1)^(n) p_j A_j  $
 
-where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_i$ is the proportion of the flow of the i-th neighbour that drains to the cell, $A_i$ is the accumulated flow for the i-th neighbour, and $n$ is the number of neighbouring cells that drain to the cell.
-Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when $p_i = 0$.
+where $A_0$ is the accumulated flow for a cell, $a_0$ is the area of the cell, $p_j$ is the proportion of the flow of the j-th neighbouring cell that drains to the cell, $A_j$ is the accumulated flow for the j-th neighbouring cell, and $n$ is the number of neighbouring cells that drain to the cell.
+Note that this calculation can be sped up substantially by: (i) storing the accumulated flows that have already been computed, and (ii) not following the recursion when $p_j = 0$.
 
-== Solving issues with sinks <se:sinks>
+== #flex-heading[Sinks][Handling sinks: filling and breaching] <se:sinks>
 
 _Sinks_#note[sink]#index[sink], which are also known as depressions or pits, are areas in a DTM that are completely surrounded by higher terrain, ie from which no path of non-increasing elevation leads to the boundary of the DTM.
 Some of these are natural features that are present in the terrain (eg lakes and dry lakebeds), towards which water would flow and stagnate in reality, and are thus not a problem for runoff modelling.
@@ -131,7 +131,7 @@ We will look at two common options to solve this problem: modifying a DTM by fil
 The aim of the algorithms to fill in sinks is to increase the elevation of certain DTM cells in a way that ensures that all the cells in the DTM can drain to a cell on its boundary (@fig:pf), or possibly to a set of cells that are known to be valid outlets, eg lakes and oceans.
 #note[outlet]
 At the same time, the elevation increases should be minimised in order to preserve the original DTM as much as possible.
-In the best case scenario, we can imagine that the resulting DTM is one that: (i) is identical to the original DTM where there is no water, but (ii) follows the top of water bodies where there is.
+In the best-case scenario, we can imagine that the resulting DTM is one that: (i) is identical to the original DTM where there is no water, but (ii) follows the top of water bodies where there is.
 
 #figure(
   image("figs/pf.pdf", width: 80%),
@@ -151,7 +151,7 @@ An alternative to modifying a DTM to eliminate sinks is to implement a more comp
 For this, the usual approach is to implement a variation of the $A^(\*)$ search algorithm, which in this context is known as the least-cost paths (LCP)#note[least-cost paths (LCP)]#index[least-cost paths]#index[LCP] algorithm.
 
 For each sink, the LCP algorithm finds the least-cost path to route its water out towards a cell that is already known to drain.
-The cost of moving from one cell to another is typically based on the difference in elevation between them, so that the search finds the path that requires the least elevation gain, ie the one that crosses the rim of the sink at its lowest point.
+The cost of moving from one cell to another is typically based on the difference in elevation between them, so that the search finds the path that requires the least elevation gain, ie roughly the one that crosses the rim of the sink at its lowest point.
 The flow direction of the cells along this path is then set towards the outlet, effectively breaching the rim of the sink.
 
 == #flex-heading[Flow direction in flats][Assigning flow direction in flats] <se:flats>
@@ -168,7 +168,7 @@ Efficient methods combine both of these approaches, resulting in more natural fl
 
 #figure(
   image("figs/ht.pdf", width: 100%),
-  caption: [In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient away from the higher terrain to route water out of the flat and towards the outlet. For this, we can iteratively assign (tiny or symbolic) elevation decreases in the flat starting from the higher terrain until all non-draining cells in the flat have been covered. Note that in this case, a sink is produced by the procedure. Figure from #citet(<Barnes14>).],
+  caption: [In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient away from the higher terrain to route water out of the flat and towards the outlet. For this, we can iteratively assign (tiny or symbolic) elevation decreases in the flat starting from the higher terrain until all non-draining cells in the flat have been covered. Figure from #citet(<Barnes14>).],
   placement: none,
 ) <fig:ht>
 
@@ -178,19 +178,19 @@ Efficient methods combine both of these approaches, resulting in more natural fl
   placement: none,
 ) <fig:lt>
 
-== #flex-heading[Drainage networks][Drainage networks and basins] <sec:drainage_basins>
+== #flex-heading[Drainage networks][Drainage networks and basins] <se:drainage_basins>
 
 Interpreting DTM cells as nodes and the flow direction as directed edges connecting them yields the _drainage network_#note[drainage network]#index[drainage network] of a DTM.
 However, it is usually best to filter out the least important parts of the network using a flow accumulation threshold.
 A common starting point for this threshold is the mean flow accumulation in the DTM, but the exact value is usually set by trial and error until the desired parts of the network are kept.
 
-Based on a computed drainage network, it is then possible to extract the _drainage basins_#note[drainage basin]#index[drainage basin]#index[basin] of a DTM by considering the areas that are drained by one or more nodes of the network (@fig:oceans).
+Based on a computed drainage network, it is then possible to extract the _drainage basins_#note[drainage basin, also known as catchment or watershed]#index[drainage basin]#index[basin]#index[catchment]#index[watershed] of a DTM by considering the areas that are drained by one or more nodes of the network (@fig:oceans).
 This operation can be performed in many different places, such as the end node of a river (yielding its river basin), the nodes just before junctions in the network (yielding the drainage basins of the tributaries of a river), or the end nodes of a selected part of the network (yielding the drainage basin of a sea or ocean).
 The lines that separate adjacent drainage basins are _drainage divides_#note[drainage divide]#index[drainage divide], which form topographical ridges.
 
 #figure(
   image("figs/Ocean_drainage.pdf", width: 100%),
-  caption: [The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them. Note the endorheic basins that drain to none of these cells. These actually form sinks in the DTM. Based on an image from Wikimedia Commons.],
+  caption: [The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them. Note the endorheic basins that drain to none of these cells; their outlets are sinks in the DTM. Based on an image from Wikimedia Commons.],
   placement: none,
 ) <fig:oceans>
 
@@ -219,7 +219,7 @@ Both operations change the surface and can create new artefacts elsewhere, so th
 
 To compute the flow accumulation at a point, one traces the flow line backwards from it, accumulating the area of every facet that drains into it.
 Unlike in a raster, the facets of a TIN are not all the same size, so each one contributes its own (horizontal) area, in the same way that the cell area $a_0$ appears in the accumulation equation of @se:accumulation.
-Because the flow lines are not aligned to a grid, they cannot be accumulated cell by cell as in a raster; the usual approach is to trace each flow line and distribute the drained area along it.
+And when the accumulated flow of the whole terrain is needed, the usual approach is to trace each flow line once and distribute the drained area along it, since there are no cells in which to accumulate it as in a raster.
 
 == Notes and comments
 
@@ -228,12 +228,12 @@ It covers how to make much more complex runoff models than the ones described he
 
 #citet(<OCallaghan84>) was the original paper to describe the D8 method.
 #citet(<Fairfield91>) modify D8 into the stochastic rho8 method.
-#citet(<Quinn91>) describes the original MFD method.
+#citet(<Quinn91>) describe the original MFD method.
 #citet(<Holmgren94>) generalises the MFD equation with an exponent that controls the dispersion of the flow.
-#citet(<Tarborton97>) describes the D∞ MFD method and contains nice figures comparing multiple methods.
+#citet(<Tarboton97>) describes the D∞ MFD method and contains nice figures comparing multiple methods.
 
-#citet(<Barnes14a>) describes how to fill in sinks, while #citet(<Metz11>) describes how to use a variation of $A^(*)$ search algorithm to route water out of them.
-#citet(<Barnes14>) describes how to assign the drainage direction over flats.
+#citet(<Barnes14a>) describe how to fill in sinks, while #citet(<Metz11>) describe how to use a variation of the $A^(*)$ search algorithm to route water out of them.
+#citet(<Barnes14>) describe how to assign the drainage direction over flats.
 
 #citet(<Jones90>) is a classic reference for the computation of runoff on TINs.
 #citet(<Palacios86>) is another early reference that handles the delineation of rivers, ridges and basins, including the treatment of pits, on TINs.

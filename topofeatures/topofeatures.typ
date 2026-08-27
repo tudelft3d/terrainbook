@@ -294,7 +294,7 @@ This is often the input of (local) meteorological models, can be used to optimis
 While curvature is used implicitly to calculate the flow direction in runoff modelling, there are use-cases where the value is useful.
 One of them is for the predicting of where snow covering will be.
 
-The values of the curvature can help a practitioners understand and characterise the drainage basins, once extracted from a terrain (see Section @sec:drainage_basins).
+The values of the curvature can help a practitioners understand and characterise the drainage basins, once extracted from a terrain (see Section @se:drainage_basins).
 
 === Roughness
 
