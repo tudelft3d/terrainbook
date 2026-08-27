@@ -13,7 +13,6 @@ Both of these elements are modelled in kriging.
 
 More than a single method, kriging comprises a family of related methods.
 Within this chapter, we will look at two types of kriging in detail: simple kriging and ordinary kriging.
-These treat the spatially correlated randomness in a similar way, but they make different assumptions about the trend in a dataset.
 
 == Statistical background
 
@@ -116,7 +115,7 @@ where $x$ is an arbitrary point in the domain (ie the area we want to interpolat
 ]
 
 Next, there are also important properties of the residual term.
-First, note that since $R = Z - E[Z]$, the variance (@eq:variance1) and covariance (@eq:covariance) can be defined in a simple way in terms of the residuals:
+First, note that since $R = Z - E[Z]$ follows from @eq:geostat, the variance (@eq:variance1) and covariance (@eq:covariance) can be defined in a simple way in terms of the residuals:
 
 $ "var"(Z) = E[R^2], $ <eq:varres>
 
@@ -168,8 +167,7 @@ Since nearby sample points tend to have similar values, the dissimilarity tends 
 However, it is worth noting that since the pairs of sample points that are farthest apart happen to have similar values in this specific dataset, the dissimilarity decreases again at the largest distances.
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
-Mathematically, the averages of the dissimilarities, known as _experimental semivariances_#note[experimental semivariance]#index[experimental semivariance] $gamma^star(h)$, are computed for all point pairs whose separation is within one of a series of specified intervals (generally known as _bins_ or _lags_).
-#note[intervals (bins)]
+Mathematically, the averages of the dissimilarities, known as _experimental semivariances_#note[experimental semivariance]#index[experimental semivariance] $gamma^star(h)$, are computed for all point pairs whose separation is within one of a series of specified intervals, generally known as _bins_ or _lags_#note[bins or lags].
 Given a set $frak(h)$ containing the vectors for a distance interval, the experimental semivariances are computed as:
 
 $ gamma^star(frak(h)) = 1/(2n) sum_(h in frak(h)) (z(x + h) - z(x))^2 $
@@ -193,7 +191,7 @@ This computation results in much smoother values for the dissimilarity, and the 
 Note that in order to avoid the unreliable dissimilarities that are common at large distances between sample points, it is usual practice to compute the experimental variogram only for distances up to about half of the extent of the region covered by the dataset.
 
 From the scatterplot of the experimental variogram, it is possible to see how a few important parameters can be used to describe it (@fig:example_variogram):
-- the _sill_#note[sill]#index[sill], which is the upper bound of $gamma^star(h)$;
+- the _sill_#note[sill]#index[sill], which is the plateau value of $gamma^star(h)$;
 - the _range_#note[range]#index[range], which is the value of $|h|$ at which $gamma^star(h)$ levels off (reaches the sill);
 - the _nugget_#note[nugget]#index[nugget], which is the value of $gamma^star(h)$ when $|h|$ approaches 0.
 
@@ -239,7 +237,7 @@ where $s$ is the _partial sill_#note[partial sill]#index[partial sill], set to r
 Note that the exponential and Gaussian functions only approach the sill asymptotically; for these, the 3 in the formulas is chosen so that $gamma(r)$ is approximately 95% of the way to the sill, and $r$ is therefore known as a _practical range_#note[practical range]#index[practical range].
 @fig:theoretical_variogram shows the result of fitting the example theoretical variogram functions.
 Note how the cubic and especially the Gaussian functions fit well in this case.
-Unlike the other functions, the power model is usually unbounded: $gamma(h) = c |h|^a$ grows without limit as $|h|$ increases, and therefore has no sill or range. The bounded version above is used here so that it can be compared with the other models.
+Unlike the other functions, the power model is usually unbounded: $gamma(h) = c |h|^a$ (with $c > 0$ and typically $0 < a <= 2$) grows without limit as $|h|$ increases, and therefore has no sill or range. The bounded version above is used here so that it can be compared with the other models.
 The bounded linear model also deserves a caveat: it is a valid model only in one dimension.
 In two dimensions (the usual case for terrains), using it can therefore yield a kriging system without a unique solution and even negative estimation variances.
 The circular model is essentially its valid two-dimensional counterpart.
@@ -361,16 +359,16 @@ $ "var"(hat(Z)_0 - Z_0) &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j "cov"(Z_i, Z_j) -
 
 In the second line, the covariance was converted to the semivariogram using $gamma(h) = "sill" - C(h)$, and the terms with the sill cancel out because the weights are constrained to sum to one.
 
-Using the previous equation and the unbiased criterion from @eq:unbiased, we can apply the minimisation method known as the method of Lagrange multipliers#footnote[#link("https://en.wikipedia.org/wiki/Lagrange_multiplier")] and arrive at the set of $n+1$ ordinary kriging equations:
+Using the previous equation and the unbiased criterion from @eq:unbiased, we can apply the minimisation method known as the method of Lagrange multipliers#note[#link("https://en.wikipedia.org/wiki/Lagrange_multiplier")] and arrive at the set of $n+1$ ordinary kriging equations:
 
-$ sum_(j=1)^(n) w_j gamma(x_i - x_j) + mu(x_0) &= gamma(x_i - x_0) quad "for all" 1 <= i <= n \
+$ sum_(j=1)^(n) w_j gamma(x_i - x_j) + lambda(x_0) &= gamma(x_i - x_0) quad "for all" 1 <= i <= n \
   sum_(i=1)^(n) w_i &= 1 $
 
-where $mu(x_0)$ is a Lagrange multiplier that was used in the minimisation process.
+where $lambda(x_0)$ is a Lagrange multiplier that was used in the minimisation process.
 
 Like with simple kriging, these equations can be used to perform ordinary kriging, but it is often easier to deal with these in matrix form:
 
-$ underbrace(mat(gamma(x_1 - x_1), dots.c, gamma(x_1 - x_n), 1; dots.v, dots.down, dots.v, 1; gamma(x_n - x_1), dots.c, gamma(x_n - x_n), 1; 1, dots.c, 1, 0), A) underbrace(mat(w_1; dots.v; w_n; mu(x_0)), w) = underbrace(mat(gamma(x_1 - x_0); dots.v; gamma(x_n - x_0); 1), d) $
+$ underbrace(mat(gamma(x_1 - x_1), dots.c, gamma(x_1 - x_n), 1; dots.v, dots.down, dots.v, 1; gamma(x_n - x_1), dots.c, gamma(x_n - x_n), 1; 1, dots.c, 1, 0), A) underbrace(mat(w_1; dots.v; w_n; lambda(x_0)), w) = underbrace(mat(gamma(x_1 - x_0); dots.v; gamma(x_n - x_0); 1), d) $
 
 which is known as the _ordinary kriging system_#note[ordinary kriging system]#index[ordinary kriging system].
 
@@ -379,12 +377,14 @@ Finally, if we invert the matrix $A$, the weights and the Lagrange multiplier ar
 $ w = A^(-1) d. $
 
 Here, the first $n$ entries of $w$ are the interpolation weights, which can be substituted into @eq:waok to estimate the value at $x_0$ as a weighted average of the values at the $n$ sample points used for the interpolation.
-The last entry, the Lagrange multiplier $mu(x_0)$, is not used in the estimate itself, but rather to compute the kriging variance below.
+The last entry, the Lagrange multiplier $lambda(x_0)$, is not used in the estimate itself, but rather to compute the kriging variance below.
 As in simple kriging, the vector $d$ depends on the interpolation location $x_0$, and thus the system needs to be solved anew for every location at which we want to interpolate.
 
 Substituting the ordinary kriging equations into the estimation variance above gives its minimum value, which is known as the _kriging variance_#note[kriging variance]#index[kriging variance]:
 
-$ sigma^2(x_0) = sum_(i=1)^(n) w_i gamma(x_i - x_0) + mu(x_0). $ <eq:krigingvariance>
+$ sigma^2(x_0) = sum_(i=1)^(n) w_i gamma(x_i - x_0) + lambda(x_0). $ <eq:krigingvariance>
+
+Despite the notation, $sigma^2(x_0)$ should not be confused with the variance $sigma^2$ of a random variable described at the start of the chapter: it depends on the location $x_0$ and represents the variance of the estimation error there.
 
 The kriging variance can be computed at every location where we interpolate, and a map of it is useful to identify where the interpolated values are least reliable (see @fig:kriging_variance and @sec:kriging_impl).
 
@@ -401,7 +401,7 @@ The kriging variance can be computed at every location where we interpolate, and
 
 There are a few important details with respect to the implementation of kriging methods in practice.
 
-First of all, within this chapter, we have assumed that you always use all sample points to interpolate any point on the plane.
+First of all, within this chapter, we have assumed that you always use all sample points to interpolate at any location.
 While this is optimal in theory, if a large number of sample points are used to interpolate every point, kriging can be _very slow_ in practice.
 The reason for this is that matrix $A$ will be very large, and inverting a matrix is a computationally expensive process.
 Since the weights of far-away sample points are usually very small, the usual solution is to limit the number of sample points used, either by using a search radius, or by selecting only a given number of the closest sample points.
@@ -424,7 +424,7 @@ Because of this, some authors and implementations instead treat the nugget as me
   )
 ]
 
-Finally, it is worth noting that kriging can be directly applied to any point on the plane, yielding a result such as the one in @fig:interpolation.
+Finally, it is worth noting that kriging can be directly applied to any location, yielding a result such as the one in @fig:interpolation.
 However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points).
 It can extrapolate (often by using negative weights), but that does not mean that the results outside the domain are accurate.
 The kriging variance (@eq:krigingvariance) shown in @fig:kriging_variance gives a quantitative picture of this: it is lowest close to the sample points and increases with the distance from them, becoming particularly large outside the domain.
@@ -452,9 +452,6 @@ If you feel like your statistics background is a bit weak, you first might want 
 A relatively simple explanation of kriging with agricultural examples is given by #citet(<Oliver15>).
 A standard reference textbook that is good but not so easy to follow is #citet(<Wackernagel03>).
 The mathematics covered in this chapter is partly based on the latter.
-
-Strictly speaking, ordinary kriging evaluated at a location that coincides exactly with a sample point reproduces the sample value even when the nugget is larger than zero, since by definition $gamma(0) = 0$.
-The smoothing at the sample points shown in @fig:nugget_exactness\b therefore comes from treating the nugget as measurement error, ie from using its value on the diagonal of the kriging system rather than zero.
 
 `Pyinterpolate`#note[#link("https://pyinterpolate.readthedocs.io/")] is a good Python library to perform kriging and is used to generate some of the example figures from this chapter.
 
