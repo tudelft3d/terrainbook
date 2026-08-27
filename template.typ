@@ -301,8 +301,8 @@
   //-- because the figure occupies the margin where the note would be placed
   show figure.caption: it => context {
     if in-wideblock.get() {
-      align(center, text(size: 8pt, style: "normal", weight: "regular")[
-        *#it.supplement #it.counter.display(it.numbering)*: #it.body
+      align(left, text(size: 8pt, style: "normal", weight: "regular")[
+        *#it.supplement #it.counter.display(it.numbering)*: #it.body 
       ])
     } else {
       note(
