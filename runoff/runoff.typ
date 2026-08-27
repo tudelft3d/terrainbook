@@ -85,10 +85,10 @@ The case $x = 1$ gives the original method of #citet(<Quinn91>); following #cite
 
 As shown in @fig:dispersion, MFD methods show characteristically wider flows compared to SFD methods.
 D8 does not disperse the flow, but the path is constrained to the 8 possible grid directions.
-By contrast, #citet(<Quinn91>) (an MFD method) can model the flow direction in a way that matches the topography better, but it also introduces substantial dispersion.
+By contrast, the original MFD method can model the flow direction in a way that matches the topography better, but it also introduces substantial dispersion.
 More modern approaches try to combine some of the advantages of both approaches.
 
-The most widely used modern method to do so is the D∞ (#citet(<Tarborton97>)) method, which computes, for each cell, the direction of the steepest descent within the triangular facets formed by the cell and pairs of its neighbouring cells.
+The most widely used modern method to do so is the D∞ method, which computes, for each cell, the direction of the steepest descent within the triangular facets formed by the cell and pairs of its neighbouring cells.
 #note[D∞ ($D^infinity$)]#index[$D^infinity$]#index[D∞]
 The resulting flow direction is continuous, ie it is not restricted to the 8 grid directions, and the flow is split between the two neighbouring cells that bracket this direction, in proportions that depend on the angles.
 D∞ thus avoids both the quantisation of the flow direction inherent to D8 and the strong dispersion of the earlier MFD methods.
@@ -139,7 +139,7 @@ In the best case scenario, we can imagine that the resulting DTM is one that: (i
   placement: none,
 ) <fig:pf>
 
-One efficient method to fill in sinks is the priority-flood algorithm #citep(<Barnes14a>).
+One efficient method to fill in sinks is the priority-flood algorithm.
 It works by keeping: (i) a list of DTM cells that are known to drain, which is kept sorted by elevation; and (ii) a raster marking whether each cell of the DTM is known to drain yet.
 The list is initialised with the cells on the boundary of the DTM (which are assumed to be able to drain outwards), as well as other specially marked cells (eg those forming part of a lake or a large river).
 Then, it iteratively: (i) removes the lowest cell from the sorted list of cells that are known to drain, (ii) raises the elevation of its neighbours that are not yet known to drain and that are lower than the cell to the level of the cell (leaving those that are higher unchanged), (iii) adds the neighbours that are not yet known to drain to the list.
@@ -148,7 +148,7 @@ Note that implicit in this last step is the fact that the neighbour cells are de
 === Least-cost (drainage) paths
 
 An alternative to modifying a DTM to eliminate sinks is to implement a more complex water routing algorithm that allows water to flow out of sinks.
-For this, the usual approach is to implement a variation of the $A^(\*)$ search algorithm, which in this context is known as the least-cost paths (LCP)#note[least-cost paths (LCP)]#index[least-cost paths]#index[LCP] algorithm #citep(<Metz11>).
+For this, the usual approach is to implement a variation of the $A^(\*)$ search algorithm, which in this context is known as the least-cost paths (LCP)#note[least-cost paths (LCP)]#index[least-cost paths]#index[LCP] algorithm.
 
 For each sink, the LCP algorithm finds the least-cost path to route its water out towards a cell that is already known to drain.
 The cost of moving from one cell to another is typically based on the difference in elevation between them, so that the search finds the path that requires the least elevation gain, ie the one that crosses the rim of the sink at its lowest point.
@@ -164,7 +164,7 @@ Flats are common in real terrain (eg lakes, floodplains and salt flats), but the
 It is thus often necessary to apply a method that assigns a flow direction to flats, either by: (i) modifying the DTM to eliminate them, and then assigning them a flow direction in the usual way, or (ii) assigning them a flow direction directly.
 
 After all flats in a DTM have been identified and their extent is known, algorithms usually work by (i) assigning an artificial gradient away from higher terrain (@fig:ht), ie terrain in a flat is assumed to become lower as we move farther away from its neighbouring higher terrain; and/or (ii) assigning an artificial gradient towards lower terrain (@fig:lt), ie terrain in a flat is assumed to become lower as we move closer to its neighbouring lower terrain.
-#citet(<Barnes14>) is a good example of an efficient method that combines both of these approaches, resulting in more natural flow directions and better results than would be possible with either approach individually.
+Efficient methods combine both of these approaches, resulting in more natural flow directions and better results than would be possible with either approach individually.
 
 #figure(
   image("figs/ht.pdf", width: 100%),
@@ -216,7 +216,6 @@ As with rasters, when a local minimum is a triangulation artefact (or a depressi
 The TIN analogue of filling a sink is to raise the offending vertex so that it lies just above its lowest neighbour; the vertex can also be deleted and the polygon formed by its neighbours re-triangulated, which eliminates the local minimum but discards a point of the input data.
 The alternative, closer in spirit to the least-cost paths of @se:sinks, is to allow water to escape over the lowest point of the rim of the local minimum, ie along the shortest path of least elevation gain to a point that drains.
 Both operations change the surface and can create new artefacts elsewhere, so they require care.
-#citet(<Palacios86>) describes such a TIN-based approach to basin delineation.
 
 To compute the flow accumulation at a point, one traces the flow line backwards from it, accumulating the area of every facet that drains into it.
 Unlike in a raster, the facets of a TIN are not all the same size, so each one contributes its own (horizontal) area, in the same way that the cell area $a_0$ appears in the accumulation equation of @se:accumulation.
