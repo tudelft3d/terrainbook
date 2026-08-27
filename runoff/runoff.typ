@@ -241,7 +241,18 @@ It covers how to make much more complex runoff models than the ones described he
 == Exercises
 
 + Given a raster map of precipitation values, how would you be able to improve the flow accumulation estimates?
-+ Why is the flow width important?
++ A DTM cell at an elevation of #qty("10", "m") has three lower neighbouring cells: one to the west at an elevation of #qty("8", "m") and one to the south at an elevation of #qty("9", "m"), both at a spacing of $d$, and one to the south-east at an elevation of #qty("9", "m"), at a distance of $sqrt(2) d$. All the other neighbouring cells are higher.
+  (a) Compute $tan alpha_i$ and the flow width $L_i$ for each of the three lower neighbours.
+  (b) Compute the flow fractions $F_i$ that they receive according to the MFD equation of @se:direction with $x = 1$.
+  (c) Repeat the computation with $x = 2$ and compare the results.
+  (d) What happens to the fractions as $x -> infinity$? Which method from this chapter does that correspond to?
+// Answer to the second exercise (kept commented out; uncomment to use):
+// (a) The slope towards the western neighbour is $tan alpha_W = (10-8)/d = 2/d$, towards the southern neighbour $tan alpha_S = (10-9)/d = 1/d$, and towards the south-eastern neighbour $tan alpha_SE = (10-9)/(sqrt(2)d) = 1/(sqrt(2)d)$.
+//   The flow widths are $L_W = L_S = d/2$ for the two adjacencies and $L_SE = sqrt(2)/4 d$ for the diagonal.
+// (b) The weights $L_i tan alpha_i$ are 1, $1/2$ and $1/4$ (the spacing $d$ cancels out), which sum to $7/4$.
+//   The flow fractions are therefore $F_W = 4/7$, $F_S = 2/7$ and $F_SE = 1/7$.
+// (c) Raising the weights to the power $x = 2$ gives 1, $1/4$ and $1/16$, which sum to $21/16$, so $F_W = 16/21$, $F_S = 4/21$ and $F_SE = 1/21$: the flow is more strongly concentrated towards the steepest descent.
+// (d) As $x -> infinity$, all the flow is assigned to the neighbour with the largest weight (here the western one), ie the method reduces to a single flow direction, as in the SFD approach.
 + You have a cycle in your drainage network. How can that happen? How would you solve it?
 + How can you detect endorheic basins without finding all other basins first?
 + Come up with an algorithm to identify flats in a DTM.
