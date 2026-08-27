@@ -283,7 +283,6 @@ It is thus possible that the final surface does not lie within $epsilon_(max )$,
 In practice, refinement is often computationally more efficient than decimation because we do not need to first build a TIN from all input points before removing several of them again. 
 However, decimation could be more efficient when you already have a detailed TIN, stored in a topological data structure, that just needs to be slightly simplified.
 
-== #flex-heading[Wedding cake effect][Conversion isolines to TIN/raster creates the "wedding cake effect"] <sec:weddingcake>
 
 #wideblock[
 #subfigure(
@@ -296,11 +295,14 @@ However, decimation could be more efficient when you already have a detailed TIN
   label: <fig:wedding>,
 )
 ]
-If the input is a set of isolines, then the simplest solution is, as shown in @fig:weddinga, to convert these to points and then use any of the interpolation methods previously discussed.
+
+== #flex-heading[Wedding cake effect][Conversion isolines to TIN/raster creates the "wedding cake effect"] <sec:weddingcake>
+
+If the input is a set of isolines, then the simplest solution is, as shown in @fig:wedding\a, to convert these to points and then use any of the interpolation methods previously discussed.
 This conversion can be done by either keeping only the vertices of the polylines, or by sampling points at regular intervals along the lines (say every #qty("10", "m")).
 However, one should be aware that doing so will create terrains having the so-called _wedding cake effect_.
-Indeed, the TIN obtained with a Delaunay triangulation, as shown in @fig:weddingb, contains several horizontal triangles; these triangles are formed by 3 vertices from the same isoline.
-If another interpolation method is used, eg nearest neighbour (@fig:weddingc), then the results are catastrophic.
+Indeed, the TIN obtained with a Delaunay triangulation, as shown in @fig:wedding\b, contains several horizontal triangles; these triangles are formed by 3 vertices from the same isoline.
+If another interpolation method is used, eg nearest neighbour (@fig:wedding\c), then the results are catastrophic.
 
 Solving this problem requires solutions specifically designed for such inputs.
 The main ideas for most of them is to add extra vertices between the isolines, to avoid having horizontal triangles. 
