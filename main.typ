@@ -1,9 +1,9 @@
 // TODOs
 // [ ] references have DOIs: remove?
 // [ ] @app:ahn[Appendix]
-// [ ] headers + page numbering at the bottom to fix
-// [ ] empty page at first have page numbering
 // [ ] eg + ie
+// [x] headers + page numbering at the bottom to fix
+// [x] empty page at first have page numbering
 // [x] harmonise Algorithms for...do etc
 // [x] figure numbers in Appendices are back at 1.1...
 // [x] table numbers are not reset at 1 each new chapter :\
