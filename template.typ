@@ -342,6 +342,9 @@
   body
 
   if cover == true {
+    //-- make sure the back cover ends up on a left (even) page
+    set page(numbering: none)
+    pagebreak(to: "even")
     page(
       width: 210mm,
       height: 297mm,
@@ -392,8 +395,7 @@
     }
     // line(length: 100%)
   })
-  set page(numbering: "1")
-  // set page(numbering: "1", number-align: top+right)
+  set page(numbering: none)
   
   counter(page).update(1)
   set heading(numbering: "1.1")

@@ -66,8 +66,10 @@
 
 
 //-- main-matter
-// #pagebreak()
-#pagebreak()
+//-- break to an odd page before switching to main matter, so that any
+//-- blank filler page stays unnumbered and chapter 1 starts at page 1
+#set page(numbering: none)
+#pagebreak(weak: true, to: "odd")
 #main-matter[
 
   // #pagebreak()
