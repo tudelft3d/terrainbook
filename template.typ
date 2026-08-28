@@ -84,7 +84,8 @@
 #let minitoc(toc, youtube: none) = note(dy:17pt)[
   #showybox(
     frame: (
-      body-color: blue.lighten(94%),
+      // body-color: rgb("#3c7e43").lighten(80%),
+      body-color: olive.lighten(80%),
       inset: 5pt,
       thickness: 0pt,
       // shadow: (
@@ -103,7 +104,7 @@
   #if youtube != none {
     showybox(
       frame: (
-        body-color: red.lighten(90%),
+        body-color: teal.lighten(90%),
         inset: 5pt,
         thickness: 0pt,
         // shadow: (
@@ -127,9 +128,9 @@
 #let box-practice(title, body) = figure(placement: auto)[
   #showybox(
     frame: (
-      border-color: red.darken(50%),
-      title-color: red.lighten(20%),
-      body-color: red.lighten(95%),
+      border-color: orange.darken(50%),
+      title-color: orange.lighten(20%),
+      body-color: orange.lighten(85%),
     ),
     title-style: (
       color: white,
