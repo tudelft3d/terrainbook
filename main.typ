@@ -120,7 +120,7 @@
   #pagebreak()
 
   #align(bottom)[
-    This document was typeset using #link("https://typst.app")[Typst]; its source code is freely available at #link("https://github.com/tudelft3d/terrainbook/").
+  This document was typeset using #link("https://typst.app")[Typst]\; its source code is freely available at #link("https://github.com/tudelft3d/terrainbook/").
     // TODO: colofon
     // The main font is Palatino.
     // The figures and diagrams were mostly drawn using IPE, PGF/Ti\emph{k}z and Omnigraffle.
