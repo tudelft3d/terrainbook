@@ -279,7 +279,7 @@ Notice how some steep surfaces and some of the adjacent ground are not registere
 The severity of both effects mostly depends on the geometry of the target objects and flight parameters such as the flying altitude and the amount of overlap between flight strips.
 However, regardless of what flight parameters are chosen for a survey both effects are almost always visible somewhere in the resulting dataset, see for example @fig:pcd:ahn1 for different lidar datasets for the same area.
 
-/* TODO: verify subfigure layout */
+#wideblock[
 #subfigure(
   figure(image("figs/ahn1_d.png", width: 100%), caption: []),
   figure(image("figs/ahn2_d.png", width: 100%), caption: []),
@@ -290,6 +290,7 @@ However, regardless of what flight parameters are chosen for a survey both effec
   placement: none,
   label: <fig:pcd:ahn1>,
 )
+]
 
 ==== Material properties
 Depending on material properties of a target surface, signals may be reflected in a way that makes it impossible to compute the correct distance. 
@@ -320,15 +321,16 @@ An example of moving objects are flocks of birds flying in front of the scanner.
 It is common to perform some kind of process after acquisition in order to fix errors caused by the reasons mentioned above. 
 In most cases such processes are largely successful. 
 For instance, one can attempt to fill the void regions, sometimes referred to as _no-data_ regions, that are for instance due to pools of rainwater or occlusion, using an interpolation method (@fig:voidfill).
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/srtm_trento_voidfill.png", width: 100%), caption: []),
   figure(image("figs/ourlier-detection-wrong.png", width: 100%), caption: []),
-  columns: (1fr, 1fr),
+  columns: (1fr),
   caption: [Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).],
-  placement: none,
+  placement: auto,
   label: <fig:voidfill>,
 )
+
 Or, one can attempt to detect and remove outliers caused eg by multi-path effects or flocks of birds (more details in @chap:pcprocessing). 
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove 'good' points if they look the same as outliers to the outlier detection algorithm (see eg @fig:outlier-wrong).
