@@ -200,6 +200,8 @@ As shown in @fig:tin, a TIN refers to an irregular tessellation of the $x y$-pla
 #notefigure(
   image("figs/tin.pdf", width: 100%),
   caption: [A TIN is obtained by lifting the vertices to their elevation. All the triangles are usually Delaunay, ie their circumcircle (green) is empty of any other points in the plane.],
+  // placement: auto,
+  dy: -150pt,
 ) <fig:tin>
 One way to explain the 2.5D properties of a TIN is as follows: if we project vertically to the $x y$-plane the triangles in 3D space forming the TIN, then no two triangles will intersect.
 
