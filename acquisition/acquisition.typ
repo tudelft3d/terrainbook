@@ -28,8 +28,8 @@ A lidar system measures the distance to a target by illuminating it with pulsed 
 #note[Backscattering is the natural phenomenon of the reflection of (electromagnetic) waves or signals back to the direction they came from.] 
 
 #notefigure(
-  image("figs/lidar.png", width: 100%),
-  caption: [Lidar range measurement],
+  image("figs/lidar.svg", width: 100%),
+  caption: [Lidar range measurement.],
 ) <fig:acqLidar>
 
 By measuring the time-of-flight, ie the difference in time between emitting a pulse and detecting its return or _echo_, the distance to the target that reflected the pulse can be found using a simple formula. To be exact, the time-of-flight $T$ is equal to
