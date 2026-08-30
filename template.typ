@@ -104,23 +104,21 @@
   #if youtube != none {
     showybox(
       frame: (
-        body-color: teal.lighten(90%),
-        inset: 5pt,
+        body-color: olive.lighten(10%),
+        inset: 12pt,
         thickness: 0pt,
         // shadow: (
         //   offset: 3pt,
         // ),
       ),
-      {
-        rect(stroke:none)[
-          #box(
-            height: 9pt,
-            baseline: (shift: 0.22em),
-            image("./misc/youtube.svg"),
-          )
-          #link(youtube)
-        ]
-      },
+      body-style: (
+        align: center,
+        color: white,
+      ),
+     [#show link: set text(fill: white)
+      #box(baseline: 0.25em, image("misc/youtube.svg", height: 8pt))
+      #h(5pt)
+      #link(youtube, youtube.replace("https://", ""))]
     )
   }
 ]
