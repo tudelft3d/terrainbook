@@ -260,6 +260,7 @@
   )
   set table.hline(stroke: 0.5pt)
   set table.vline(stroke: 0.5pt)
+
  
   
   // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
@@ -277,7 +278,7 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  // show link: it => text(fill: rgb("#3087b3"), font: serif-font, it)
+  // show link: set text(fill: rgb("#1a1a1a"), font: serif-font)
   show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
   // show link: set text(blue)
   show ref: set text(blue)
