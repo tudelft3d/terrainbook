@@ -672,17 +672,16 @@
                 match="any"
                 type="article-magazine article-newspaper broadcast collection document event motion_picture pamphlet performance personal_communication post post-weblog song speech webpage"
               >
-                <!-- Many video and audio examples in manual give full dates. Err on the side of too much information. -->
-                <text macro="date-issued-month-day" />
+                <!-- Full dates would render here, but hayagriva keeps the delimiter when the
+                     date has no month (renders "(2018,)"). The bibliography has year-only dates,
+                     so month/day rendering is disabled until that is fixed upstream. -->
               </if>
               <!-- Only show the month and day for an unpublished `interview` or `paper-conference` -->
               <else-if
                 match="any"
                 variable="collection-editor compiler editor editorial-director issue page supplement-number volume"
               />
-              <else-if match="any" type="interview paper-conference">
-                <text macro="date-issued-month-day" />
-              </else-if>
+              <else-if match="any" type="interview paper-conference" />
               <!-- Only year: article article-journal book chapter classic entry entry-dictionary entry-encyclopedia dataset figure graphic manuscript map musical_score paper-conference[published] patent periodical report review review-book software standard thesis -->
             </choose>
           </group>
@@ -2087,7 +2086,7 @@
   <macro name="source-DOI-URL">
     <choose>
       <if variable="DOI">
-        <text prefix="https://doi.org/" variable="DOI" />
+        <text prefix="doi:" variable="DOI" />
       </if>
       <else-if variable="URL">
         <group delimiter=" ">
