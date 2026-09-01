@@ -441,9 +441,9 @@ The constrained segments in $S$ act as visibility blockers.
   placement: none,
 ) <fig:cdt_steps>
 Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see @fig:cdt_steps):
-+ construct DT($S^(p)$), where $S^(p)$ is the set containing all the points in $S$ and the end points of the line segments (@fig:cdt_stepsb)
-+ insert each line segment, each insertion will remove edges from DT($S^(p)$). In @fig:cdt_stepsc 3 edges are removed.
-+ this creates 2 polygons that need to be retriangulated, in @fig:cdt_stepsd there is a blue and a green one.
++ construct DT($S^(p)$), where $S^(p)$ is the set containing all the points in $S$ and the end points of the line segments (@fig:cdt_steps\b)
++ insert each line segment, each insertion will remove edges from DT($S^(p)$). In @fig:cdt_steps\c 3 edges are removed.
++ this creates 2 polygons that need to be retriangulated, in @fig:cdt_steps\d there is a blue and a green one.
 + retriangulate each separately, the Delaunay criterion needs to be verified only for the vertices incident to the triangles incident to the hole/polygon.
 
 Observe that the ConsDT can be used to triangulate polygons with holes (see @fig:cdt_dog), it suffices to remove the triangle outside the exterior boundary, but inside the convex hull.

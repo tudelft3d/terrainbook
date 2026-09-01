@@ -256,7 +256,7 @@ Photogrammetry knows a similar process called aerial triangulation, in which cam
   columns: (1fr, 1fr, 1fr),
   caption: [Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.],
   placement: none,
-  label: <fig:dim:a>,
+  label: <fig:dim>,
 )
 
 === Target surface
@@ -328,7 +328,7 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
   columns: (1fr, 1fr),
   caption: [Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).],
   placement: auto,
-  label: <fig:voidfill>,
+  label: <fig:processing>,
 )
 
 Or, one can attempt to detect and remove outliers caused eg by multi-path effects or flocks of birds (more details in @chap:pcprocessing). 

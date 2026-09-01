@@ -182,7 +182,7 @@ To obtain satisfactory results, this method is usually used in 2D with a Delauna
 The method is exact, continuous, local, adaptative, efficient, and automatic.
 Only the property \#3 is not fulfilled (at the edges of the triangles).
 
-If the point location strategy is used to identify the triangle containing $x$ (@dtwalk), then $cal(O) (n^(frac(1,3)))$ on average is used.
+If the point location strategy is used to identify the triangle containing $x$ (@algo:walk), then $cal(O) (n^"1/3")$ on average is used.
 The interpolation itself is performed in constant time.
 
 ==== Data-dependent triangulations
@@ -273,7 +273,7 @@ The NNI method can be thought of performing linear interpolation, in the 1D case
 It can be modified so that the first derivative is possible everywhere, including at the data points.
 This is achieved by modifying the weights so that they are not linear anymore.
 The gradient of the surface at each sample point is taken into account, ie for each data point we can estimate the slope (with a linear function, a plane) and modify the weights; how this is done is out of scope for this book.
-The resulting interpolant is $C^(1)$, and @fig:comp_nni shows an example.
+The resulting interpolant is $C^(1)$, and @fig:nni shows an example.
   #subfigure(
     figure(image("figs/nni.png", width: 100%), caption: [NNI]),
     figure(image("figs/nni_c1.png", width: 100%), caption: [NNI ($C^(1)$)]),
@@ -415,7 +415,6 @@ The differences in the lower areas (which is water) are smaller since these area
       [*NNI-c1*], [#sym.checkmark], [$C^(1)$], [#sym.checkmark], [++], [--], [#sym.checkmark] , 
       [*Laplace*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [+], [#sym.checkmark] , 
       [*bilinear*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [++], [#sym.checkmark] ,
-      
       table.hline(),
     ) 
   ) <tab:results_interpol>

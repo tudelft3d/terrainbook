@@ -41,7 +41,7 @@ For our subset of 10 or 15 neighbouring points in $S$, the direction of maximum 
     image("./figs/normal.pdf", width: 100%, page: 3),
   ),
   caption: [Calculating the normal of points with $k$d-trees and fitting of a plane. *(top)* A few points sampling the surface of a cube. *(middle)* For the case where 5 neighbours are used, the normal is indicated in dark red. *(bottom)* If $p$ is near the edge of the cube, then some neighbours will on the other face and the normal will be modified.],
-) <fig:normal>
+) <fig:knn_normal>
 
 Observe that the normal obtained this way is not by definition correctly oriented, that is it could point in either direction perpendicular to the fitted plane.
 For buildings, we usually prefer to have the normal pointing outwards/up, and thus the normal with the $z$-component positive is usually chosen.

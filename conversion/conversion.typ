@@ -30,7 +30,7 @@ We consider in this chapter the following four terrain representations and discu
     
     table.hline(),
   ) 
-) <tab:results_interpol>
+) 
 ]
 
 
@@ -139,8 +139,8 @@ For most other applications this can be problematic, for instance:
 + if a GIS format requires that the isolines be closed polylines oriented such that the higher terrain is on the left for instance, such as for colouring the area enclosed by an isoline.
 
 To obtain structured segments, the simplest solution is to merge, as post-processing, the line segments based on their start and end vertices.
-Observe that the line segments will not be consistently oriented to form one polygon (see @fig:isoline2a), that is the orientation of the segments might need to be swapped.
-This can be done by simply starting with a segment $a b$, and searching for the other segment having $b$ as either start or end vertex, and continue until a component is formed (a polygon is formed), or until no segment can be found (the border of the dataset is reached, as shown in @fig:isoline2a).
+Observe that the line segments will not be consistently oriented to form one polygon (see @fig:isoline2\a), that is the orientation of the segments might need to be swapped.
+This can be done by simply starting with a segment $a b$, and searching for the other segment having $b$ as either start or end vertex, and continue until a component is formed (a polygon is formed), or until no segment can be found (the border of the dataset is reached, as shown in @fig:isoline2\a).
 #figure(
   image("figs/isoline2.pdf", width: 100%),
   caption: [#strong[(a)] The isoline segments extracted with @algo:iso do not have a consistent orientation. #strong[(b)] @algo:iso can be sped up by starting at a seed triangle and 'tracing' the isoline; the order is shown by the blue arrows.],
