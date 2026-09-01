@@ -244,7 +244,7 @@ For this reason adjacent flight strips (see @fig:lidarStrips) often need to be a
   columns: (1fr, 1fr),
   caption: [Strip adjustment for lidar point clouds],
   placement: none,
-  label: <fig:lidarStrips>,
+  label: <fig:lidarStripsAdj>,
 )
 If the strip adjustment process fails or is omitted, a 'ghosting' effect can occur as illustrated in @fig:lidarGableRoof (top). 
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in @fig:dim.
