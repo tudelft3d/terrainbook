@@ -33,7 +33,7 @@ The three most used instruments to collect elevation information are:
 
 === Photogrammetry from high-resolution satellite images
 
-See Section @sec:photogrammetry.
+See @sec:photogrammetry.
 
 === InSAR
 
@@ -44,7 +44,7 @@ As InSAR requires two images of the same area for stereoscopy to derive a DEM, t
 
 Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred meters (!) away, to generate InSAR data in a single pass.
 
-See Section @sec:insar for more information.
+See @sec:insar for more information.
 
 === Spaceborne lidar (ICESat-2 + GEDI)
 

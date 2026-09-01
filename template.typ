@@ -104,12 +104,9 @@
   #if youtube != none {
     showybox(
       frame: (
-        body-color: olive.lighten(10%),
+        body-color: olive.lighten(20%),
         inset: 12pt,
         thickness: 0pt,
-        // shadow: (
-        //   offset: 3pt,
-        // ),
       ),
       body-style: (
         align: center,

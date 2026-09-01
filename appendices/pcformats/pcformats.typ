@@ -48,6 +48,7 @@ The biggest downside is that they are not standardised, ie the type, order, and 
   caption: [A simple PLY file with 1 additional user-defined attribute of type integer (`int`). It contains 7 points.],
   placement: none,
 ) <fig:ply>
+
 The PLY format can be considered a standardised ASCII format.
 #note[More information about PLY: #link("http://paulbourke.net/dataformats/ply/")]
 A PLY file contains a header#note[A header is supplemental information placed at the beginning of a file, eg to store metadata about the file.] that specifies the structure of the point records in the file, ie the number of attributes (for this format called a _property_), their order, their names, and their data types.
@@ -70,7 +71,7 @@ LAS files are binary and unlike the PLY format the fields are prescribed, ie the
 @tab:las-record shows the composition of the base record type for the latest version of LAS (v1.4).
 
 //-- TODO: figures in appendix not numbered
-#wideblock(side: "right")[
+#wideblock[
 #figure(
   caption: [LAS Point Data Record Format 6.],
   {

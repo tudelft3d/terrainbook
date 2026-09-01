@@ -224,8 +224,9 @@ While there exist different strategies to construct a DT, we focus in this book 
 An incremental algorithm is one where the structure is built incrementally; in our case this means that each point is inserted one at a time in a valid DT and the triangulation is updated, with respect to the Delaunay criterion (empty circumcircle), after each insertion. 
 Observe that the insertion of a single point $p$ in a DT modifies only _locally_ the DT, ie only the triangles whose circumcircle contains $p$ need to be deleted and replaced by new ones respecting the Delaunay criterion (see @fig:insertion_deletion for an example). 
 #notefigure(
-  image("./figs/insertion_deletion.pdf", width: 90%),
+  image("./figs/insertion_deletion.pdf", width: 75%),
   caption: [#strong[(top)] The DT before and #strong[(bottom)] after a point $p$ has been inserted. Notice that the DT is updated only locally (only the yellow triangles are affected).],
+  // dy: -420pt,
 ) <fig:insertion_deletion>
 
 In sharp contrast to this, other strategies to construct a DT (eg divide-and-conquer and plane sweep algorithms, see Section @sec:notes), build a DT in _one_ operation (this is a batch operation), and if another point needs to be inserted after this, the whole construction operation must be done again from scratch. 
@@ -234,11 +235,14 @@ That hinders their use for some applications where new data coming from a sensor
 The incremental insertion algorithm, and the other well-known algorithms, can all construct the DT of $n$ points randomly distributed in the Euclidean plane in $cal(O) (n log n)$.
 
 @fig:insertion_steps illustrates the steps of the algorithm, and @algo:insert1pt its pseudo-code. 
-#figure(
-  image("./figs/insertion_steps.pdf", width: 90%),
-  caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
-  placement: none,
-) <fig:insertion_steps>
+
+// #wideblock[
+  #figure(
+    image("./figs/insertion_steps.pdf", width: 90%),
+    caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
+    placement: none,
+  ) <fig:insertion_steps>
+// ]
 
 #figure(
   kind: "algorithm",
@@ -299,7 +303,7 @@ The extra triangles can nevertheless be easily marked as they are the only ones 
 #box-practice("How are DT created in practice?")[
   Several implementations of the DT use a big triangle or the infinite vertex, CGAL (#link("https://www.cgal.org/")) and startinpy (#link("https://github.com/hugoledoux/startinpy")) are two examples.
   Those will refer in their API to "finite" and "infinite" vertices, edges, and triangles.
-  It is therefore essential to understand the mechanism to use those libraries, even if one is not constructing the DT herself.
+  It is therefore essential to understand the mechanism to use those libraries, even if you never construct the DT yourself.
 ]
 
 === Point location with walking <sec:dtwalk>
@@ -352,19 +356,22 @@ In practice, because most real-world datasets will have a high _spatial coherenc
   image("./figs/flip22.pdf", width: 70%),
   caption: [A #emph[flip22].],
 ) <fig:flip22>
+
 Flips are operations that modify _locally_ the triangulation.
 There are 3 flip operations (the numbers refer to the number of triangles before and after the flip):
-- a *flip22* modifies the configuration of two adjacent triangles. 
+/ flip22: modifies the configuration of two adjacent triangles. 
  Consider the set $S = {a, b, c, d}$ of points in the plane forming a quadrilateral, as shown in @fig:flip22. 
  There exist exactly two ways to triangulate $S$: the first one contains the triangles $a b c$ and $b c d$; and the second one contains the triangles $a b d$ and $a c d$. 
  Only the first triangulation of $S$ is Delaunay because $d$ is outside the circumcircle of $a b c$. 
  A _flip22_ is the operation that transforms the first triangulation into the second, or vice-versa.
  It is performed in constant time $cal(O) (1)$.
-- a *flip13* is the operation of inserting a vertex inside a triangle, and splitting it into three triangles (see @fig:flip13).
-- a *flip31* is the inverse operation that deletes a vertex (see @fig:flip13).
+/ flip13: is the operation of inserting a vertex inside a triangle, and splitting it into three triangles (see @fig:flip13).
+/ flip31: is the inverse operation that deletes a vertex (see @fig:flip13).
+
 #notefigure(
   image("./figs/flip13.pdf", width: 70%),
   caption: [A #emph[flip13] and its inverse operation #emph[flip31].],
+  dy: 400pt,
 ) <fig:flip13>
 
 === Controlling the flips
@@ -387,8 +394,8 @@ $ "InCircle"(a, b, c, p) = mat(delim: "|", a_x, a_y, a^(2)_x + a^(2)_y, 1 ; b_x,
 
 A triangulation is simply a subdivision of the plane into polygons, and thus any data structure used in GIS can be used to store a triangulation.
 
-/ Simple Features:: while many use this (PostGIS and any triangulation you see in Shapefiles), this is not smart: (1) the topological relationships between the triangles are not stored; (2) the vertices are repeated for each triangle (and we know that for a Poisson distribution of points in the plane a given point has exactly 6 incident triangles).
-/ Edge-based structures:: all the edge-based topological data structure used for storing planar graphs (eg DCEL, half-edge, winged-edge, etc) can be used. These usually lead to large storage space.
+/ Simple Features: While many use this (PostGIS and any triangulation you see in Shapefiles), this is not smart: (1) the topological relationships between the triangles are not stored; (2) the vertices are repeated for each triangle (and we know that for a Poisson distribution of points in the plane a given point has exactly 6 incident triangles).
+/ Edge-based structures: All the edge-based topological data structure used for storing planar graphs (eg DCEL, half-edge, winged-edge, etc) can be used. These usually lead to large storage space.
 
 Observe that in practice, if only the DT is wanted (and not the constrained one, see below), practitioners will often simply store the sample points and reconstruct on-the-fly the DT, since it is unique (if we omit points not in general position that is).
 
@@ -397,6 +404,7 @@ However, because it is simpler to manage triangles over arbitrary polygons (they
 #figure(
   image("./figs/tr_ds.pdf", width: 100%),
   caption: [The triangle-based data structure to store efficiently a triangulation (and the adjacency relationships between the triangles).],
+  placement: auto,
 ) <fig:tr_ds>
 
 The simplest data structure, as shown in @fig:tr_ds, considers the triangle as being its atom and stores each triangle with 3 pointers to its vertices and 3 pointers to its adjacent triangles.
@@ -412,7 +420,7 @@ We are mostly interested in the _constrained Delaunay triangulation_ (ConsDT) an
 #notefigure(
   image("./figs/cdt_example.pdf", width: 85%),
   caption: [#strong[(top)] A set $S$ of points and straight-line segments. #strong[(middle)] Constrained DT of $S$. #strong[(bottom)] Conforming DT of $S$; the Steiner points added are in red.],
-  dy: 200pt,
+  // dy: 200pt,
 ) <fig:cdt_example>
 
 ==== Constrained DT (ConsDT)

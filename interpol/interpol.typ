@@ -59,7 +59,7 @@ This is known as the Runge's phenomenon in numerical analysis,
 #index[Runge's phenomenon ]#note[Runge's phenomenon]
 and is shown in @fig:polynomial.
 
-#wideblock(side: "outer")[
+#wideblock[
 #figure(
   image("figs/polynomial.pdf", width: 100%),
   caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and the Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
@@ -395,7 +395,7 @@ The differences in the lower areas (which is water) are smaller since these area
   #link("https://tudelft3d.github.io/terrainbook/extra/interpol/")
 ]
 
-#wideblock(side: "right")[
+#wideblock[
   #figure(
     placement: auto,
     caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
