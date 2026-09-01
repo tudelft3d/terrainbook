@@ -2,6 +2,7 @@
 // [ ] references have DOIs: remove?
 // [ ] @app:ahn[Appendix]
 // [ ] eg + ie
+// [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
 // [x] headers + page numbering at the bottom to fix
 // [x] empty page at first have page numbering
 // [x] harmonise Algorithms for...do etc
