@@ -467,7 +467,7 @@ The mathematics covered in this chapter is partly based on the latter.
 
 For the fitting of theoretical variogram functions, the classical reference on the weighted least squares approach is #citet(<Cressie85>).
 
-`Pyinterpolate`#note[#link("https://pyinterpolate.readthedocs.io/")] is a good Python library to perform kriging and is used to generate some of the example figures from this chapter.
+`Pyinterpolate`#note[#link("https://pyinterpolate.readthedocs.io")] is a good Python library to perform kriging and is used to generate some of the example figures from this chapter.
 
 Two other good YouTube videos that explain kriging:
 - #link("https://www.youtube.com/watch?v=CVkmuwF8cJ8")

@@ -295,7 +295,7 @@ In both papers, the authors describe different strategies to make the algorithm 
 
 The $chi$-shape was introduced in #citet(<Duckham08>).
 
-The explanation of the $alpha$-shape is taken from #citet(<Edelsbrunner94>) and from the #link("https://doc.cgal.org/latest/Alpha_shapes_2/index.html")[CGAL documentation].
+The explanation of the $alpha$-shape is taken from #citet(<Edelsbrunner94>) and from the CGAL documentation (#link("https://doc.cgal.org/latest/Alpha_shapes_2/index.html")).
 
 The DBSCAN algorithm was introduced in #citet(<Ester96>).
 

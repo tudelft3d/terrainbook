@@ -301,7 +301,7 @@ For example in @fig:big_tr only the shaded triangles would be part of DT($S$).
 The extra triangles can nevertheless be easily marked as they are the only ones containing at least one of the 3 points forming $tau_"big"$.
 
 #box-practice("How are DT created in practice?")[
-  Several implementations of the DT use a big triangle or the infinite vertex, CGAL (#link("https://www.cgal.org/")) and startinpy (#link("https://github.com/hugoledoux/startinpy")) are two examples.
+  Several implementations of the DT use a big triangle or the infinite vertex, CGAL (#link("https://www.cgal.org")) and startinpy (#link("https://github.com/hugoledoux/startinpy")) are two examples.
   Those will refer in their API to "finite" and "infinite" vertices, edges, and triangles.
   It is therefore essential to understand the mechanism to use those libraries, even if you never construct the DT yourself.
 ]
@@ -491,7 +491,7 @@ Several criteria for constructing data-dependent triangulations are discussed in
 While these can be used, in practice it was proven that the Delaunay triangulation is still the triangulation that minimises the roughness of a surface #citep(<Wang01>)#citep(<Rippa90>)
 
 #citet(<Shewchuk97>) shows that while the triangle-based data structure requires twice as much code as with the quad-edge (to store and construct a ConsDT), the result is that the code runs twice as fast and the memory requirement as about 2X less.
-CGAL (#link("https://www.cgal.org/")), among many others, uses the triangle-based data structure.
+CGAL (#link("https://www.cgal.org")), among many others, uses the triangle-based data structure.
 
 Since a DT can be locally modified by adding one point (and not reconstructing the whole structure from scratch, see @fig:insertion_deletion), it is also possible to delete/remove one vertex from a DT with only local operations.
 #citet(<Mostafavi03>) and #citet(<Devillers09>) describe algorithms.
