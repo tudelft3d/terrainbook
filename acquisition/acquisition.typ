@@ -239,8 +239,8 @@ Consequently, any errors in the position and orientation of the sensor platform 
 For this reason adjacent flight strips (see @fig:lidarStrips) often need to be adjusted to match with each other using ground control points. 
 /* TODO: verify subfigure layout */
 #subfigure(
-  figure(image("figs/lidar_strips.png", width: 100%), caption: []),
-  figure(image("figs/strip_adjustment.png", width: 100%), caption: []),
+  figure(image("figs/lidar_strips.png", width: 100%), caption: [Plan view of the different strips of a lidar survey. Figure from #citet(<Kornus03>)]), <fig:lidarStrips>,
+  figure(image("figs/strip_adjustment.png", width: 100%), caption: [Cross-section of gable roof before (top) and after (bottom) strip adjustment.]), <fig:lidarGableRoof>,
   columns: (1fr, 1fr),
   caption: [Strip adjustment for lidar point clouds],
   placement: none,
@@ -250,9 +250,9 @@ If the strip adjustment process fails or is omitted, a 'ghosting' effect can occ
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in @fig:dim.
 /* TODO: verify subfigure layout */
 #subfigure(
-  figure(image("figs/Roof_OP_NA_10cm.jpg", width: 100%), caption: []),
-  figure(image("figs/Roof_DSM_NA_10cm.jpg", width: 100%), caption: []),
-  figure(image("figs/Roof_DSM_NA+OBL_10cm.jpg", width: 100%), caption: []),
+  figure(image("figs/Roof_OP_NA_10cm.jpg", width: 100%), caption: [Nadir image.]),
+  figure(image("figs/Roof_DSM_NA_10cm.jpg", width: 100%), caption: [DSM with good aerial triangulation.]),
+  figure(image("figs/Roof_DSM_NA+OBL_10cm.jpg", width: 100%), caption: [DSM with poor aerial triangulation.]),
   columns: (1fr, 1fr, 1fr),
   caption: [Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.],
   placement: none,
@@ -281,10 +281,10 @@ However, regardless of what flight parameters are chosen for a survey both effec
 
 #wideblock[
 #subfigure(
-  figure(image("figs/ahn1_d.png", width: 100%), caption: []),
-  figure(image("figs/ahn2_d.png", width: 100%), caption: []),
-  figure(image("figs/ahn3_d.png", width: 100%), caption: []),
-  figure(image("figs/rdam16_d.png", width: 100%), caption: []),
+  figure(image("figs/ahn1_d.png", width: 100%), caption: [AHN1 (1996--2003)]),
+  figure(image("figs/ahn2_d.png", width: 100%), caption: [AHN2 (2008)]),
+  figure(image("figs/ahn3_d.png", width: 100%), caption: [AHN3 (2014)]),
+  figure(image("figs/rdam16_d.png", width: 100%), caption: [City of Rotterdam (2016)]),
   columns: (1fr, 1fr),
   caption: [Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.],
   placement: none,
@@ -323,9 +323,9 @@ In most cases such processes are largely successful.
 For instance, one can attempt to fill the void regions, sometimes referred to as _no-data_ regions, that are for instance due to pools of rainwater or occlusion, using an interpolation method (@fig:voidfill).
 
 #subfigure(
-  figure(image("figs/srtm_trento_voidfill.png", width: 100%), caption: []),
-  figure(image("figs/ourlier-detection-wrong.png", width: 100%), caption: []),
-  columns: (1fr),
+  figure(image("figs/srtm_trento_voidfill.png", width: 100%), caption: [Void-filling through interpolation in SRTM data.]), <fig:voidfill>,
+  figure(image("figs/ourlier-detection-wrong.png", width: 100%), caption: [Good points, ie those on the power line, may be removed during outlier detection.]), <fig:outlier-wrong>,
+  columns: (1fr, 1fr),
   caption: [Post-processing aimed at correcting artefacts. Before processing (left) and after processing (right).],
   placement: auto,
   label: <fig:voidfill>,
