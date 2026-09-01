@@ -16,6 +16,7 @@ International Licence. For licence details, see
   inset: 3pt,
   columns: 2,
   align: (left, left),
+  // TODO: add new release + date
   [`v2025.0`], [`[2025–10–27]`],
   [`v2024.0`], [`[2024–10–29]`],
   [`v2023.0`], [`[2023–11–12]`],
@@ -35,7 +36,7 @@ and some chapters have extra material. Available at \
 #link("https://tudelft3d.github.io/terrainbook/videos")
 
 #strong[Source code] \
-The source code of the book, in LaTeX, is available at \
+The source code of the book, in Typst, is available at \
 #link("https://github.com/tudelft3d/terrainbook")
 
 #strong[Errors? Feedback?] \
