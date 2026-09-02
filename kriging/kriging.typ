@@ -91,6 +91,8 @@ These are:
 - _simple kriging_, where the trend is a known constant that we specify in the model; and
 - _ordinary kriging_, where the trend is a local mean that we calculate in the interpolation process.
 
+A known but non-constant trend, such as the quadratic surface fitted to the samples in @fig:trend_residual\b, is also possible; it is handled by universal kriging (see @sec:otherkriging), one of the other types of kriging.
+
 These will be described in detail later in the chapter.
 However, in order to understand how these work and when they can be applied, it is important to cover some common properties of the two terms of the standard geostatistical model.
 
@@ -137,15 +139,13 @@ Since both the expectation (@eq:stationarityofthemean) and the covariance (@eq:s
 
 == Covariance, dissimilarity and the semivariogram
 
-#index[variogram]
-
 According to the standard geostatistical model described above, the residual term is spatially correlated.
 That is, even after removing the general spatial trend from a dataset, nearby samples will tend to have more similar values than those farther apart.
 In kriging, we exploit that property by modelling it through a _semivariogram_ or a _covariance function_.
 These are roughly opposites, since the semivariogram is a measure of dissimilarity and the covariance is a measure of similarity.
 However, both attempt to measure how much spatial correlation there is as a function of distance and both can be used with kriging.
 
-The semivariogram $gamma(h)$#note[semivariogram]#index[semivariogram], often just called a variogram#note[variogram]#index[variogram] for short, is a function that expresses the average dissimilarity of the value of a random variable $Z$ between sample points at different distances.
+The semivariogram $gamma(h)$#note[semivariogram]#index[semivariogram], often just called a variogram#note[variogram]#index[variogram] for short (strictly, the variogram is twice the semivariogram), is a function that expresses the average dissimilarity of the value of a random variable $Z$ between sample points at different distances.
 It is defined as:
 
 $ gamma(h) = 1/2 E[(Z(x + h) - Z(x))^2], $ <eq:semivariogram>
@@ -167,7 +167,7 @@ Since nearby sample points tend to have similar values, the dissimilarity tends 
 However, it is worth noting that since the pairs of sample points that are farthest apart happen to have similar values in this specific dataset, the dissimilarity decreases again at the largest distances.
 
 Since most of the time there is a wide variation between the dissimilarities shown at all distances in a variogram cloud, the next step is to average the dissimilarity of the pairs of sample points based on distance intervals.
-Mathematically, the averages of the dissimilarities, known as _experimental semivariances_#note[experimental semivariance]#index[experimental semivariance] $gamma^star(h)$, are computed for all point pairs whose separation is within one of a series of specified intervals, generally known as _bins_ or _lags_#note[bins or lags].
+Mathematically, the averages of the dissimilarities, known as _experimental semivariances_#note[experimental semivariance]#index[experimental semivariance] $gamma^star(h)$, are computed for all point pairs whose separation is within one of a series of specified intervals, generally known as _bins_ or _lags_#note[bins or lags]#index[bins or lags].
 Given a set $frak(h)$ containing the vectors for a distance interval, the experimental semivariances are computed as:
 
 $ gamma^star(frak(h)) = 1/(2n) sum_(h in frak(h)) (z(x + h) - z(x))^2 $
@@ -201,7 +201,7 @@ From the scatterplot of the experimental variogram, it is possible to see how a 
   placement: none,
 ) <fig:example_variogram>
 
-The last step is to use these parameters to replace the experimental variogram with a _theoretical variogram function_#note[theoretical variogram function]#index[theoretical variogram function] that approximates it and which can be more easily evaluated for further calculations.
+The last step is to use these parameters to replace the experimental variogram with a _theoretical variogram function_#note[theoretical variogram function]#index[theoretical variogram function] that approximates it and can be more easily evaluated for further calculations.
 However, not every function that fits the experimental variogram can be used.
 The covariances that the model assigns to every pair of sample points determine the variance of any weighted average of the sample values.
 Since a variance can never be negative, this variance must be non-negative for any weights and any configuration of the sample points.
@@ -220,27 +220,23 @@ $ gamma_"circular"(h) &= cases(
   ) \
   gamma_"exponential"(h) &= s (1 - e^((-3 |h|)/r)) + n \
   gamma_"gaussian"(h) &= s (1 - e^((-3 |h|^2)/(r^2))) + n \
-  gamma_"linear"(h) &= cases(
-    (s |h|)/r + n & "if" |h| <= r,
-    s + n & "if" |h| > r,
-  ) \
-  gamma_"power"(h) &= cases(
-    (s |h|^2)/(r^2) + n & "if" |h| <= r,
-    s + n & "if" |h| > r,
-  ) \
   gamma_"spherical"(h) &= cases(
     s ((3 |h|)/(2 r) - (|h|^3)/(2 r^3)) + n & "if" |h| <= r,
     s + n & "if" |h| > r,
   ) $
 
-where $s$ is the _partial sill_#note[partial sill]#index[partial sill], set to roughly the difference between the value of $gamma^star(h)$ when it is flat and the nugget; $r$ is the _range_, roughly the minimum value of $|h|$ where $gamma^star(h)$ is flat; and $n$ is the nugget, which is the starting value of $gamma^star(h)$. Together, the partial sill and the nugget make up the (total) _sill_, $s + n$, which is the value at which $gamma^star(h)$ becomes flat.
+where $s$ is the _partial sill_#note[partial sill]#index[partial sill], set to roughly the difference between the flat value of $gamma^star(h)$ and the nugget; $r$ is the _range_, roughly the minimum value of $|h|$ where $gamma^star(h)$ is flat; and $n$ is the nugget, which is the starting value of $gamma^star(h)$. Together, the partial sill and the nugget make up the (total) _sill_, $s + n$, which is the value at which $gamma^star(h)$ becomes flat.
 Note that the exponential and Gaussian functions only approach the sill asymptotically; for these, the 3 in the formulas is chosen so that $gamma(r)$ is approximately 95% of the way to the sill, and $r$ is therefore known as a _practical range_#note[practical range]#index[practical range].
 @fig:theoretical_variogram shows the result of fitting the example theoretical variogram functions.
 Note how the cubic and especially the Gaussian functions fit well in this case.
-Unlike the other functions, the power model is usually unbounded: $gamma(h) = c |h|^a$ (with $c > 0$ and typically $0 < a <= 2$) grows without limit as $|h|$ increases, and therefore has no sill or range. The bounded version above is used here so that it can be compared with the other models.
-The bounded linear model also deserves a caveat: it is a valid model only in one dimension.
-In two dimensions (the usual case for terrains), using it can therefore yield a kriging system without a unique solution and even negative estimation variances.
-The circular model is essentially its valid two-dimensional counterpart.
+
+In contrast, the linear and power models are usually unbounded: $gamma(h) = c |h|^a$ (with $c > 0$ and typically $0 < a < 2$) grows without limit as $|h|$ increases, and therefore has no sill or range.
+The linear model is the special case with $a = 1$, and at $a = 2$ the power model becomes degenerate, making the kriging system singular; the exponent is therefore kept strictly below 2.
+
+Finally, be careful with bounded (ie truncated at the range) versions of these two models, which are sometimes seen in the literature and in software: do not use them in two dimensions.
+The truncated linear model is valid only in one dimension, and the truncated power model is valid only for small exponents (in particular not for exponents such as $a = 2$).
+In two dimensions (the usual case for terrains), using them can yield a kriging system without a unique solution and even negative estimation variances.
+The circular model is essentially the valid two-dimensional counterpart of the truncated linear model.
 
 #wideblock[
   #subfigure(
@@ -248,11 +244,9 @@ The circular model is essentially its valid two-dimensional counterpart.
     figure(image("figs/model_cubic.pdf", width: 100%), caption: []),
     figure(image("figs/model_exponential.pdf", width: 100%), caption: []),
     figure(image("figs/model_gaussian.pdf", width: 100%), caption: []),
-    figure(image("figs/model_linear.pdf", width: 100%), caption: []),
-    figure(image("figs/model_power.pdf", width: 100%), caption: []),
     figure(image("figs/model_spherical.pdf", width: 100%), caption: []),
     columns: (1fr, 1fr, 1fr),
-    caption: [Some possible theoretical variogram functions. #strong[(a)] Circular. #strong[(b)] Cubic. #strong[(c)] Exponential. #strong[(d)] Gaussian. #strong[(e)] Linear (bounded). #strong[(f)] Power (bounded). #strong[(g)] Spherical.],
+    caption: [Some possible theoretical variogram functions. #strong[(a)] Circular. #strong[(b)] Cubic. #strong[(c)] Exponential. #strong[(d)] Gaussian. #strong[(e)] Spherical.],
     placement: none,
     label: <fig:theoretical_variogram>,
   )
@@ -263,12 +257,12 @@ However, of the ones described above, the spherical, exponential and Gaussian ar
 
 Before moving on to apply these to kriging, there are a couple of important points.
 First, note that these theoretical functions are often only applied when $|h| > 0$, since setting $gamma(0) = 0$ helps to ensure that kriging passes exactly through the sample points (the exactness property, as explained in @sec:interpol_properties and discussed further in @sec:kriging_impl).
-Second, all of the semivariogram-related functions seen in this section can be converted to covariance functions as well, taking into account that $gamma(h) = "sill" - C(h)$.
+Second, all of the semivariogram-related functions seen in this section can be converted to covariance functions as well: for $|h| > 0$, they are related by $gamma(h) = "sill" - C(h)$, and a nonzero nugget corresponds to a jump of the covariance at $|h| = 0$ (as discussed in @sec:kriging_impl).
 Note that this means that the covariance is high when $|h|$ is small and it decreases as $|h|$ increases.
 
 == Simple kriging
 
-Simple kriging is similar to other spatial interpolation methods that use a weighted average.
+Simple kriging is similar to other spatial interpolation methods that use a weighted average (see @sec:wam_interpol).
 It starts from the assumption of second-order stationarity.
 Moreover, the expectation is also known, and so the general procedure is to: (i) subtract the expectation from the sample points to obtain residuals, (ii) use the residuals to define a function that estimates the value of the residual term at any location, and (iii) interpolate at the desired locations using the function added to the expectation.
 
@@ -388,7 +382,7 @@ Despite the notation, $sigma^2(x_0)$ should not be confused with the variance $s
 
 The kriging variance can be computed at every location where we interpolate, and a map of it is useful to identify where the interpolated values are least reliable (see @fig:kriging_variance and @sec:kriging_impl).
 
-== Other types of kriging
+== Other types of kriging <sec:otherkriging>
 
 / Directional kriging: is useful when the similarity between points depends on the direction, eg north-south versus east-west. It involves creating variograms for different directions.
 / Block kriging: estimates the average value over an area (a block) rather than at a single point. It can be used to obtain smoother results.
@@ -421,7 +415,7 @@ A simple way to do this is _leave-one-out cross-validation_#note[leave-one-out c
 
 Another related issue is that kriging is often said to be exact in theory, ie it passes exactly through the sample points.
 Strictly speaking, this exactness follows from using $gamma(0) = 0$ in the kriging system, and it holds even when the fitted theoretical variogram function has a nugget.
-However, a nugget larger than zero has a noticeable effect around the sample points: since $gamma(h)$ is already large for very small $|h|$, the interpolant is smoothed in the neighbourhood of each sample point, reaching the sample value only exactly at the sample point itself, which creates a discontinuity.
+However, a nugget larger than zero has a noticeable effect around the sample points: since $gamma(h)$ is already large for very small $|h|$, the interpolant is smoothed in the neighbourhood of each sample point, reaching the sample value only exactly at the sample point itself, which creates a kink (a discontinuity in the slope) there.
 Because of this, some authors and implementations instead treat the nugget as measurement error, using its value on the diagonal of the kriging system rather than zero; in that case the interpolant no longer passes exactly through the sample points.
 @fig:nugget_exactness illustrates this: with a zero nugget the interpolant passes exactly through the sample points (a), whereas with a large nugget it smooths the data (b).
 
@@ -437,7 +431,7 @@ Because of this, some authors and implementations instead treat the nugget as me
 ]
 
 Finally, it is worth noting that kriging can be directly applied to any location, yielding a result such as the one in @fig:interpolation.
-However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points).
+However, much like other interpolation methods, kriging is only reliable in the domain (ie roughly the convex hull of the points, as discussed in @chap:interpol).
 It can extrapolate (often by using negative weights), but that does not mean that the results outside the domain are accurate.
 The kriging variance (@eq:krigingvariance) shown in @fig:kriging_variance gives a quantitative picture of this: it is lowest close to the sample points and increases with the distance from them, becoming particularly large outside the domain.
 
