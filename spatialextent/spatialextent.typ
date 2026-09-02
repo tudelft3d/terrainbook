@@ -70,10 +70,10 @@ Two examples of convex hulls are in Figures @fig:ideas\b and @fig:properties\a.
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
 It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or computed directly using a specific algorithm.
-An example of the latter is the well-known _gift wrapping algorithm_, shown in @fig:giftwrapping.
+ An example of the latter is the well-known _gift wrapping algorithm_, shown in @fig:giftwrapping.
 #subfigure(
-  image("figs/giftwrapping.pdf", width: 100%, page: 1),
-  image("figs/giftwrapping.pdf", width: 100%, page: 2),
+  figure(image("figs/giftwrapping.pdf", width: 100%, page: 1), caption: []),
+  figure(image("figs/giftwrapping.pdf", width: 100%, page: 2), caption: []),
   columns: (1fr, 1fr),
   caption: [*(a)* First four steps of the gift wrapping algorithm to compute the convex hull. *(b)* The resulting convex hull.],
   label: <fig:giftwrapping>
@@ -111,10 +111,6 @@ Properties convex hull: \
   caption: [First four steps of the #emph[moving arm algorithm] (with a #emph[knn] where $k=3$) to compute the spatial extent.],
 ) <fig:movingarm:2>
 
-#notefigure(
-  image("figs/movingarm.pdf", width: 90%, page: 3),
-  caption: [The resulting region for the moving arm, it is concave. Observe that 1 point from $S$ (highlighted in red) is not part of the region.],
-) <fig:movingarm:3>
 
 ==== Arm of length $l$
 The moving arm is a generalisation of the gift wrapping algorithm (see Section @sec:se_ch) where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the "moving arm").
@@ -123,6 +119,11 @@ This also means that potentially the result is a polygon that is non-convex.
 @fig:movingarm:1 shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
 Observe also that if $l$ had been larger then conv($S$) could have been obtained.
 
+#notefigure(
+  image("figs/movingarm.pdf", width: 90%, page: 3),
+  caption: [The resulting region for the moving arm, it is concave. Observe that 1 point from $S$ (highlighted in red) is not part of the region.],
+) <fig:movingarm:3>
+
 ==== Adaptative arm with _knn_
 There exists a variation of this algorithm where the length of the moving arm is adaptive at each step; the $k$ nearest neighbours (knn) of a given point $p$ are used to determine it (see @sec:kdtree).
 As can be seen in @fig:movingarm:2, the largest polar angle, as used for gift wrapping algorithm, is used to select the point at each step.
@@ -130,6 +131,7 @@ As can be seen in @fig:movingarm:2, the largest polar angle, as used for gift wr
 ==== No guarantee that it will work
 Both versions of the algorithm will work in most cases, but there is no guarantee that they will for all inputs.
 @fig:movingarm_kdd shows a concrete example.
+
 #notefigure(
   grid(
     image("figs/movingarm.pdf", width: 100%, page: 4),

@@ -188,8 +188,8 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
 // ]
 
 #subfigure(
-  figure(image("./figs/nasadem.png", width: 100%), caption: []),
-  figure(image("./figs/copernicusdem.png", width: 100%), caption: []),
+  figure(image("./figs/nasadem.png", width: 100%), caption: [NASADEM]),
+  figure(image("./figs/copernicusdem.png", width: 100%), caption: [CopernicusDEM]),
   columns: (1fr, 1fr),
   caption: [NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how
   CopernicusDEM has more detail. There is ∼12 years between these images.],
