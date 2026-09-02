@@ -165,7 +165,7 @@ Because there are 2 types of curvatures and each have 3 potential values, there 
 #figure(
   image("figs/curvatures.png", width: 90%),
   caption: [Nine curvatures (Figure adapted from #citet(<VanKreveld97>)).],
-  placement: none,
+  placement: auto,
 ) <fig:curvatures>
 
 ==== Computing for grids
@@ -231,7 +231,7 @@ One could recreate a TIN with the values of the vertices having the roughness, o
 #figure(
   image("figs/feature_points.png", width: 100%),
   caption: [#strong[(a)] Peaks and pits. #strong[(b)] A saddle point (Figure from #link("https://www.armystudyguide.com"))],
-  placement: none,
+  placement: auto,
 ) <fig:feature_points>
 
 === Peak
@@ -271,7 +271,7 @@ If we consider the contour line of a saddle point $p$, then there are 4 or more 
 #figure(
   image("figs/valley_ridge.png", width: 100%),
   caption: [Edges in a TIN can be classified as valley, ridge, or neither],
-  placement: none,
+  placement: auto,
 ) <fig:valley_ridge>
 Valleys and ridges are 1-dimensional features.
 If a terrain is represented as a TIN, we can extract the edges of the triangles that form a valley or a ridge.
@@ -310,7 +310,7 @@ Hillshading is a technique used to help visualise the relief of a gridded terrai
 #figure(
   image("figs/hillshade.pdf", width: 100%),
   caption: [#strong[Left]: a DTM visualised with height as a shade of blue. #strong[Right]: when hillshading is applied.],
-  placement: none,
+  placement: auto,
 ) <fig:hillshade>
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position (usually North-West).
@@ -334,7 +334,7 @@ Notice that the position of the sun is relative to the cell, its position thus c
 #figure(
   image("figs/hillshade-params.png", width: 95%),
   caption: [The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).],
-  placement: none,
+  placement: auto,
 ) <fig:hillshade-params>
 As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alpha_"ij"$, its aspect is $theta_"ij"$, the azimuth of the sun is $psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $gamma$ (0 rad is the horizon, $pi/2$ rad is the zenith).
 

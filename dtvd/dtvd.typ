@@ -42,7 +42,7 @@ The VD in $bb(R)^(2)$ can also be seen as a two-dimensional cell complex where e
 #figure(
   image("./figs/vd2d.pdf", width: 100%, page: 3),
   caption: [VD of a set of points in the plane (clipped by a box). The point $p$ (whose Voronoi cell is dark grey) has seven neighbouring cells (light grey).],
-  placement: none,
+  placement: auto,
 ) <fig:vd2d>
 Two Voronoi cells, $cal(V)_p$ and $cal(V)_q$, lie on the opposite sides of the perpendicular bisector separating the points $p$ and $q$.
 
@@ -63,7 +63,7 @@ $cal(T)$ is actually called the Delaunay triangulation (DT) of $S$, and, as show
 #figure(
   image("./figs/vd2d.pdf", width: 100%, page: 4),
   caption: [The DT of a set of points in the plane (same point set as @fig:vd2d). The green circles show 2 examples of empty circumcircles.],
-  // placement: none,
+  // placement: auto,
 ) <fig:dt2da>
 partitions the plane into triangles---where the vertices of the triangles are the points in $S$ generating each Voronoi cell---that satisfy the _empty circumcircle_ test (a circle is said to be _empty_ when no points are in its interior). 
 If $S$ is in general position, then DT($S$) is unique.
@@ -123,7 +123,7 @@ In the context of modelling terrains, the max-min angle optimality ensures that 
 #figure(
   image("./figs/notdelaunay/notdelaunay.png", width: 90%),
   caption: [The same set of sample points of a hill is triangulated on the left with a random triangulation (non-Delaunay) and right with a Delaunay triangulation. The shape of the triangles is shown at the bottom by projecting them to the $x y$-plane.],
-    placement: none,
+    placement: auto,
   ) <fig:notdelaunay>
 ]
 
@@ -208,7 +208,7 @@ Observe that, as shown in Figures @fig:vd2d and @fig:dualdetail, the location of
     ),
   ),
   caption: [Duality between the DT (dotted) and the VD (dashed).],
-  placement: none,
+  placement: auto,
 ) <fig:dualdetail>
 
 
@@ -240,7 +240,7 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
   #figure(
     image("./figs/insertion_steps.pdf", width: 90%),
     caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
-    placement: none,
+    placement: auto,
   ) <fig:insertion_steps>
 // ]
 
@@ -315,7 +315,7 @@ The idea, called "walking", is shown in @fig:walk and details are given in the @
 #figure(
   image("./figs/walk.pdf", width: 70%),
   caption: [The Walk algorithm for a DT in two dimensions. The query point is $p$.],
-  placement: none,
+  placement: auto,
 ) <fig:walk>
 
 #figure(
@@ -432,13 +432,13 @@ The constrained segments in $S$ act as visibility blockers.
 #figure(
   image("./figs/cdtbuildings.pdf", width: 95%),
   caption: [The ConsDT of a set of segments. On the right, the triangle whose circumcircle is green is a Delaunay (no other points in its interior) and so is the triangle whose circumcircle is in purple (there is one point in its interior, but it cannot be seen because of the constrained segment).],
-  placement: none,
+  placement: auto,
 ) <fig:cdt_buildings>
 
 #figure(
   image("./figs/cdt_steps.pdf", width: 95%),
   caption: [Steps to construct a ConsDT.],
-  placement: none,
+  placement: auto,
 ) <fig:cdt_steps>
 Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see @fig:cdt_steps):
 + construct DT($S^(p)$), where $S^(p)$ is the set containing all the points in $S$ and the end points of the line segments (@fig:cdt_steps\b)
@@ -454,7 +454,7 @@ Observe that the ConsDT can be used to triangulate polygons with holes (see @fig
   figure(image("./figs/cdt_dog.pdf", width: 100%, page: 3), caption: []),
   columns: (1fr, 1fr, 1fr),
   caption: [#strong[(a)] One polygon with 4 holes (interior rings). #strong[(b)] its ConsDT. #strong[(c)] its ConfDT (the Steiner point added is in red).],
-  placement: none,
+  placement: auto,
   label: <fig:cdt_dog>,
 )
 

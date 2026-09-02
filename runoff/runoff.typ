@@ -14,7 +14,7 @@ Such models can be quite accurate, but they require high-resolution data that is
 #figure(
   image("figs/hydrology.pdf", width: 95%),
   caption: [Different types of water flows as modelled in hydrology. Figure adapted from #citet(<Beven12>).],
-  placement: none,
+  placement: auto,
 ) <fig:hydrology>
 
 By contrast, the simpler _GIS models of runoff_ can be computed automatically over large areas with only a DTM.
@@ -56,7 +56,7 @@ This method can therefore easily create artefacts in certain geometric configura
   figure(image("figs/d8_d8.pdf", width: 100%), caption: [D8]),
   columns: (1fr, 1fr),
   caption: [Flow accumulation as water drains from a circular cone, computed with D-infinity (left) and D8 (right). The D8 method creates artefactual spokes every #qty("45", "degree"), while D-infinity gives a smooth pattern. Based on #citet(<Tarboton97>).],
-  placement: none,
+  placement: auto,
   label: <fig:d8>,
 )
 
@@ -98,7 +98,7 @@ D∞ thus avoids both the quantisation of the flow direction inherent to D8 and 
   figure(image("figs/dispersion_quinn.pdf", width: 100%), caption: [Quinn]),
   columns: (1fr, 1fr),
   caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Based on #citet(<Tarboton97>).],
-  placement: none,
+  placement: auto,
   label: <fig:dispersion>,
 )
 
@@ -136,7 +136,7 @@ In the best-case scenario, we can imagine that the resulting DTM is one that: (i
 #figure(
   image("figs/pf.pdf", width: 80%),
   caption: [A vertical cross-section of a DTM with a filled sink. The dashed line is the original terrain and the thicker solid line is the filled terrain; the shaded area is the material added to fill the sink.],
-  placement: none,
+  placement: auto,
 ) <fig:pf>
 
 One efficient method to fill in sinks is the priority-flood algorithm.
@@ -169,13 +169,13 @@ Efficient methods combine both of these approaches, resulting in more natural fl
 #figure(
   image("figs/ht.pdf", width: 100%),
   caption: [In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient away from the higher terrain to route water out of the flat and towards the outlet. For this, we can iteratively assign (tiny or symbolic) elevation decreases in the flat starting from the higher terrain until all non-draining cells in the flat have been covered. Figure from #citet(<Barnes14>).],
-  placement: none,
+  placement: auto,
 ) <fig:ht>
 
 #figure(
   image("figs/lt.pdf", width: 100%),
   caption: [In a flat surrounded by higher terrain (dark grey) with a single lower-elevation outlet (light grey), we can use a gradient towards the outlet to route water out of the flat. For this, we can iteratively assign (tiny or symbolic) elevation increases in the flat starting from the outlet until all non-draining cells in the flat have been covered. Figure from #citet(<Barnes14>).],
-  placement: none,
+  placement: auto,
 ) <fig:lt>
 
 == #flex-heading[Drainage networks][Drainage networks and basins] <se:drainage_basins>
@@ -191,7 +191,7 @@ The lines that separate adjacent drainage basins are _drainage divides_#note[dra
 #figure(
   image("figs/Ocean_drainage.pdf", width: 100%),
   caption: [The areas that drain to all the oceans can be computed by selecting the DTM cells on the coastline of these oceans and finding the areas that drain through them. Note the endorheic basins that drain to none of these cells; their outlets are sinks in the DTM. Based on an image from Wikimedia Commons.],
-  placement: none,
+  placement: auto,
 ) <fig:oceans>
 
 == Runoff on TINs

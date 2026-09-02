@@ -26,7 +26,7 @@ The eigenvector linked with the largest eigenvalue represents the direction wher
   #figure(
     image("./figs/normal_demo.pdf", width: 100%),
     caption: [Perspective view of a point cloud with 3 planes fitted and their normal vector.],
-    placement: none,
+    placement: auto,
   ) <fig:normal_demo>
 ]
 

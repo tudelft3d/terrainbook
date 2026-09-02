@@ -161,7 +161,7 @@ However, other variations exist (see @fig:idwvar):
   figure(image("figs/idwvar.pdf", width: 100%, page: 4), caption: []), <fig:idwvar:4>,
   columns: (1fr, 1fr, 1fr, 1fr),
   caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). (green=neighbours used; red=not). #strong[(b)] 4-nearest neighbours. #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
-  placement: none,
+  placement: auto,
   label: <fig:idwvar>,
 )
 
@@ -337,7 +337,7 @@ Suppose we have 4 adjacent pixels, each having an elevation, as in @fig:bilinear
 #figure(
   image("figs/bilinear.pdf", width: 90%),
   caption: [Bilinear interpolation.],
-  placement: none,
+  placement: auto,
 ) <fig:bilinear>
 Bilinear interpolation uses the 4 centres to perform the interpolation at location $p = (p_x, p_y)$; it is thus a weighted-average method because the 4 samples are used, and their weight is based on the linear interpolation, as explained below.
 We need to linearly interpolate the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values.

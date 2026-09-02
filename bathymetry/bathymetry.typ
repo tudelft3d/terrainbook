@@ -26,14 +26,15 @@ It is however in practice still a (semi-)manual process since the new technologi
 #figure(
   image("figs/enc_denhelder.jpeg", width: 90%),
   caption: [An example of an ENC (electronic navigational chart) in the Netherlands. [photo of a paper map from the #emph[Hydrografische Dienst]]],
-  placement: none,
+  placement: auto,
 ) <fig:enc>
 
 The raw contours constructed directly from MBES datasets are often not satisfactory for navigational purposes since, as @fig:raw shows,
 they are zigzagging (the representation of the seafloor thus contains "waves", ie the slope changes abruptly) and they contain many "island" contours (seafloor has several local minima and maxima). 
 These artefacts are the result of measurement noise that is present in MBES datasets, ie the variation in depth between two close samples can be larger than in reality, even after the dataset has been (statistically) cleaned.
 @fig:ideal illustrates what is expected by hydrographers.
-/* TODO: verify subfigure layout */
+
+#wideblock[
 #subfigure(
   figure(image("figs/raw.pdf", width: 100%), caption: []), <fig:raw>,
   figure(image("figs/maponly.pdf", width: 100%), caption: []), <fig:ideal>,
@@ -41,9 +42,10 @@ These artefacts are the result of measurement noise that is present in MBES data
   figure(image("figs/aggregation.png", width: 100%), caption: []), <fig:aggregation>,
   columns: (1fr, 1fr),
   caption: [Comparison of #strong[(a)] depth-contours obtained automatically from the raw MBES data and #strong[(b)] the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. #strong[(c)] Pits are removed, while peaks are preserved or integrated with another contour. #strong[(d)] Groups of nearby contour lines are aggregated],
-  placement: none,
+  placement: auto,
   label: <fig:contouringaspects>,
 )
+]
 
 === Generalisation is required to obtain good depth contours <sec:good-depth-contours>
 
@@ -68,7 +70,7 @@ Also, because of the safety constraint, depth-contours can only be modified such
 #figure(
   image("figs/genvalidornot.pdf", width: 80%),
   caption: [During generalisation, depth-contours can only be moved towards greater depth (indicated by a "--" in the figure).],
-  placement: none,
+  placement: auto,
 ) <fig:genvalidornot>
 It is therefore obvious that the end result must be a reasonable compromise between the four constraints, although the hard constraints must not be broken.
 
@@ -108,7 +110,7 @@ While different functions can be used to select the point (eg deepest, shallowes
   figure(image("figs/1Didw.pdf", width: 100%, page: 5), caption: [IDW rasterisation and contours]), <fig:fr:idw:b>,
   columns: (1fr, 1fr),
   caption: [Profile views of different filtering and rasterisation methods. The arrows indicate where the safety constraint is violated with respect to the original points. Also note that in case a grid cell contains no data, no contours can be derived.],
-  placement: none,
+  placement: auto,
   label: <fig:filterraster>,
 )
 It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
@@ -142,7 +144,7 @@ This is due to the fact that the triangulation must be updated (with flips, see 
   figure(image("figs/simpfail.pdf", width: 100%, page: 3), caption: [2nd vertex removal]), <fig:simpfail:c>,
   columns: (1fr, 1fr, 1fr),
   caption: [Due to the re-triangulation after a removal, violations of the safety constraint may occur after a series of points are removed. The first vertex is removed (locally the resulting surface will be shallower). However, the second removal changes the configuration of triangles and at that location the surface is now deeper. A lower number means a shallower point.],
-  placement: none,
+  placement: auto,
   label: <fig:simpfail>,
 )
 
@@ -158,7 +160,7 @@ Instead of performing generalisation by moving lines or using a subset of the or
 #figure(
   image("figs/surfaceapproach_V2.pdf", width: 100%),
   caption: [Overview of the Voronoi- and surface-based approach.],
-  placement: none,
+  placement: auto,
 ) <fig:surfapproach>
 
 Firstly, all the input points of a given area are used to construct a Delaunay TIN.
@@ -187,7 +189,7 @@ Thus, the smoothing operator does not change the planimetric coordinates of vert
   figure(image("figs/1Dsmoothop.pdf", width: 100%, page: 4), caption: [Resulting TIN]), <fig:1Dsmoothop:d>,
   columns: (1fr, 1fr),
   caption: [Cross-section view of the smoothing of a single vertex in a TIN.],
-  placement: none,
+  placement: auto,
   label: <fig:1Dsmoothop>,
 )
 
@@ -213,7 +215,7 @@ Its objective is primarily to minimise the discretisation error between the Lapl
   figure(image("figs/1Ddensop.pdf", width: 100%, page: 4), caption: [Resulting TIN]), <fig:1Ddensop:d>,
   columns: (1fr, 1fr),
   caption: [Cross-section view of the densification operator in a TIN.],
-  placement: none,
+  placement: auto,
   label: <fig:1Ddensop>,
 )
 
@@ -232,7 +234,7 @@ The circumcentre is chosen here because that location is equidistant to its thre
   figure(image("figs/pyramid_v_cl.pdf", width: 100%), caption: [Contour lines from densified surface]),
   columns: (1fr, 1fr, 1fr),
   caption: [Original data are shown in #strong[(a)] and #strong[(b)], and the resulting contour lines in #strong[(c)]. The three figures below represent the same area densified with the Laplace interpolant.],
-  placement: none,
+  placement: auto,
   label: <fig:interpol_smooth>,
 )
 
@@ -286,7 +288,7 @@ Naturally, the smoothing operator also smoothes and simplifies the resulting con
 #figure(
   image("figs/zl1845detailcontours0-30.pdf", width: 95%),
   caption: [From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.],
-  placement: none,
+  placement: auto,
 ) <fig:zl1845lineview>
 ]
 It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 

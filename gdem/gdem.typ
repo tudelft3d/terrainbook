@@ -72,7 +72,7 @@ GEDI has been combined with TanDEM-X data to produce biomass estimates and with 
 #figure(
   image("./figs/orbit.pdf", width: 100%),
   caption: [Ground tracks for three successive orbits of ICESat-2 and GEDI. The satellite is a represented by a triangle and past orbits fade out. Note the increased density of ground tracks at the latitude of inclination, as well as the lack of coverage beyond #qty[51.6][deg] latitude for GEDI.],
-  placement: none,
+  placement: auto,
 ) <fig:orbit>
 
 The characteristics of both missions are summarised in @tab:lidarcomparison
@@ -193,7 +193,7 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
   columns: (1fr, 1fr),
   caption: [NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how
   CopernicusDEM has more detail. There is ∼12 years between these images.],
-  placement: none,
+  placement: auto,
   label: <fig:nasadem>,
 )
 

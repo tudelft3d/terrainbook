@@ -67,5 +67,5 @@ If 14 is not used, the pylons and cables are in class 26/`kunstwerk`.
     table.hline(),
   ),
   caption: [The LAS classification codes and their meanings.],
-  placement: none,
+  placement: auto,
 ) <tab:ahn-classes>

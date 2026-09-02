@@ -35,7 +35,7 @@ In this chapter we present methods that are used in practice to define the spati
   figure(image("figs/idea.pdf", width: 80%, page: 4), caption: [An $alpha$-shape]),
   columns: (1fr, 1fr),
   caption: [Different methods to obtain the spatial extent of a given set of points in the plane.],
-  placement: none,
+  placement: auto,
   label: <fig:ideas>,
 )
 
@@ -219,7 +219,7 @@ See @fig:alphashape for an example.
   figure(image("figs/alphashape.pdf", width: 100%, page: 5), caption: []),
   columns: (1fr, 1fr, 1fr, 1fr, 1fr),
   caption: [Five $alpha$-shape for the same set of points, with decreasing $alpha$ values from left to right.],
-  placement: none,
+  placement: auto,
   label: <fig:alphashape>,
 )
 

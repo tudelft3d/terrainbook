@@ -53,7 +53,7 @@ The term "3D" is misleading in a DTM context---as it is in a GIS context--- beca
   figure(image("figs/dimgis.pdf", width: 100%, page: 4), caption: [Volumetric modelling, or full 3D]), <fig:dimgis:3>,
   columns: (1fr, 1fr),
   caption: [Different meanings for '3D GIS' in the context of terrains.],
-  placement: none,
+  placement: auto,
   label: <fig:dimgis>,
 )
 
@@ -212,7 +212,7 @@ As can be seen in @fig:whydt,
 #figure(
   image("figs/whydt.pdf", width: 100%),
   caption: [Two TINs (left is non-Delaunay; right is Delaunay) and the result of estimating with linear interpolation in the TIN.],
-  placement: none,
+  placement: auto,
 ) <fig:whydt>
 the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of #qty("95", "m") is not used).
 
@@ -283,7 +283,7 @@ Isolines have been traditionally used to represent the elevation in topographic 
 #figure(
   image("figs/contours.pdf", width: 70%),
   caption: [An example of a terrain (top) and its contour lines at every #qty("100", "m") (bottom).],
-  placement: none,
+  placement: auto,
 ) <fig:contours>
 
 One particular property of an isoline is that its direction is always perpendicular to the direction of the steepest slope of the terrain. 
@@ -305,7 +305,7 @@ As shown in @fig:isoline,
 #figure(
   image("figs/isoline.pdf", width: 95%),
   caption: [Cross-section of a terrain (left), and the #qty("200", "m") isoline extracted from a TIN representation of it (right).],
-  placement: none,
+  placement: auto,
 ) <fig:isoline>
 the idea is to compute the intersection between the level value (eg #qty("200", "m")) and the terrain, represented for instance with a TIN. 
 Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.

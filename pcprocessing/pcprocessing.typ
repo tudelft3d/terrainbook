@@ -28,7 +28,7 @@ See @fig:randvsgrid for a comparison between random thinning and grid thinning.
   figure(image("./figs/voxel08m.png", width: 100%), caption: [3D grid thinning]),
   columns: (1fr, 1fr),
   caption: [Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.],
-  placement: none,
+  placement: auto,
   label: <fig:randvsgrid>,
 )
 
@@ -55,7 +55,7 @@ The points that are determined to be in the neighbourhood of a point of interest
   figure(image("./figs/knn-distance.pdf", width: 100%), caption: [knn distance ($k=3$)]),
   columns: (1fr, 1fr, 1fr),
   caption: [Three outlier detection methods based on local point density. The red point is an outlier, whereas the blue point is an inlier.],
-  placement: none,
+  placement: auto,
   label: <fig:outlier-detection>,
 )
 The underlying assumption of most outlier detection methods is that an outlier is often an isolated point, ie there are not many points in its neighbourhood. We distinguish the following outlier detection methods (see also @fig:outlier-detection):
@@ -76,7 +76,7 @@ This splits the TIN into several smaller TINs, and the largest of those should t
   figure(image("./figs/mbes_cleaning_after.png", width: 100%), caption: [after outlier detection]),
   columns: (1fr, 1fr),
   caption: [Outlier detection in a multi-beam echo sounding dataset using a TIN. Figure from #citep(<Arge10>).],
-  placement: none,
+  placement: auto,
   label: <fig:mbes>,
 )
 
@@ -151,7 +151,7 @@ The main observation necessary for this algorithm is that lower points are usual
 #figure(
   image("./figs/csf_idea.pdf", width: 100%),
   caption: [Basic idea behind the CSF algorithm for ground filtering of a point cloud: inverting the data and letting a cloth fall.],
-  placement: none,
+  placement: auto,
 ) <fig:csf_idea>
 The key idea of the algorithm, as shown in @fig:csf_idea, is to invert (upside-down) a point cloud, and to let a piece of cloth fall from the sky.
 The cloth will fall until it reaches the points forming the ground.
@@ -270,7 +270,7 @@ If this distance is less than a given user-defined threshold, then the sample po
 #figure(
   image("./figs/bk-planes.png", width: 100%),
   caption: [Planar regions in the AHN3 point cloud. Each region was assigned a random colour.],
-  placement: none,
+  placement: auto,
 ) <fig:bk-planes>
 
 Shape detection is used to automatically detect simple shapes---such as planes---in a point cloud.
@@ -378,7 +378,7 @@ Otherwise $c$ is ignored (@fig:region-growing:d).
   figure(image("./figs/region-growing.pdf", width: 100%, page: 5), caption: [Final regions from all three seed points]), <fig:region-growing:e>,
   columns: (1fr, 1fr),
   caption: [Region growing for plane detection based on the angle between neighbouring point normals],
-  placement: none,
+  placement: auto,
   label: <fig:region-growing>,
 )
 This process of growing $R$ continues until no more candidates can be found that are compatible with $R$.
@@ -460,7 +460,7 @@ Where $(r, theta , phi.alt )$ are the spherical coordinates of the point on the 
   figure(image("./figs/hough-transform.pdf", width: 100%, page: 4), caption: [Detected line instances with a minimal vote count of 3.]), <fig:hough-transform:e>,
   columns: (1fr, 1fr, 1fr),
   caption: [Hough transform for line detection with a $10times 2$ accumulator. The $(phi.alt, r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y = m x + b$ form for example).],
-  placement: none,
+  placement: auto,
   label: <fig:hough-transform>,
 )
 ]

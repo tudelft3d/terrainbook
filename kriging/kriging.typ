@@ -81,7 +81,7 @@ For a sample dataset, this decomposition is shown in @fig:trend_residual: (a) th
     figure(image("figs/trend_residuals.pdf", width: 100%), caption: []),
     columns: (1fr, 1fr, 1fr),
     caption: [#strong[(a)] A sample dataset can be decomposed into #strong[(b)] a spatial trend (a quadratic surface fitted to the samples) and #strong[(c)] the residuals (ie the local differences from the trend).],
-    placement: none,
+    placement: auto,
     label: <fig:trend_residual>,
   )
 ]
@@ -109,7 +109,7 @@ where $x$ is an arbitrary point in the domain (ie the area we want to interpolat
     figure(image("figs/nonstationary.pdf", width: 100%), caption: []),
     columns: (1fr, 1fr),
     caption: [The stationarity of the mean. #strong[(a)] A terrain profile with peaks and valleys but no general trend: the expectation (dashed line) is the same everywhere. #strong[(b)] The same local variation superimposed on a clear slope: the expectation changes across the domain, and so the assumption does not hold.],
-    placement: none,
+    placement: auto,
     label: <fig:stationarity>,
   )
 ]
@@ -159,7 +159,7 @@ The result of such a plot is what is known as a _variogram cloud_#note[variogram
 #figure(
   image("figs/variogram_cloud.pdf", width: 100%),
   caption: [Starting from the sample dataset (@fig:trend_residual\a), the variogram cloud can be computed. In this case, only a random selection of 1% of the point pairs was used.],
-  placement: none,
+  placement: auto,
 ) <fig:variogram_cloud>
 
 In this figure, it is possible to see some typical characteristics of a variogram cloud.

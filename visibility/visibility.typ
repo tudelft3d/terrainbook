@@ -93,13 +93,13 @@ If the pixel containing $q$ is reached without detecting an intersection, then t
   #figure(
     image("./figs/los.pdf", width: 100%),
     caption: [Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.],
-    placement: none,
+    placement: auto,
   ) <fig:los>
 ]
 #wideblock[#figure(
   image("./figs/viewshed.pdf", width: 100%),
   caption: [Viewshed for the point $v$; the blue circle is the radius of the horizon (#qty("5000", "m") in this case).],
-    placement: none,
+    placement: auto,
   ) <fig:viewshed>
 ]
 

@@ -9,7 +9,7 @@ We consider in this chapter the following four terrain representations and discu
 #figure(
   image("figs/reps.pdf", width: 100%),
   // caption: [],
-  // placement: none,
+  // placement: auto,
 )
 
 #wideblock(side: "outer")[
@@ -39,7 +39,7 @@ We consider in this chapter the following four terrain representations and discu
 #figure(
   image("figs/r-interpolation.pdf", width: 100%),
   caption: [#strong[(a)] input sample points. #strong[(b)] size/location of output raster. #strong[(c)] 9 interpolations must be performed (at the locations marked with blue disks): in the middle of each cell. #strong[(d)] the convex hull of the sample points show that 2 estimations are outside, thus no interpolation. #strong[(e)] the resulting raster.],
-  placement: none,
+  placement: auto,
 ) <fig:r-interpolation>
 
 As shown in @fig:r-interpolation, this step is trivial: one needs to interpolate at the locations of the centre points of the raster cells.
@@ -54,7 +54,7 @@ Isolines are usually directly extracted from either a TIN or a grid representati
 #figure(
   image("figs/isoline.pdf", width: 90%),
   caption: [Vertical cross-section of a terrain (left), and a 2D projection of the terrain TIN with the extracted #qty("200", "m") isoline (right).],
-  placement: none,
+  placement: auto,
 ) <fig:isolineidea>
 The basic idea, as shown in @fig:isolineidea, is to compute the intersection between a level value (eg #qty("200", "m")) and each cell of the terrain (triangle or grid cell in our case).
 Notice that the cells are 'lifted' to their elevation. 
@@ -87,12 +87,12 @@ The basic algorithm for extracting one isoline is shown in @algo:iso.
 #figure(
   image("figs/isoline-square.pdf", width: 95%),
   caption: [Different cases when extracting an isoline at elevation #qty("10", "m") (in blue) for a regular grid. The blue lines are the ones extracted for that cell.],
-  placement: none,
+  placement: auto,
 ) <fig:rasterconfs>
 #figure(
   image("figs/isoline-tr.pdf", width: 95%),
   caption: [Different cases when extracting an isoline at elevation #qty("10", "m") (in blue) for a TIN. The blue lines are the ones extracted for that triangle.],
-  placement: none,
+  placement: auto,
 ) <fig:isoline-tr>
 Note that since the algorithm visits every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
 It is thus a scalable algorithm.
@@ -144,7 +144,7 @@ This can be done by simply starting with a segment $a b$, and searching for the 
 #figure(
   image("figs/isoline2.pdf", width: 100%),
   caption: [#strong[(a)] The isoline segments extracted with @algo:iso do not have a consistent orientation. #strong[(b)] @algo:iso can be sped up by starting at a seed triangle and 'tracing' the isoline; the order is shown by the blue arrows.],
-  placement: none,
+  placement: auto,
 ) <fig:isoline2>
 
 As shown in @fig:isoline2\b, another solution is to find _one_ cell $tau_0$ intersecting the isoline at a given elevation, 'tracing' the isoline by navigating from $tau_0$ to the adjacent cell, and continuing until $tau_0$ is visited again (or the border of the dataset is reached).
@@ -196,7 +196,7 @@ Notice that $cal(T)$ does not contain $p$ as a vertex.
 #figure(
   image("figs/mesh_simplification.pdf", width: 85%),
   caption: [The importance measure of a point can be expressed by its vertical error. When this error is greater than a given threshold $epsilon_(max )$, the point is kept ($p_1$), else it is discarded ($p_2$).],
-  placement: none,
+  placement: auto,
 ) <fig:meshsimplification>
 
 === TIN simplification algorithms
@@ -291,7 +291,7 @@ However, decimation could be more efficient when you already have a detailed TIN
   figure(image("figs/wedding-nn.png", width: 100%), caption: []),
   columns: (1fr, 1fr, 1fr),
   caption: [The 'wedding cake' effect. #strong[(a)] The input isolines have been discretised into sample points. #strong[(b)] The TIN of the samples creates several horizontal triangles. #strong[(c)] The surface obtained with nearest-neighbour interpolation.],
-  placement: none,
+  placement: auto,
   label: <fig:wedding>,
 )
 ]
