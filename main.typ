@@ -94,7 +94,7 @@
   #include "bathymetry/bathymetry.typ"       //-- 14
 
   //-- Appendices
-  #heading(numbering: none)[Appendices]
+  // #heading(numbering: none)[Appendices]
   #set heading(numbering: "A.1")
   #set figure(numbering: dependent-numbering("A.1"))
   #counter(heading).update(0)
