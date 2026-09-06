@@ -2,7 +2,7 @@
 
 = Conversions between terrain representations <chap:conversion>
 
-#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/youtu.be/Nqfp94KpcUA")
+#minitoc(suboutline(depth: 1, indent: 0pt), youtube: "https://youtu.be/Nqfp94KpcUA")
 
 We consider in this chapter the following four terrain representations and discuss the conversions between them:
 
@@ -286,7 +286,7 @@ However, decimation could be more efficient when you already have a detailed TIN
 
 #wideblock[
 #subfigure(
-  figure(image("figs/wedding0.png", width: 100%), caption: []),
+  figure(image("figs/wedding0.png", width: 60%), caption: []),
   figure(image("figs/wedding-tin.png", width: 100%), caption: []),
   figure(image("figs/wedding-nn.png", width: 100%), caption: []),
   columns: (1fr, 1fr, 1fr),
@@ -322,6 +322,8 @@ Such methods require more storage, but can be useful for interactive environment
 
 #citet(<Garland95>) elaborate further on different aspects of TIN simplification, such as different importance measures, the differences between refinement and decimation, and the usefulness of data-dependent triangulations. 
 They also show how Algorithm @algo:tin-simp:ref can be made a lot faster by only recomputing the importance of points in triangles that have been modified.
+
+#pagebreak()
 
 == Exercises
 

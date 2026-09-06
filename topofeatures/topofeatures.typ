@@ -307,11 +307,14 @@ The variations in roughness in a terrain can be used to delineate the terrain in
 #index[hillshading]
 
 Hillshading is a technique used to help visualise the relief of a gridded terrain (see @fig:hillshade for an example).
-#figure(
-  image("figs/hillshade.pdf", width: 100%),
-  caption: [#strong[Left]: a DTM visualised with height as a shade of blue. #strong[Right]: when hillshading is applied.],
-  placement: auto,
-) <fig:hillshade>
+
+#wideblock[
+  #figure(
+    image("figs/hillshade.pdf", width: 100%),
+    caption: [#strong[Left]: a DTM visualised with height as a shade of blue. #strong[Right]: when hillshading is applied.],
+    placement: auto,
+  ) <fig:hillshade>
+]
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 This image assumes that the source of light (the sun) is located at a given position (usually North-West).
 
@@ -332,7 +335,7 @@ The formula to compute the hillshade of a given cell $c_"ij"$ differs from softw
 It assumes that the output hillshade value is an integer in the range $[0, 255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known. 
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain.
 #figure(
-  image("figs/hillshade-params.png", width: 95%),
+  image("figs/hillshade-params.svg", width: 100%),
   caption: [The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).],
   placement: auto,
 ) <fig:hillshade-params>
@@ -361,5 +364,7 @@ The algorithm to extract profile and plan curvatures from a TIN is taken from #c
 == Exercises
 
 + What is the missing word? The \_\_\_\_\_\_\_\_\_ is the 2nd derivative of the surface representing the terrain, it represents the rate of change of the gradient.
+
+
 + Given a raster, how to identify a valley and a ridge?
 + If we want to compute the slope (gradient + aspect) for the cell at the centre of this $3 times 3$ DTM with the 'finite difference method', what results will we get? \ #image("./figs/slope_grid_question.pdf")

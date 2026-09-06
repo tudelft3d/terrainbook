@@ -17,7 +17,7 @@ Extrapolating implies that more uncertainty is attached to the estimated value.
 #notefigure(
   image("figs/extrapolation.pdf", width: 100%),
   caption: [Spatial interpolation and extrapolation.],
-  dy: 20pt,
+  dy: 100pt,
 ) <fig:extrapolation>
 
 Spatial interpolation methods are crucial in the visualisation process (eg generation of contours lines), for the conversion of data from one format to another (eg from scattered points to raster), to have a better understanding of a dataset, or simply to identify 'bad' samples. 
@@ -99,8 +99,12 @@ In the context of terrain modelling, the attribute $a$ is the elevation above/un
 Nearest neighbour, or closest neighbour, is a simple interpolation method: the value of an attribute at location $x$ is simply assumed to be equal to the attribute of the nearest data point. 
 This data point gets a weight of exactly 1.0.
 
-#notefigure(
-  image("figs/cn.pdf", width: 80%),
+#subfigure(
+  figure(image("figs/cn.pdf", width: 100%, page: 1), caption: []),
+  figure(image("figs/cn.pdf", width: 100%, page: 2), caption: []),
+  figure(image("figs/cn.pdf", width: 100%, page: 3), caption: []),
+  columns: (1fr, 1fr, 1fr),
+  placement: auto,
   caption: [#strong[(a)] Nearest neighbour: the estimated value at $x$ is that of the closest data point. #strong[(b)] the Voronoi diagram can be used. #strong[(c)] Ambiguity because $p_1$, $p_2$, and $p_3$ are equidistant from $x$; this causes discontinuities in the resulting surface.],
 ) <fig:cn>
 
@@ -146,6 +150,19 @@ IDW is exact, local, and can be implemented in an efficient manner.
 However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see @sec:kdtree) otherwise each interpolation requires $cal(O) (n)$ operations.
 Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
 
+#wideblock[
+#subfigure(
+  figure(image("figs/idwvar.pdf", width: 90%, page: 1), caption: []), <fig:idwvar:1>,
+  figure(image("figs/idwvar.pdf", width: 90%, page: 2), caption: []), <fig:idwvar:2>,
+  figure(image("figs/idwvar.pdf", width: 90%, page: 3), caption: []), <fig:idwvar:3>,
+  figure(image("figs/idwvar.pdf", width: 90%, page: 4), caption: []), <fig:idwvar:4>,
+  columns: (1fr, 1fr, 1fr, 1fr),
+  caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). #strong[(b)] 4-nearest neighbours (green=neighbours used; red=not). #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
+  placement: auto,
+  label: <fig:idwvar>,
+)
+]
+
 ==== IDW variations
 IDW is a _family_ of spatial interpolation methods, and its simplest form to select the neighbours is as described above: with a searching circle.
 However, other variations exist (see @fig:idwvar):
@@ -154,16 +171,6 @@ However, other variations exist (see @fig:idwvar):
 / $k$-per-quadrant:: to ensure that the neighbours used in the interpolation process are not all in one direction (eg the location on the left of @fig:idw\c), one can use _quadrants_ and take the $k$-nearest per quadrant. This makes IDW automatic and continuous. (@fig:idwvar\d)
 / combinations of above:: it would for example be possible to use quadrants but restrict the search to a given radius, ie sample points that are farther than the radius are not considered.
 
-#subfigure(
-  figure(image("figs/idwvar.pdf", width: 100%, page: 1), caption: []), <fig:idwvar:1>,
-  figure(image("figs/idwvar.pdf", width: 100%, page: 2), caption: []), <fig:idwvar:2>,
-  figure(image("figs/idwvar.pdf", width: 100%, page: 3), caption: []), <fig:idwvar:3>,
-  figure(image("figs/idwvar.pdf", width: 100%, page: 4), caption: []), <fig:idwvar:4>,
-  columns: (1fr, 1fr, 1fr, 1fr),
-  caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). (green=neighbours used; red=not). #strong[(b)] 4-nearest neighbours. #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
-  placement: auto,
-  label: <fig:idwvar>,
-)
 
 === Linear interpolation in triangulation (TIN)
 

@@ -226,7 +226,7 @@ Observe that the insertion of a single point $p$ in a DT modifies only _locally_
 #notefigure(
   image("./figs/insertion_deletion.pdf", width: 75%),
   caption: [#strong[(top)] The DT before and #strong[(bottom)] after a point $p$ has been inserted. Notice that the DT is updated only locally (only the yellow triangles are affected).],
-  // dy: -420pt,
+  // dy: 220pt,
 ) <fig:insertion_deletion>
 
 In sharp contrast to this, other strategies to construct a DT (eg divide-and-conquer and plane sweep algorithms, see Section @sec:notes), build a DT in _one_ operation (this is a batch operation), and if another point needs to be inserted after this, the whole construction operation must be done again from scratch. 
@@ -240,7 +240,7 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
   #figure(
     image("./figs/insertion_steps.pdf", width: 90%),
     caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
-    placement: auto,
+    // placement: auto,
   ) <fig:insertion_steps>
 // ]
 
@@ -353,7 +353,7 @@ In practice, because most real-world datasets will have a high _spatial coherenc
 === Flips
 
 #notefigure(
-  image("./figs/flip22.pdf", width: 70%),
+  image("./figs/flip22.pdf", width: 60%),
   caption: [A #emph[flip22].],
 ) <fig:flip22>
 
@@ -369,7 +369,7 @@ There are 3 flip operations (the numbers refer to the number of triangles before
 / flip31: is the inverse operation that deletes a vertex (see @fig:flip13).
 
 #notefigure(
-  image("./figs/flip13.pdf", width: 70%),
+  image("./figs/flip13.pdf", width: 60%),
   caption: [A #emph[flip13] and its inverse operation #emph[flip31].],
   dy: 400pt,
 ) <fig:flip13>
