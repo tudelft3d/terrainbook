@@ -23,7 +23,7 @@ In most cases you can recognise such files by the _.xyz_, _.csv_, or _.txt_ exte
 #note[#link("https://en.wikipedia.org/wiki/Comma-separated_values")].
 A benefit of ASCII files is that you can simply open and edit them in a text editor.
 The biggest downside is that they are not standardised, ie the type, order, and number of attributes vary, and also the used coordinate reference system (CRS) is usually not documented in the file.
-/* TODO: figure without image */
+
 #notefigure(
   ```csv
     x y z

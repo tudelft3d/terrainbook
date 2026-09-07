@@ -237,7 +237,7 @@ We distinguish three types of artefacts,
 The sensor position and orientation are continuously monitored during acquisition, eg by means of GNSS and an IMU for airborne and seaborne systems, and used to determine the 3D coordinates of the measured points. 
 Consequently, any errors in the position and orientation of the sensor platform affect the elevation measurements. 
 For this reason adjacent flight strips (see @fig:lidarStrips) often need to be adjusted to match with each other using ground control points. 
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/lidar_strips.png", width: 100%), caption: [Plan view of the different strips of a lidar survey. Figure from #citet(<Kornus03>)]), <fig:lidarStrips>,
   figure(image("figs/strip_adjustment.png", width: 100%), caption: [Cross-section of gable roof before (top) and after (bottom) strip adjustment.]), <fig:lidarGableRoof>,
@@ -248,7 +248,7 @@ For this reason adjacent flight strips (see @fig:lidarStrips) often need to be a
 )
 If the strip adjustment process fails or is omitted, a 'ghosting' effect can occur as illustrated in @fig:lidarGableRoof (top). 
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in @fig:dim.
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/Roof_OP_NA_10cm.jpg", width: 100%), caption: [Nadir image.]),
   figure(image("figs/Roof_DSM_NA_10cm.jpg", width: 100%), caption: [DSM with good aerial triangulation.]),

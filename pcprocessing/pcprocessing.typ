@@ -94,7 +94,7 @@ Ground filtering involves classifying the points of a point cloud into ground po
 As shown in @fig:filter-profile, ground points are those points that are part of the bare-earth surface of the Earth, thus excluding vegetation and man-made structures such as buildings, statues, and cars.
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, eg to classify buildings and vegetation possibly using a region growing algorithm (see @sec:regiongrowing).
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("./figs/filter-profile-before.png", width: 100%), caption: [Original point cloud]),
   figure(image("./figs/filter-profile-after.png", width: 100%), caption: [After ground filtering]),
@@ -258,7 +258,7 @@ When the process is completed, the surface of the cloth can be used to obtain tw
 If the surface of the cloth is used, it is for instance possible to triangle it or to create a grid from it.
 If a segmentation/classification of the input points is wanted, then the distance between a sample point of the original point cloud and the cloth can be used (this is the parameter $epsilon_"ground"$ in @algo:csf).
 If this distance is less than a given user-defined threshold, then the sample point is a ground point.
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("./figs/csf_before.png", width: 100%), caption: [Original point cloud]),
   figure(image("./figs/csf_onlyground.png", width: 100%), caption: [Output \#1: the ground points (with the ground surface shown in grey)]),

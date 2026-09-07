@@ -102,7 +102,7 @@ This is a point filtering method that aims at reducing the volume of data, in or
 The idea is to overlay a virtual grid on the input points and to keep one point for every grid cell (similar to grid thinning as explained in Section @sec:thinning).
 The selected points can either be used to construct a raster using interpolation or a TIN surface, and contours can be derived from that.
 While different functions can be used to select the point (eg deepest, shallowest, average, or median), because of the safety constraint the shallowest point is often chosen by practitioners, see @fig:fr:vg:a for a one-dimensional equivalent.
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/virtualgridding.pdf", width: 100%, page: 2), caption: [Virtual gridding]), <fig:fr:vg:a>,
   figure(image("figs/maxgridding.pdf", width: 100%, page: 2), caption: [Max rasterisation]), <fig:fr:mg:a>,
@@ -139,7 +139,7 @@ One could use TIN simplification, as explained in @chap:conversion, to simplify 
 This would also simplify the depth-contours that are generated from the TIN. 
 However, as @fig:simpfail shows, the safety constraint is not guaranteed to be respected when vertices are removed from a TIN.
 This is due to the fact that the triangulation must be updated (with flips, see @sec:dtconstruction) and it is likely that a change in the triangulation will eventually violate the safety constraint on a vertex that was removed earlier.
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/simpfail.pdf", width: 100%, page: 1), caption: [Initial configuration]), <fig:simpfail:a>,
   figure(image("figs/simpfail.pdf", width: 100%, page: 2), caption: [1st vertex removal]), <fig:simpfail:b>,
@@ -183,7 +183,7 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 The smoothing operator basically estimates, with the Laplace interpolant (see @sec:laplace), the depth of each vertex in a dataset by considering its natural neighbours (see @fig:1Dsmoothop).
 If this depth is shallower, then the vertex is assigned this value; if it is deeper then nothing is done.
 Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths upwards (if at all). 
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/1Dsmoothop.pdf", width: 100%, page: 1), caption: [Initial TIN]), <fig:1Dsmoothop:a>,
   figure(image("figs/1Dsmoothop.pdf", width: 100%, page: 2), caption: [Estimation using only neighbours]), <fig:1Dsmoothop:b>,
@@ -209,7 +209,7 @@ Furthermore this operator can be applied any number of times, delivering more ge
 === The densification operator <sec:densification>
 
 Its objective is primarily to minimise the discretisation error between the Laplace interpolated field and the contours that are extracted from the DT, this is illustrated in @fig:1Ddensop.
-/* TODO: verify subfigure layout */
+
 #subfigure(
   figure(image("figs/1Ddensop.pdf", width: 100%, page: 1), caption: [Initial TIN]), <fig:1Ddensop:a>,
   figure(image("figs/1Ddensop.pdf", width: 100%, page: 2), caption: [Interpolated field (dashed)]), <fig:1Ddensop:b>,
