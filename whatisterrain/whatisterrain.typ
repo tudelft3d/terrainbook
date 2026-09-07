@@ -4,9 +4,8 @@
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
 
-Defining what a 'terrain' is, also called a _digital terrain model_ (DTM), is not a simple task because there is no universal agreement, neither among practitioners nor in the scientific literature.
+Defining what a "terrain" is, also called a _digital terrain model_ (DTM), is not a simple task because there is no universal agreement, neither among practitioners nor in the scientific literature.
 Different terms are used, often interchangeably.
-
 In most cases, we can state that:
 
 #quote(block: true)[
@@ -18,7 +17,7 @@ However, the "Earth's surface" is also not a clear concept, since several object
 
 In this book, we use the following definitions (see @fig:dtmdsm):
 / DTM: (#strong[d]igital #strong[t]errain #strong[m]odel): the surface is the _bare-earth_, without man-made objects or vegetation.#index[DTM (digital terrain model)]
-/ DSM: (#strong[d]igital #strong[s]urface #strong[m]odel): the surface includes all objects and structures on the terrain, including vegetation.#index[DSM (digital surface model)]
+/ DSM: (#strong[d]igital #strong[s]urface #strong[m]odel): the surface includes all objects and man-made structures on the terrain, including vegetation.#index[DSM (digital surface model)]
 / DEM: (#strong[d]igital #strong[e]levation #strong[m]odel): 
  in the literal meaning of the term, it is simply a model of the elevation. A DEM is either a DSM or a DTM.#index[DEM] 
  #note[DEM != grid]
@@ -65,7 +64,7 @@ What is usually used for modelling terrains: a surface (which is topologically a
 is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
 #note[2-manifold]#index[2-manifold]
 In other words, the surface can be projected to the $x y$-plane and maintain its topology.
-In this book, when we refer to "terrains" we mean such a surface, unless explicitly stated otherwise.
+In this book, when we refer to a "terrain" we mean such a surface, unless explicitly stated otherwise.
 This is often what is used in GIS software, and the well-known raster/grid is such a case.
 Observe that this restricts the real-world cases that can be modelled because, as shown in @fig:dimgis:25, vertical surfaces (eg walls of a building if we model all man-made objects with the terrain to construct a digital surface model), overhangs (eg the balcony of a house) and caves are impossible to represent.
 As shown in the figure, these are modelled as nearly vertical surfaces; in practice the wall of a building could deviate by for instance 1 degree from the vertical. 
@@ -116,7 +115,7 @@ To represent a terrain in a computer, and be able to manipulate it (ie edit the 
 
 === Strategy \#1: points + global interpolation function
 
-This means storing the original sample points with the parameters of the _global_ spatial interpolation method that is best suited to the distribution of the samples and their accuracy.
+This means storing the original sample points with the parameters of the _global_ spatial interpolation method #note[global methods] that is best suited to the distribution of the samples and their accuracy.
 Global methods are for instance inverse-distance to a power, natural neighbours, and kriging.
 This strategy is used because one can compactly represent a field (only the samples and a few parameters need to be stored).
 
@@ -129,9 +128,9 @@ This means that the spatial interpolation function used is _piecewise_ (instead 
 #note[piecewise function]#index[piecewise function]
 That is, the two-dimensional domain of the terrain (the $x y$-plane) is tessellated, or partitioned, into several pieces, and for each of these we assign an interpolation function describing the spatial variation in its interior.
 This function is usually a simple mathematical function:
-- constant function: the value of the modelled attribute is constant within one cell;
-- linear function;
-- higher-order function.
+/ constant function: the value of the modelled attribute is constant within one cell;
+/ linear function: the value varies linearly within the cell;
+/ higher-order function: the value varies quadratically or with higher-order polynomials within the cell.
 
 In general, we classify the tessellations of space into three categories (as shown in @fig:tesstypes): _regular_, _irregular_, and _hierarchical_.
 #index[tessellation]
@@ -210,12 +209,12 @@ While not a requirement, the triangulation is usually a _Delaunay triangulation_
 #index[Delaunay triangulation]
 The main reason is that Delaunay triangles are as "fat" as possible (long and skinny triangles are avoided), and thus they behave better for interpolation.
 As can be seen in @fig:whydt,
+the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of #qty("95", "m") is not used).
 #figure(
   image("figs/whydt.pdf", width: 100%),
   caption: [Two TINs (left is non-Delaunay; right is Delaunay) and the result of estimating with linear interpolation in the TIN.],
   placement: auto,
 ) <fig:whydt>
-the estimated value can be significantly different, and in this case the right one would make more sense since sample points that are closer to the interpolation location are used (in the TIN on the left, the value of #qty("95", "m") is not used).
 
 Every point (which becomes a vertex in the triangulation) is lifted to its elevation to create a surface, embedded in three dimensions, approximating the morphology of the terrain.
 The value of elevation at an unsampled location $p$ is obtained by linearly interpolating on the plane passing through the three vertices of the triangle containing $p$. 
@@ -243,15 +242,15 @@ Another disadvantage is that the notion of neighbours, which is straightforward 
 
 #figure(
   image("figs/dggs.png"),
-  caption: [Six DGGS systems as provided in DiscreteGlobalGrids.jl.],
-  placement: top,
+  caption: [Six DGGS systems as provided in the library `DiscreteGlobalGrids.jl`.],
+  placement: auto,
 ) <fig:dggs>
 
 However, a regular tessellation like a grid cannot accurately fit a sphere, this is problematic for global (geographic) datasets.
 Therefore---even with their disadvantages---global hierarchical tessellations, also called _discrete global grid systems_ (DGGS), are becoming more popular.
 #index[DGGS]#note[discrete global grid system (DGGS)]
 Well-known examples are Google's S2, the H3 grid system developed by Uber, and HEALPix, as shown in @fig:dggs.
-More recent advances combine efficient indexing schemes (fast neighbour lookup, see @sec:knn) with optimal (equal area) cell properties.
+More recent advances combine efficient indexing schemes (fast neighbour lookup, see @sec:kdtree) with optimal (equal area) cell properties.
 
 
 === Other common terrain representations used in GIS <sec:representation_others>
@@ -303,15 +302,14 @@ But, depending on the relation between the spacing between contours (the _contou
 
 In practice, isolines are only approximated from the computer representation of a field.
 They are usually extracted directly from a TIN or a regular grid. 
-As shown in @fig:isoline,
+As shown in @fig:isoline, the idea is to compute the intersection between the level value (eg #qty("200", "m")) and the terrain, represented for instance with a TIN. 
+Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
+@chap:conversion gives more details.
 #figure(
-  image("figs/isoline.pdf", width: 95%),
+  image("figs/isoline.pdf", width: 90%),
   caption: [Cross-section of a terrain (left), and the #qty("200", "m") isoline extracted from a TIN representation of it (right).],
   placement: auto,
 ) <fig:isoline>
-the idea is to compute the intersection between the level value (eg #qty("200", "m")) and the terrain, represented for instance with a TIN. 
-Each triangle is scanned and segment lines are extracted to form an approximation of an isoline.
-@chap:conversion gives more details.
 
 == #flex-heading[TIN versus raster][TIN versus raster for modelling terrains]
 
