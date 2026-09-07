@@ -36,7 +36,7 @@ By measuring the time-of-flight, ie the difference in time between emitting a pu
 $  T = 2 R/c  $ <eq-tof>
 where $c$ is the speed of light (approximately 300,000 km/s), and $R$ is the distance or _range_ between the lidar scanner and the target object that reflects the laser pulse. Therefore the range $R$ can be found from the measured time-of-flight $T$ using
 #math.equation(block: true, numbering: none)[
-$  R = 1/2 T c .  $
+$  R = 1/2 T c $
 ]
 A typical lidar systems performs hundreds of thousands of such range measurements per second. 
 
