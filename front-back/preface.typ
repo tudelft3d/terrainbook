@@ -10,7 +10,7 @@ We wanted the book to be language-agnostic.
 The course website for which this book was developed (#link("https://3d.bk.tudelft.nl/courses/geo1015");) provides assignments where students use Python and/or C++.
 
 #strong[Open material] \
-This book was primarily developed for the course #emph[Digital terrain modelling] (GEO1015) in the MSc Geomatics programme in the Built Environment at Delft University of Technology in the Netherlands. 
+This book was primarily developed for the course #emph[Digital terrain modelling] (GEO1015) in the _MSc Geomatics for the Built Environment_ programme at the Delft University of Technology in the Netherlands. 
 The course is tailored for MSc students who have already followed introductory courses in GIS, programming, and acquisition of geographical datasets. 
 Each chapter corresponds to a lesson in the course, whose content is also openly available: #link("https://3d.bk.tudelft.nl/courses/geo1015")
 
