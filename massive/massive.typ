@@ -232,12 +232,12 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
 === Overview of streaming DT construction
 
 @fig:streamingdt shows the overview of the processes involved for the construction of a DT with the streaming paradigm.
+Think of the stream as a 1D list of objects (points, triangles, tags, etc.) and the aim is to be able to perform an operation without having in memory the whole stream.
 #figure(
   image("figs/streaming_pipeline.pdf", width: 90%),
   caption: [Overview of the streaming pipeline to construct a DT (or extract isolines).],
   placement: none,
 ) <fig:streamingdt>
-Think of the stream as a 1D list of objects (points, triangles, tags, etc.) and the aim is to be able to perform an operation without having in memory the whole stream.
 
 === Finaliser: adding finalisation tags to the stream
 
@@ -257,16 +257,15 @@ In practice, this is performed by reading a LAS/LAZ file (or any format with poi
 
 The input of the triangulator is the output of the finaliser: a set of points with finalisation tags.
 The triangulator will triangulate the points as described in @sec:dtconstruction, but will attempt to remove from memory the triangles that are _final_, those that we are sure will never be modified (since it is guaranteed that no new points will fall inside their circumcircle).
-This is performed with the finalisation tags and the following observation (see @fig:triangulator): 
-#figure(
-  image("figs/triangulator.pdf", width: 100%),
-  caption: [The DT at a given moment during the triangulation process. Blue quadtree cells are not finalised yet, white ones are; yellow triangles are still in memory (their circumcircles (in red) encroach on unfinalised cells); white triangles have been written to disk since their circumcircles do not encroach on an active cell (some green circles shown as example).],
-  placement: none,
-) <fig:triangulator>
-a triangle inside a finalised quadtree cell (ie where all the points in the streams inside that cell have been read) is _final_
+This is performed with the finalisation tags and the following observation (see @fig:triangulator): a triangle inside a finalised quadtree cell (ie where all the points in the streams inside that cell have been read) is _final_
 #note[finalisation of triangles]
 if its circumcircle does not encroach on an active quadtree cell.
 If its circumcircle overlaps with an active quadtree cell, then it is possible that later in the stream a new point will be added inside the circle, and thus the triangle will not be Delaunay.
+#figure(
+  image("figs/triangulator.pdf", width: 100%),
+  caption: [The DT at a given moment during the triangulation process. Blue quadtree cells are not finalised yet, white ones are; yellow triangles are still in memory (their circumcircles (in red) encroach on unfinalised cells); white triangles have been written to disk since their circumcircles do not encroach on an active cell (some green circles shown as example).],
+  placement: auto,
+) <fig:triangulator>
 
 Final triangles can be removed from memory and written directly to disk; it is however possible to add another process to the pipeline and send the final triangles to them (eg to create a grid or to extract isolines).
 

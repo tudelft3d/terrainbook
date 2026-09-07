@@ -39,12 +39,12 @@ Notice also that every point $x in bb(R)^(2)$ has at least one nearest point in 
 As shown in @fig:vd_circle, the VD of a set $S$ of points in $bb(R)^(2)$ is a planar graph. 
 Its edges are the perpendicular bisectors of the line segments of pairs of points in $S$, and its vertices are located at the centres of the circles passing through three points in $S$. 
 The VD in $bb(R)^(2)$ can also be seen as a two-dimensional cell complex where each 2-cell is a (convex) polygon (see @fig:vd2d). 
+Two Voronoi cells, $cal(V)_p$ and $cal(V)_q$, lie on the opposite sides of the perpendicular bisector separating the points $p$ and $q$.
 #figure(
   image("./figs/vd2d.pdf", width: 100%, page: 3),
   caption: [VD of a set of points in the plane (clipped by a box). The point $p$ (whose Voronoi cell is dark grey) has seven neighbouring cells (light grey).],
   placement: auto,
 ) <fig:vd2d>
-Two Voronoi cells, $cal(V)_p$ and $cal(V)_q$, lie on the opposite sides of the perpendicular bisector separating the points $p$ and $q$.
 
 The VD has many interesting properties, what follows is a list of the most relevant properties in the context of this course.
 / Size:: if $S$ has $n$ points, then VD($S$) has exactly $n$ Voronoi cells since there is a one-to-one mapping between the points and the cells.
@@ -60,13 +60,13 @@ Let $cal(D)$ be the VD of a set $S$ of points in $bb(R)^(2)$.
 Since VD($S$) is a planar graph, it has a dual graph, and let $cal(T)$ be this dual graph obtained by drawing straight edges between two points $p,q in S$ if and only if $cal(V)_p$ and $cal(V)_q$ are adjacent in $cal(D)$. 
 Because the vertices in $cal(D)$ are of degree 3 (3 edges connected to it), the graph $cal(T)$ is a triangulation. 
 $cal(T)$ is actually called the Delaunay triangulation (DT) of $S$, and, as shown in @fig:dt2da, 
+partitions the plane into triangles---where the vertices of the triangles are the points in $S$ generating each Voronoi cell---that satisfy the _empty circumcircle_ test (a circle is said to be _empty_ when no points are in its interior). 
+If $S$ is in general position, then DT($S$) is unique.
 #figure(
   image("./figs/vd2d.pdf", width: 100%, page: 4),
   caption: [The DT of a set of points in the plane (same point set as @fig:vd2d). The green circles show 2 examples of empty circumcircles.],
   // placement: auto,
 ) <fig:dt2da>
-partitions the plane into triangles---where the vertices of the triangles are the points in $S$ generating each Voronoi cell---that satisfy the _empty circumcircle_ test (a circle is said to be _empty_ when no points are in its interior). 
-If $S$ is in general position, then DT($S$) is unique.
 
 === Convex hull <sec:convexhull>
 

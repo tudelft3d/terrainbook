@@ -344,12 +344,12 @@ Here one has to be careful about the meaning of a grid: does the value of a pixe
 In most cases, unless metadata are available, it is not known. 
 But in the context of terrain modelling, we can assume that the value of a pixel represents the value at the centre of the pixel.
 
-Suppose we have 4 adjacent pixels, each having an elevation, as in @fig:bilinear.
 #figure(
   image("figs/bilinear.pdf", width: 90%),
   caption: [Bilinear interpolation.],
   placement: auto,
 ) <fig:bilinear>
+Suppose we have 4 adjacent pixels, each having an elevation, as in @fig:bilinear.
 Bilinear interpolation uses the 4 centres to perform the interpolation at location $p = (p_x, p_y)$; it is thus a weighted-average method because the 4 samples are used, and their weight is based on the linear interpolation, as explained below.
 We need to linearly interpolate the values at locations $q$ and $r$ with linear interpolation, and then linearly interpolate along the $y$ axis with these values.
 Also, notice that the result is independent of the order of interpolation: we could start with interpolating along the $y$ axis and then the $x$ axis and we would get the same result. 

@@ -162,6 +162,7 @@ The curvature at a point $p$ is often decomposed into types:
 + *profile curvature:* the curvature of the vertical cross-section through $p$ perpendicular to the contour line passing through $p$ (or of the vertical plane along the 2D vector of the aspect at $p$)
 + *plan curvature:* the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$) 
 Because there are 2 types of curvatures and each have 3 potential values, there are 9 possible options (as @fig:curvatures shows).
+
 #figure(
   image("figs/curvatures.png", width: 90%),
   caption: [Nine curvatures (Figure adapted from #citet(<VanKreveld97>)).],
@@ -266,7 +267,7 @@ If we consider the contour line of a saddle point $p$, then there are 4 or more 
 ) <fig:saddle_contour>
 @fig:saddle_contour shows an example for a point with an elevation of #qty("10", "m"), the contour lines at #qty("10", "m") are drawn by linearly interpolating along the edges of the TIN of the surrounding (see @chap:conversion).
 
-=== Valleys \& ridges
+=== Valleys & ridges
 
 #figure(
   image("figs/valley_ridge.png", width: 100%),
@@ -334,12 +335,12 @@ The values computed for each cell need as input the gradient and the aspect of t
 The formula to compute the hillshade of a given cell $c_"ij"$ differs from software to software, and we present here one (it is used in QGIS and ArcGIS for example, and surely others).
 It assumes that the output hillshade value is an integer in the range $[0, 255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known. 
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain.
+As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alpha_"ij"$, its aspect is $theta_"ij"$, the azimuth of the sun is $psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $gamma$ (0 rad is the horizon, $pi/2$ rad is the zenith).
 #figure(
   image("figs/hillshade-params.svg", width: 100%),
   caption: [The 4 parameters necessary to calculate the hillshade at a location (black point on the terrain).],
   placement: auto,
 ) <fig:hillshade-params>
-As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alpha_"ij"$, its aspect is $theta_"ij"$, the azimuth of the sun is $psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $gamma$ (0 rad is the horizon, $pi/2$ rad is the zenith).
 
 $ "hillshade"_(i j) = 255 dot.op &[(cos(pi/2 - gamma) cos(alpha_(i j))) + \
 &(sin(pi/2 - gamma) sin(alpha_(i j)) cos(psi - theta_(i j)))] $

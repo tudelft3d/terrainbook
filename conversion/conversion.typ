@@ -12,7 +12,7 @@ We consider in this chapter the following four terrain representations and discu
   // placement: auto,
 )
 
-#wideblock(side: "outer")[
+#wideblock[
 #figure(
   // placement: ,
   caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
@@ -50,12 +50,12 @@ The interpolation method can be any of the ones described in @chap:interpol and 
 Reading a contour map requires some skill, however it is considerably easier to learn to interpret a contour map than to manually draw one from a limited set of sample points.
 Yet this was exactly the task of many cartographers in the past couple of centuries: it was intuitively done by imagining a local triangulation of sample points.
 
-Isolines are usually directly extracted from either a TIN or a grid representation of a terrain. 
 #figure(
   image("figs/isoline.pdf", width: 90%),
   caption: [Vertical cross-section of a terrain (left), and a 2D projection of the terrain TIN with the extracted #qty("200", "m") isoline (right).],
   placement: auto,
 ) <fig:isolineidea>
+Isolines are usually directly extracted from either a TIN or a grid representation of a terrain. 
 The basic idea, as shown in @fig:isolineidea, is to compute the intersection between a level value (eg #qty("200", "m")) and each cell of the terrain (triangle or grid cell in our case).
 Notice that the cells are 'lifted' to their elevation. 
 Each cell of the terrain is thus visited, one after the other, and for each cell if there is an intersection (which forms a line segment) then it is extracted.
