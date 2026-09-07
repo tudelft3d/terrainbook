@@ -410,7 +410,7 @@
   show: marginalia.setup.with(
     // A4: 210mm x 297mm
     inner: (far: 10mm, width: 5mm, sep: 5mm),
-    outer: (far: 10mm, width: 55mm, sep: 5mm),
+    outer: (far: 15mm, width: 50mm, sep: 5mm),
     // main text is 120mm
     // inner: (far: 15mm, width: 0mm, sep: 5mm),
     // outer: (far: 15mm, width: 50mm, sep: 5mm),
