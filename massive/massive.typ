@@ -129,17 +129,21 @@ An alternative is to construct the Voronoi diagram (or the Delaunay triangulatio
 While this works, in practice it is not as efficient as using a $k$d-tree.
 
 First observe that the obvious method to find the cell in the $k$d-tree containing $q$---follow the insertion steps as described above and look for the parents---does not work because $q$ can be far away in the tree.
-@fig:kdtree_nn\a illustrates this: $c$ (the nearest neighbour to $q$) is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
-/* TODO: verify subfigure layout */
-#subfigure(
-  figure(image("figs/kdtree_nn.pdf", width: 100%, page: 2), caption: []),
-  figure(image("figs/kdtree_nn.pdf", width: 100%, page: 3), caption: []),
-  figure(image("figs/kdtree_nn.pdf", width: 100%, page: 4), caption: []),
-  figure(image("figs/kdtree_nn.pdf", width: 100%, page: 5), caption: []),
-  columns: (1fr, 1fr),
-  caption: [Several states for the nearest neighbour query based on a $k$d-tree, $q=(4.5, 4.0)$ is the query point and $c=(6,4)$ is the nearest point.],
-  placement: none,
-  label: <fig:kdtree_nn>,
+@fig:kdtree_nn:a illustrates this: $c$ (the nearest neighbour to $q$) is ($6,4$) but is located in the right subtree of the root, while $q$ is in the left subtree.
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/kdtree_nn.pdf", width: 100%, page: 2), caption: []), <fig:kdtree_nn:a>,
+      figure(image("figs/kdtree_nn.pdf", width: 100%, page: 3), caption: []), <fig:kdtree_nn:b>,
+      figure(image("figs/kdtree_nn.pdf", width: 100%, page: 4), caption: []), <fig:kdtree_nn:c>,
+      figure(image("figs/kdtree_nn.pdf", width: 100%, page: 5), caption: []), <fig:kdtree_nn:d>,
+      columns: (1fr, 1fr),
+      caption: [Several states for the nearest neighbour query based on a $k$d-tree, $q=(4.5, 4.0)$ is the query point and $c=(6,4)$ is the nearest point.],
+      placement: none,
+      label: <fig:kdtree_nn>,
+    )
+  ]
 )
 
 The idea of the algorithm we are presenting here is to traverse the whole tree (in depth-first order), but use the properties of the tree to quickly eliminate large portions of the tree.
@@ -151,19 +155,19 @@ The algorithm starts at the root, stores the current closest point $c_"temp"$ as
 This order is the one that is _most promising_, because we expect $c$ to be close to the insertion location (albeit this is not always the case).
 At each node $n_i$ it updates $c_"temp"$ if it is closer.
 For this, the Euclidean distance is used.
-For the example in @fig:kdtree_nn\b, point ($5,6$) is the first $c_"temp"$, and then although ($2,7$) and ($1,3$) are visited, neither is closer and thus after that step $c_"temp" = (5,6)$.
+For the example in @fig:kdtree_nn:b, point ($5,6$) is the first $c_"temp"$, and then although ($2,7$) and ($1,3$) are visited, neither is closer and thus after that step $c_"temp" = (5,6)$.
 
 The algorithm then recursively visits the other subtrees, and checks whether there could be any points, on the other side of the splitting hyperplane, that are closer to $q$ than $c_"temp"$.
 The idea behind this step is that most of the subtrees can be eliminated by verifying whether the region of the bounding box of the subtree is closer than the current $d(q, c_"temp")$, $d()$ being the Euclidean distance between 2 points.
 If that distance is shorter, then it is possible that one point in the subtree is closer than $c_"temp"$, and thus that subtree must be visited. 
 If not, then the whole subtree can be skipped, and the algorithm continues.
 
-@fig:kdtree_nn\c shows this idea after ($1,3$) has been visited.
+@fig:kdtree_nn:c shows this idea after ($1,3$) has been visited.
 $c_"temp"$ is ($5,6$), and we must decide whether the subtree right of ($2,7$) must be visited.
 In this case it must not be visited because the bounding box (light blue region) is 3.0 units from $q$, and $d(q,c_"temp")$ is around 2.07; it is thus impossible that one point inside the subtree be closer than ($5,6$).
 
 The next step is verifying whether the subtree right of the root could contain a point closer than $c_"temp"$.
-In the @fig:kdtree_nn\d, this is possible since the bounding box is only 0.5 unit from $q$, and thus the subtree must be visited.
+In the @fig:kdtree_nn:d, this is possible since the bounding box is only 0.5 unit from $q$, and thus the subtree must be visited.
 
 The algorithm continues until all subtrees have either been visited or eliminated.
 At the end, $c$ is ($6,4$).
@@ -283,7 +287,7 @@ If we shuffled randomly the points in an input file, then the spatial coherence 
 It is possible to visualise the spatial coherence of a dataset by colouring, for an arbitrary grid, the positions of the first and last points; @fig:spatial_coherence gives an example.
 The idea is to assign a colour map based on the position of the points in the file, and to colour the centre of the cells with the position of the first point inside that cell, and to colour the boundary of the cell with the position of the last point.
 #notefigure(
-  image("figs/spatial_coherence.pdf", width: 95%),
+  image("figs/spatial_coherence.pdf", width: 80%),
   caption: [The colour map used for the position of a point in the file, and 3 examples of cells.],
   dy: 300pt,
 ) <fig:spatial_coherence>
@@ -291,16 +295,19 @@ The idea is to assign a colour map based on the position of the points in the fi
 @fig:spatial_coherence_examples illustrates the spatial coherence for 2 tiles of the AHN3 dataset in the Netherlands.
 Notice that the cells are generally of the same colour, which means that the spatial coherence is relatively high.
 It is interesting to notice that the two datasets have different patterns probably because they were compiled by different companies, who used different equipment and processing software to generate the datasets.
-// #wideblock[
-  #subfigure(
-    figure(image("figs/37EN1_double.pdf", width: 100%), caption: []),
-    figure(image("figs/07BZ2-double.pdf", width: 100%), caption: []),
-    columns: (1fr, 1fr),
-    caption: [Spatial coherence of 2 AHN3 tiles. The inner cell colour indicates the position in the stream of first point in that cell, and the outer cell colour indicates the position in the stream of the last point in that cell.],
-    placement: top,
-    label: <fig:spatial_coherence_examples>,
-  )
-// ]
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/37EN1_double.pdf", width: 100%), caption: []),
+      figure(image("figs/07BZ2-double.pdf", width: 100%), caption: []),
+      columns: (1fr, 1fr),
+      caption: [Spatial coherence of two AHN3 tiles. The inner cell colour indicates the position in the stream of first point in that cell, and the outer cell colour indicates the position in the stream of the last point in that cell.],
+      placement: top,
+      label: <fig:spatial_coherence_examples>,
+    )
+  ]
+)
 
 === Streaming cannot solve all problems related to terrains
 

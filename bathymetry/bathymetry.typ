@@ -34,18 +34,20 @@ they are zigzagging (the representation of the seafloor thus contains "waves", i
 These artefacts are the result of measurement noise that is present in MBES datasets, ie the variation in depth between two close samples can be larger than in reality, even after the dataset has been (statistically) cleaned.
 @fig:ideal illustrates what is expected by hydrographers.
 
-#wideblock[
-#subfigure(
-  figure(image("figs/raw.pdf", width: 100%), caption: []), <fig:raw>,
-  figure(image("figs/maponly.pdf", width: 100%), caption: []), <fig:ideal>,
-  figure(image("figs/smoothinAndOmission.png", width: 100%), caption: []),
-  figure(image("figs/aggregation.png", width: 100%), caption: []), <fig:aggregation>,
-  columns: (1fr, 1fr),
-  caption: [Comparison of #strong[(a)] depth-contours obtained automatically from the raw MBES data and #strong[(b)] the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. #strong[(c)] Pits are removed, while peaks are preserved or integrated with another contour. #strong[(d)] Groups of nearby contour lines are aggregated],
-  placement: auto,
-  label: <fig:contouringaspects>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/raw.pdf", width: 100%), caption: []), <fig:raw>,
+      figure(image("figs/maponly.pdf", width: 100%), caption: []), <fig:ideal>,
+      figure(image("figs/smoothinAndOmission.png", width: 100%), caption: []),
+      figure(image("figs/aggregation.png", width: 100%), caption: []), <fig:aggregation>,
+      columns: (1fr, 1fr),
+      caption: [Comparison of #strong[(a)] depth-contours obtained automatically from the raw MBES data and #strong[(b)] the hydrographic chart from the Royal Australian Navy for the Torres Strait north of Australia. Raw depth contours are blue, generalized depth contours are black. #strong[(c)] Pits are removed, while peaks are preserved or integrated with another contour. #strong[(d)] Groups of nearby contour lines are aggregated],
+      placement: auto,
+      label: <fig:contouringaspects>,
+    )
+  ]
 )
-]
 
 === Generalisation is required to obtain good depth contours <sec:good-depth-contours>
 
@@ -224,18 +226,21 @@ As a result also the extracted contour lines have a smoother appearance because 
 We insert a new vertex at the centre of the circumscribed circle of any triangle that has an area greater than a preset threshold; its depth is assigned with the Laplace interpolant.
 The circumcentre is chosen here because that location is equidistant to its three closest points, and subsequently results in a very natural point distribution.
 
-
-#subfigure(
-  figure(image("figs/pyramid_o_tr.pdf", width: 100%), caption: [Original data]),
-  figure(image("figs/pyramid_o_pers.pdf", width: 100%), caption: [Perspective view of original data]),
-  figure(image("figs/pyramid_o_cl.pdf", width: 100%), caption: [Contour lines from original data]),
-  figure(image("figs/pyramid_v_tr.pdf", width: 100%), caption: [Densified with Laplace interpolant]),
-  figure(image("figs/pyramid_v_pers.pdf", width: 100%), caption: [Perspective view after densification]),
-  figure(image("figs/pyramid_v_cl.pdf", width: 100%), caption: [Contour lines from densified surface]),
-  columns: (1fr, 1fr, 1fr),
-  caption: [Original data are shown in #strong[(a)] and #strong[(b)], and the resulting contour lines in #strong[(c)]. The three figures below represent the same area densified with the Laplace interpolant.],
-  placement: auto,
-  label: <fig:interpol_smooth>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/pyramid_o_tr.pdf", width: 100%), caption: [Original data]),
+      figure(image("figs/pyramid_o_pers.pdf", width: 100%), caption: [Perspective view of original data]),
+      figure(image("figs/pyramid_o_cl.pdf", width: 100%), caption: [Contour lines from original data]),
+      figure(image("figs/pyramid_v_tr.pdf", width: 100%), caption: [Densified with Laplace interpolant]),
+      figure(image("figs/pyramid_v_pers.pdf", width: 100%), caption: [Perspective view after densification]),
+      figure(image("figs/pyramid_v_cl.pdf", width: 100%), caption: [Contour lines from densified surface]),
+      columns: (1fr, 1fr, 1fr),
+      caption: [Original data are shown in #strong[(a)] and #strong[(b)], and the resulting contour lines in #strong[(c)]. The three figures below represent the same area densified with the Laplace interpolant.],
+      placement: auto,
+      label: <fig:interpol_smooth>,
+    )
+  ]
 )
 
 @fig:interpol_smooth shows an example of these ideas. 
@@ -260,17 +265,19 @@ However, because of the maximum area threshold, that worst case scenario will ne
 @fig:zl1845fieldview shows the results obtained with the implementation of the method described in this chapter.
 This was tested with an MBES dataset from Zeeland, in the Netherlands.
 
-#wideblock[
-  #subfigure(
-    figure(image("figs/zl1845fieldview_o.pdf", width: 100%), caption: []), <fig:zl1845fieldview_o>,
-    figure(image("figs/zl1845fieldview_s.pdf", width: 100%), caption: []), <fig:zl1845fieldview_s>,
-    figure(image("figs/zl1845fieldview_raster_d.pdf", width: 100%), caption: []), <fig:zl1845fieldview_raster_d>,
-    columns: (1fr, 1fr, 1fr),
-    caption: [The effect of the smoothing operator in the Zeeland dataset. #strong[(a)] Raw contours extracted at a #qty("50", "cm") depth interval. #strong[(b)] Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. #strong[(c)] Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixel size #qty("50", "cm")).],
-    placement: auto,
-    label: <fig:zl1845fieldview>,
-  )
-]
+#place(float: true, auto,
+  wideblock[
+      #subfigure(
+        figure(image("figs/zl1845fieldview_o.pdf", width: 100%), caption: []), <fig:zl1845fieldview_o>,
+        figure(image("figs/zl1845fieldview_s.pdf", width: 100%), caption: []), <fig:zl1845fieldview_s>,
+        figure(image("figs/zl1845fieldview_raster_d.pdf", width: 100%), caption: []), <fig:zl1845fieldview_raster_d>,
+        columns: (1fr, 1fr, 1fr),
+        caption: [The effect of the smoothing operator in the Zeeland dataset. #strong[(a)] Raw contours extracted at a #qty("50", "cm") depth interval. #strong[(b)] Smoothed contours (100 smoothing passes). The ellipses mark areas where aggregation (left), omission (middle) and enlargement (right) take place. #strong[(c)] Difference map between the initial and 100X smoothed interpolated and rasterised fields (pixel size #qty("50", "cm")).],
+        placement: auto,
+        label: <fig:zl1845fieldview>,
+    )
+  ]
+)
 
 As can be observed from @fig:zl1845fieldview_o, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 
 However, the smoothed contours (100 smoothing passes) from @fig:zl1845fieldview_s have a much cleaner and less cluttered appearance. 
@@ -284,13 +291,16 @@ The result is a much smoother contour line that still respects the sample points
 
 Naturally, the smoothing operator also smoothes and simplifies the resulting contour lines.
 @fig:zl1845lineview illustrates the effect of the smoothing operator on a single contour over 30 smoothing passes. 
-#wideblock[
-#figure(
-  image("figs/zl1845detailcontours0-30.pdf", width: 95%),
-  caption: [From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.],
-  placement: auto,
-) <fig:zl1845lineview>
-]
+
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("figs/zl1845detailcontours0-30.pdf", width: 95%),
+      caption: [From 0X smoothing (outer) to 30X smoothing (inner) for a given dataset.],
+      placement: auto,
+    ) <fig:zl1845lineview>
+  ]
+)
 It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 
 What can also be seen is that the line is simplified (the details on the outer rim disappear, note however that the point count stays the same) and smoothed.
 

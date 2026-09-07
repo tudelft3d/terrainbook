@@ -18,14 +18,18 @@ As @fig:ideas shows, there are several potential regions for a rather simple set
 
 In this chapter we present methods that are used in practice to define the spatial extent of a set of points in $bb(R)^(2)$, which implies that the points in a point cloud are first projected to a two-dimensional plane.
 
-#subfigure(
-  figure(image("figs/ahn3-water.png", width: 100%), caption: []),
-  figure(image("figs/facade.jpg", width: 100%, page: 2), caption: []),
-  figure(image("figs/footprint.png", width: 100%), caption: []),
-  columns: (1fr, 1fr, 1fr),
-  caption: [Three point cloud datasets for which we would like to find the spatial extent. #strong[(a)] An aerial point cloud with several canals (dark colour). #strong[(b)] A scan of a façade containing several windows. #strong[(c)] For the subset formed of the building footprint (green points) we would like to obtain its footprint (line in red).],
-  placement: bottom,
-  label: <fig:examples>,
+#place(float: true, auto,
+  wideblock[
+   #subfigure(
+    figure(image("figs/ahn3-water.png", width: 100%), caption: []),
+    figure(image("figs/facade.jpg", width: 100%, page: 2), caption: []),
+    figure(image("figs/footprint.png", width: 100%), caption: []),
+    columns: (1fr, 1fr, 1fr),
+    caption: [Three point cloud datasets for which we would like to find the spatial extent. #strong[(a)] An aerial point cloud with several canals (dark colour). #strong[(b)] A scan of a façade containing several windows. #strong[(c)] For the subset formed of the building footprint (green points) we would like to obtain its footprint (line in red).],
+    placement: bottom,
+    label: <fig:examples>,
+  )
+  ]
 )
 
 #subfigure(

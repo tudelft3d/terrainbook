@@ -70,65 +70,66 @@ However, in practice it is also used for other types of point cloud, eg those de
 LAS files are binary and unlike the PLY format the fields are prescribed, ie the attributes for each point record and their types (number of bits) cannot be modified.
 @tab:las-record shows the composition of the base record type for the latest version of LAS (v1.4).
 
-//-- TODO: figures in appendix not numbered
-#wideblock[
-#figure(
-  caption: [LAS Point Data Record Format 6.],
-  {
-  set text(size: 8pt)
-  table(
-    columns: (auto, auto, auto, auto),
-    stroke: none,
-    // stroke: (y: none),
-    inset: 3pt,
-    table.vline(x: 1, start: 1),
-    table.vline(x: 2, start: 1),
-    table.vline(x: 3, start: 1),
-    align: (left, left, right, left),
-    table.header([Field], [Type], [Size (bits)], [Description],),
-    table.hline(),
-    [`X`], [int], [32], [X-coordinate (not real value, see below)],
-    [`Y`], [int], [32], [Y-coordinate (not real value, see below)],
-    [`Z`], [int], [32], [Z-coordinate (not real value, see below)],
-    [`intensity`], [unsigned int], [16], [pulse return amplitude],
-    [`return_number`], [unsigned int], [4], [total pulse return number
-    for a given output pulse],
-    [`number_of_returns`], [unsigned int], [4], [total number of returns
-    for a given pulse],
-    [`synthetic`], [boolean], [1], [flag to indicate whether the point
-    is synthetic, ~if it has been artificially generated rather measured
-    by the lidar sensor],
-    [`key_point`], [boolean], [1], [flag to mark points that should not
-    be removed or thinned during data processing],
-    [`overlap`], [boolean], [1], [flag to identify points that are part
-    of an overlap region between different lidar flight lines],
-    [`scanner_channel`], [unsigned int], [2], [used to distinguish
-    between the different channels of a multi-channel lidar system,
-    where each channel might correspond to a different laser or beam
-    angle],
-    [`scan_direction_flag`], [boolean], [1], [direction at which the
-    scanner mirror was travelling at the time of the output pulse. A bit
-    value of 1 is a positive scan direction, and a bit value of 0 is a
-    negative scan direction (where positive scan direction is a scan
-    moving from the left side of the in-track direction to the right
-    side and negative the opposite)],
-    [`edge_of_flight_line`], [boolean], [1], [has a value of 1 only when
-    the point is at the end of a scan. It is the last point on a given
-    scan line before it changes direction.],
-    [`classification`], [unsigned int], [8], [classification code, see
-    @tab:las-classes],
-    [`user_data`], [unsigned int], [8], [may be used at the user’s
-    discretion],
-    [`scan_angle`], [int], [16], [angle at which the laser pulse was
-    output from the scanner including the roll of the aircraft],
-    [`point_source_id`], [unsigned int], [8], [indicates the file from
-    which this point originate, non-zero if this point was copied from
-    another file],
-    [`gps_time`], [float], [64], [GPS time of acquisition of the point],
-    table.hline(),
-  )} 
+#place(float: true, auto,
+wideblock[
+  #figure(
+    caption: [LAS Point Data Record Format 6.],
+    {
+    set text(size: 8pt)
+    table(
+      columns: (auto, auto, auto, auto),
+      stroke: none,
+      // stroke: (y: none),
+      inset: 3pt,
+      table.vline(x: 1, start: 1),
+      table.vline(x: 2, start: 1),
+      table.vline(x: 3, start: 1),
+      align: (left, left, right, left),
+      table.header([Field], [Type], [Size (bits)], [Description],),
+      table.hline(),
+      [`X`], [int], [32], [X-coordinate (not real value, see below)],
+      [`Y`], [int], [32], [Y-coordinate (not real value, see below)],
+      [`Z`], [int], [32], [Z-coordinate (not real value, see below)],
+      [`intensity`], [unsigned int], [16], [pulse return amplitude],
+      [`return_number`], [unsigned int], [4], [total pulse return number
+      for a given output pulse],
+      [`number_of_returns`], [unsigned int], [4], [total number of returns
+      for a given pulse],
+      [`synthetic`], [boolean], [1], [flag to indicate whether the point
+      is synthetic, ~if it has been artificially generated rather measured
+      by the lidar sensor],
+      [`key_point`], [boolean], [1], [flag to mark points that should not
+      be removed or thinned during data processing],
+      [`overlap`], [boolean], [1], [flag to identify points that are part
+      of an overlap region between different lidar flight lines],
+      [`scanner_channel`], [unsigned int], [2], [used to distinguish
+      between the different channels of a multi-channel lidar system,
+      where each channel might correspond to a different laser or beam
+      angle],
+      [`scan_direction_flag`], [boolean], [1], [direction at which the
+      scanner mirror was travelling at the time of the output pulse. A bit
+      value of 1 is a positive scan direction, and a bit value of 0 is a
+      negative scan direction (where positive scan direction is a scan
+      moving from the left side of the in-track direction to the right
+      side and negative the opposite)],
+      [`edge_of_flight_line`], [boolean], [1], [has a value of 1 only when
+      the point is at the end of a scan. It is the last point on a given
+      scan line before it changes direction.],
+      [`classification`], [unsigned int], [8], [classification code, see
+      @tab:las-classes],
+      [`user_data`], [unsigned int], [8], [may be used at the user’s
+      discretion],
+      [`scan_angle`], [int], [16], [angle at which the laser pulse was
+      output from the scanner including the roll of the aircraft],
+      [`point_source_id`], [unsigned int], [8], [indicates the file from
+      which this point originate, non-zero if this point was copied from
+      another file],
+      [`gps_time`], [float], [64], [GPS time of acquisition of the point],
+      table.hline(),
+    )} 
   )<tab:las-record>
 ]
+)
 
 In the specifications this is referred to as the "Format 6", and other record types are possible (Formats 0 to 10).
 #note[Different LAS formats: #link("https://laspy.readthedocs.io/en/latest/intro.html#point-records")]

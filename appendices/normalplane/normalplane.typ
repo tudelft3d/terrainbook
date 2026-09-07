@@ -22,13 +22,15 @@ PCA allows us to identify the directions of maximum variance in a dataset, and i
 #index[eigenvalues]#index[eigenvectors]
 The eigenvector linked with the largest eigenvalue represents the direction where the variance is the largest, and the smallest eigenvalue where the variance is the smallest.
 
-#wideblock[
-  #figure(
-    image("./figs/normal_demo.pdf", width: 100%),
-    caption: [Perspective view of a point cloud with 3 planes fitted and their normal vector.],
-    placement: auto,
-  ) <fig:normal_demo>
-]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/normal_demo.pdf", width: 100%),
+      caption: [Perspective view of a point cloud with 3 planes fitted and their normal vector.],
+      placement: auto,
+    ) <fig:normal_demo>
+  ]
+)
 
 For our subset of 10 or 15 neighbouring points in $S$, the direction of maximum variance is the plane that best fits the data, and the normal vector is the direction of minimum variance.
 @fig:knn_normal shows that one should be careful for points close to the edges of building for instance, since the normal will be affected by neighbouring points.

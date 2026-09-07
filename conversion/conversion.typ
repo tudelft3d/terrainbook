@@ -283,18 +283,19 @@ It is thus possible that the final surface does not lie within $epsilon_(max )$,
 In practice, refinement is often computationally more efficient than decimation because we do not need to first build a TIN from all input points before removing several of them again. 
 However, decimation could be more efficient when you already have a detailed TIN, stored in a topological data structure, that just needs to be slightly simplified.
 
-
-#wideblock[
-#subfigure(
-  figure(image("figs/wedding0.png", width: 60%), caption: []),
-  figure(image("figs/wedding-tin.png", width: 100%), caption: []),
-  figure(image("figs/wedding-nn.png", width: 100%), caption: []),
-  columns: (1fr, 1fr, 1fr),
-  caption: [The 'wedding cake' effect. #strong[(a)] The input isolines have been discretised into sample points. #strong[(b)] The TIN of the samples creates several horizontal triangles. #strong[(c)] The surface obtained with nearest-neighbour interpolation.],
-  placement: auto,
-  label: <fig:wedding>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/wedding0.png", width: 60%), caption: []),
+      figure(image("figs/wedding-tin.png", width: 100%), caption: []),
+      figure(image("figs/wedding-nn.png", width: 100%), caption: []),
+      columns: (1fr, 1fr, 1fr),
+      caption: [The 'wedding cake' effect. #strong[(a)] The input isolines have been discretised into sample points. #strong[(b)] The TIN of the samples creates several horizontal triangles. #strong[(c)] The surface obtained with nearest-neighbour interpolation.],
+      placement: auto,
+      label: <fig:wedding>,
+    )
+  ]
 )
-]
 
 == #flex-heading[Wedding cake effect][Conversion isolines to TIN/raster creates the "wedding cake effect"] <sec:weddingcake>
 

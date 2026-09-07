@@ -40,7 +40,7 @@ The main issue involves finding that closest object, and especially discarding t
 @fig:zbuffer shows the idea for 2 objects ($O_1$ and $O_2$).
 Observe that objects can _partially_ be hidden by others, and that the value of the pixel should always contain the closest object at that location.
 #figure(
-  image("./figs/zbuffer.pdf", width: 70%),
+  image("./figs/zbuffer.pdf", width: 55%),
   caption: [Two planar objects $O_1$ and $O_2$ are partially overlapping when viewed from $v$.],
   placement: top,
 ) <fig:zbuffer>
@@ -89,19 +89,25 @@ Start at $v$, and for each pixel $c$ encountered along $v q_"xy"$, verify whethe
 If it is, then continue to the next pixel; if not, then there is an intersection and thus the visibility is False.
 If the pixel containing $q$ is reached without detecting an intersection, then the visibility is True.
 
-#wideblock[
-  #figure(
-    image("./figs/los.pdf", width: 100%),
-    caption: [Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.],
-    placement: auto,
-  ) <fig:los>
-]
-#wideblock[#figure(
-  image("./figs/viewshed.pdf", width: 100%),
-  caption: [Viewshed for the point $v$; the blue circle is the radius of the horizon (#qty("5000", "m") in this case).],
-    placement: auto,
-  ) <fig:viewshed>
-]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/los.pdf", width: 100%),
+      caption: [Line-of-sight between $v$ and $q$. Observe that along the profile, the points with elevation are not equally spaced.],
+      placement: auto,
+    ) <fig:los>
+  ]
+)
+
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/viewshed.pdf", width: 100%),
+      caption: [Viewshed for the point $v$; the blue circle is the radius of the horizon (#qty("5000", "m") in this case).],
+      placement: auto,
+    ) <fig:viewshed>
+  ]
+)
 
 ==== Viewshed
 As shown in @fig:viewshed, computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 

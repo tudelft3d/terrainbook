@@ -156,11 +156,15 @@ An alternative to TIN refinement is the algorithm called _cloth simulation filte
 Unlike the previous one, no TIN is required, its input is only a point cloud.
 The main observation necessary for this algorithm is that lower points are usually forming the ground (again it is assumed no outliers appear below the ground in the dataset).
 
-#figure(
-  image("./figs/csf_idea.pdf", width: 100%),
-  caption: [Basic idea behind the CSF algorithm for ground filtering of a point cloud: inverting the data and letting a cloth fall.],
-  placement: auto,
-) <fig:csf_idea>
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/csf_idea.pdf", width: 100%),
+      caption: [Basic idea behind the CSF algorithm for ground filtering of a point cloud: inverting the data and letting a cloth fall.],
+      placement: auto,
+    ) <fig:csf_idea>
+  ]
+)
 The key idea of the algorithm, as shown in @fig:csf_idea, is to invert (upside-down) a point cloud, and to let a piece of cloth fall from the sky.
 The cloth will fall until it reaches the points forming the ground.
 During the process, we aim to control the _tension_ (or rigidity) of the cloth, so that areas where there is no sample point (eg where there are large buildings or water) can be filled realistically.
@@ -377,17 +381,21 @@ To check if a candidate point $c$ should be added to $R$, a test is performed.
 In the case of region growing for plane detection (see @fig:region-growing) this test entails computing the angle between the normal vector of $c$ and the normal vector #note[see @app:normalplane[Appendix] to estimate the normal in a point cloud] of its neighbour in $R$.
 If this angle is small it is assumed that $c$ lies in the plane instance that corresponds to $R$, and that it can therefore be added to $R$.
 Otherwise $c$ is ignored (@fig:region-growing:d).
-/* TODO: verify subfigure layout */
-#subfigure(
-  figure(image("./figs/region-growing.pdf", width: 100%, page: 1), caption: [Input points with normals and three seed points]), <fig:region-growing:a>,
-  figure(image("./figs/region-growing.pdf", width: 100%, page: 2), caption: [Start growing. Add neighbours if the normal angle is small]), <fig:region-growing:b>,
-  figure(image("./figs/region-growing.pdf", width: 100%, page: 3), caption: [Continue growing from new region \ point]), <fig:region-growing:c>,
-  figure(image("./figs/region-growing.pdf", width: 100%, page: 4), caption: [Stop growing where the normal angle is too large]), <fig:region-growing:d>,
-  figure(image("./figs/region-growing.pdf", width: 100%, page: 5), caption: [Final regions from all three seed points]), <fig:region-growing:e>,
-  columns: (1fr, 1fr),
-  caption: [Region growing for plane detection based on the angle between neighbouring point normals],
-  placement: auto,
-  label: <fig:region-growing>,
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("./figs/region-growing.pdf", width: 100%, page: 1), caption: [Input points with normals and three seed points]), <fig:region-growing:a>,
+      figure(image("./figs/region-growing.pdf", width: 100%, page: 2), caption: [Start growing. Add neighbours if the normal angle is small]), <fig:region-growing:b>,
+      figure(image("./figs/region-growing.pdf", width: 100%, page: 3), caption: [Continue growing from new region \ point]), <fig:region-growing:c>,
+      figure(image("./figs/region-growing.pdf", width: 100%, page: 4), caption: [Stop growing where the normal angle is too large]), <fig:region-growing:d>,
+      figure(image("./figs/region-growing.pdf", width: 100%, page: 5), caption: [Final regions from all three starting seed points]), <fig:region-growing:e>,
+    columns: (1fr, 1fr, 1fr),
+    caption: [Region growing for plane detection based on the angle between neighbouring point normals],
+    placement: auto,
+    label: <fig:region-growing>,
+    )
+  ]
 )
 This process of growing $R$ continues until no more candidates can be found that are compatible with $R$.
 When this happens, the algorithm proceeds to the next seed point to grow a new region.
@@ -459,19 +467,21 @@ Where $(r, theta , phi.alt )$ are the spherical coordinates of the point on the 
 
 @fig:hough-transform shows an example for line detection with the Hough transform and Algorithm @algo:hough-transform gives the full pseudo-code.
 
-#wideblock[
-#subfigure(
-  figure(image("./figs/hough-transform.pdf", width: 100%, page: 1), caption: [Line parametrisation]), <fig:hough-transform:a>,
-  figure(image("./figs/hough-transform.pdf", width: 100%, page: 2), caption: [Input points]), <fig:hough-transform:b>,
-  figure(image("./figs/hough-transform.pdf", width: 100%, page: 3), caption: [Line instances for each point]), <fig:hough-transform:c>,
-  figure(image("./figs/hough-transform_accumulator.pdf", width: 70%), caption: [Accumulator contains the number of votes for each line instance.]), <fig:hough-transform:d>,
-  figure(image("./figs/hough-transform.pdf", width: 100%, page: 4), caption: [Detected line instances with a minimal vote count of 3.]), <fig:hough-transform:e>,
-  columns: (1fr, 1fr, 1fr),
-  caption: [Hough transform for line detection with a $10times 2$ accumulator. The $(phi.alt, r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y = m x + b$ form for example).],
-  placement: auto,
-  label: <fig:hough-transform>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("./figs/hough-transform.pdf", width: 100%, page: 1), caption: [Line parametrisation]), <fig:hough-transform:a>,
+      figure(image("./figs/hough-transform.pdf", width: 100%, page: 2), caption: [Input points]), <fig:hough-transform:b>,
+      figure(image("./figs/hough-transform.pdf", width: 100%, page: 3), caption: [Line instances for each point]), <fig:hough-transform:c>,
+      figure(image("./figs/hough-transform_accumulator.pdf", width: 70%), caption: [Accumulator contains the number of votes for each line instance.]), <fig:hough-transform:d>,
+      figure(image("./figs/hough-transform.pdf", width: 100%, page: 4), caption: [Detected line instances with a minimal vote count of 3.]), <fig:hough-transform:e>,
+      columns: (1fr, 1fr, 1fr),
+      caption: [Hough transform for line detection with a $10times 2$ accumulator. The $(phi.alt, r)$ line parametrisation is chosen because this form can represent vertical lines (unlike the $y = m x + b$ form for example).],
+      placement: auto,
+      label: <fig:hough-transform>,
+    )
+  ]
 )
-]
 
 #figure(
   kind: "algorithm",
@@ -498,6 +508,7 @@ Notice that the accumulator can be made more sensitive by choosing a finer quant
 ==== Time complexity
 The time complexity of the Hough transform algorithm as discussed here is $cal(O) (n m)$, where $m$ is the number of elements in the accumulator.
 
+#pagebreak()
 == Notes and comments
 
 #citet(<Arge10>) introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN.
