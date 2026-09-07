@@ -278,7 +278,7 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  // show link: set text(fill: rgb("#1a1a1a"), font: serif-font)
+  // show link: set text(fill: rgb("#1a1a1a"), font: mono-font)
   show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
   // show link: set text(blue)
   show ref: set text(blue)
