@@ -50,7 +50,7 @@ However, in the remainder of this text we will focus on airborne lidar.
 === Georeferencing the range measurements
 
 #figure(
-  image("figs/lidar-gnss-imu.png", width: 70%),
+  image("figs/lidar-gnss-imu.png", width: 50%),
   caption: [An airborne lidar system. Figure from #citet(<Dowman04>).],
   placement: auto,
 ) <fig:airborne-lidar>
@@ -80,7 +80,7 @@ In practice one emitted pulse can even lead to multiple echoes in the case when 
 Notice that lidar pulses are typically emitted in a slightly divergent manner. As a result the footprint of the pulse at ground level is several centimetres in diameter, which increases the likelihood of multiple echoes.
 
 #figure(
-  image("figs/lidar-multipulse.pdf", width: 80%),
+  image("figs/lidar-multipulse.pdf", width: 60%),
   caption: [The emitted laser pulse, #strong[(a)] the returned signal, and #strong[(b)] the recorded echoes. Figure adapted from #citet(<Bailly12>).],
   placement: auto,
 ) <fig:lidar-multipulse>
@@ -264,7 +264,7 @@ Photogrammetry knows a similar process called aerial triangulation, in which cam
 Many commonly occurring artefacts happen due to properties of the target surface. We distinguish three classes.
 
 ==== Geometry
-The shape of the target surfaces in relation to the sensor position has a great effect on 1) local point densities and 2) occlusion. As you can see from @fig:lidarAcquisitionConditions:a,
+The shape of the target surfaces in relation to the sensor position has a great effect on 1) local point densities and 2) occlusion. As you can see from @fig:lidarAcquisitionConditions:a, which illustrates this for lidar, surfaces that are closest to the scanner and orthogonal to the laser beams will yield the highest point densities (see the rooftop of the middle house). Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
 #notefigure(
   image("figs/lidarAcq.pdf", width: 100%, page: 2),
   caption: [Point distribution and occlusion],
