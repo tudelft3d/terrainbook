@@ -364,7 +364,5 @@ The algorithm to extract profile and plan curvatures from a TIN is taken from #c
 == Exercises
 
 + What is the missing word? The \_\_\_\_\_\_\_\_\_ is the 2nd derivative of the surface representing the terrain, it represents the rate of change of the gradient.
-
-
 + Given a raster, how to identify a valley and a ridge?
 + If we want to compute the slope (gradient + aspect) for the cell at the centre of this $3 times 3$ DTM with the 'finite difference method', what results will we get? \ #image("./figs/slope_grid_question.pdf")

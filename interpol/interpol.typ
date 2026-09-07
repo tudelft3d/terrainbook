@@ -55,16 +55,18 @@ This interpolant will be exact, continuous and smooth (at least $C^(2)$).
 However, it will not be local (which is problematic for terrains), and finding the polynomial of a high degree for large datasets might be impossible (or take a lot of time).
 
 The biggest concern with polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and 'overshoot', ie be (far) outside the minimum or maximum $z$ values of the set $S$.
-This is known as the Runge's phenomenon in numerical analysis,
 #index[Runge's phenomenon ]#note[Runge's phenomenon]
-and is shown in @fig:polynomial.
+This is known as the Runge's phenomenon in numerical analysis, and is shown in @fig:polynomial.
 
-#wideblock[
-#figure(
-  image("figs/polynomial.pdf", width: 100%),
-  caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and the Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
-) <fig:polynomial>
-]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("figs/polynomial.pdf", width: 100%),
+      caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and the Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
+      placement: auto,
+    ) <fig:polynomial>
+  ]
+)
 
 === Splines: piecewise polynomials
 
@@ -150,18 +152,20 @@ IDW is exact, local, and can be implemented in an efficient manner.
 However, finding all the points inside a given radius requires using an auxiliary data structure (such as a $k$d-tree, see @sec:kdtree) otherwise each interpolation requires $cal(O) (n)$ operations.
 Also, as mentioned above, there are cases where IDW might not yield a continuous surface (nor smooth), it suffers from the distribution of sample points, and we cannot claim that it is automatic since finding the correct parameters for the search radius is usually a trial-and-error task.
 
-#wideblock[
-#subfigure(
-  figure(image("figs/idwvar.pdf", width: 90%, page: 1), caption: []), <fig:idwvar:1>,
-  figure(image("figs/idwvar.pdf", width: 90%, page: 2), caption: []), <fig:idwvar:2>,
-  figure(image("figs/idwvar.pdf", width: 90%, page: 3), caption: []), <fig:idwvar:3>,
-  figure(image("figs/idwvar.pdf", width: 90%, page: 4), caption: []), <fig:idwvar:4>,
-  columns: (1fr, 1fr, 1fr, 1fr),
-  caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). #strong[(b)] 4-nearest neighbours (green=neighbours used; red=not). #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
-  placement: auto,
-  label: <fig:idwvar>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/idwvar.pdf", width: 90%, page: 1), caption: []), <fig:idwvar:1>,
+      figure(image("figs/idwvar.pdf", width: 90%, page: 2), caption: []), <fig:idwvar:2>,
+      figure(image("figs/idwvar.pdf", width: 90%, page: 3), caption: []), <fig:idwvar:3>,
+      figure(image("figs/idwvar.pdf", width: 90%, page: 4), caption: []), <fig:idwvar:4>,
+      columns: (1fr, 1fr, 1fr, 1fr),
+      caption: [IDW variations for #strong[(a)] a set of points and an interpolation location (middle point). #strong[(b)] 4-nearest neighbours (green=neighbours used; red=not). #strong[(c)] search ellipse. #strong[(d)] 2-nearest per quadrant.],
+      placement: auto,
+      label: <fig:idwvar>,
+    )
+  ]
 )
-]
 
 ==== IDW variations
 IDW is a _family_ of spatial interpolation methods, and its simplest form to select the neighbours is as described above: with a searching circle.
@@ -376,17 +380,20 @@ $ "RMSE" = sqrt(frac(sum_(i = 1)^(n)(hat(z)_i - z_i)^(2), n))  $
 
 And it is a good idea to plot the results to observe where the largest differences between the estimation and the real values are obtained, this can help in identifying which parameters should be fine-tuned.
 See for instance one example in @fig:jackknife.
-/* TODO: verify subfigure layout */
-#subfigure(
-  figure(image("figs/jackknife/jk1.pdf", width: 100%), caption: []),
-  figure(image("figs/jackknife/jk2.pdf", width: 100%), caption: []),
-  figure(image("figs/jackknife/jk3.pdf", width: 100%), caption: []),
-  figure(image("figs/jackknife/jk4.pdf", width: 100%), caption: []),
-  columns: (1fr, 1fr),
-  caption: [#strong[(a)] A terrain of a given area containing 2 hills. #strong[(b)] A sample of 1000 points of this terrain. #strong[(c)] A plot of the errors (absolute values) obtained from the jackknife (with IDW and a given search radius and power). #strong[(d)] A plot of the absolute elevation versus the estimated ones .],
-  label: <fig:jackknife>
-) 
 
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/jackknife/jk1.pdf", width: 82%), caption: []),
+      figure(image("figs/jackknife/jk2.pdf", width: 100%), caption: []),
+      figure(image("figs/jackknife/jk3.pdf", width: 100%), caption: []),
+      figure(image("figs/jackknife/jk4.pdf", width: 100%), caption: []),
+      columns: (1fr, 1fr),
+      caption: [#strong[(a)] A terrain of a given area containing 2 hills. #strong[(b)] A sample of 1000 points of this terrain. #strong[(c)] A plot of the errors (absolute values) obtained from the jackknife (with IDW and a given search radius and power). #strong[(d)] A plot of the absolute elevation versus the estimated ones .],
+      label: <fig:jackknife>,
+    )
+  ]
+)
 It can be seen in @fig:jackknife\c that the largest differences between the observed and estimated values are (mostly) concentrated around the two peaks of the terrain, which is not surprising.
 The differences in the lower areas (which is water) are smaller since these areas have a flatter morphology.
 @fig:jackknife\d shows the same absolute differences but in a scattered plot of the observed values versus the estimated ones.
@@ -402,30 +409,32 @@ The differences in the lower areas (which is water) are smaller since these area
   #link("https://tudelft3d.github.io/terrainbook/extra/interpol/")
 ]
 
-#wideblock[
-  #figure(
-    placement: auto,
-    caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
-    table(
-      // stroke: none,
-      columns: 7,
-      align: (left, center, center, center, center, center, center),
-      table.hline(),
-      table.header[][exact][continuous \ smooth][local][adaptable][efficient][automatic],
-      table.hline(),
-      [*global\ function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
-      [*splines*], [#sym.crossmark], [$C^(2+)$], [depends], [0], [--], [#sym.crossmark],
-      [*nearest neigh.*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
-      [*IDW*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [--], [0], [#sym.crossmark] , 
-      [*TIN*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
-      [*NNI*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [0], [#sym.checkmark] , 
-      [*NNI-c1*], [#sym.checkmark], [$C^(1)$], [#sym.checkmark], [++], [--], [#sym.checkmark] , 
-      [*Laplace*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [+], [#sym.checkmark] , 
-      [*bilinear*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [++], [#sym.checkmark] ,
-      table.hline(),
-    ) 
-  ) <tab:results_interpol>
-]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      placement: auto,
+      caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
+      table(
+        // stroke: none,
+        columns: 7,
+        align: (left, center, center, center, center, center, center),
+        table.hline(),
+        table.header[][exact][continuous \ smooth][local][adaptable][efficient][automatic],
+        table.hline(),
+        [*global\ function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
+        [*splines*], [#sym.crossmark], [$C^(2+)$], [depends], [0], [--], [#sym.crossmark],
+        [*nearest neigh.*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
+        [*IDW*], [#sym.checkmark], [#sym.crossmark], [#sym.checkmark], [--], [0], [#sym.crossmark] , 
+        [*TIN*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [+], [++], [#sym.checkmark] , 
+        [*NNI*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [0], [#sym.checkmark] , 
+        [*NNI-c1*], [#sym.checkmark], [$C^(1)$], [#sym.checkmark], [++], [--], [#sym.checkmark] , 
+        [*Laplace*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [+], [#sym.checkmark] , 
+        [*bilinear*], [#sym.checkmark], [$C^(0)$], [#sym.checkmark], [++], [++], [#sym.checkmark] ,
+        table.hline(),
+      ) 
+    ) <tab:results_interpol>
+  ]
+)
 
 
 
@@ -475,7 +484,7 @@ It splits each triangle into 3 sub-triangles (by inserting a temporary point at 
 Here, roughness is defined as the integral of the square of the $L^(2)$-norm of the gradient of the terrain.
 #citet(<Gudmundsson02>) shows that a variation of the DT (one where $k$ vertices can be inside the circumcircle of a given triangle) can yield fewer local minima; whether it yields a "better" terrain is an open question.
 
-// #pagebreak()
+#pagebreak()
 == Exercises
 
 + Given a triangle $tau$ with coordinates (20.0, 72.0, 21.0), (116.0, 104.0, 32.0), and (84.0, 144.0, 26.0), estimate the elevation at $x$ = (92.0, 112.0) with linear interpolation in the triangle (both by finding the equation of the plane and with barycentric coordinates).

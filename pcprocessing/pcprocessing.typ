@@ -16,28 +16,36 @@ This chapter describes algorithms and techniques to process a point cloud such t
 Point clouds can be in practice very large, see @chap:massive for more details and for spatial indexing and some practical solutions.
 A point cloud with fewer points is easier to manage and quicker to visualise and process.
 Therefore a point cloud is sometimes _thinned_, which simply means that a portion of the points is discarded and not used for processing.
+
 Commonly encountered thinning methods in practice are:
 / random: randomly keep a given percentage of the points, eg 10%.
 / #emph[n]th-point: keep only the $n$th point in the dataset. For instance, if $n=100$, we would keep the 1st, the 101th, the 201th, etc; a dataset with #num(100000) points is reduced to #num(1000) points. This is the quickest thinning method.
 / #emph[n]th-point random: if there is some structure in the input points (eg if generated from a gridded terrain) then #emph[n]th-point could create datasets with artefacts. The randomised variation chooses randomly in the $n$ points one point.
 / grid: overlay a 2D or 3D regular grid over the points and keep $m$ points per grid cell. That can be one of the original points, an average of those, or the exact centre of the cell. The thinning factor depends on the chosen cell-size. Notice that the result is often a point cloud with a homogeneous point density on all surfaces (only on the horizontal surfaces if a 2D grid is used).
-See @fig:randvsgrid for a comparison between random thinning and grid thinning.
-/* TODO: verify subfigure layout */
-#subfigure(
-  figure(image("./figs/rand01.png", width: 100%), caption: [random thinning]),
-  figure(image("./figs/voxel08m.png", width: 100%), caption: [3D grid thinning]),
-  columns: (1fr, 1fr),
-  caption: [Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.],
-  placement: auto,
-  label: <fig:randvsgrid>,
-)
 
+See @fig:randvsgrid for a comparison between random thinning and grid thinning.
+
+#place(float: true, top, 
+  wideblock[
+    #subfigure(
+      figure(image("./figs/rand01.png", width: 100%), caption: [random thinning]),
+      figure(image("./figs/voxel08m.png", width: 100%), caption: [3D grid thinning]),
+      columns: (1fr, 1fr),
+      caption: [Comparison of two thinning methods. The thresholds were chosen such that the number of remaining points is approximately the same.],
+      placement: auto,
+      label: <fig:randvsgrid>,
+    )
+  ]
+)
 From @sec:tin-simpl you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
 However, for a given number of resulting points, TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
 Thinning methods on the other hand do not consider the 'importance' of a point in any way, and might discard a lot of potentially meaningful details.
 So why bother with thinning? The answer is that thinning methods are a lot faster since they do not require something like a computationally expensive triangulation.
 Especially in scenarios where the point density is very high and the available time is limited, thinning can be useful.
 They are also very useful to test algorithms to get an answer quickly, and then the final processing can be done with all the points.
+
+
+
 
 == Outlier detection <sec:outlier_detection>
 

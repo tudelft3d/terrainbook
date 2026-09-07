@@ -119,13 +119,15 @@ Notice here that maximising the minimum angle is not the same as minimising the 
 In the context of modelling terrains, the max-min angle optimality ensures that a surface approximated with the set of lifted (Delaunay) triangles will be close to the original surface.
 @fig:notdelaunay shows two examples of a hill, the left surface is a random triangulation of some sample points of the surface, and the right one is the Delaunay triangulation of the same set of points.
 
-#wideblock[
-#figure(
-  image("./figs/notdelaunay/notdelaunay.png", width: 90%),
-  caption: [The same set of sample points of a hill is triangulated on the left with a random triangulation (non-Delaunay) and right with a Delaunay triangulation. The shape of the triangles is shown at the bottom by projecting them to the $x y$-plane.],
-    placement: auto,
-  ) <fig:notdelaunay>
-]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/notdelaunay/notdelaunay.png", width: 90%),
+      caption: [The same set of sample points of a hill is triangulated on the left with a random triangulation (non-Delaunay) and right with a Delaunay triangulation. The shape of the triangles is shown at the bottom by projecting them to the $x y$-plane.],
+      placement: auto,
+    ) <fig:notdelaunay>
+  ]
+)
 
 === Lifting on the paraboloid <sec:parabolic_lifting>
 
@@ -236,17 +238,20 @@ The incremental insertion algorithm, and the other well-known algorithms, can al
 
 @fig:insertion_steps illustrates the steps of the algorithm, and @algo:insert1pt its pseudo-code. 
 
-// #wideblock[
-  #figure(
-    image("./figs/insertion_steps.pdf", width: 90%),
-    caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
-    // placement: auto,
-  ) <fig:insertion_steps>
-// ]
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/insertion_steps.pdf", width: 90%),
+      caption: [Step-by-step insertion, with flips, of a single point in a DT in two dimensions.],
+      placement: auto,
+    ) <fig:insertion_steps>
+  ]
+)
 
 #figure(
   kind: "algorithm",
   supplement: [Algorithm],
+  placement: auto,
   caption: [Algorithm to insert one point in a DT],
   pseudocode-list[
     + *Input:* A DT($S$) $cal(T)$, and a new point $p$ to insert 
@@ -435,11 +440,16 @@ The constrained segments in $S$ act as visibility blockers.
   placement: auto,
 ) <fig:cdt_buildings>
 
-#figure(
-  image("./figs/cdt_steps.pdf", width: 95%),
-  caption: [Steps to construct a ConsDT.],
-  placement: auto,
-) <fig:cdt_steps>
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/cdt_steps.pdf", width: 95%),
+      caption: [Steps to construct a ConsDT.],
+      placement: auto,
+    ) <fig:cdt_steps>
+  ]
+)
+
 Without going into details about one potential algorithm, one way to construct a ConsDT($S$) is (see @fig:cdt_steps):
 + construct DT($S^(p)$), where $S^(p)$ is the set containing all the points in $S$ and the end points of the line segments (@fig:cdt_steps\b)
 + insert each line segment, each insertion will remove edges from DT($S^(p)$). In @fig:cdt_steps\c 3 edges are removed.

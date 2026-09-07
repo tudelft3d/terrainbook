@@ -14,10 +14,15 @@ It cannot be understated that before the introduction of gDEMs (with SRTM v1 in 
 Indeed, looking at the datasets listed and/or hosted at
 #note[#link("https://opentopography.org")]
 OpenTopography (@fig:dem_coverage), we can observe that, even in 2022, local elevation datasets are mostly limited to developed countries.
-#figure(
-  image("./figs/opentopography.pdf", width: 100%),
-  caption: [OpenTopography coverage with some European datasets added in pink; there are in fact more European datasets but there is no global registry for them.],
-) <fig:dem_coverage>
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/opentopography.pdf", width: 100%),
+      caption: [OpenTopography coverage with some European datasets added in pink; there are in fact more European datasets but there is no global registry for them.],
+      placement: auto,
+    ) <fig:dem_coverage>
+  ]
+)
 
 Global DEMs enable us to perform _global_ environmental studies, such as geological studies, hydrological modelling, ecosystems dynamics, the understanding of volcanic processes, and flow simulations (see @chap:runoff).
 
@@ -77,7 +82,8 @@ GEDI has been combined with TanDEM-X data to produce biomass estimates and with 
 
 The characteristics of both missions are summarised in @tab:lidarcomparison
 
-#wideblock(side: "right")[
+#place(float: true, auto,
+wideblock(side: "right")[
   #figure(
     placement: auto,
     caption: [Key characteristics of GEDI and ICESat-2 missions in comparison with a typical airborne lidar mission.],
@@ -106,7 +112,7 @@ The characteristics of both missions are summarised in @tab:lidarcomparison
     ) 
   ) <tab:lidarcomparison>
 ]
-
+)
 
 The ICESat-2 laser splits into six beams, divided into three pairs, each pair #qty("90", "m") apart and the pairs #qty("3.3", "km") apart, for a total swath width of #qty("6.6", "km").
 Along-track, it can measure each #qty("0.7", "m"), while its beam footprint is $tilde$#qty("11", "m"), so each measurement overlaps.
@@ -138,12 +144,18 @@ While both ICESat-2 and GEDI employ instruments with multiple (split) laser beam
 == #flex-heading[Most common products][Most common products available]
 
 An overview of the most common gDEMS are given in @fig:gdem_inheritance.
-#figure(
-  image("./figs/dems_overview.pdf", width: 100%),
-  caption: [An overview of current gDEMs],
-) <fig:gdem_inheritance>
 Note that all these products differ considerably in terms of coverage, resolution, accuracy and licensing.
 Even the same product can have different versions, with different resolutions and licenses.
+
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("./figs/dems_overview.pdf", width: 100%),
+      caption: [An overview of current gDEMs],
+      placement: auto,
+    ) <fig:gdem_inheritance>
+  ]
+)
 
 For example, SRTM is freely available,
 #note[SRTM]#index[SRTM]
@@ -187,14 +199,18 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
 ) <tab:gdem_overview>
 // ]
 
-#subfigure(
-  figure(image("./figs/nasadem.png", width: 100%), caption: [NASADEM]),
-  figure(image("./figs/copernicusdem.png", width: 100%), caption: [CopernicusDEM]),
-  columns: (1fr, 1fr),
-  caption: [NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how
-  CopernicusDEM has more detail. There is ∼12 years between these images.],
-  placement: auto,
-  label: <fig:nasadem>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("./figs/nasadem.png", width: 100%), caption: [NASADEM]),
+      figure(image("./figs/copernicusdem.png", width: 100%), caption: [CopernicusDEM]),
+      columns: (1fr, 1fr),
+      caption: [NASADEM and CopernicusDEM for the Indus delta in Pakistan. Note the striped noise in NASADEM, and how
+      CopernicusDEM has more detail. There is ∼12 years between these images.],
+      placement: auto,
+      label: <fig:nasadem>,
+    )
+  ]
 )
 
 == #flex-heading[Specific characteristics][Specific characteristics of gDEMs]

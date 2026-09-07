@@ -268,8 +268,8 @@ The shape of the target surfaces in relation to the sensor position has a great 
 #notefigure(
   image("figs/lidarAcq.pdf", width: 100%, page: 2),
   caption: [Point distribution and occlusion],
+  dy: 150pt,
 ) <fig:lidarAcquisitionConditions:a>
-which illustrates this for lidar, surfaces that are closest to the scanner and orthogonal to the laser beams will yield the highest point densities (see the rooftop of the middle house). Very steep surfaces on the other hand, yield relatively low point densities (see the façades of the buildings). 
 
 _Occlusion_ happens when a surface is not visible from the scanner position.
 #index[occlusion]
@@ -279,18 +279,20 @@ Notice how some steep surfaces and some of the adjacent ground are not registere
 The severity of both effects mostly depends on the geometry of the target objects and flight parameters such as the flying altitude and the amount of overlap between flight strips.
 However, regardless of what flight parameters are chosen for a survey both effects are almost always visible somewhere in the resulting dataset, see for example @fig:pcd:ahn1 for different lidar datasets for the same area.
 
-#wideblock[
-#subfigure(
-  figure(image("figs/ahn1_d.png", width: 100%), caption: [AHN1 (1996--2003)]),
-  figure(image("figs/ahn2_d.png", width: 100%), caption: [AHN2 (2008)]),
-  figure(image("figs/ahn3_d.png", width: 100%), caption: [AHN3 (2014)]),
-  figure(image("figs/rdam16_d.png", width: 100%), caption: [City of Rotterdam (2016)]),
-  columns: (1fr, 1fr),
-  caption: [Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.],
-  placement: auto,
-  label: <fig:pcd:ahn1>,
+#place(float:true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/ahn1_d.png", width: 100%), caption: [AHN1 (1996--2003)]),
+      figure(image("figs/ahn2_d.png", width: 100%), caption: [AHN2 (2008)]),
+      figure(image("figs/ahn3_d.png", width: 100%), caption: [AHN3 (2014)]),
+      figure(image("figs/rdam16_d.png", width: 100%), caption: [City of Rotterdam (2016)]),
+      columns: (1fr, 1fr),
+      caption: [Several lidar point clouds for the same area in the city of Rotterdam. Point distribution and occlusion effects vary.],
+      placement: auto,
+      label: <fig:pcd:ahn1>,
+    )
+  ]
 )
-]
 
 ==== Material properties
 Depending on material properties of a target surface, signals may be reflected in a way that makes it impossible to compute the correct distance. 

@@ -24,7 +24,6 @@ In this book, we use the following definitions (see @fig:dtmdsm):
  #note[DEM != grid]
  However, it should be noticed that in some countries (especially in the USA) a DEM is often synonymous with a grid of elevation (but not in this book!).
 
- 
 Furthermore, some concepts are derived from those, for instance: 
 / nDSM: (#strong[n]ormalised DSM): the difference between the DSM and the DTM.
  #index[nDSM (normalised DSM)]#index[normalised DSM]
@@ -33,13 +32,15 @@ Furthermore, some concepts are derived from those, for instance:
  #index[CHM]#index[canopy height model]
  The CHM is the difference between the DSM _of the vegetation_ and the DTM.
 
-#wideblock(side: "outer")[
-  #figure(
-    image("figs/destm.pdf", width: 100%),
-    // placement: bottom,
-    caption: [The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.],
-   ) <fig:dtmdsm>
-]
+#place(float:true, bottom, 
+  wideblock(side: "outer")[
+    #figure(
+      image("figs/destm.pdf", width: 100%),
+      // placement: bottom,
+      caption: [The DSM (green), DTM (pink), and nDSM (blue) for a profile view of a point cloud in Delft, the Netherlands.],
+    ) <fig:dtmdsm>
+  ]
+)
 
 == Dimensionality of DTMs
 
@@ -263,14 +264,15 @@ Conceptually speaking, these should therefore not be considered valid representa
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
 In @chap:pcprocessing we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
 
-// #wideblock(side: "outer")[
-  #figure(
-    image("figs/reps.pdf"),
-    caption: [Four most common data models for terrains.],
-    // placement: top,
-  )<fig:reps>
-// ]
-
+#place(float:true, bottom, 
+  wideblock[
+    #figure(
+      image("figs/reps.pdf"),
+      caption: [Four most common data models for terrains.],
+      // placement: top,
+    )<fig:reps>
+  ]
+)
 We will nevertheless consider these in the course; the four representations we will use are shown in @fig:reps.
 
 ==== Contour lines
