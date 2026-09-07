@@ -111,6 +111,8 @@
 
 #back-matter[
   //-- references
+  // https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
+  #show bibliography: set block(width: 100%)
   #bibliography("./refs/tb.bib", style: "./refs/apa-annotated-bibliography_modified-HL.csl")
 
   = Index
