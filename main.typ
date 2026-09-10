@@ -86,7 +86,7 @@
   // #include "conversion/conversion.typ"       //-- 07
   // #include "topofeatures/topofeatures.typ"   //-- 08
   #include "visualisation/visualisation.typ" //-- 09
-  // #include "visibility/visibility.typ"       //-- 10
+  #include "visibility/visibility.typ"       //-- 10
   // #include "runoff/runoff.typ"               //-- 11
   // #include "pcprocessing/pcprocessing.typ"   //-- 12
   // #include "massive/massive.typ"             //-- 13
