@@ -85,18 +85,53 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 // - scale is very important to select the contour interval and stuff in Imhof book
 
 
+=== From hachures to contours <sec:vis-hachures>
+
+// TODO: ~half page + 1 figure (Lehmann system diagram: thickness/spacing
+// encode slope; or public-domain 19th-century map extract from Wikimedia:
+// Lehmann originals, Dufour map extracts)
+//
+// Content:
+// - Lehmann system (1799): hachures drawn along the direction of steepest
+//   descent (the aspect field), thickness proportional to steepness
+//   (the gradient field) -> reuses the gradient/aspect from
+//   @chap:topofeatures, no new machinery
+// - slope hachuring can be equated to analytical hillshading with vertical
+//   illumination (Kennelly & Kimerling 2000)
+// - shadow hachures: oblique illumination (thin/white lines on lit slopes,
+//   thick/black on shaded ones) -> the Dufour maps; precursor of the
+//   light-direction theme of this chapter (relief inversion, cf the
+//   box-practice in @sec:vis-hillshading)
+// - Imhof's five rules (listed here or in the notes):
+//   1) lines follow steepest descent; 2) arranged in rows;
+//   3) length = horizontal distance between assumed contours;
+//   4) width proportional to slope; 5) constant density
+// - why they disappeared: enormous engraving workload, steep terrain
+//   darkens the map, no absolute elevation -> contours won
+// - closing line: "Tanaka's illuminated contours, presented below, can be
+//   seen as the modern, computational reincarnation of shadow hachures"
+
+
 === Tanaka maps <sec:tanaka>
 
 // - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
 // - hypsometric layer tints between contours
 //   each contour line varies with the direction of the line relative to the
 //   light source; reuses the gradient and aspect from @chap:topofeatures
+// - historical context: Tanaka (1950) is the endpoint of the chain
+//   hachures -> contours -> illuminated contours (Kennelly & Kimerling 2000
+//   note their illuminated hachures use "the tonal method similar to
+//   Tanaka (1950)")
 
-#figure(
-  image("figs/sunlight_nw_se.png", width: 100%),
-  caption: [The same map showing how Tanakacontours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
-  placement: auto,
-) <fig:tanaka>
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("figs/sunlight_nw_se.png", width: 100%),
+      caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
+      placement: auto,
+    ) <fig:tanaka>
+  ]
+)
 
 == Combining colour and shading <sec:vis-colour>
 
@@ -118,6 +153,23 @@ The formula to calculate the hillshade for one cell in a gridded DTM is from #ci
 // - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?)
 // - Imhof (1982), Cartographic Relief Presentation
 // - Patterson & Jenny (2011), cross-blended hypsometric tints
+//
+// Hachures (@sec:vis-hachures):
+// - Lehmann 1799, Darstellung einer neuen Theorie der Bergzeichnung (original,
+//   public domain, Leipzig)
+// - Imhof (1982), Cartographic Relief Presentation (five rules of slope
+//   hachuring)
+// - Yoeli 1985, Topographic relief depiction by hachures with computer and
+//   plotter, Cartographic Journal 22(2): 111-124, doi:10.1179/caj.1985.22.2.111
+//   (first computer algorithm; works from contour lines -> backward pointer
+//   to @sec:iso)
+// - Kennelly & Kimerling 2000, Desktop hachure maps from digital elevation
+//   models, Cartographic Perspectives 37, doi:10.14714/cp37.811 (small-scale
+//   illuminated hachures from DEM slope/aspect; explicitly Tanaka-like)
+// - optional: Magyari 2017, Automatic generation of hachure lines,
+//   doi:10.21163/gt_2017.121.08
+// - optional: Automated Swiss-style relief shading and rock hachuring (2018),
+//   Cartographic Journal, doi:10.1080/00087041.2018.1551955
 
 
 == Exercises
