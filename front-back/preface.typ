@@ -20,7 +20,8 @@ those are freely available online:
 #link("https://tudelft3d.github.io/terrainbook/videos")
 
 #strong[Who is this book for] \
-The book is written for MSc Geomatics students, but it can also be used at the BSc level. Prerequisites include: knowledge of GIS, background in linear algebra, and an introductory programming course.
+The book is written for MSc students (in geomatics, but it can also be used at the BSc level. 
+Prerequisites include: knowledge of GIS, background in linear algebra, and an introductory programming course.
 
 #strong[Acknowledgements] \
 We thank the many students of the GEO1015 course over the years who have helped us by pointing—and often fixing with a pull request—the errors, typos, and weird sentences of this book. 

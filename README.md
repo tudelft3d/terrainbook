@@ -8,7 +8,7 @@
 The book *Computational modelling of terrains* presents an overview of algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
 It covers different representations of terrains (eg TINs, rasters, point clouds, contour lines), discusses different applications (visibility analysis, runoff modelling, etc.), presents techniques to handle large datasets, and discusses related topics such as global elevation models and bathymetric datasets.
 
-The book is currently used for the course [Digital terrain modelling (GEO1015)](https://3d.bk.tudelft.nl/courses/geo1015/) in the [MSc Geomatics at the Delft University of Technology](http://geomatics.tudelft.nl) in the Netherlands.
+The book is currently used for the course [Digital terrain modelling (GEO1015)](https://3d.bk.tudelft.nl/courses/geo1015/) in the [MSc Geomatics for the Built Environment at the Delft University of Technology](http://geomatics.tudelft.nl) in the Netherlands.
 The course is tailored for MSc students who have already followed an introductory course in GIS and in programming.
 
 Each chapter is a lesson in the course, and each lesson is accompanied by a video introducing the key ideas and/or explaining some parts of the lessons.
