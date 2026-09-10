@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 720 230" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <rect x="0" y="0" width="720" height="230" style="fill:white;"/>
+    <g transform="matrix(0.999997,0,0,1,0.000466915,-3.20446e-05)">
+        <g>
+            <path d="M576.708,134.134L576.972,124.763L585.895,127.64L576.708,134.134Z" style="fill:rgb(232,160,0);"/>
+            <path d="M597.732,80.806C610.593,80.743 621.06,93.828 621.111,110.033C621.161,126.226 610.768,139.425 597.916,139.488C591.241,139.521 584.876,135.943 580.436,129.662" style="fill:none;stroke:rgb(232,160,0);stroke-width:2.5px;"/>
+        </g>
+    </g>
+    <path d="M20,190L308,190" style="fill:none;fill-rule:nonzero;stroke:rgb(208,32,32);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    <g transform="matrix(1,0,0,1,315,196)">
+        <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:19px;fill:rgb(208,32,32);">z = 0</text>
+    </g>
+    <g transform="matrix(0.936747,0.0448419,0.0448419,0.96821,-1.13567,0.805113)">
+        <path d="M305,55L116.016,188.976" style="fill:none;fill-rule:nonzero;stroke:rgb(30,110,240);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    </g>
+    <path d="M65,190L135,38" style="fill:none;fill-rule:nonzero;stroke:rgb(30,110,240);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    <path d="M115,83L115,190" style="fill:none;fill-rule:nonzero;stroke:rgb(30,110,240);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5,5;"/>
+    <path d="M30,167C48,170 62,170 76,163C92,155 98,128 108,103C112,92 114,87 115,83C120,70 132,57 146,57C158,57 164,68 170,79C176,89 180,84 186,95C194,110 200,101 210,114C220,126 234,134 248,142C256,147 262,149 272,151" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:2.5px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    <circle cx="115" cy="83" r="4"/>
+    <path d="M85,190C84.999,182.261 80.505,175.189 73.5,171.9" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    <g transform="matrix(1,0,0,1,87.4742,179.491)">
+        <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:20px;fill:rgb(232,160,0);">α</text>
+    </g>
+    <g transform="matrix(1,0,0,1,16.5149,-1.04502)">
+        <path d="M125,190C124.988,184.374 123.394,178.863 120.4,174.1" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    </g>
+    <g transform="matrix(1,0,0,1,150.415,180.583)">
+        <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:20px;fill:rgb(232,160,0);">γ</text>
+    </g>
+    <g id="sun" transform="matrix(1,0,0,1,305,55)">
+        <g>
+            <path d="M0,-13L0,-19" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M9.2,-9.2L13.4,-13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M13,0L19,0" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M9.2,9.2L13.4,13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M0,13L0,19" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-9.2,9.2L-13.4,13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-13,0L-19,0" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-9.2,-9.2L-13.4,-13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        </g>
+        <circle cx="0" cy="0" r="10" style="fill:rgb(255,212,0);"/>
+    </g>
+    <g>
+        <path d="M595,105L595,30" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        <path d="M595,105L595,182" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        <path d="M595,105L685,105" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        <path d="M595,105L518,105" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    </g>
+    <g>
+        <g transform="matrix(1,0,0,1,588.863,22)">
+            <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:16px;">N</text>
+        </g>
+        <g transform="matrix(1,0,0,1,590.512,204)">
+            <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:16px;">S</text>
+        </g>
+        <g transform="matrix(1,0,0,1,691.773,110)">
+            <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:16px;">E</text>
+        </g>
+        <g transform="matrix(1,0,0,1,499.195,110)">
+            <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:16px;">W</text>
+        </g>
+    </g>
+    <path d="M632.456,131.287L623.3,133.3L623.931,123.946L632.456,131.287Z" style="fill:rgb(232,160,0);fill-rule:nonzero;"/>
+    <path d="M595,65L595.031,65C616.975,65 635.031,83.057 635.031,105C635.031,113.597 632.26,121.916 627.215,128.753" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    <g transform="matrix(1,0,0,1,638,90)">
+        <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:21px;fill:rgb(232,160,0);">θ</text>
+    </g>
+    <g transform="matrix(1,0,0,1,577,158)">
+        <text x="0px" y="0px" style="font-family:'Georgia', serif;font-size:21px;fill:rgb(232,160,0);">ψ</text>
+    </g>
+    <g transform="matrix(0.997038,-0.00658332,-0.00658332,0.98537,2.45393,5.45319)">
+        <path d="M595,105L642.167,156.267" style="fill:none;fill-rule:nonzero;"/>
+        <g transform="matrix(1.00302,0.00670121,0.00670121,1.01489,-2.49788,-5.55084)">
+            <path d="M644.74,150.353L645.713,159.533L636.628,157.897L644.74,150.353Z" style="fill:rgb(30,110,240);fill-rule:nonzero;"/>
+            <path d="M595,105L641.69,155.207" style="fill:none;fill-rule:nonzero;stroke:rgb(30,110,240);stroke-width:2.46px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        </g>
+    </g>
+    <g transform="matrix(1.22208,-0.222079,-0.222079,1.22208,-108.819,108.819)">
+        <path d="M595,105L553,147" style="fill:none;fill-rule:nonzero;stroke:rgb(30,110,240);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+    </g>
+    <g id="sun1" serif:id="sun" transform="matrix(1,0,0,1,517,178)">
+        <g>
+            <path d="M0,-13L0,-19" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M9.2,-9.2L13.4,-13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M13,0L19,0" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M9.2,9.2L13.4,13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M0,13L0,19" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-9.2,9.2L-13.4,13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-13,0L-19,0" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+            <path d="M-9.2,-9.2L-13.4,-13.4" style="fill:none;fill-rule:nonzero;stroke:rgb(232,160,0);stroke-width:3px;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+        </g>
+        <circle cx="0" cy="0" r="10" style="fill:rgb(255,212,0);"/>
+    </g>
+</svg>
