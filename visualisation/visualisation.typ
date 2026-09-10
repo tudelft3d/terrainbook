@@ -12,19 +12,6 @@
 //   combining colour and shading
 
 
-== Contour lines and Tanaka maps <sec:vis-contours>
-
-// TODO:
-// - contour lines are the oldest and most used technique; how they are read
-//   (closeness = steepness), index vs intermediate contours, labelling
-// - the algorithms to *extract* contour lines are covered in @sec:iso
-//   (Chapter @chap:conversion); here we focus on how they are *rendered/presented*
-// - hypsometric layer tints between contours
-// - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
-//   each contour line varies with the direction of the line relative to the
-//   light source; reuses the gradient and aspect from @chap:topofeatures
-
-
 == Hillshading <sec:vis-hillshading>
 
 #index[hillshading]
@@ -72,11 +59,44 @@ $ "hillshade"_(i j) = 255 dot.op &[(cos(pi/2 - gamma) cos(alpha_(i j))) + \
 
 Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ then $"hillshade"_"ij" = 0$.
 
-// TODO: possible additions
-// - multi-directional hillshading
-// - alternatives avoiding relief inversion: sky-view factor / openness,
-//   local dominance (ties in with @chap:visibility)
+=== Multi-directional hillshading
 
+// https://deltares.github.io/Geomorphometry.jl/dev/reference#Geomorphometry.multihillshade-Tuple{AbstractMatrix{%3C:Real}}
+// multihillshade is the simulated illumination of a surface based on its slope and aspect. Like hillshade, but combining multiple light sources at the given azimuth angles (degrees) as defined in Mark, R.K. (1992), similar to GDAL's -multidirectional. Returns a Matrix{Union{Missing,UInt8}} of illumination values in 0:255.
+
+
+// TODO: possible additions
+// - alternatives based on diffuse illumination (no single light direction,
+//   thus no relief inversion): present the sky-view factor as the main one
+//   (it is defined in @sec:svf, Chapter @chap:visibility), and mention
+//   openness (average zenith/nadir angles, Yokoyama et al. 2002) in passing.
+//   Show the SVF + hillshade combination, which is the recommended one for
+//   cartography (Zaksek et al. 2011)
+
+== Contour lines  <sec:vis-contours>
+
+// TODO:
+// - contour lines are the oldest and most used technique; how they are read
+//   (closeness = steepness), index vs intermediate contours, labelling
+// - only geometric representation (hachures and shading give an impression of relief; 
+//   from contours we can reconstruct the shape)
+// - the algorithms to *extract* contour lines are covered in @sec:iso
+//   (Chapter @chap:conversion); here we focus on how they are *rendered/presented*
+// - scale is very important to select the contour interval and stuff in Imhof book
+
+
+=== Tanaka maps <sec:tanaka>
+
+// - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
+// - hypsometric layer tints between contours
+//   each contour line varies with the direction of the line relative to the
+//   light source; reuses the gradient and aspect from @chap:topofeatures
+
+#figure(
+  image("figs/sunlight_nw_se.png", width: 100%),
+  caption: [The same map showing how Tanakacontours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
+  placement: auto,
+) <fig:tanaka>
 
 == Combining colour and shading <sec:vis-colour>
 
@@ -103,4 +123,3 @@ The formula to calculate the hillshade for one cell in a gridded DTM is from #ci
 == Exercises
 
 // TODO: add exercises
-+ // TODO
