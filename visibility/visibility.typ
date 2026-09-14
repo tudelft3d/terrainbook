@@ -13,7 +13,7 @@ These can be used to estimate the photovoltaic potential (where can we best inst
 
 
 When referring to visibility problems in terrains, we address the following three fundamental problems:
-/ line-of-sight (LoS): given a viewpoint $v$ and another point $q$, does $v$ see $q$ (and vice-versa)? Or, in other words, does the segment $v q$ intersects the terrain? The result is either True or False. (@fig:overview_los)
+/ line-of-sight (LoS): given a viewpoint $v$ and another point $q$, does $v$ see $q$ (and vice-versa)? Or, in other words, does the segment $v q$ intersect the terrain? The result is either True or False. (@fig:overview_los)
 / viewshed: given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain "horizon", or radius of visibility. If the terrain is formed of different objects (eg buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex). (@fig:overview_viewshed)
 / sky-view factor (SVF): given a viewpoint $v$, the SVF is the portion of the sky that is visible from $v$, ie the part of the sky hemisphere that is not obstructed by the surrounding terrain (and the objects on it, such as buildings and trees). (@fig:overview_svf)
 
@@ -181,20 +181,17 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 
 == Sky-view factor <sec:svf>
 
-// TODO: check SVF and the formula so that it's only geometric and not also with diffuse radiation
-
 #index[sky-view factor]
 
-The sky-view factor (SVF) is the fraction of the sky that is visible from a given location $v$ on the ground (or perhaps 2m above it).
+The sky-view factor (SVF) is the fraction of the sky that is visible from a given location $v$ on the ground (usually at the surface itself, or at pedestrian height, #qty("2", "m")).
 It depends on the height and locations of the obstacles (eg buildings, trees, etc.) in the surroundings of $v$.
-The result is a normalised value between 0 (the sky is completely hidden) and 1 (the entire sky hemisphere is visible). 
+The result is a normalised value between 0 (the sky is completely hidden) and 1 (the entire sky hemisphere is visible).
 
-The SVF is not only a geometric indicator, it is also a physical quantity that determines for instance how much diffuse sunlight/shadow a location receives, it acts as a proxy for GPS reception, and it is used in urban climatology to quantify how open a street or a courtyard is.
-The SVF is a physical quantity: under the assumption that diffuse sunlight arrives approximately uniformly from the whole sky, the SVF is proportional to the amount of diffuse solar radiation received at a location.
-This explains its use in many applications: it correlates with the urban heat island effect in cities, with the formation of frost on roads, and it is also used to estimate the availability of GPS signals in urban areas.
+The SVF is not only a geometric indicator: under the assumption that the sky brightness is approximately uniform, it is a proxy for the amount of diffuse sky radiation that a location receives, which explains its use in many applications.
+It is for instance used in urban climatology to quantify how open a street or a courtyard is (it correlates with the urban heat island effect in cities), to estimate the formation of frost on roads, or to estimate the availability of GPS signals in urban areas.
 It is also a useful terrain visualisation technique, as we explain in @chap:relief: since the SVF does not depend on any light direction, it does not suffer from the relief inversion that affects hillshading (see @sec:vis-hillshading).
 
-The SVF can be calculated using different methods: using fisheye images, analytically using a terrain, or using point clouds (fully in 3D, where the 2.5D does not hold on anymore).
+The SVF can be computed in different ways: from fisheye images, from a digital terrain model, or from point clouds (where the full 3D geometry is considered, since the 2.5D assumption no longer holds).
 
 
 === Fisheye images
@@ -223,30 +220,41 @@ This method is common in urban climatology and in forestry, but it captures the 
 
 === Gridded terrains
 
-Its computation is based on the same principles as the viewshed.
+The SVF can also be computed from a gridded terrain, using the same principles as the viewshed.
 For each of the $n$ directions (azimuths) equally spaced around $v$, we 'walk' along the ray starting at $v$ up to a maximum distance $R$ (the search radius), and we store the vertical elevation angle $gamma_i$ of the horizon, ie the maximal angle under which the terrain is seen along that direction.
 Observe that this is exactly the tangent algorithm described above, except that instead of comparing each cell to the current tangent, we simply keep the largest angle encountered.
 The sky visible from $v$ is the portion of the hemisphere lying above the horizon.
+Contrary to the fisheye method, no projection (and no tessellation of the sky) is needed: because a terrain is a 2.5D surface, a direction of the sky is visible from $v$ if and only if its elevation angle is larger than the horizon elevation angle $gamma_i$ of its azimuth.
+The contribution of each sector can therefore be computed analytically, and only $n$ angles need to be stored.
 // TODO: add a figure illustrating the computation of the vertical elevation
 // angle of the horizon $gamma_i$ in $n$ directions (here $n = 8$) up to the
 // search radius $R$, and the visible sky as the portion of the hemisphere
 // above the horizon (cf Figure 2 in Zaksek et al. 2011)
 
 Let us first consider the case where the horizon has the same elevation angle $gamma$ in every direction.
-The visible sky is then the part of the hemisphere above a cone with apex $p$, and its solid angle is $2 pi (1 - sin gamma)$ (the solid angle of the complete hemisphere is $2 pi$).
+The visible sky is then the part of the hemisphere above a cone with apex $v$, and its solid angle is $2 pi (1 - sin gamma)$ (the solid angle of the complete hemisphere is $2 pi$).
+// TODO: make simple figure of this
 The visible portion of the sky is thus $(1 - sin gamma)$, and with $n$ directions the sky-view factor is obtained by averaging this quantity:
 
 $ "SVF" = 1 - frac(1, n) sum_(i=1)^n sin gamma_i $
 
 The values range from 1 (the entire hemisphere is visible; this is the case on exposed locations such as peaks) to 0 (the sky is completely obstructed; this happens in deep sinks and at the bottom of deep valleys).
 In practice, the two parameters to set are the number of directions $n$ (8 or 16 is common) and the search radius $R$, which should be chosen according to the scale of the features of interest.
+Observe that both parameters influence the result: with too few directions, narrow obstacles lying between 2 rays are missed, and with a search radius that is too small, the distant terrain is ignored; in both cases the terrain looks less obstructed than it is, and the computed SVF is thus an overestimation of the true value.
 
+// TODO:
 // UMEP does it for buildings and separately for trees also (assuming a transmissivity of light through the vegetation, usually based on the tree species).
 // https://umep-docs.readthedocs.io/en/latest/pre-processor/Urban%20Geometry%20Sky%20View%20Factor%20Calculator.html
+// 
+// add that the discretisation of the horizon angles leads to a loss of detail in complex environments, and that it's a lower-bound on the SVF since we can miss details (which would lower the SVF value)
 
 === Using point clouds
 
-Analytical computation of the SVF using point clouds requires considering the full 3D geometry of the surroundings, including buildings, trees, and terrain. This approach involves casting many rays from the viewpoint in different directions and determining whether they intersect any of the points in the cloud. While this method can capture complex occlusion patterns more accurately than gridded approaches, it is computationally intensive and requires high-resolution point cloud data.
+Computing the SVF from a point cloud requires considering the full 3D geometry of the surroundings, including buildings, trees, and terrain.
+This is needed because with real 3D objects 1 horizon angle per direction no longer suffices: gaps in the canopy, and overhangs (eg balconies or bridges), mean that the sky visible in one direction cannot be summarised by a single angle.
+As for the fisheye method, the sky hemisphere is divided into cells, each weighted by its solid angle, and many rays are cast from the viewpoint to determine whether they intersect any of the points in the cloud.
+While this method can capture complex occlusion patterns more accurately than gridded approaches, it is computationally intensive, and the result depends on the density of the point cloud and on how the points are classified (vegetation points, for instance, are often given a transmissivity).
+In practice, a gridded DSM derived from the same point cloud is often used instead, as a compromise between accuracy and computation time.
 
 
 == Notes and comments
@@ -269,4 +277,5 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 
 + Explain why the spacing in @fig:los\c along the profile has points that are not equally spaced.
 + The sky-view factor of a location is computed with $n = 8$ equally spaced directions. What is the SVF if the horizon elevation angle is #qty("30", "degree") in all directions? And if it is #qty("0", "degree") in 4 directions and #qty("60", "degree") in the 4 others?
++ In a fisheye image, do the pixels close to the centre or those close to the border of the image represent a larger part of the sky? What would happen to the SVF if one simply counted the sky pixels without weighting them?
 + You are given a 2.75D terrain of an area, it is composed of triangles, and your aim is to perform line-of-sight queries between some locations. Describe the algorithm that you will implement to perform the queries.
