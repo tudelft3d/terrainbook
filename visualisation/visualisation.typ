@@ -127,7 +127,7 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 #place(float: true, auto,
   wideblock[
     #figure(
-      image("figs/sunlight_nw_se.png", width: 100%),
+      image("figs/sunlight_direction.pdf", width: 100%),
       caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
       placement: auto,
     ) <fig:tanaka>
