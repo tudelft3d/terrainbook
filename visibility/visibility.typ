@@ -196,6 +196,8 @@ The SVF can be computed in different ways: from fisheye images, from a digital t
 
 === Fisheye images
 
+// TODO: add info about solid angle? https://www.mathwords.com/s/solid_angle.htm
+
 As shown in @fig:fisheye_images_svf, a fisheye image captures the entire sky hemisphere in a single image: the centre of the image corresponds to the zenith, and its border to the horizon.
 To compute the SVF, the pixels of the image are first classified as sky or as obstruction.
 The image cannot however simply be counted as-is: because the hemisphere is projected onto the plane of the image, the pixels close to the border (near the horizon) represent a larger part of the sky than those close to the centre.
