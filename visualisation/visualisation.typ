@@ -1,6 +1,7 @@
 #import "../template.typ": *
 
-= Cartographic relief representation <chap:relief>
+= Cartographic relief representation <chap:viz>
+// Relief visualisation techniques
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
 
