@@ -30,8 +30,8 @@ When referring to visibility problems in terrains, we address the following thre
 ) <fig:overview_viewshed>
 
 #notefigure(
-  image("figs/Flatiron_fishView_ideal.jpg", width: 100%), 
-  caption: [A fisheye view looking straight up: every direction of the sky visible from the camera position appears in the image, which is essentially what a sky-view factor measures. Photo: Autopilot, remapped by Peter Wieden (CC BY-SA 3.0), via Wikimedia Commons.], 
+  image("figs/flatiron_fishview_ideal.jpg", width: 100%), 
+  caption: [A fisheye view looking straight up: every direction of the sky visible from the camera position appears in the image, which is essentially what a sky-view factor measures. Adapted from a photo by Autopilot, remapped by Peter Wieden (CC BY-SA 3.0), via Wikimedia Commons.], 
   dy: 200pt,
 ) <fig:overview_svf>
 
@@ -194,24 +194,32 @@ The SVF is a physical quantity: under the assumption that diffuse sunlight arriv
 This explains its use in many applications: it correlates with the urban heat island effect in cities, with the formation of frost on roads, and it is also used to estimate the availability of GPS signals in urban areas.
 It is also a useful terrain visualisation technique, as we explain in @chap:relief: since the SVF does not depend on any light direction, it does not suffer from the relief inversion that affects hillshading (see @sec:vis-hillshading).
 
-The SVF can be calculated using different methods: using fish-eye images, analytically using a terrain, or using point clouds (fully in 3D, where the 2.5D does not hold on anymore).
+The SVF can be calculated using different methods: using fisheye images, analytically using a terrain, or using point clouds (fully in 3D, where the 2.5D does not hold on anymore).
 
 
-=== Fish-eye images
+=== Fisheye images
 
-As shown in @fig:fishye_images_svf, using fish-eye images allows one to capture the entire sky hemisphere in a single image. 
-The SVF factor is then computed from this image by analyzing the visible and invisible areas.
-It should be noticed that this method requires specialized cameras and is less common in standard terrain analysis workflows.
-Futhermore, to ensure that the value is accurate, one must carefully discretise the image by using to [to finish]
+As shown in @fig:fisheye_images_svf, a fisheye image captures the entire sky hemisphere in a single image: the centre of the image corresponds to the zenith, and its border to the horizon.
+To compute the SVF, the pixels of the image are first classified as sky or as obstruction.
+The image cannot however simply be counted as-is: because the hemisphere is projected onto the plane of the image, the pixels close to the border (near the horizon) represent a larger part of the sky than those close to the centre.
+The image is therefore divided into concentric rings and sectors (@fig:fisheye_images_svf\c), each sky pixel is weighted by the solid angle of its cell, and the SVF is the ratio of the weighted sky to the weighted whole.
+This method is common in urban climatology and in forestry, but it captures the sky at only one location, while a terrain model (or a point cloud) allows computing the SVF everywhere at once.
 
-#subfigure(
-  figure(image("figs/Flatiron_fishView_ideal.jpg", width: 70%), caption: []), 
-  figure(image("figs/Flatiron_fishView_SVF.svg", width: 70%), caption: []), 
-  columns: (1fr, 1fr),
-  caption: [*(a)* Fish-eye image showing the entire sky hemisphere (same image as @fig:overview_svf); *(b)* the SVF factor is computed from this image; in this case the SVF value is about 0.6, which means that 60% of the sky hemisphere is unobstructed.],
-  placement: auto,
-  label: <fig:fishye_images_svf>,
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/flatiron_fishview_ideal.jpg", width: 80%), caption: []),
+      figure(image("figs/flatiron_fishview_svf.svg", width: 80%), caption: []),
+      figure(image("figs/flatiron_fishview_subdivision.svg", width: 80%), caption: []),
+      columns: (1fr, 1fr, 1fr),
+      caption: [*(a)* Fisheye image showing the entire sky hemisphere (same image as @fig:overview_svf); *(b)* the pixels are classified as sky or as obstruction, and the SVF is computed from the sky pixels; in this case the SVF value is about 0.6, ie 60% of the sky hemisphere is unobstructed; *(c)* the image is divided into concentric rings and sectors; the cells towards the border (close to the horizon) are larger and represent a larger solid angle, and each sky cell is weighted by the solid angle that it represents.
+      ],
+      placement: auto,
+      label: <fig:fisheye_images_svf>,
+    )
+  ]
 )
+
 
 === Gridded terrains
 
