@@ -228,14 +228,22 @@ Observe that this is exactly the tangent algorithm described above, except that 
 The sky visible from $v$ is the portion of the hemisphere lying above the horizon.
 Contrary to the fisheye method, no projection (and no tessellation of the sky) is needed: because a terrain is a 2.5D surface, a direction of the sky is visible from $v$ if and only if its elevation angle is larger than the horizon elevation angle $gamma_i$ of its azimuth.
 The contribution of each sector can therefore be computed analytically, and only $n$ angles need to be stored.
-// TODO: add a figure illustrating the computation of the vertical elevation
-// angle of the horizon $gamma_i$ in $n$ directions (here $n = 8$) up to the
-// search radius $R$, and the visible sky as the portion of the hemisphere
-// above the horizon (cf Figure 2 in Zaksek et al. 2011)
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/svf_profile.pdf", width: 90%), caption: []), <fig:svf_profile>,
+      figure(image("figs/svf_hemisphere.pdf", width: 80%), caption: []), <fig:svf_hemisphere>,
+      columns: (1fr, 1fr),
+      caption: [Sky-view factor computation. *(a)* Profile of a scene with obstacles on both sides of the viewpoint $v$: in a given direction, the horizon elevation angle $gamma_i$ is the angle above the horizontal (dashed) at which the line of sight is tangent to the horizon (here the rooftops). *(b)* The same scene in 3D with the $n = 8$ azimuths along which the horizon elevation angle $gamma_i$ is computed up to the search radius $R$.],
+      placement: auto,
+      label: <fig:svf>,
+    )
+  ]
+)
 
 Let us first consider the case where the horizon has the same elevation angle $gamma$ in every direction.
 The visible sky is then the part of the hemisphere above a cone with apex $v$, and its solid angle is $2 pi (1 - sin gamma)$ (the solid angle of the complete hemisphere is $2 pi$).
-// TODO: make simple figure of this
 The visible portion of the sky is thus $(1 - sin gamma)$, and with $n$ directions the sky-view factor is obtained by averaging this quantity:
 
 $ "SVF" = 1 - frac(1, n) sum_(i=1)^n sin gamma_i $
@@ -243,6 +251,12 @@ $ "SVF" = 1 - frac(1, n) sum_(i=1)^n sin gamma_i $
 The values range from 1 (the entire hemisphere is visible; this is the case on exposed locations such as peaks) to 0 (the sky is completely obstructed; this happens in deep sinks and at the bottom of deep valleys).
 In practice, the two parameters to set are the number of directions $n$ (8 or 16 is common) and the search radius $R$, which should be chosen according to the scale of the features of interest.
 Observe that both parameters influence the result: with too few directions, narrow obstacles lying between 2 rays are missed, and with a search radius that is too small, the distant terrain is ignored; in both cases the terrain looks less obstructed than it is, and the computed SVF is thus an overestimation of the true value.
+
+#box-practice("Sky-view factor computation in practice")[
+  The QGIS plugin UMEP (Urban Multi-scale Environmental Predictor: #link("https://umep-docs.readthedocs.io")) provides tools for calculating the sky-view factor from gridded DSMs.
+
+  The tool allows for separate analysis of building and tree contributions, assuming a transmissivity of light through the vegetation based on tree species.
+]
 
 // TODO:
 // UMEP does it for buildings and separately for trees also (assuming a transmissivity of light through the vegetation, usually based on the tree species).
@@ -269,11 +283,9 @@ The description here is inspired by that of #citet(<DeFloriani99-1>).
 
 #citet(<Edelsbrunner90>) proved that Delaunay triangulations, in any dimensions, are acyclic.
 
-The sky-view factor was proposed as a relief visualisation technique by #citet(<Zaksek11>), where the formula given above and the influence of the parameters (number of directions, search radius) on the results are discussed in detail.
-The paper also describes its use for spatial analysis, eg for energy balance studies and to estimate the availability of GPS signals in urban areas.
-// A closely related measure is the _openness_ of #citet(<Yokoyama02>), where instead of the solid angle of the visible sky, the zenith angles of the horizon are averaged (positive openness), or the nadir angles below the surface (negative openness).
-// Free and open-source implementations of both, together with several other techniques to visualise high-resolution DTMs, are available in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
+A good explanation of the fisheye projection (from hemisphere to a plane) can be found at #link("https://paulbourke.net/dome/fisheye/").
 
+The QGIS plugin UMEP is based on the paper #citet(<Lindberg18>). 
 
 == Exercises
 
