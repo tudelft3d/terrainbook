@@ -113,6 +113,15 @@
   //-- references
   // https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
   #show bibliography: set block(width: 100%)
+  //-- hack: prefix DOI links in the bibliography with an icon
+  //-- (CSL cannot call Typst functions, so this is done at the Typst level)
+  #show link: it => {
+    if type(it.dest) == str and it.dest.contains("doi.org") {
+      box(hi("bookmark", height: 0.9em, color: gray) + it)
+    } else {
+      it
+    }
+  }
   #bibliography("./refs/tb.bib", style: "./refs/apa-annotated-bibliography_modified-HL.csl")
 
   = Index
