@@ -1,4 +1,4 @@
-// TODOs
+// TODO
 // [ ] @app:ahn[Appendix]
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
@@ -17,8 +17,8 @@
 #import "template.typ": *
 
 #show: doc => tbtemplate(
-  version: "2026.0-beta4",
-  cover: true,
+  version: "2026.0-beta5",
+  cover: false,
   doc,
 )
 
@@ -45,7 +45,7 @@
     #outline(depth: 2, indent: auto)
   ]
 
-  // // TODO: remove list of tables/algorithms
+  // TODO: remove list of tables/algorithms
   // #outline(
   //   title: [List of tables],
   //   target: figure.where(kind: table),
@@ -112,7 +112,7 @@
 
 #back-matter[
   //-- references
-  // https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
+  // TODO https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
   #show bibliography: set block(width: 100%)
   //-- hack: prefix DOI links in the bibliography with an icon
   //-- (CSL cannot call Typst functions, so this is done at the Typst level)
