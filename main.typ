@@ -118,7 +118,8 @@
   //-- (CSL cannot call Typst functions, so this is done at the Typst level)
   #show link: it => {
     if type(it.dest) == str and it.dest.contains("doi.org") {
-      box(hi("bookmark", height: 0.9em, color: gray) + it)
+      box(hi("bookmark", height: 0.9em, color: olive.lighten(80%)) + it)
+      // box(hi("bookmark", height: 0.9em, color: gray) + it)
     } else {
       it
     }
