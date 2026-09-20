@@ -296,10 +296,11 @@
   show raw: set text(font: mono-font)
 
   // Set link style
-  // show link: set text(fill: rgb("#1a1a1a"), font: mono-font)
-  show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
-  // show link: set text(blue)
-  show ref: set text(blue)
+  // TODO: remove colour for links
+  show link: it => highlight(fill: olive.lighten(90%), text(font: mono-font, it))
+  // show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
+  // show link: it => text(font: mono-font, it)
+  // show ref: set text(blue)
 
 
   set list(indent: 1em, tight: true)
