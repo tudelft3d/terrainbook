@@ -176,6 +176,22 @@
 ]
 
 
+//-- stroke of the vertical bars (running header + chapter openings)
+
+//-- vertical bar used in the running header (as in the kaobook class).
+//-- It is 18mm tall and sits on the text baseline (1mm below it), so its top
+//-- is level with the top of the page. It is zero-width, so it does not affect
+//-- the layout of the header.
+#let header-bar(
+  height: 18mm,
+  depth: 1mm,
+  stroke: 0.6pt,
+) = box(
+  height: height,
+  baseline: depth,
+  line(stroke: stroke, length: height, angle: 90deg),
+)
+
 #let tbtemplate(
   title: "Computational modelling of terrains",
   version: "",
@@ -372,27 +388,43 @@
 // Main matter: Arabic numerals from 1
 #let main-matter(body) = {
   //-- header
+  //-- the header is built by hand (instead of with marginalia.header()) so that the
+  //-- padding into the margins and the content are computed in the same context:
+  //-- otherwise the padding can be computed with the other page parity, shifting the
+  //-- whole header line inwards by one margin (this happened on p.18 of ch.3).
+  //-- NB: the margin geometry must match the marginalia.setup below.
   set page(header: context {
-    if calc.odd(here().page()) {
-      if hydra(1) != none {
-        // place(
-          // dx: 100mm, // negative = move left, toward the outside edge
-          // dy: 1cm,
-          // align(left, emph(hydra(1)))
-        // )
-        // move(dy: 3mm, line(stroke: 0.6pt, start: (173mm, 20mm), end: (173mm, -50mm)))
-        // place(right, emph(hydra(1) + " • " + counter(page).display() + [🚀]))
-        // marginalia.header(text-style: (size: 10pt), align(right, emph(hydra(2))), [hugo],  counter(page).display())
-        marginalia.header(text-style: (size: 10pt, style: "italic"), [], align(right, hydra(1)), align(right, counter(page).display()))
-        // marginalia.header(text-style: (size: 10pt), [a], [b], align(right, emph(hydra(2) + h(1cm) + counter(page).display())))
+    let inner = (far: 10mm, width: 5mm, sep: 5mm)
+    let outer = (far: 15mm, width: 50mm, sep: 5mm)
+    let is-odd = calc.odd(here().page())
+    let (leftm, rightm) = if is-odd { (inner, outer) } else { (outer, inner) }
+    let title = if is-odd { hydra(1) } else { hydra(2) }
+    if not (is-odd and title == none) {
+      set text(size: 10pt, style: "italic")
+      let number = box(
+        width: 7mm,
+        align(if is-odd { left } else { right }, counter(page).display()),
+      )
+      //-- the page number and the title are both 3mm away from the vertical bar
+      let group = if is-odd {
+        title + h(3mm) + header-bar() + h(3mm) + number
+      } else {
+        number + h(3mm) + header-bar() + h(3mm) + title
       }
-      // align(right, emph(hydra(1) + " | " + counter(page).display()))
-    } else {
-      marginalia.header(text-style: (size: 10pt, style: "italic"), [], align(left, hydra(2)), align(left, counter(page).display()))
-      // move(dy: 3mm, line(stroke: 0.6pt, start: (-53mm, 20mm), end: (-53mm, -50mm)))
-      // marginalia.header(text-style: (size: 10pt), [], [], align(left, counter(page).display() + h(1cm) + emph(hydra(1))))
+      pad(
+        left: -(leftm.width + leftm.sep),
+        right: -(rightm.width + rightm.sep),
+        align(if is-odd { right } else { left }, group),
+      )
     }
-    // line(length: 100%)
+    //-- previous attempts, kept for reference:
+    // move(dy: 3mm, line(stroke: 0.6pt, start: (173mm, 20mm), end: (173mm, -50mm)))
+    // move(dy: 3mm, line(stroke: 0.6pt, start: (-53mm, 20mm), end: (-53mm, -50mm)))
+    // place(dx: 100mm, dy: 1cm, align(left, emph(hydra(1))))
+    // place(right, emph(hydra(1) + " • " + counter(page).display() + [🚀]))
+    // marginalia.header(text-style: (size: 10pt), align(right, emph(hydra(2))), [hugo], counter(page).display())
+    // marginalia.header(text-style: (size: 10pt), [a], [b], align(right, emph(hydra(2) + h(1cm) + counter(page).display())))
+    // marginalia.header(text-style: (size: 10pt), [], [], align(left, counter(page).display() + h(1cm) + emph(hydra(1))))
   })
   set page(numbering: none)
   
@@ -442,7 +474,7 @@
         // place(bottom+center, 
         //   line(stroke: 0.6pt, start: (0mm, 0mm), end: none, angle: 90deg, length: 100%), 
         // ),
-        move(dy:3mm, line(stroke: 0.6pt, start: (0mm, 20mm), end: (0mm, -50mm))), 
+        move(dy:3mm, line(stroke: 0.9pt, start: (0mm, 20mm), end: (0mm, -50mm))), 
         place(
           bottom+left,
           text(
