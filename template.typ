@@ -297,10 +297,10 @@
 
   // Set link style
   // TODO: remove colour for links
-  show link: it => highlight(fill: olive.lighten(90%), text(font: mono-font, it))
+  // show link: it => highlight(fill: olive.lighten(90%), text(font: mono-font, it))
   // show link: it => text(fill: rgb("#3087b3"), font: mono-font, it)
-  // show link: it => text(font: mono-font, it)
-  // show ref: set text(blue)
+  show link: it => text(font: mono-font, it)
+  show ref: set text(blue)
 
 
   set list(indent: 1em, tight: true)
