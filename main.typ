@@ -123,6 +123,7 @@
   #columns(2)[
     #make-index(
       section-title: (letter, counter) => v(1.5em),
+      use-page-counter: true,
     )
   ]
 
