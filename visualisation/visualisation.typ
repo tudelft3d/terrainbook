@@ -1,16 +1,103 @@
 #import "../template.typ": *
 
-= Cartographic relief representation <chap:viz>
+= Cartographic relief representation <chap:vis>
 // Relief visualisation techniques
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
 
+The problem we are tackling in this chapter is how to represent the 3D surface of a terrain on a flat 2D medium (a map or a computer screen) while maintaining both its measurable properties (position, shape, elevation) and its pictorial form (to obtain a legible impression of the relief).
+Before computers were mainstream this has occupied cartographers for centuries, who had to _manually_ draw hachures, contours, and shading.
 
-// TODO: intro
-// - the problem: a terrain is a 2.5D surface, how to depict it on a (2D) map?
-// - brief history: hachures -> contour lines -> hillshading (Imhof's Cartographic Relief Presentation)
-// - overview of the chapter: contours (and Tanaka maps), hillshading,
-//   combining colour and shading
+Eduard Imhof's book, _Cartographic Relief Presentation_, first published in German in 1965 and later translated into English, is the classic synthesis of this body of practice, and it remains the reference work on the subject.
+#notefigure(
+  image("figs/imhof_cover.pdf", width: 100%),
+  caption: [Eduard Imhof seminal book.],
+  dy:250pt,
+) <fig:imhof_cover>
+As Imhof states, the main difficulty when creating a map is that we look at the terrain from directly above, a viewing direction that does not help to convey an impression of three dimensions.
+Our most effective hint for form and relief is the light: even the smallest undulation of a surface becomes visible when light falls on it at an angle, and this is precisely the effect that most of the techniques in this chapter exploit.
+// Notice however that using light as a cue has its risks: the wrong light direction can _invert_ the relief, so that mountains are read as valleys (see @sec:vis-hillshading).
+
+It should be noticed that the topic of this chapter is extremely vast and complex, and for a thorough treatment it would require a whole book (we will not attempt it here; we simply refer the interested reader to the book of Imhof, among others). 
+Instead, we provide a short overview of the first attemps at depicting relief on a 2D medium, and then focus on the key techniques that remain central to cartographic practice today.
+
+Nowadays the medium is a computer screen and the images are now computed from a gridded terrain (or a TIN, or a point cloud), but the questions are the same as in Imhof's time: which graphic device, and with which parameters, makes the form of the terrain legible?
+// TODO: what about scale? where to put this discussion in this chapter?
+The answer also depends on the scale, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
+
+Finally, we explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
+The algorithms that produce the underlying data are covered elsewhere---gradient and aspect in @chap:topofeatures, contour extraction in @sec:iso; here we focus on how the result is rendered.
+
+
+== Perpective views of relief <sec:vis_history>
+
+The oldest maps (from the Middle Ages) showed mountains depicted from the side, as rows of rounded "molehills", which are regularly rounded domes arranged in certain patterns.
+Figure @fig:molehills shows three examples taken from Imhof's book. 
+#subfigure(
+  figure(image("figs/molehill_1.png", width: 100%), caption: []),
+  figure(image("figs/molehill_2.png", width: 100%), caption: []),
+  figure(image("figs/molehill_3.png", width: 100%), caption: []),
+  columns: (1fr, 1fr, 1fr),
+  caption: [Early perspective representations showing rows of rounded "molehills" as seen from the side. Figures taken from #citet(<Imhof65>).],
+  label: <fig:molehills>,
+) 
+Notice that the molehills are arranged in a row and are facing the viewer, but that they can also be arranged in other orientations to indicate where the valley is located.
+
+Drawing exactly where the mountains where was not possible because there was neither the need nor the technique to place them correctly in plan.
+
+
+
+== Hachures <sec:vis-hachures>
+
+One of the first attempts at representing the shape, the form, and the interactions between mountains (and not depicted with pictorial-like symbols (the molehills)) is the Leonardo da Vinci's map of Tuscany (see @fig:leonardo_tuscany), which shows the mountains as a series of interlocking ridges and valleys viewed from above.
+#figure(
+  image("figs/davinci_tuscany.jpg", width: 100%),
+  caption: [Leonardo da Vinci's map of Tuscany (c. 1502) showing mountains as interlocking ridges and valleys viewed from above.],
+  placement: auto,
+) <fig:leonardo_tuscany>
+Notice that this map is still from a perpective view, but still provides insights into the morphology of the area.
+
+Observe also that _slope lines_ and _shadow hachuring_ were used.
+#index[slope lines]
+#index[hachuring]
+Hachures are lines drawn down the slope, whose thickness or spacing encodes the steepness---oftentimes "the steeper, the darker".
+#note[hachuring]
+Those were later refined into _shadow hachures_ that imitate how a surface is lit from a certain direction.
+
+
+
+
+// TODO: ~half page + 1 figure (Lehmann system diagram: thickness/spacing
+// - Lehmann system (1799): hachures drawn along the direction of steepest descent (the aspect field), thickness proportional to steepness (the gradient field) -> reuses the gradient/aspect from @chap:topofeatures, no new machinery
+// - slope hachuring can be equated to analytical hillshading with vertical illumination (Kennelly & Kimerling 2000)
+// - shadow hachures: oblique illumination (thin/white lines on lit slopes, thick/black on shaded ones) -> the Dufour maps; precursor of the light-direction theme of this chapter (relief inversion, cf the box-practice in @sec:vis-hillshading)
+// - Imhof's five rules (listed here or in the notes):
+//   1) lines follow steepest descent; 2) arranged in rows;
+//   3) length = horizontal distance between assumed contours;
+//   4) width proportional to slope; 5) constant density
+// - Not used anymore b/c enormous engraving workload, steep terrain
+//   darkens the map (see Da Vinci's map...), no absolute elevation -> contours won
+// - closing line: "Tanaka's illuminated contours, presented below, can be
+//   seen as the modern, computational reincarnation of shadow hachures"
+
+
+
+
+== Contour lines  <sec:vis-contours>
+
+// Scale dependence and the warning that technique is a means, not an end.
+// The second were the _contour lines_: an abstract but measurable device that encodes elevation in equally spaced lines, and which became the standard for large-scale topographic maps.
+// Imhof described this as an imagined "contour blanket" laid over the terrain; we are so accustomed to it that its abstract character is seldom appreciated, and on its own it gives a poor impression of form, so it was soon combined with shading, hachures, and colour.
+
+// - contour lines are the oldest and most used technique; how they are read
+//   (closeness = steepness), index vs intermediate contours, labelling
+// - only geometric representation (hachures and shading give an impression of relief; 
+//   from contours we can reconstruct the shape)
+// - the algorithms to *extract* contour lines are covered in @sec:iso
+//   (Chapter @chap:conversion); here we focus on how they are *rendered/presented*
+// - scale is very important to select the contour interval and stuff in Imhof book
+
+
 
 
 == Hillshading <sec:vis-hillshading>
@@ -74,65 +161,7 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 //   Show the SVF + hillshade combination, which is the recommended one for
 //   cartography (Zaksek et al. 2011)
 
-== Contour lines  <sec:vis-contours>
 
-// TODO:
-// - contour lines are the oldest and most used technique; how they are read
-//   (closeness = steepness), index vs intermediate contours, labelling
-// - only geometric representation (hachures and shading give an impression of relief; 
-//   from contours we can reconstruct the shape)
-// - the algorithms to *extract* contour lines are covered in @sec:iso
-//   (Chapter @chap:conversion); here we focus on how they are *rendered/presented*
-// - scale is very important to select the contour interval and stuff in Imhof book
-
-
-=== From hachures to contours <sec:vis-hachures>
-
-// TODO: ~half page + 1 figure (Lehmann system diagram: thickness/spacing
-// encode slope; or public-domain 19th-century map extract from Wikimedia:
-// Lehmann originals, Dufour map extracts)
-//
-// Content:
-// - Lehmann system (1799): hachures drawn along the direction of steepest
-//   descent (the aspect field), thickness proportional to steepness
-//   (the gradient field) -> reuses the gradient/aspect from
-//   @chap:topofeatures, no new machinery
-// - slope hachuring can be equated to analytical hillshading with vertical
-//   illumination (Kennelly & Kimerling 2000)
-// - shadow hachures: oblique illumination (thin/white lines on lit slopes,
-//   thick/black on shaded ones) -> the Dufour maps; precursor of the
-//   light-direction theme of this chapter (relief inversion, cf the
-//   box-practice in @sec:vis-hillshading)
-// - Imhof's five rules (listed here or in the notes):
-//   1) lines follow steepest descent; 2) arranged in rows;
-//   3) length = horizontal distance between assumed contours;
-//   4) width proportional to slope; 5) constant density
-// - why they disappeared: enormous engraving workload, steep terrain
-//   darkens the map, no absolute elevation -> contours won
-// - closing line: "Tanaka's illuminated contours, presented below, can be
-//   seen as the modern, computational reincarnation of shadow hachures"
-
-
-=== Tanaka maps <sec:tanaka>
-
-// - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
-// - hypsometric layer tints between contours
-//   each contour line varies with the direction of the line relative to the
-//   light source; reuses the gradient and aspect from @chap:topofeatures
-// - historical context: Tanaka (1950) is the endpoint of the chain
-//   hachures -> contours -> illuminated contours (Kennelly & Kimerling 2000
-//   note their illuminated hachures use "the tonal method similar to
-//   Tanaka (1950)")
-
-#place(float: true, auto,
-  wideblock[
-    #figure(
-      image("figs/sunlight_direction.pdf", width: 100%),
-      caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
-      placement: auto,
-    ) <fig:tanaka>
-  ]
-)
 
 == Combining colour and shading <sec:vis-colour>
 
@@ -146,7 +175,28 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 //   Patterson & Jenny (2011) cross-blended hypsometric tints
 
 
+== Tanaka contours <sec:tanaka>
+
+// - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
+// - hypsometric layer tints between contours
+//   each contour line varies with the direction of the line relative to the
+//   light source; reuses the gradient and aspect from @chap:topofeatures
+
+
+
+#place(float: true, auto,
+  wideblock[
+    #figure(
+      image("figs/sunlight_direction.pdf", width: 100%),
+      caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
+      placement: auto,
+    ) <fig:tanaka>
+  ]
+)
+
 == Notes and comments
+
+The introduction of this chapter---in particular the tension between the measurability and the pictorial representation of relief---draws on #citet(<Imhof65>), which remains the classic reference on the subject.
 
 The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (#link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")[link]).
 
@@ -160,12 +210,7 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 // - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?)
 // - Imhof (1982), Cartographic Relief Presentation
 // - Patterson & Jenny (2011), cross-blended hypsometric tints
-//
-// Hachures (@sec:vis-hachures):
-// - Lehmann 1799, Darstellung einer neuen Theorie der Bergzeichnung (original,
-//   public domain, Leipzig)
-// - Imhof (1982), Cartographic Relief Presentation (five rules of slope
-//   hachuring)
+
 // - Yoeli 1985, Topographic relief depiction by hachures with computer and
 //   plotter, Cartographic Journal 22(2): 111-124, doi:10.1179/caj.1985.22.2.111
 //   (first computer algorithm; works from contour lines -> backward pointer
@@ -173,10 +218,11 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 // - Kennelly & Kimerling 2000, Desktop hachure maps from digital elevation
 //   models, Cartographic Perspectives 37, doi:10.14714/cp37.811 (small-scale
 //   illuminated hachures from DEM slope/aspect; explicitly Tanaka-like)
-// - optional: Magyari 2017, Automatic generation of hachure lines,
-//   doi:10.21163/gt_2017.121.08
-// - optional: Automated Swiss-style relief shading and rock hachuring (2018),
+// - Automated Swiss-style relief shading and rock hachuring (2018),
 //   Cartographic Journal, doi:10.1080/00087041.2018.1551955
+
+
+
 
 
 == Exercises
