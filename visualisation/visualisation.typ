@@ -97,29 +97,39 @@ Tanaka's illuminated contours, presented below, can be seen as the modern, compu
 
 #index[hillshading]
 
-Hillshading is a technique used to help visualise the relief of a gridded terrain (see @fig:hillshade for an example).
-
-#place(float: true, bottom,
-  wideblock[
-    #figure(
-      image("figs/hillshade.pdf", width: 100%),
-      caption: [#strong[Left]: a DTM visualised with height as a shade of blue. #strong[Right]: when hillshading is applied.],
-      placement: auto,
-    ) <fig:hillshade>
-  ]
-)
+Hillshading is a technique used to visualise the relief of a gridded terrain.
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
-This image assumes that the source of light (the sun) is located at a given position (usually North-West).
+It assumes that the source of light (the sun) is located at a given position (usually North-West and at a certain elevation) and that it illuminates the terrain.
+
+Consider the gridded DEM shown in @fig:tasmania_dem_01, which contains a river at low elevation and two peaks.
+The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has the sun located at an azimuth of #qty("315", "deg") (North-West) and an elevation of #qty("45", "deg").
+#figure(
+  image("figs/hillshade/dem_01_colour.pdf", width: 80%),
+  caption: [The terrain of a random region in Tasmania, Australia.],
+  placement: auto,
+) <fig:tasmania_dem_01>
+#subfigure(
+  figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]), <fig:hillshade_nw>,
+  figure(image("figs/hillshade/hillshade_se.png", width: 100%), caption: [Hillshade with light from South-East]), <fig:hillshade_se>,
+  columns: (1fr, 1fr),
+  caption: [Hillshade for the terrain from @fig:tasmania_dem_01. Observe how we perceive the same terrain differently when the light comes from different directions, and that in *(b)* we see peaks as valleys. ],
+  placement: auto,
+  label: <fig:hillshade>,
+)
+
+
 
 #box-practice("Why does the sunlight come from the North-West?")[
-  The source of the light for hillshading is usually set at the North-West, but in reality the sun is _never_ located there (in the northern hemisphere).
+  The source of the light for hillshading, and other techniques using light, is usually set at the North-West, but in reality the sun is _never_ located there (in the northern hemisphere).
   Why is this a common practice then?
   The main reason is because the human brain usually assumes that the light comes from above when looking at picture.
   Doing so reduces the chances of _relief inversion_, ie when mountains are perceived as valleys, and vice-versa.
-  This #link("https://ramblemaps.com/why-does-sunlight-come-from-north")[website] gives a clear example where a valley is interpreted as a mountain ridge by many if the sun is coming from the South.
+
+  Observe that @fig:hillshade_se shows the terrain from @fig:tasmania_dem_01 but with the light coming from the South instead of the North-West, resulting in an inverted perception of the relief.
+  // The website #link("https://ramblemaps.com/why-does-sunlight-come-from-north") gives a clear example where a valley is interpreted as a mountain ridge by many if the sun is coming from the South.
 ]
 
-While it would be possible to use advanced computer graphics methods (see @chap:visibility) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very quickly.
+While it would be possible to use advanced computer graphics methods (see @chap:visibility) to compute the shadows created by the terrain surface, in practice most GIS implements a simplified version of it which can be computed very efficiently.
 
 Given a regular gridded terrain, hillshading means that each cell gets a value which depicts the variation in tone, from light to dark.
 The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original grid (for convenience).
@@ -169,6 +179,14 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 
 
 == Tanaka contours <sec:tanaka>
+
+imhof calls them "3D shaded contours with flat area tones"
+
+#notefigure(
+  image("figs/tanaka_original.png", width: 100%),
+  caption: [Tanaka's illuminated contours showing how contour lines vary with their orientation relative to the light source.],
+  // placement: auto,
+) <fig:tanaka_original>
 
 // - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
 // - hypsometric layer tints between contours
