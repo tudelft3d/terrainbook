@@ -57,30 +57,23 @@ One of the first attempts at representing the shape, the form, and the interacti
 ) <fig:leonardo_tuscany>
 Notice that this map is still from a perpective view, but still provides insights into the morphology of the area.
 
-Observe also that _slope lines_ and _shadow hachuring_ were used.
+We can observe in da Vinci's map that hachures (short parallel lines) were used to depict slope and shadow.
+Hachures #index[hachuring] are usually drawn along the direction of steepest gradient, and their thickness (and thus spacing between adjacent lines) is proportional to the steepness at that location: the steeper, the thicker/darker.
+This can be observed in the so-called "Dufour Map" from in 1842 by the Swiss Topographic Bureau.
 #index[slope lines]
-#index[hachuring]
-Hachures are lines drawn down the slope, whose thickness or spacing encodes the steepness---oftentimes "the steeper, the darker".
-#note[hachuring]
-Those were later refined into _shadow hachures_ that imitate how a surface is lit from a certain direction.
 
+#figure(
+  image("figs/dufour-map.jpg", width: 100%),
+  caption: [The Dufour Map (1842) showing slope lines/hachures drawn along the direction of steepest gradient, with thickness proportional to steepness. Figure from #citet(<Imhof65>).],
+  placement: auto,
+) <fig:dufour_map>
 
+The slope lines/hachures were later refined into _shadow hachures_ that imitate how a surface is lit from a certain direction: thin/white lines on slopes facing the source of light, and thick/black on shaded ones.
+#note[slope lines]
 
-
-// TODO: ~half page + 1 figure (Lehmann system diagram: thickness/spacing
-// - Lehmann system (1799): hachures drawn along the direction of steepest descent (the aspect field), thickness proportional to steepness (the gradient field) -> reuses the gradient/aspect from @chap:topofeatures, no new machinery
-// - slope hachuring can be equated to analytical hillshading with vertical illumination (Kennelly & Kimerling 2000)
-// - shadow hachures: oblique illumination (thin/white lines on lit slopes, thick/black on shaded ones) -> the Dufour maps; precursor of the light-direction theme of this chapter (relief inversion, cf the box-practice in @sec:vis-hillshading)
-// - Imhof's five rules (listed here or in the notes):
-//   1) lines follow steepest descent; 2) arranged in rows;
-//   3) length = horizontal distance between assumed contours;
-//   4) width proportional to slope; 5) constant density
-// - Not used anymore b/c enormous engraving workload, steep terrain
-//   darkens the map (see Da Vinci's map...), no absolute elevation -> contours won
-// - closing line: "Tanaka's illuminated contours, presented below, can be
-//   seen as the modern, computational reincarnation of shadow hachures"
-
-
+It should be mentioned that hachures are no longer used because they require enormous engraving workload, especially for steep terrain where they darken the map (see Da Vinci's map...), and because absolute elevation is not encoded.
+Hillshading and contours have replaced those techniques.
+Tanaka's illuminated contours, presented below, can be seen as the modern, computational reincarnation of shadow hachures.
 
 
 == Contour lines  <sec:vis-contours>
@@ -193,6 +186,12 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
     ) <fig:tanaka>
   ]
 )
+
+== SVF-based hillshading
+
+// TODO
+// it's not with a source of light, but can be considered as having diffuse light
+// not affected by the "reverse-effect"
 
 == Notes and comments
 
