@@ -21,7 +21,6 @@
 #let citet = cite.with(form: "prose")
 #let citep = cite
 
-
 //-- for wideblocks (to detect captions of wide figures)
 #let in-wideblock = state("in-wideblock", false)
 #let wideblock(side: auto, body) = {
@@ -45,7 +44,7 @@
   if in-outline.get() { long } else { short }
 }
 
-
+//-- subfigure numbering
 //-- https://github.com/tingerrr/subpar/issues/16
 #let sub-figure-numbering = (super, sub) => numbering("1.1a", counter(heading).get().first(), super, sub)
 #let figure-numbering = super => numbering("1.1", counter(heading).get().first(), super)
@@ -57,9 +56,6 @@
   },
 )
 
-
-
-
 //-- default for pseudo-code/lovelace
 #let my-lovelace-defaults = (
   booktabs: true,
@@ -69,6 +65,7 @@
 )
 #let pseudocode-list = pseudocode-list.with(..my-lovelace-defaults)
 
+//-- margin notes
 #let note = note.with(counter: none, text-style: (size: 8pt, style: "normal", weight: "regular"))
 #let notefigure = notefigure.with(
   // dy: 20pt,
@@ -81,6 +78,7 @@
   },
 )
 
+//-- minitoc for each chapter (with optional YouTube link)
 #let minitoc(toc, youtube: none) = note(dy:17pt)[
   #showybox(
     frame: (
@@ -120,6 +118,7 @@
   }
 ]
 
+//-- the custom boxes in the text
 #let box-practice(title, body) = figure(placement: auto)[
   #showybox(
     frame: (
@@ -176,8 +175,6 @@
 ]
 
 
-//-- stroke of the vertical bars (running header + chapter openings)
-
 //-- vertical bar used in the running header (as in the kaobook class).
 //-- It is 18mm tall and sits on the text baseline (1mm below it), so its top
 //-- is level with the top of the page. It is zero-width, so it does not affect
@@ -195,7 +192,7 @@
 #let tbtemplate(
   title: "Computational modelling of terrains",
   version: "",
-  cover: false,
+  cover: false, 
   body,
 ) = {
 
@@ -278,7 +275,6 @@
   )
   set table.hline(stroke: 0.5pt)
   set table.vline(stroke: 0.5pt)
-
  
   
   // show heading.where(level: 1): it => pagebreak(weak: true, to: "odd") + it.body
@@ -492,16 +488,6 @@
   // --
   // show: marginalia.show-frame
   //--
-  // set page(
-  //   header: context if here().page() > 1 {
-  //     marginalia.header(
-  //       text-style: (size: 8pt),
-  //       // [Page #counter(page).display("1 of 1", both: true)],
-  //       // [#smallcaps[Marginalia] #text(fill: luma(60%))[ledoux]],
-  //       [#counter(page).display() --- ],
-  //     )
-  //   },
-  // )
   body
 }
 
@@ -513,7 +499,5 @@
   set page(
     header: none
   )
-
   body
 }
-  //
