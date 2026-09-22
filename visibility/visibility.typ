@@ -41,16 +41,16 @@ Observe that for all these problems, the viewpoint can either be directly on the
 We discuss in this chapter the general problem of visibility as defined in computer graphics, and then discuss how terrains, being 2.5D surfaces, simplify the problem. 
 
 
-#pagebreak()
-== The general visibility problem
+// #pagebreak()
+== #flex-heading[General visibility problem][The general visibility problem]
 
 Rendering is the process of generating (2D) images from 2D or 3D scenes. #index[rendering] 
 As shown in @fig:Ray_trace_diagram, it involves projecting the (3D) objects in a scene to an image (say $800 times 800$ pixels) and assigning one colour to each pixel.
+In the simplest case the colour assigned is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (however this goes beyond the scope of this book).
 #notefigure(
   image("./figs/Ray_trace_diagram.pdf", width: 100%),
   caption: [Ray tracing builds the image pixel-by-pixel by extending rays into the scene. (Figure from #link("https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg")[Wikipedia])],
 ) <fig:Ray_trace_diagram>
-In the simplest case the colour assigned is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (however this goes beyond the scope of this book).
 
 #index[ray casting] #note[ray casting]
 _Ray casting_ is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.
@@ -76,6 +76,7 @@ It should be noticed that it is possible that objects cannot be strictly $z$-ord
 #notefigure(
   image("./figs/depthsort_issues.pdf", width: 100%),
   caption: [Part of $O_2$ is behind $O_1$ and part is in front.],
+  dy:250pt,
 ) <fig:depthsort_issues>
 The solution to this is to decompose one of the objects by the plane of the other, and to process all the parts as different objects.
 
@@ -185,6 +186,7 @@ Each viewshed yields a binary grid, and it suffices to use a map algebra operato
 
 The sky-view factor (SVF) is the fraction of the sky that is visible from a given location $v$ on the ground (usually at the surface itself, or at pedestrian height, #qty("2", "m")).
 It depends on the height and locations of the obstacles (eg buildings, trees, etc.) in the surroundings of $v$.
+#note[SVF is value in range [0,1]]
 The result is a normalised value between 0 (the sky is completely hidden) and 1 (the entire sky hemisphere is visible).
 
 The SVF is not only a geometric indicator: under the assumption that the sky brightness is approximately uniform, it is a proxy for the amount of diffuse sky radiation that a location receives, which explains its use in many applications.
@@ -195,8 +197,6 @@ The SVF can be computed in different ways: from fisheye images, from a digital t
 
 
 === Fisheye images
-
-// TODO: add info about solid angle? https://www.mathwords.com/s/solid_angle.htm
 
 As shown in @fig:fisheye_images_svf, a fisheye image captures the entire sky hemisphere in a single image: the centre of the image corresponds to the zenith, and its border to the horizon.
 To compute the SVF, the pixels of the image are first classified as sky or as obstruction.
@@ -244,6 +244,9 @@ The contribution of each sector can therefore be computed analytically, and only
 
 Let us first consider the case where the horizon has the same elevation angle $gamma$ in every direction.
 The visible sky is then the part of the hemisphere above a cone with apex $v$, and its solid angle is $2 pi (1 - sin gamma)$ (the solid angle of the complete hemisphere is $2 pi$).
+#note[solid angle]
+// TODO: solid angle in Appendix add info about solid angle
+//  https://www.mathwords.com/s/solid_angle.htm
 The visible portion of the sky is thus $(1 - sin gamma)$, and with $n$ directions the sky-view factor is obtained by averaging this quantity:
 
 $ "SVF" = 1 - frac(1, n) sum_(i=1)^n sin gamma_i $
@@ -258,7 +261,7 @@ Observe that both parameters influence the result: with too few directions, narr
   The tool allows for separate analysis of building and tree contributions, assuming a transmissivity of light through the vegetation based on tree species.
 ]
 
-// TODO:
+// TODO: stuff about UMEP
 // UMEP does it for buildings and separately for trees also (assuming a transmissivity of light through the vegetation, usually based on the tree species).
 // https://umep-docs.readthedocs.io/en/latest/pre-processor/Urban%20Geometry%20Sky%20View%20Factor%20Calculator.html
 // 
