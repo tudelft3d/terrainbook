@@ -25,4 +25,4 @@ Prerequisites include: knowledge of GIS, background in linear algebra, and an in
 
 #strong[Acknowledgements] \
 We thank the many students of the GEO1015 course over the years who have helped us by pointing—and often fixing with a pull request—the errors, typos, and weird sentences of this book. 
-A special thanks to the students of the year 2018–-2019 who had to deal with the first version of this book, and to Balázs Dukai for thoroughly proofreading the first drafts of this book.
+A special thanks to the students of the year 2018--2019 who had to deal with the first version of this book, and to Balázs Dukai for thoroughly proofreading the first drafts of this book.

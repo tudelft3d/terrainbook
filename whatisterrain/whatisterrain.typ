@@ -43,8 +43,7 @@ Furthermore, some concepts are derived from those, for instance:
 
 == Dimensionality of DTMs
 
-#note[3D is misleading]
-The term "3D" is misleading in a DTM context---as it is in a GIS context--- because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see @fig:dimgis).
+The term "3D" is misleading #note[3D is misleading] in a DTM context---as it is in a GIS context--- because it might refer to three different concepts: 2.5D, 2.75D, and 3D (see @fig:dimgis).
 #note[2.5D? 2.75D? Volumes?]
 #subfigure(
   figure(image("figs/dimgis.pdf", width: 100%, page: 1), caption: [A terrain]), <fig:dimgis:1>,
@@ -71,7 +70,6 @@ As shown in the figure, these are modelled as nearly vertical surfaces; in pract
 
 === 2.75D
 
-#index[2.75D] 
 The term "2.75D" refers to a surface (a 2-manifold) but unlike for the 2.5D case, the surface is not restricted to be projectable to the 2D plane (see @fig:dimgis:275).
 Thus, more than one $z$ value is allowed for a given location ($x,y$).
 The term '2.75D' was coined because: it is more than 2.5D, but less than 3D.
