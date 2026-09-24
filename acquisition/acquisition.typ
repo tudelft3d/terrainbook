@@ -336,7 +336,7 @@ For instance, one can attempt to fill the void regions, sometimes referred to as
 Or, one can attempt to detect and remove outliers caused eg by multi-path effects or flocks of birds (more details in @chap:pcprocessing).
 However, while the intention is always to reduce the number and severity of artefacts, these processes sometimes introduce distortions of their own.
 For example, an outlier detection algorithm may remove 'good' points if they look the same as outliers to the outlier detection algorithm (see eg @fig:outlier-wrong).
-And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with; Chapters @chap:interpol and @chap:kriging explore the topic of spatial interpolation in detail.
+And void-filling is only effective if the void area is not too large, since interpolation methods always assume there is sufficient neighbourhood information to work with; @chap:interpol and @chap:kriging explore the topic of spatial interpolation in detail.
 
 
 #box-toread("To read or to watch")[

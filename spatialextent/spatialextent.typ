@@ -70,7 +70,7 @@ To evaluate the different algorithms to create R($S$), we list here different pr
 == Convex hull <sec:se_ch>
 
 As explained in @sec:convexhull, given $S$, a set of points in $bb(R)^(2)$, its convex hull, which we denote conv($S$), is the minimal convex set containing $S$.
-Two examples of convex hulls are in Figures @fig:ideas\b and @fig:properties\a.
+Two examples of convex hulls are in @fig:ideas\b and @fig:properties\a.
 
 For a given set of points, the convex hull is uniquely defined and does not require any parameters (unlike the other methods listed below).
 It is also relatively easy to compute: it can be extracted from the Delaunay triangulation, or computed directly using a specific algorithm.
@@ -81,7 +81,7 @@ It is also relatively easy to compute: it can be extracted from the Delaunay tri
   columns: (1fr, 1fr),
   caption: [*(a)* First four steps of the gift wrapping algorithm to compute the convex hull. *(b)* The resulting convex hull.],
   label: <fig:giftwrapping>
-) 
+)
 It begins with a point that is guaranteed to be on conv($S$) (we can take an 'extreme', such as $a$ in @fig:giftwrapping, because it is the point with the lowest $y$-coordinate), and then picks the point in $S$ (omitting the ones already on conv($S$)) for which the polar angle between the horizontal line and that point ($a$ at this step) is the largest ($b$ in this case), and adds it to conv($S$).
 Then for $b$, the polar angle is calculated from the line $a b$ and the $c$ is chosen since it forms the largest angle.
 The algorithm continues this way until $a$ is visited again.
@@ -100,7 +100,7 @@ Properties convex hull: \
   [*P4*], [No holes in the region],
   [*P5*], [$cal(O) (n log  n)$],
   table.hline(),
-) 
+)
 
 
 == Moving arm
@@ -117,7 +117,7 @@ Properties convex hull: \
 
 
 ==== Arm of length $l$
-The moving arm is a generalisation of the gift wrapping algorithm (see Section @sec:se_ch) where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the "moving arm").
+The moving arm is a generalisation of the gift wrapping algorithm (see @sec:se_ch) where the infinite line, used to calculate the polar angles, is replaced by a line segment of a given length $l$ (the "moving arm").
 This means that, unlike the original gift wrapping algorithm, only a subset of the points in $S$ are considered at each step.
 This also means that potentially the result is a polygon that is non-convex.
 @fig:movingarm:1 shows the first few steps for a given $l$, and it can be observed that 1 point is not part of the final region.
@@ -154,10 +154,10 @@ If $S$ forms different clusters (see for instance @fig:clusters), then only the 
 ) <fig:clusters>
 Notice that this can also be useful to discard unwanted outliers (unless the lowest point is an outlier).
 In practice, the problem of several clusters can be solved by preprocessing the input points with a clustering algorithm (in the case of @fig:clusters two clusters should be detected) and then each cluster is processed separately.
-See Section @sec:clustering for an overview.
+See @sec:clustering for an overview.
 
 The worst case time complexity is the same as for the gift wrapping algorithm: $cal(O) (n h)$.
-If a $k$d-tree is used, this stays the same but in practice will be sped up as the subset of $S$ tested will be smaller. 
+If a $k$d-tree is used, this stays the same but in practice will be sped up as the subset of $S$ tested will be smaller.
 Each query in a $k$d-tree takes $cal(O) (log n)$ on average, but we need to store an auxiliary structure that takes $cal(O) (n)$ storage.
 
 Properties moving arm:
@@ -260,7 +260,7 @@ Properties $alpha$-shape:
 Clustering algorithms are used widely for statistical data analysis, they allow us to group points (often in higher dimensions) that are close to each other in one group.
 Different notions to create clusters can be used, eg distance between the points, density, intervals or particular statistical distributions.
 As @fig:clustering shows, the result of a clustering algorithm is that each input point is assigned to a cluster (here a colour), and potentially some outliers are identified.
-#subfigure( 
+#subfigure(
   figure(image("figs/clustering.pdf", width: 100%, page: 1), caption: []),
   figure(image("figs/clustering.pdf", width: 100%, page: 2), caption: []),
   figure(image("figs/clustering.pdf", width: 100%, page: 3), caption: []),
@@ -290,7 +290,7 @@ A cluster is formed by recursively finding all the neighbouring points of a give
 
 == Notes and comments
 
-The properties listed in Section @sec:properties are taken, and slightly adapted, from #citet(<Galton06>). 
+The properties listed in @sec:properties are taken, and slightly adapted, from #citet(<Galton06>).
 
 The _Quickhull_ algorithm is the most known and used convex hull algorithm, and it is valid in any dimensions. See #citet(<Barber96>) for the details, and #link("http://www.qhull.org") for implementations.
 
