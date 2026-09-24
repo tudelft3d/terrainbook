@@ -109,7 +109,7 @@ wideblock(side: "right")[
       [\# beams], [6], [4], [1],
       [\# ground tracks], [6 (in 3 strong/weak pairs)], [8 (4 strong, 4 weak)], [1],
       table.hline(),
-    ) 
+    )
   ) <tab:lidarcomparison>
 ]
 )
@@ -130,7 +130,7 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
  GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
 
 ==== Comparison to typical airborne lidar
-These space borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
+These space-borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
 The altitude increase results in a wider beam footprint, from #qty("0.5", "m") (at #qty("500", "m")) for airborne platforms to #qty("15", "m") for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from #qty("0.5", "km") to #qty("500", "km").
 A comparison is given in Table @tab:lidarcomparison.
@@ -168,7 +168,7 @@ The pseudo DTMs FABDEM (#strong[F]orest #strong[A]nd #strong[B]uilding removed) 
 Similarly, while ALOS World3D is freely available at #qty("30", "m"), it also comes in a commercial version at #qty("5", "m") resolution.
 There is even a #qty("0.5", "m") commercial version, based on multiple optical satellites, available on request.
 
-// #wideblock(side: "right")[ 
+// #wideblock(side: "right")[
 #figure(
   placement: auto,
   caption: [Overview of global DEMS, see @fig:gdem_inheritance for their lineage.],
@@ -181,21 +181,21 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
     table.hline(),
     table.header[][Release year][By][Sensor][Type][License][Resolution],
     table.hline(),
-    [SRTM]          ,[2001], [NASA],                 [InSAR],   [DSM],      [Open],    [30--90m],    
-    [ASTER]         ,[2009], [NASA],                 [optical], [DSM],      [Open],    [30m],        
-    [Tandem-X]      ,[2014], [DLR],                  [InSAR],   [DSM],      [Closed],  [12m],        
-    [WorldDEM]      ,[2014], [Airbus],               [InSAR],   [DSM/DTM'], [Closed],  [5--12m],     
-    [ALOS]          ,[2016], [JAXA],                 [optical], [DSM],      [Open],    [30m],        
-    [MERIT]         ,[2017], [#citet(<Yamazaki17>)], [InSAR],   [DTM'],     [Open],    [90m],        
-    [NASADEM]       ,[2019], [NASA],                 [InSAR],   [DSM],      [Open],    [30m],        
-    [CopernicusDEM] ,[2020], [ESA],                  [InSAR],   [DSM],      [Open],    [30--90m],    
-    [Tandem-X 2020] ,[2022], [#citet(<wessel2022>)], [InSAR],   [DSM],      [Closed],  [30m],        
-    [FABDEM]        ,[2022], [#citet(<Hawker22>)],   [InSAR],   [DTM'],     [Closed],  [30m],        
-    [FathomDEM]     ,[2025], [#citet(<uhe2025>)],    [InSAR],   [DTM'],     [Closed],  [30m],        
-    [GEDTM30]       ,[2025], [#citet(<ho2025>)],     [InSAR],   [DTM'],     [Open],    [30m],        
+    [SRTM]          ,[2001], [NASA],                 [InSAR],   [DSM],      [Open],    [30--90m],
+    [ASTER]         ,[2009], [NASA],                 [optical], [DSM],      [Open],    [30m],
+    [Tandem-X]      ,[2014], [DLR],                  [InSAR],   [DSM],      [Closed],  [12m],
+    [WorldDEM]      ,[2014], [Airbus],               [InSAR],   [DSM/DTM'], [Closed],  [5--12m],
+    [ALOS]          ,[2016], [JAXA],                 [optical], [DSM],      [Open],    [30m],
+    [MERIT]         ,[2017], [#citet(<Yamazaki17>)], [InSAR],   [DTM'],     [Open],    [90m],
+    [NASADEM]       ,[2019], [NASA],                 [InSAR],   [DSM],      [Open],    [30m],
+    [CopernicusDEM] ,[2020], [ESA],                  [InSAR],   [DSM],      [Open],    [30--90m],
+    [Tandem-X 2020] ,[2022], [#citet(<wessel2022>)], [InSAR],   [DSM],      [Closed],  [30m],
+    [FABDEM]        ,[2022], [#citet(<Hawker22>)],   [InSAR],   [DTM'],     [Closed],  [30m],
+    [FathomDEM]     ,[2025], [#citet(<uhe2025>)],    [InSAR],   [DTM'],     [Closed],  [30m],
+    [GEDTM30]       ,[2025], [#citet(<ho2025>)],     [InSAR],   [DTM'],     [Open],    [30m],
     table.hline(),
   )
- } 
+ }
 ) <tab:gdem_overview>
 // ]
 

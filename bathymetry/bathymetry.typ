@@ -30,7 +30,7 @@ It is however in practice still a (semi-)manual process since the new technologi
 ) <fig:enc>
 
 The raw contours constructed directly from MBES datasets are often not satisfactory for navigational purposes since, as @fig:raw shows,
-they are zigzagging (the representation of the seafloor thus contains "waves", ie the slope changes abruptly) and they contain many "island" contours (seafloor has several local minima and maxima). 
+they are zigzagging (the representation of the seafloor thus contains "waves", ie the slope changes abruptly) and they contain many "island" contours (seafloor has several local minima and maxima).
 These artefacts are the result of measurement noise that is present in MBES datasets, ie the variation in depth between two close samples can be larger than in reality, even after the dataset has been (statistically) cleaned.
 @fig:ideal illustrates what is expected by hydrographers.
 
@@ -58,17 +58,17 @@ A good depth contour satisfies all of the following four generalisation constrai
 / Safety constraint: #note[safety constraint]
  At every location, the indicated depth must not be deeper than the depth that was originally measured at that location; this is to guarantee that a ship never runs aground because of a faulty map.
  This constraint is a so-called hard constraint, ie it can never be broken.
-/ Legibility constraint: 
+/ Legibility constraint:
  An overdose of information slows down the map reading process for the mariner, thus only the essential information should be depicted on the map in a form that is clearly and efficiently apprehensible.
 / Topology constraint:
  The topology of the depicted map elements must be correct, ie isocontours may not touch or intersect (also a hard constraint).
 / Morphology constraint:
  The map should be as realistic and accurate as possible, ie the overall shape of the morphology of the underwater surface should be clearly perceivable and defined features should be preserved.
 
-It should be noted that these four constraints are sometimes incompatible with each other. 
+It should be noted that these four constraints are sometimes incompatible with each other.
 For instance, the morphology constraint tells us to stay close to the measured shape of the seafloor, while the legibility constraint forces us to deviate from that exact shape by disregarding details.
 
-Also, because of the safety constraint, depth-contours can only be modified such that the safety is respected at all times: contours can only be pushed towards the deeper side during generalisation, as illustrated in @fig:genvalidornot. 
+Also, because of the safety constraint, depth-contours can only be modified such that the safety is respected at all times: contours can only be pushed towards the deeper side during generalisation, as illustrated in @fig:genvalidornot.
 #figure(
   image("figs/genvalidornot.pdf", width: 80%),
   caption: [During generalisation, depth-contours can only be moved towards greater depth (indicated by a "--" in the figure).],
@@ -99,7 +99,7 @@ The following are methods that use a raster data structure either to select a su
 
 ==== Selection with virtual gridding
 This is a point filtering method that aims at reducing the volume of data, in order to create generalised contours and to speed up the computation time, or simply to make the computation possible, in the case the input dataset is several orders of magnitude bigger than the main memory of a computer.
-The idea is to overlay a virtual grid on the input points and to keep one point for every grid cell (similar to grid thinning as explained in Section @sec:thinning).
+The idea is to overlay a virtual grid on the input points and to keep one point for every grid cell (similar to grid thinning as explained in @sec:thinning).
 The selected points can either be used to construct a raster using interpolation or a TIN surface, and contours can be derived from that.
 While different functions can be used to select the point (eg deepest, shallowest, average, or median), because of the safety constraint the shallowest point is often chosen by practitioners, see @fig:fr:vg:a for a one-dimensional equivalent.
 
@@ -115,28 +115,28 @@ While different functions can be used to select the point (eg deepest, shallowes
   placement: auto,
   label: <fig:filterraster>,
 )
-It should however be stressed that choosing the shallowest point does not guarantee safe contours. 
-The problem is that contour extraction algorithms perform a linear interpolation on the raster cells. 
-As can be observed from @fig:fr:vg:b, this easily results in safety violations at 'secondary' local maxima in a grid cell. 
+It should however be stressed that choosing the shallowest point does not guarantee safe contours.
+The problem is that contour extraction algorithms perform a linear interpolation on the raster cells.
+As can be observed from @fig:fr:vg:b, this easily results in safety violations at 'secondary' local maxima in a grid cell.
 The number and severity of these violation is related to the cellsize of the virtual grid: a bigger cellsize will result in more and more severely violated points.
 Notice that it is not possible to reduce the cellsize such that the safety issue can be guaranteed.
 
 ==== Max rasterisation
 As @fig:fr:mg:a shows, it is similar to virtual gridding, the main difference is that a raster (a surface) is created where every cell in the virtual grid becomes a raster cell whose depth is the shallowest of all the samples.
-This disregards the exact location of the original sample points, and moves the shallowest point in the grid cell to the centre of the pixel. 
+This disregards the exact location of the original sample points, and moves the shallowest point in the grid cell to the centre of the pixel.
 That means that the morphology constraint is not respected.
 Moreover, as @fig:fr:mg:b shows, the safety constraint is not guaranteed, for the same reasons as with virtual gridding.
 Again, the severity of these problems depends on the chosen cellsize.
 
 ==== Interpolation to a raster
 For hydrographic charts, the raster surface is often constructed with spatial interpolation, particularly with the method of inverse distance weighting (IDW).
-Figures @fig:fr:idw:a and @fig:fr:idw:b illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place, extrema are disregarded and subsequently the safety constraint is also violated.
+@fig:fr:idw:a and @fig:fr:idw:b illustrate the process of IDW interpolation, notice that as a result of the averaging that takes place, extrema are disregarded and subsequently the safety constraint is also violated.
 
 
 === TIN simplification
 
 One could use TIN simplification, as explained in @chap:conversion, to simplify the seabed.
-This would also simplify the depth-contours that are generated from the TIN. 
+This would also simplify the depth-contours that are generated from the TIN.
 However, as @fig:simpfail shows, the safety constraint is not guaranteed to be respected when vertices are removed from a TIN.
 This is due to the fact that the triangulation must be updated (with flips, see @sec:dtconstruction) and it is likely that a change in the triangulation will eventually violate the safety constraint on a vertex that was removed earlier.
 
@@ -156,9 +156,9 @@ Part of the problems with existing approaches to generate depth-contours is the 
 This method uses several of the algorithms and data structures studied in this book, and with small extensions and modifications we can obtain depth-contours that are both legible and guaranteed to be safe.
 
 The key idea behind the method, called the Voronoi-based surface approach, is to have one single consistent representation of the seafloor from which contours can be generated on-the-fly (potentially for different map scales, or with varying degrees of generalisation).
-Instead of performing generalisation by moving lines or using a subset of the original samples, we include all MBES points in a triangulation (the surface) and manipulate this triangulation directly with generalisation operators that fulfil the constraints listed in Section @sec:good-depth-contours.
+Instead of performing generalisation by moving lines or using a subset of the original samples, we include all MBES points in a triangulation (the surface) and manipulate this triangulation directly with generalisation operators that fulfil the constraints listed in @sec:good-depth-contours.
 
-@fig:surfapproach gives a schematic overview of the different components of our Voronoi-based surface concept. 
+@fig:surfapproach gives a schematic overview of the different components of our Voronoi-based surface concept.
 #figure(
   image("figs/surfaceapproach_V2.pdf", width: 100%),
   caption: [Overview of the Voronoi- and surface-based approach.],
@@ -174,7 +174,7 @@ Finally, contour lines are derived from the altered TIN using linear interpolati
 Representing a field in a computer is problematic since computers are discrete machines.
 We therefore need to _discretise_ the field, ie partition it into several pieces that cover the whole area (usually either grid cells or triangles).
 Contours in @fig:raw are not smooth basically because the seabed is represented simply with a TIN of the original samples, which is a $C^0$ interpolant.
-However, as we demonstrate below, we can obtain a smooth looking approximation of the field by densifying the TIN using the Laplace interpolant (see Section @sec:laplace), which is $C^1$.
+However, as we demonstrate below, we can obtain a smooth looking approximation of the field by densifying the TIN using the Laplace interpolant (see @sec:laplace), which is $C^1$.
 
 Two generalisation operators allow us to obtain a smoother surface from which depth-contours can be extracted: (1) smoothing; (2) densification.
 
@@ -182,7 +182,7 @@ Two generalisation operators allow us to obtain a smoother surface from which de
 
 The smoothing operator basically estimates, with the Laplace interpolant (see @sec:laplace), the depth of each vertex in a dataset by considering its natural neighbours (see @fig:1Dsmoothop).
 If this depth is shallower, then the vertex is assigned this value; if it is deeper then nothing is done.
-Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths upwards (if at all). 
+Thus, the smoothing operator does not change the planimetric coordinates of vertices, but only lifts the vertices' depths upwards (if at all).
 
 #subfigure(
   figure(image("figs/1Dsmoothop.pdf", width: 100%, page: 1), caption: [Initial TIN]), <fig:1Dsmoothop:a>,
@@ -195,15 +195,15 @@ Thus, the smoothing operator does not change the planimetric coordinates of vert
   label: <fig:1Dsmoothop>,
 )
 
-To perform the Laplace interpolation for each vertex $v$ in the Voronoi diagram $cal(D)$, it suffices to obtain the natural neighbours $p_i$ of $v$, and for each calculate the lengths of the Delaunay and the dual Voronoi edge (as explained in Section @sec:laplace).
+To perform the Laplace interpolation for each vertex $v$ in the Voronoi diagram $cal(D)$, it suffices to obtain the natural neighbours $p_i$ of $v$, and for each calculate the lengths of the Delaunay and the dual Voronoi edge (as explained in @sec:laplace).
 There is no need to insert/remove $v$ in the dataset, since we are only interested in estimating its depth (without considering the depth it is already assigned).
 
-The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall seabed shape. 
+The primary objective of smoothing is to generalise the surface by removing high frequency detail while preserving the overall seabed shape.
 Applying it reduces the angle between adjacent triangles which gives the surface a smoother look.
 
 It performs two linear loops over the $n$ vertices of the dataset (the depths are only updated after all the depths have been estimated), and since the smoothing of one vertex is performed in expected constant time, the expected time complexity of the algorithm is $cal(O) (n)$.
 
-Observe that the operator can be performed either on a portion of a dataset, or on the whole dataset. 
+Observe that the operator can be performed either on a portion of a dataset, or on the whole dataset.
 Furthermore this operator can be applied any number of times, delivering more generalisation with each pass.
 
 === The densification operator <sec:densification>
@@ -222,7 +222,7 @@ Its objective is primarily to minimise the discretisation error between the Lapl
 )
 
 By inserting extra vertices in large triangles (to break them into three triangles), the resolution of the DT is improved.
-As a result also the extracted contour lines have a smoother appearance because they now have shorter line-segments; see Section @sec:smoothness-contours for an explanation.
+As a result also the extracted contour lines have a smoother appearance because they now have shorter line-segments; see @sec:smoothness-contours for an explanation.
 We insert a new vertex at the centre of the circumscribed circle of any triangle that has an area greater than a preset threshold; its depth is assigned with the Laplace interpolant.
 The circumcentre is chosen here because that location is equidistant to its three closest points, and subsequently results in a very natural point distribution.
 
@@ -243,21 +243,21 @@ The circumcentre is chosen here because that location is equidistant to its thre
   ]
 )
 
-@fig:interpol_smooth shows an example of these ideas. 
-@fig:interpol_smooth\a and @fig:interpol_smooth\b show the original dataset, which is a very simple pyramid having its base at elevation 0, and its summit at 10. 
-@fig:interpol_smooth\d--f shows the results when a densification operator based on the Laplace interpolant is used. 
+@fig:interpol_smooth shows an example of these ideas.
+@fig:interpol_smooth\a and @fig:interpol_smooth\b show the original dataset, which is a very simple pyramid having its base at elevation 0, and its summit at 10.
+@fig:interpol_smooth\d--f shows the results when a densification operator based on the Laplace interpolant is used.
 It should be noticed that the "top" of the pyramid was densified, and not so much the bottom, therefore the contour lines near the bottom should be ignored (the fact that they are close to the border of the dataset also creates artefacts).
 
 Densification aims to reduce the difference between the linear TIN and the Laplace interpolated field of its vertices---effectively improving the resolution of the extracted contours.
 Therefore, densification is to be applied just before the extraction of the depth-contours.#note[apply densification _before_ contour extraction and _after_ smoothing]
 If applied _before_ the smoothing operator, it would limit the effectiveness of that operator, since a denser triangulation smoothes more slowly.
 
-The densification operator uses an area-threshold that determines which triangles should be densified. 
-This way triangles that are already sufficiently small are not densified. 
+The densification operator uses an area-threshold that determines which triangles should be densified.
+This way triangles that are already sufficiently small are not densified.
 It performs a single pass on the input triangles, thus with every call the resolution of the DT is increased, until all triangles have reached a certain area.
 
-If the maximum area threshold is ignored, a single call costs $cal(O) (n)$ time, as it only requires a single pass over the $n$ triangles of the TIN. 
-However, when a number of $t$ densification passes is sequentially performed, it only scales to $cal(O) (3^(t) n)$ time, since every point insertion creates two new triangles. 
+If the maximum area threshold is ignored, a single call costs $cal(O) (n)$ time, as it only requires a single pass over the $n$ triangles of the TIN.
+However, when a number of $t$ densification passes is sequentially performed, it only scales to $cal(O) (3^(t) n)$ time, since every point insertion creates two new triangles.
 However, because of the maximum area threshold, that worst case scenario will never be reached in practice with large $t$.
 
 == #flex-heading[Real-world examples][Some examples of results with real-world datasets]
@@ -279,18 +279,18 @@ This was tested with an MBES dataset from Zeeland, in the Netherlands.
   ]
 )
 
-As can be observed from @fig:zl1845fieldview_o, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance. 
-However, the smoothed contours (100 smoothing passes) from @fig:zl1845fieldview_s have a much cleaner and less cluttered appearance. 
-Clearly, the number of contour lines has diminished. 
-This is both because pits (local minima) have been lifted upwards by the smoothing operator, and nearby peaks (local maxima) have been aggregated (because the region in-between has been lifted upwards). 
+As can be observed from @fig:zl1845fieldview_o, the raw and ungeneralised contours in the dataset have a very irregular and cluttered appearance.
+However, the smoothed contours (100 smoothing passes) from @fig:zl1845fieldview_s have a much cleaner and less cluttered appearance.
+Clearly, the number of contour lines has diminished.
+This is both because pits (local minima) have been lifted upwards by the smoothing operator, and nearby peaks (local maxima) have been aggregated (because the region in-between has been lifted upwards).
 Notice also that a third effect of the smoothing operator is the enlargement of certain features as a result of the uplifting of the points surrounding a local maximum.
 
-The effects of the densification operator are also visible. 
-The sharp edges of the undensified lines are caused by the large triangles in the initial TIN, however after densification these large triangles are subdivided into much smaller ones. 
+The effects of the densification operator are also visible.
+The sharp edges of the undensified lines are caused by the large triangles in the initial TIN, however after densification these large triangles are subdivided into much smaller ones.
 The result is a much smoother contour line that still respects the sample points.
 
 Naturally, the smoothing operator also smoothes and simplifies the resulting contour lines.
-@fig:zl1845lineview illustrates the effect of the smoothing operator on a single contour over 30 smoothing passes. 
+@fig:zl1845lineview illustrates the effect of the smoothing operator on a single contour over 30 smoothing passes.
 
 #place(float: true, auto,
   wideblock[
@@ -301,7 +301,7 @@ Naturally, the smoothing operator also smoothes and simplifies the resulting con
     ) <fig:zl1845lineview>
   ]
 )
-It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards). 
+It is clear that the contour line moves towards the inner region, which is the deeper side of the contour, which is to be expected since the smoothing operator is safe per definition (and only lifts the surface upwards).
 What can also be seen is that the line is simplified (the details on the outer rim disappear, note however that the point count stays the same) and smoothed.
 
 == Notes and comments

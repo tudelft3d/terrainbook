@@ -8,7 +8,7 @@ In this chapter we discuss three methods to handle and/or process _massive_ terr
 
 "Massive" is a vague and undefined term in GIS, and it is continuously changing: 15 years ago a point cloud dataset containing 5 million elevation points was considered massive, but in 2024 it is considered a small one.
 #index[massive datasets]
-Examples of massive datasets: 
+Examples of massive datasets:
 + the point cloud dataset of a $qty("1.5", "km^2")$ of Dublin #note(link("https://bit.ly/32GXiFq")) contains around 1.4 billion points (density of $num("300")$ pts/$m^2$), which was collected with airborne laser scanners; //TODO m^2
 + the lidar dataset of the whole of the Netherlands (AHN #note(link("https://www.ahn.nl/"))) has about $num("10")$ pts/$m^2$ and its latest version (AHN6) has more than 900 billion points;
 + the global digital surface model _ALOS World 3D---30m (AW3D30)_ #note(link("https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm")) is a raster dataset with a resolution of #qty(1, "arcsecond"), therefore we have about #num("8.4e11") pixels.
@@ -19,7 +19,7 @@ This definition makes practical sense because working with data outside of the m
 Keep in mind that not only the $x y z$ coordinates of the points of a point cloud need to be stored, but also often attributes for each point (LAS has several standard ones, see @tab:las-record).
 In the case of TINs, the geometry of the triangles---and potentially the topological relationships between them---need to be explicitly stored.
 
-What is ironic is that while datasets like those above are being collected in several countries, in practice they are seldom used directly since the tools that practitioners have, and are used to, usually cannot handle such massive datasets. 
+What is ironic is that while datasets like those above are being collected in several countries, in practice they are seldom used directly since the tools that practitioners have, and are used to, usually cannot handle such massive datasets.
 Instead of the raw point clouds, gridded terrains are often derived (for example with a #qty("50", "cm") resolution), because those are easier to process with a personal computer.
 Indeed, the traditional GISs and terrain modelling tools are limited by the main memory of computers: if a dataset is bigger then operations will be very slow, and will most likely not finish (or even crash).
 
@@ -52,9 +52,9 @@ The downsamples grids are used to speed up visualisation (when a user zooms out 
 
 #box-practice("How does it work in practice?")[
   For certain GIS formats, eg GeoTIFF, the lower-resolutions rasters can be stored directly in the same file as the original raster, and this is standardised.
-  \ 
+  \
   For other formats, if the GDAL library is used (the _de facto_ open-source library for GIS images and grids), the pyramids can be stored in an auxiliary file with the extension `.ovr`, which is actually a TIFF format.
-  \ 
+  \
   The GDAL utility \href{https://www.gdal.org/gdaladdo.html}{gdaladdo \faExternalLink} can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
   In QGIS, one can use `gdaladdo`, or there is also a built-in mechanism, as can be seen in @fig:qgis
 ]
@@ -101,7 +101,7 @@ The first dimension splits the data into 2 halfplanes along the line $x=5$, then
 ==== Construction of a kd-tree
 In theory, any point could be used to divide the space according to each dimension, and that would yield a valid $k$d-tree.
 However, selecting the _median_ point creates a _balanced_ binary tree,
-#note[selecting the median creates a balanced tree] 
+#note[selecting the median creates a balanced tree]
 which is desirable because it will improve searching and visiting the tree (see below).
 The tree in @fig:kdtree2 is balanced, but if for instance ($1,3$) had been selected as the root, then there would be no children on the left, and all of them would be on the right.
 
@@ -119,7 +119,7 @@ Methods to balance a $k$d-tree exists but are out of scope for this book.
   image("figs/kdtree_insert.pdf", width: 90%),
   caption: [Insertion of a new point ($7,3$) in a $k$d-tree.],
   placement: none,
-) <fig:kdtree_insert> 
+) <fig:kdtree_insert>
 
 ==== Nearest neighbour query in kd-trees <sec:knn>
 The nearest neighbour query aims to find the point $c$ in a set $S$ that is the nearest (according to the Euclidean distance) to a query point $q$.
@@ -159,7 +159,7 @@ For the example in @fig:kdtree_nn:b, point ($5,6$) is the first $c_"temp"$, and 
 
 The algorithm then recursively visits the other subtrees, and checks whether there could be any points, on the other side of the splitting hyperplane, that are closer to $q$ than $c_"temp"$.
 The idea behind this step is that most of the subtrees can be eliminated by verifying whether the region of the bounding box of the subtree is closer than the current $d(q, c_"temp")$, $d()$ being the Euclidean distance between 2 points.
-If that distance is shorter, then it is possible that one point in the subtree is closer than $c_"temp"$, and thus that subtree must be visited. 
+If that distance is shorter, then it is possible that one point in the subtree is closer than $c_"temp"$, and thus that subtree must be visited.
 If not, then the whole subtree can be skipped, and the algorithm continues.
 
 @fig:kdtree_nn:c shows this idea after ($1,3$) has been visited.
@@ -177,9 +177,9 @@ To insert a new point, and to search for a nearest neighbour, the time complexit
 The tree stores one node per point, thus the space complexity is $cal(O) (n)$.
 
 ==== $m$-closest neighbours <sec:knn-m>
-The algorithm can be extended in several ways by simple modifications. 
-It can provide the $m$ nearest neighbours to a point by maintaining $m$ current closest points instead of just one. 
-A branch is only eliminated when $m$ points have been found and the branch cannot have points closer than any of the $m$ current bests. 
+The algorithm can be extended in several ways by simple modifications.
+It can provide the $m$ nearest neighbours to a point by maintaining $m$ current closest points instead of just one.
+A branch is only eliminated when $m$ points have been found and the branch cannot have points closer than any of the $m$ current bests.
 This can help improve significantly the running time of several operations described in this book: IDW with a fixed number of neighbours (@sec:wam_interpol), extracting shapes from point clouds (@sec:shape-detection), estimating normals in point clouds (@app:normalplane[Appendix]), calculating the spatial extent (@chap:spatialextent), are only but a few examples.
 
 == #flex-heading[Streaming paradigm][Streaming paradigm to construct massive TINs and grids from point clouds] <sec:streaming>
@@ -193,23 +193,23 @@ The operating system controls which parts are in memory and which parts are on t
 
 One solution to this problem is to design external memory algorithms.
 #index[external memory algorithms]#note[external memory algorithms]
-These basically do not rely on the operating system to decide which parts of the data structure are stored on the disk, but improve the process by explicitly storing temporarily files and having explicit rules for the swapping of data between the disk and the memory. 
+These basically do not rely on the operating system to decide which parts of the data structure are stored on the disk, but improve the process by explicitly storing temporarily files and having explicit rules for the swapping of data between the disk and the memory.
 The main drawbacks of this approach are that the design of such algorithms is rather complex, that for different problems different solutions have to be designed, and that for problems like the DT construction a lot of large temporary files need to be created.
 
 We discuss in this section an alternative approach to dealing with massive datasets: _streaming_.
-#index[streaming data]#note[streaming data] 
+#index[streaming data]#note[streaming data]
 A _stream_ is a sequence of data---in theory it can be infinite!---that is available over a period of time, and "can be thought of as items on a conveyor belt being processed one at a time rather than in large batches" #note(link("https://en.wikipedia.org/wiki/Stream_(computing)")).
 One concrete example is YouTube: to watch a given video a user does not need to first download the whole file, she can simply start watching the video as soon as the first KB are downloaded.
 The content of the video is downloaded as she watches the video, and if she fast-forwards to, for instance, 5:32s then only the KB of content from where the cursor is need to be downloaded to watch the video.
 At no moment is the full video downloaded to the user's device.
 
 Batch algorithms, like the incremental insertion algorithm described in @sec:dtconstruction,
-#index[batch processing]#note[batch processing] 
+#index[batch processing]#note[batch processing]
 require to have all the points in memory to work.
 By contrast, a streaming algorithm operates only _locally_ and can thus, in theory, process infinitely large datasets.
 
 The streaming paradigm can be used to process geometries (points, meshes, polygons, etc.) but it is slightly more involved than for a simple video.
-Since the First Law of Geography of #citet(<Tobler70>) stipulates that "everything is related to everything else, but near things are more related than distant things", 
+Since the First Law of Geography of #citet(<Tobler70>) stipulates that "everything is related to everything else, but near things are more related than distant things",
 if we wanted to calculate the slope at one location in a point cloud we would need to retrieve all the neighbouring points and potentially calculate locally the DT.
 The question is: is it possible to do this without reading the whole file and only process one part of it?
 
@@ -219,13 +219,13 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
 
 #box-practice("Streaming is realised with Unix pipes")[
   The key to implementing streaming of geometries is to use Unix pipes (also called _pipelines_).
-  \ 
+  \
   Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow to chain several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the _stream_). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
-  \ 
-  In Unix, the pipe operator is the vertical line "`|`", and several commands can be chained with it: "`cmd1 | cmd2 | cmd3`". 
+  \
+  In Unix, the pipe operator is the vertical line "`|`", and several commands can be chained with it: "`cmd1 | cmd2 | cmd3`".
   A simple example would be "`ls -l | grep json | wc -l`" which would:
-  + list all the files in the current directory (one file name per line); 
-  + send this to the operator _grep_ which would discard all lines not having the keyword `"json"`; 
+  + list all the files in the current directory (one file name per line);
+  + send this to the operator _grep_ which would discard all lines not having the keyword `"json"`;
   + send this to the operator "`wc -l`" which counts the number of line.
 ]
 
@@ -249,7 +249,7 @@ For the DT construction, as shown in @fig:finaliser, this can be realised by con
   placement: none,
 ) <fig:finaliser>
 
-In practice, this is performed by reading a LAS/LAZ file (or any format with points) _twice_ from disk: 
+In practice, this is performed by reading a LAS/LAZ file (or any format with points) _twice_ from disk:
 + the first pass will count how many points are in each cell of the quadtree (and store the results)
 + the second pass will read again sequentially each point (and send it in the stream), and decrement the counter for each cell. When it is empty, a finalisation tag will be added to the stream.
 
@@ -314,7 +314,7 @@ The ideas behind streaming are very useful for certain _local_ problems (eg inte
 
 == Notes and comments
 
-The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (link("https://en.wikipedia.org/wiki/K-d_tree")) and the lecture notes entitled "kd-Trees---CMSC 420" from Carl Kingsford (available at #link("https://www.cs.cmu.edu/ckingsf/bioinfo-lectures/kdtrees.pdf")).
+The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (#link("https://en.wikipedia.org/wiki/K-d_tree")) and the lecture notes entitled "kd-Trees---CMSC 420" from Carl Kingsford (available at #link("https://www.cs.cmu.edu/ckingsf/bioinfo-lectures/kdtrees.pdf")).
 
 #citet(<Vitter01>) provides an overview of external algorithms.
 
