@@ -185,7 +185,7 @@ Both airborne and spaceborne photogrammetry are possible.
 #index[InSar]
 
 Interferometric synthetic aperture radar (InSAR) is a radar-based technique that is used from space in the context of terrain generation.
-It is quite different from airborne lidar or photo\-gramme\-try-based acquisition because of the extremely high altitude of the satellite carrying the sensor.
+It is quite different from airborne lidar or photogrammetry-based acquisition because of the extremely high altitude of the satellite carrying the sensor.
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions.
 As a result the speed of the radar signal is not known and the time-of-flight principle can not be used to get detailed measurements.
 However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, accurate elevation can still be measured.
@@ -215,7 +215,7 @@ For bathymetry usually a multi-beam echo sounder is used.
 
 == Artefacts <sec:artefacts>
 
-In the acquisition process, there are many aspects---both under our control and not under our control--- that affect the quality and usability of the resulting elevation data for a given application.
+In the acquisition process, there are many aspects---both under our control and not under our control---that affect the quality and usability of the resulting elevation data for a given application.
 Some examples are
 - the choice of the sensor technique,
 - the sensor specifications, eg the resolution and focal length of a camera, or the scanning speed, the width of the swath, and scanning pattern of a lidar system,
