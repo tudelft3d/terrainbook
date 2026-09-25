@@ -268,20 +268,9 @@
     leading: 0.60em,
   )
 
-  show heading: set text(font: serif-font, weight: "bold")
+  show heading: set text(font: sans-font, weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
   show heading.where(level: 1): it => counter(figure.where(kind: table)).update(0) + it
-  show heading.where(level: 1): it => {
-    set par(justify: false)
-    pagebreak(weak: true, to: "odd")
-    // place(top+right)[
-    //   #rect(fill: blue, width: 10%, height: 10%)
-    // ]
-    align(left, text(font: sans-font, hyphenate: false, weight: "bold", size: 18pt, it))
-    // note(counter(heading).get().first())
-    // place(top, note(counter: none, side: "outer")[#text(font: sans-font, hyphenate: false, weight: "bold", size: 28pt, "1")])
-    v(2em)
-  }
   show heading.where(level: 2): it => {
     v(3em, weak: true)
     text(font: sans-font, size: 14pt, weight: "bold", it)
@@ -501,7 +490,7 @@
           bottom+right,
   			  text(
             font: sans-font,
-            size: 2em,
+            size: 1.8em,
   					it.body
   			  )
         ),
