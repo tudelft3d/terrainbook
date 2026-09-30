@@ -69,7 +69,11 @@
 )
 #let pseudocode-list = pseudocode-list.with(..my-lovelace-defaults)
 
-#let note = note.with(counter: none, text-style: (size: 8pt, style: "normal", weight: "regular"))
+#let note-raw = note
+#let note(..args) = {
+  note-raw(counter: none, text-style: (size: 8pt, style: "normal", weight: "regular"), ..args)
+  h(0pt, weak: true)
+}
 #let notefigure = notefigure.with(
   // dy: 20pt,
   show-caption: (number, caption) => {
