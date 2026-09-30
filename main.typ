@@ -1,5 +1,6 @@
 // TODOs
 // [ ] @app:ahn[Appendix]
+// [ ] check that the index has correct page number references
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
 // [ ] search in PDF for: "Target not found:"
