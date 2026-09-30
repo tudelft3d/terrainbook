@@ -27,10 +27,10 @@ We consider in this chapter the following four terrain representations and discu
     [*raster*], [keep middle points only], [--], [create TIN using middle points of cells + TIN simplification], [extract from grid cells + structure output],
     [*TIN*], [keep only vertices], [interpolate at middle points of cells], [--], [extract from triangles + structure output],
     [*isolines*], [keep only vertices \ (⚠️ wedding cake effect)], [convert lines to points + interpolate \ (⚠️ wedding cake effect)], [create DT using points \ (⚠️ wedding cake effect)], [--],
-    
+
     table.hline(),
-  ) 
-) 
+  )
+)
 ]
 
 
@@ -55,9 +55,9 @@ Yet this was exactly the task of many cartographers in the past couple of centur
   caption: [Vertical cross-section of a terrain (left), and a 2D projection of the terrain TIN with the extracted #qty("200", "m") isoline (right).],
   placement: auto,
 ) <fig:isolineidea>
-Isolines are usually directly extracted from either a TIN or a grid representation of a terrain. 
+Isolines are usually directly extracted from either a TIN or a grid representation of a terrain.
 The basic idea, as shown in @fig:isolineidea, is to compute the intersection between a level value (eg #qty("200", "m")) and each cell of the terrain (triangle or grid cell in our case).
-Notice that the cells are 'lifted' to their elevation. 
+Notice that the cells are 'lifted' to their elevation.
 Each cell of the terrain is thus visited, one after the other, and for each cell if there is an intersection (which forms a line segment) then it is extracted.
 The resulting set of segment lines forms an approximation of the isoline.
 This process is then repeated for every level value.
@@ -82,7 +82,7 @@ The basic algorithm for extracting one isoline is shown in @algo:iso.
         + add $chi$ to _segmentList_
   ]
 ) <algo:iso>
-   
+
 
 #figure(
   image("figs/isoline-square.pdf", width: 95%),
@@ -94,7 +94,7 @@ The basic algorithm for extracting one isoline is shown in @algo:iso.
   caption: [Different cases when extracting an isoline at elevation #qty("10", "m") (in blue) for a TIN. The blue lines are the ones extracted for that triangle.],
   placement: auto,
 ) <fig:isoline-tr>
-Note that since the algorithm visits every grid cell or triangle individually and requires only local information, it is very easy to parallelise. 
+Note that since the algorithm visits every grid cell or triangle individually and requires only local information, it is very easy to parallelise.
 It is thus a scalable algorithm.
 Its time complexity is $cal(O) (c)$, where $c$ is the number of cells.
 Recall from @chap:dtvd that for $n$ points a DT contains about $2n$ triangles.
@@ -103,23 +103,23 @@ The same idea can be used to extract all the isolines: for each triangle/cell an
 
 === Conversion of raster to isolines <sec:r-iso>
 
-Observe that, for a raster, the dual of the raster must be constructed (see Section @sec:duality), that is we consider the centre each pixel as a sample point, and we join with an edge the centres of two adjacent pixels (in @fig:rasterconfs, the four values are centres of 4 adjacent raster cells).
+Observe that, for a raster, the dual of the raster must be constructed (see @sec:duality), that is we consider the centre each pixel as a sample point, and we join with an edge the centres of two adjacent pixels (in @fig:rasterconfs, the four values are centres of 4 adjacent raster cells).
 
 Intersections are computed by linearly interpolating the elevations of the vertex pairs along the edges of this grid.
-@fig:rasterconfs illustrates the different possible configurations. 
-The top-left case indicates the case for which there are no intersections: all vertices are either higher or lower than $z_0$. 
+@fig:rasterconfs illustrates the different possible configurations.
+The top-left case indicates the case for which there are no intersections: all vertices are either higher or lower than $z_0$.
 
-Observe that when two vertices are exactly at $z_0$, then the extraction of these is in theory not necessary because the neighbouring cell could also extract them. 
+Observe that when two vertices are exactly at $z_0$, then the extraction of these is in theory not necessary because the neighbouring cell could also extract them.
 However, we do not want to obtain an output with duplicate line segments, and thus a simple solution to this is to only extract such line segments if they are for instance the lower and/or left segments of a given cell.
 
 The most interesting case is the bottom-left one in @fig:rasterconfs, it occurs when the two pairs of opposing points are respectively higher and lower than $z_0$.
-This forms a saddle point. 
+This forms a saddle point.
 The ambiguity arises here since there are two ways to extract a valid pair of contour line segments (only one of the 2 options must be extracted).
 This can be resolved by simply picking a random option or consistently choose one geometric orientation.
 
 === Conversion TIN to isolines <sec:tin-iso>
 
-Since a triangle has one fewer vertices than a square grid cell, there are less possible intersection cases and, more importantly, there is no ambiguous case. 
+Since a triangle has one fewer vertices than a square grid cell, there are less possible intersection cases and, more importantly, there is no ambiguous case.
 
 When one or more vertices of the triangle are at the same elevation as $z_0$, then one must be careful.
 As shown in @fig:isoline-tr, if only one vertex is at $z_0$ then nothing should be extract; if two vertices are at $z_0$ then the edge between these can be extracted; if all three vertices are at $z_0$ then the triangle is flat/horizontal and nothing should be extracted (because adjacent triangles will have edges extracted).
@@ -161,11 +161,11 @@ Simply visit triangle sequentially and mark them as 'visited', when one triangle
 
 The mathematical concept of the _Implicit Function Theorem_ states that a contour line extracted from a field $f$ will be no less smooth than $f$ itself.
 In other words, obtaining smooth contour lines can be achieved by smoothing the field itself.
-#citet(<Sibson97>)Sibson goes further in stating that:
+#citet(<Sibson97>) goes further in stating that:
 #quote(block: true)[
   #emph("The eye is very good at detecting gaps and corners, but very bad at detecting discontinuities in derivatives higher than the first. For contour lines to be accepted by the eye as a description of a function however smooth, they need to have continuously turning tangents, but higher order continuity of the supposed contours is not needed for them to be visually convincing.")
 ]
-In brief, in practice we should use interpolant functions whose first derivative is continuous (ie $C^(1)$) if we want to obtain smooth contours. 
+In brief, in practice we should use interpolant functions whose first derivative is continuous (ie $C^(1)$) if we want to obtain smooth contours.
 $C^(0)$ interpolants are not enough, and $C^(2)$ ones are not necessary.
 
 == Simplification of a TIN <sec:tin-simpl>
@@ -182,15 +182,15 @@ Observe that the simplification of a TIN can be used to simplify a raster terrai
 
 === The importance of a point
 
-The importance of a point is a measure that indicates the error in the TIN when that point would not be part of it. 
-Imagine for instance a large flat area in a terrain. 
-This area can be accurately approximated with only a few large triangles, and inserting points in the middle of such an area does not make the TIN more accurate. 
-An area with a lot of relief on the other hand can only be accurately modelled with many small triangles. 
+The importance of a point is a measure that indicates the error in the TIN when that point would not be part of it.
+Imagine for instance a large flat area in a terrain.
+This area can be accurately approximated with only a few large triangles, and inserting points in the middle of such an area does not make the TIN more accurate.
+An area with a lot of relief on the other hand can only be accurately modelled with many small triangles.
 We can therefore say that the points in the middle of the flat area are less important than the points in the area with relief.
 
 The importance of a point---or importance measure---can be expressed in several ways, eg based on an elevation difference or the curvature of the point. Here we focus on the _vertical error_ which has proven to be effective in practice.
 
-The vertical error of a point $p$ is the elevation difference between $p$ itself and the interpolated elevation in the TIN $cal(T)$ at the $(x,y)$ coordinates of $p$ (see @fig:meshsimplification). 
+The vertical error of a point $p$ is the elevation difference between $p$ itself and the interpolated elevation in the TIN $cal(T)$ at the $(x,y)$ coordinates of $p$ (see @fig:meshsimplification).
 Notice that $cal(T)$ does not contain $p$ as a vertex.
 
 #figure(
@@ -201,16 +201,16 @@ Notice that $cal(T)$ does not contain $p$ as a vertex.
 
 === TIN simplification algorithms
 
-There are two main approaches to TIN simplification: decimation and refinement. 
-In a decimation algorithm, we start with a TIN that contains all the input points, and gradually remove points that are not important. 
-In a refinement algorithm, we do the opposite: we start with a very simple TIN, and we gradually refine it by adding the important points. 
+There are two main approaches to TIN simplification: decimation and refinement.
+In a decimation algorithm, we start with a TIN that contains all the input points, and gradually remove points that are not important.
+In a refinement algorithm, we do the opposite: we start with a very simple TIN, and we gradually refine it by adding the important points.
 
 ==== TIN simplification by refinement
 
 Here we describe an iterative refinement algorithm based on a series of insertion.
-It begins with a simple triangulation of the spatial extent and, at each iteration, finds the input point with highest importance---the highest vertical error---in the current TIN and inserts it as a new vertex in the triangulation. 
-The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $epsilon _(max )$. 
-Algorithm @algo:tin-simp:ref shows the pseudo-code.
+It begins with a simple triangulation of the spatial extent and, at each iteration, finds the input point with highest importance---the highest vertical error---in the current TIN and inserts it as a new vertex in the triangulation.
+The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $epsilon _(max )$.
+@algo:tin-simp:ref shows the pseudo-code.
 It is also possible to insert only a certain percentage of the number of input points, eg we might want to keep only 10% of them.
 
 #figure(
@@ -218,15 +218,15 @@ It is also possible to insert only a certain percentage of the number of input p
   supplement: [Algorithm],
   caption: [TIN simplification by refinement],
   pseudocode-list[
-    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
+    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$
     + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + Construct an initial triangulation $cal(T)$ that covers the 2D bbox of $S$
     + $epsilon  <-  infinity$
     + *while* $epsilon > epsilon_(max)$ *do*
       + $epsilon <- 0$
-      + $q <-$ nil 
+      + $q <-$ nil
       + *for* $p in S$ *do*
-        + $tau  <-$ the triangle in $cal(T)$ that contains $p$ 
+        + $tau  <-$ the triangle in $cal(T)$ that contains $p$
         + $epsilon_(tau ) <-$ the vertical error of $p$ with respect to $tau$
         + *if* $epsilon _(tau ) > epsilon$ *then*
           + $epsilon <- epsilon_(tau )$
@@ -237,24 +237,24 @@ It is also possible to insert only a certain percentage of the number of input p
   ]
 ) <algo:tin-simp:ref>
 
-The implementation of the decimation algorithm is similar to the refinement algorithm. The main differences are 
+The implementation of the decimation algorithm is similar to the refinement algorithm. The main differences are
 + we start with a full triangulation of all the input points, instead of an empty triangulation;
 + instead of iteratively adding the point with the highest importance, we iteratively remove the point with the lowest importance, and
 + in order to compute the importance of a point we actually need to remove it _temporarily_ from the triangulation before we can decide if it should be permanently removed. In other words: we need to verify what the vertical error would be if the point was not present.
 
-Algorithm @algo:tin-simp:dec shows the pseudo-code for the TIN decimation algorithm.
+@algo:tin-simp:dec shows the pseudo-code for the TIN decimation algorithm.
 #figure(
   kind: "algorithm",
   supplement: [Algorithm],
   caption: [TIN simplification by decimation],
   pseudocode-list[
-    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$ 
+    + *Input:* A set of input points $S$, and the simplification threshold $epsilon_(max)$
     + *Output:* A triangulation $cal(T)$ that consists of a subset of $S$ and that satisfies $epsilon_(max )$
     + $cal(T)  <-$ a triangulation of $S$
     + $epsilon  <- 0$ \;
     + *while* $epsilon < epsilon_(max)$ *do*
       + $epsilon <- 0$
-      + $q <-$ nil 
+      + $q <-$ nil
       + *for* $p in cal(T)$ *do*
         + remove $p$ from $cal(T)$
         + $epsilon_(tau ) <-$ the vertical error of $p$ with respect to $tau$
@@ -269,7 +269,7 @@ Algorithm @algo:tin-simp:dec shows the pseudo-code for the TIN decimation algori
 It should be noticed that the implementation of this algorithm requires a method to delete/remove a vertex from a (Delaunay) triangulation, and that many libraries do not have one.
 #note[The implementation of the DT in #link("https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Delaunay.html")[SciPy] does not allow to delete/remove vertices, but #link("https://www.cgal.org")[CGAL] and #link("https://github.com/hugoledoux/startinpy")[startinpy] do.]
 
-Observe that the Algorithms @algo:tin-simp:ref and @algo:tin-simp:dec both state that the importance of the points must be completely recomputed after each iteration of the algorithms (either one removal or one insertion), but that in practice several of these will not have changed.
+Observe that the @algo:tin-simp:ref and @algo:tin-simp:dec both state that the importance of the points must be completely recomputed after each iteration of the algorithms (either one removal or one insertion), but that in practice several of these will not have changed.
 As can be seen in @chap:dtvd, the insertion/deletion of a single point/vertex will only _locally_ modify the triangulation, and it is thus faster from a computational point of view to flag the vertices incident to the modified triangles, and only update these.
 
 === Comparison: decimation versus refinement
@@ -277,10 +277,10 @@ As can be seen in @chap:dtvd, the insertion/deletion of a single point/vertex wi
 While both methods will allow us to obtain similar results, the properties of the resulting terrain are different.
 Consider the threshold $epsilon_(max )$ that is used to stop the simplification process.
 If the refinement method is used, then it is guaranteed that the final surface of the terrain will be at a maximum of $epsilon_(max )$ (vertical distance) to the 'real surface' because all the points of the input are considered.
-However, with the decimation method, after a vertex is deleted from the TIN, it is never considered again when assessing whether a given vertex has an error larger than $epsilon_(max )$. 
+However, with the decimation method, after a vertex is deleted from the TIN, it is never considered again when assessing whether a given vertex has an error larger than $epsilon_(max )$.
 It is thus possible that the final surface does not lie within $epsilon_(max )$, although for normal distribution of points, it should not deviate too much from it.
 
-In practice, refinement is often computationally more efficient than decimation because we do not need to first build a TIN from all input points before removing several of them again. 
+In practice, refinement is often computationally more efficient than decimation because we do not need to first build a TIN from all input points before removing several of them again.
 However, decimation could be more efficient when you already have a detailed TIN, stored in a topological data structure, that just needs to be slightly simplified.
 
 #place(float: true, auto,
@@ -306,7 +306,7 @@ Indeed, the TIN obtained with a Delaunay triangulation, as shown in @fig:wedding
 If another interpolation method is used, eg nearest neighbour (@fig:wedding\c), then the results are catastrophic.
 
 Solving this problem requires solutions specifically designed for such inputs.
-The main ideas for most of them is to add extra vertices between the isolines, to avoid having horizontal triangles. 
+The main ideas for most of them is to add extra vertices between the isolines, to avoid having horizontal triangles.
 One strategy that has proven to work is to add the new vertices on the _skeleton_, or medial-axis transform, of the isolines, which are located 'halfway' between two isolines.
 The elevation assigned to these is based on the elevations of the isolines.
 
@@ -321,8 +321,8 @@ To avoid this, #citet(<VanKreveld96>) build an auxiliary data structure, the _in
 It is also possible to build another auxiliary structure, the contour tree, where the triangle seeds are stored #citep(<VanKreveld97-1>).
 Such methods require more storage, but can be useful for interactive environment where the user extracts isolines interactively.
 
-#citet(<Garland95>) elaborate further on different aspects of TIN simplification, such as different importance measures, the differences between refinement and decimation, and the usefulness of data-dependent triangulations. 
-They also show how Algorithm @algo:tin-simp:ref can be made a lot faster by only recomputing the importance of points in triangles that have been modified.
+#citet(<Garland95>) elaborate further on different aspects of TIN simplification, such as different importance measures, the differences between refinement and decimation, and the usefulness of data-dependent triangulations.
+They also show how @algo:tin-simp:ref can be made a lot faster by only recomputing the importance of points in triangles that have been modified.
 
 #pagebreak()
 

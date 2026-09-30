@@ -25,7 +25,7 @@ Commonly encountered thinning methods in practice are:
 
 See @fig:randvsgrid for a comparison between random thinning and grid thinning.
 
-#place(float: true, top, 
+#place(float: true, top,
   wideblock[
     #subfigure(
       figure(image("./figs/rand01.png", width: 100%), caption: [random thinning]),
@@ -37,7 +37,7 @@ See @fig:randvsgrid for a comparison between random thinning and grid thinning.
     )
   ]
 )
-From @sec:tin-simpl you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction. 
+From @sec:tin-simpl you undoubtedly remember that TIN simplification has a somewhat similar objective: data reduction.
 However, for a given number of resulting points, TIN simplification yields a higher quality end result because it only removes points that are deemed unimportant.
 Thinning methods on the other hand do not consider the 'importance' of a point in any way, and might discard a lot of potentially meaningful details.
 So why bother with thinning? The answer is that thinning methods are a lot faster since they do not require something like a computationally expensive triangulation.
@@ -73,11 +73,11 @@ The underlying assumption of most outlier detection methods is that an outlier i
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding (see @sec:mbes), a common issue is the occurrence of (shoals of) fish. 
+For example in case of a point cloud derived from multi-beam echo sounding (see @sec:mbes), a common issue is the occurrence of (shoals of) fish.
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to remove the relatively long edges that connect the outlier clusters to the seafloor.
-This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers. 
+This splits the TIN into several smaller TINs, and the largest of those should then be the seafloor surface without the outliers.
 @fig:mbes gives an example.
 #subfigure(
   figure(image("./figs/mbes_cleaning_before.png", width: 100%), caption: [before outlier detection]),
@@ -104,7 +104,7 @@ Or, the non-ground points can be used as input for another classifier, eg to cla
   label: <fig:filter-profile>,
 )
 
-Ground filtering methods are typically based on the assumptions that 
+Ground filtering methods are typically based on the assumptions that
 + the ground is a continuous surface without sudden elevation jumps,
 + for a given 2D neighbourhood, the ground points are the ones with the lowest elevation.
 Notice that outliers (especially those under the ground surface) may break these assumptions and in some cases it may be necessary to first run an outlier removal algorithm such as one from @sec:outlier_detection.
@@ -122,7 +122,7 @@ It should be observed that there are several variations of this algorithm; we de
 The main idea of the method is to first construct an initial TIN based on (known) ground points, and then densify this TIN by iteratively adding points that fulfil certain criteria.
 The method uses the same algorithmic paradigm as the iterative TIN refinement from @sec:tin-simpl.
 
-The algorithm starts by constructing a rudimentary initial TIN, usually based on the Delaunay triangulation. 
+The algorithm starts by constructing a rudimentary initial TIN, usually based on the Delaunay triangulation.
 The TIN is constructed from a number of points that have locally the lowest elevation and are spread somewhat evenly over the data extent.
 These points are found by superimposing a 2D grid over the data extent and selecting the lowest point for each grid cell (similar to grid thinning).
 The cellsize of the grid should be chosen such that it is larger than the largest non-ground object (usually a building).
@@ -183,12 +183,12 @@ These will potentially be neighbours to _movable_ ones, whose elevation will be 
   image("./figs/csf_iterations.pdf", width: 100%),
   caption: [First four iterations of the CSF algorithm for ground filtering of a point cloud.],
 ) <fig:csf_iterations>
-As shown in @fig:csf_iterations, the process is iterative. 
+As shown in @fig:csf_iterations, the process is iterative.
 We first define a cloth formed of particles ($t_0$), and then for each iteration we calculate the next $z$-value of each particle based on the vector of displacement from the external and internal forces at the previous step.
 If a particle is movable (ie it has not reached the ground yet), then the gravity force is applied (a vector pointing downwards; its magnitude will depend on the momentum of the particle) and afterwards the internal forces are applied.
 Notice that in @fig:csf_iterations, the particle in red at $t_3$ was moved downwards because of the gravity, but its internal forces are a vector pointing upwards since its 2 neighbours (it would be 4 for a 2D case) have higher $z$-values.
 
-The algorithm is detailed in Algorithm @algo:csf.
+The algorithm is detailed in @algo:csf.
 
 #figure(
   kind: "algorithm",
@@ -212,9 +212,9 @@ The algorithm is detailed in Algorithm @algo:csf.
           + $p_"zprev" = "tmp"$
       + \// _internal forces, process once each pair $e$ of adjacent particles_
       + *for* each $e$ in $C$ *do*
-        + $p 0 = e_"start"$ 
-        + $p 1 = e_"end"$ 
-        + update $p 0_"zcur"$ and $p 1_"zcur"$ if they are movable 
+        + $p 0 = e_"start"$
+        + $p 1 = e_"end"$
+        + update $p 0_"zcur"$ and $p 1_"zcur"$ if they are movable
       + \// _calculate the max $Delta z$_
       + *for* each $p$ in $C$ *do*
         + *if* $(p_"zcur" - p_"zprev") > Delta z$ *then*
@@ -244,8 +244,8 @@ For each neighbour $n_i$, there are two cases (see @fig:csf_2cases):
 
 
 ==== Controlling the tension/rigidity
-Notice that in @fig:csf_2cases\b, both particles are moved to the same elevation, but that it is also possible to scale the internal forces displacement vector, eg to 0.8 of its length (and thus decrease the tension in the cloth). Lower internal force displacement means that the particles will move more during a single iteration and so the tension in the cloth is effectively reduced. 
-The same idea applies to @fig:csf_2cases\a, the displacement vector can be controlled by scaling the displacement vector. 
+Notice that in @fig:csf_2cases\b, both particles are moved to the same elevation, but that it is also possible to scale the internal forces displacement vector, eg to 0.8 of its length (and thus decrease the tension in the cloth). Lower internal force displacement means that the particles will move more during a single iteration and so the tension in the cloth is effectively reduced.
+The same idea applies to @fig:csf_2cases\a, the displacement vector can be controlled by scaling the displacement vector.
 In @fig:csf_2cases\a, it is 0.5 of the difference in elevation, but if less tension is wanted, then the scale could be for instance 0.4 (so that $p$ has an internal displacement $arrow(v) =(0, 0, 3.2)$, because $0.4 \* (10-2) = 3.2$) or 0.3.
 
 ==== How the process ends
@@ -289,14 +289,14 @@ Shape detection is used to automatically detect simple shapes---such as planes--
 See for example @fig:bk-planes where the points are randomly coloured according to the corresponding planar surfaces.
 Shape detection is an important step in the extraction and reconstruction of more complex objects, eg man-made structures such as buildings are often composed of planar surfaces.
 
-In this section, three shape detection methods will be introduced: 
+In this section, three shape detection methods will be introduced:
 + RANSAC
 + Region growing
 + Hough transform
 
 First, some common terminology.
-Let $P$ denote a point cloud, if we perform shape detection on $P$ we aim to find a subset of points $S subset P$ that fit with a particular shape. 
-Most shape detection methods focus on shapes that can be easily parametrised, such as a line, a plane, or a sphere. 
+Let $P$ denote a point cloud, if we perform shape detection on $P$ we aim to find a subset of points $S subset P$ that fit with a particular shape.
+Most shape detection methods focus on shapes that can be easily parametrised, such as a line, a plane, or a sphere.
 If we specify values for the parameters of such a parametrised shape, we define an _instance_ of that shape.
 For example, a line in the plane can be parametrised using the equation $y = m x + b$, in this case $m$ and $b$ are the parameters.
 We can create an instance of a line by specifying values for its parameters $m$ and $b$, respectively fixing the slope and the position of the line.
@@ -310,9 +310,9 @@ Only for illustrative purposes specific shapes such as a line or a plane are use
 #index[RANSAC]
 
 RANSAC is short for _RANdom SAmpling Consensus_ and, as its name implies, works by randomly sampling the input points.
-In fact it starts by picking a random set of points $M subset P$. 
-This set $M$ is called the _minimal set_#note[minimal set] and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, eg 2 for a line and 3 for a plane. 
-From the minimal set $M$ the (unique) shape instance $cal(I)$ is constructed (see Figures @fig:ransac:b and @fig:ransac:c).
+In fact it starts by picking a random set of points $M subset P$.
+This set $M$ is called the _minimal set_#note[minimal set] and contains exactly the minimum number of points that is needed to uniquely construct the shape that we are looking for, eg 2 for a line and 3 for a plane.
+From the minimal set $M$ the (unique) shape instance $cal(I)$ is constructed (see @fig:ransac:b and @fig:ransac:c).
 #subfigure(
   figure(image("./figs/ransac.pdf", width: 100%, page: 1), caption: [Input points]), <fig:ransac:a>,
   figure(image("./figs/ransac.pdf", width: 100%, page: 2), caption: [1st minimal set]), <fig:ransac:b>,
@@ -324,11 +324,11 @@ From the minimal set $M$ the (unique) shape instance $cal(I)$ is constructed (se
   label: <fig:ransac>,
 )
 
-The algorithm then checks for each point $p in {P without M}$ if it fits with $cal(I)$. 
+The algorithm then checks for each point $p in {P without M}$ if it fits with $cal(I)$.
 This is usually done by computing the distance $d$ from $p$ to $cal(I)$ and comparing $d$ against a user-defined threshold $epsilon$.
 If $d < epsilon$ we say that $p$ is an _inlier_#index[inliers]#note[inlier], otherwise $p$ is an _outlier_.
 The complete set of inliers is called the _consensus set_#note[consensus set], and its size is referred to as the _score_#note[score].
-The whole process from picking a minimal set to computing the consensus set and its score, as shown in @algo:ransac, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (@fig:ransac:d). 
+The whole process from picking a minimal set to computing the consensus set and its score, as shown in @algo:ransac, is repeated a fixed number of times, after which the shape instance with the highest score is outputted (@fig:ransac:d).
 
 #figure(
   kind: "algorithm",
@@ -342,7 +342,7 @@ The whole process from picking a minimal set to computing the consensus set and 
     + *for* $i$ in $[1..k]$ *do*
       + $M <- n$ randomly selected points from $P$
       + $cal(I) <-$ shape instance constructed from $M$
-      + $C <- emptyset$ 
+      + $C <- emptyset$
       + *for* each $p in P without M$ *do*
         + $d <- "distance" (p, cal(I))$
         + *if* $d < epsilon$ *then*
@@ -413,7 +413,7 @@ Also notice that candidate points that are already assigned to a region are skip
     + *Output:* A list with detected regions $L_R$
     + $L_R <- []$
     + *for* each $s$ in $L_S$ *do*
-      + $S <- {s}$ 
+      + $S <- {s}$
       + $R <- emptyset$
       + *while* $S$ is not empty *do*
         + $p <- "pop"(S)$
@@ -426,8 +426,8 @@ Also notice that candidate points that are already assigned to a region are skip
   ]
 ) <algo:region-growing>
 
-The seed points can be generated by assessing the local neighbourhood of each input point. 
-For example in case of plane detection one could fit a plane through each point neighbourhood and subsequently sort all points on the fitting error. 
+The seed points can be generated by assessing the local neighbourhood of each input point.
+For example in case of plane detection one could fit a plane through each point neighbourhood and subsequently sort all points on the fitting error.
 Points with a low plane fitting error are probably part of a planar region so we can expect them to be good seeds.
 
 To compute the point neighbourhoods a $k$-nearest neighbour search or a fixed radius search can be used, which can both be implemented efficiently using a $k$d-tree (see @sec:kdtree).
@@ -456,16 +456,16 @@ To find the possible shape instances for $p$, the algorithm simply checks all po
 
 It is thus important to choose a good parametrisation of the shape that is to be detected.
 For instance when detecting lines one could use the slope-intercept form, ie $y = m x+b$.
-However, this particular parametrisation can not easily represent vertical lines, because $m$ would need to become infinite which is computationally difficult to manage. 
-A better line parametrisation is the Hesse normal form#index[Hesse normal form]#note[Hesse normal form] which is defined as 
+However, this particular parametrisation can not easily represent vertical lines, because $m$ would need to become infinite which is computationally difficult to manage.
+A better line parametrisation is the Hesse normal form#index[Hesse normal form]#note[Hesse normal form] which is defined as
 $  r = x cos phi.alt + y sin phi.alt  $
-As illustrated in @fig:hough-transform:a, $(r,phi.alt )$ are the polar coordinates of the point on the line that is closest to the origin, ie $r$ is the distance from the origin to the closest point on the line, and $phi.alt in 0^(degree ), 180^(degree )$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line. 
+As illustrated in @fig:hough-transform:a, $(r,phi.alt )$ are the polar coordinates of the point on the line that is closest to the origin, ie $r$ is the distance from the origin to the closest point on the line, and $phi.alt in 0^(degree ), 180^(degree )$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line.
 This parametrisation has no problems with vertical lines (ie $phi.alt =90^(degree )$).
 Similarly, for plane detection we can use the parametrisation
 $ r = x cos theta sin phi.alt + y sin phi.alt sin theta + z cos phi.alt $
 Where $(r, theta , phi.alt )$ are the spherical coordinates of the point on the plane that is closest to the origin.
 
-@fig:hough-transform shows an example for line detection with the Hough transform and Algorithm @algo:hough-transform gives the full pseudo-code.
+@fig:hough-transform shows an example for line detection with the Hough transform and @algo:hough-transform gives the full pseudo-code.
 
 #place(float: true, auto,
   wideblock[
@@ -516,7 +516,7 @@ The time complexity of the Hough transform algorithm as discussed here is $cal(O
 #citet(<Axelsson00>) originally proposed the greedy TIN densification algorithm for ground filtering.
 He also describes how to handle discontinuities in the terrain such as cliffs.
 It should be said that his paper is scarce on details, and many variations of the algorithms have been proposed so that small/low objects are filtered out and so that it performs well in densely forested areas.
-See for instance #citet(<Lin14>). 
+See for instance #citet(<Lin14>).
 
 The cloth simulation filter (CSF) algorithm is from #citet(<Zhang16>).
 The original paper has a somewhat complex definition that has been simplified and modified for this book.

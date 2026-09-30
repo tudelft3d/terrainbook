@@ -62,7 +62,7 @@ What we casually refer to as 'slope' has actually two components (see @fig:slope
 ) <fig:slope_aspect>
 
 ==== Gradient
-The gradient at a given point $p$ is the maximum rate of change in elevation. 
+The gradient at a given point $p$ is the maximum rate of change in elevation.
 It is obtained by the angle $alpha$ between $H$ and the horizontal plane (@fig:slope_aspect).
 From a mathematical point-of-view, the gradient is the maximum value of the derivative at a point on the surface of the terrain (maximised over the direction).
 
@@ -78,7 +78,7 @@ Notice that if we calculate the gradient at every location for a terrain, then w
 This means in practice that for a given terrain in raster, calculating its gradient will create a new raster file that can be further processed.
 
 ==== Aspect
-At a given point $p$ on the terrain the gradient can be in any direction, the aspect is this direction projected to the $x y$-plane. 
+At a given point $p$ on the terrain the gradient can be in any direction, the aspect is this direction projected to the $x y$-plane.
 It is basically a 2D vector telling us the direction of the steepest slope at a given point; at a given location the aspect will always be perpendicular to the contour line.
 Observe that for the parts of the terrain that are horizontal (eg a lake) the value of the aspect is unknown.
 
@@ -87,7 +87,7 @@ The aspect is usually expressed as a _cartographical azimuth_,
 which is expressed in degrees, from the North, clockwise: $qty("0", "degree")$ means North, $qty("90", "degree")$ East, $qty("180", "degree")$ South, and $qty("270", "degree")$ West.
 
 ==== Slope in TINs
-Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $tau$ containing this point, and compute the normal vector $arrow(n)$ of $tau$ (pointing outwards). 
+Calculating the slope in a TIN is fairly straightforward: for a point $p=(x,y)$ find the triangle $tau$ containing this point, and compute the normal vector $arrow(n)$ of $tau$ (pointing outwards).
 The projection of $arrow(n)$ on the $x y$-plane is the aspect (this is done by simply ignoring the $z$-component of the vector).
 And the gradient is obtained by calculating the angle $gamma$ between $arrow(n)$ and the horizontal plane, and taking the complement of $gamma$.
 
@@ -123,11 +123,11 @@ $  tan alpha = sqrt((frac(partial z, partial x))^(2) +(frac(partial z, partial y
 and the aspect as:
 $  tan theta = frac(frac(partial z, partial x), frac(partial z, partial y))  $
 
-The value of $theta$ should be resolved for the correct trigonometric quadrant, and if $frac(partial z, partial y) = 0$ then it means the aspect should be handled differently (considering only the variation in the south-north direction). 
+The value of $theta$ should be resolved for the correct trigonometric quadrant, and if $frac(partial z, partial y) = 0$ then it means the aspect should be handled differently (considering only the variation in the south-north direction).
 
 For the case in @fig:slope_grid, the gradient would be #qty("39.5", "degree") and the aspect would be #qty("194.0", "degree").
 
-==== 4. Local polynomial fitting 
+==== 4. Local polynomial fitting
 Based on the 9 elevation points, it is possible to fit a polynomial (as explained in @chap:interpol) that approximate the surface locally; notice that the polynomial might not pass through the point if a low-degree function is used.
 
 A quadratic polynomial could for instance be defined:
@@ -143,7 +143,7 @@ and if a local coordinate system centered at $c_(i,j)$ is used, then $x = y = 0$
   After some searching, we can conclude that the method "4. Local polynomial fitting" is used by default for slope/aspect, and specifically the Horn's method is used #citep(<Horn81>).
   This uses a $3 times 3$ window, and fits a polynomial; the centre pixel value is not used.
   \
-  If the option `-alg ZevenbergenThorne` is used, then the algorithm of #citet(<Zevenbergen87>) is used. 
+  If the option `-alg ZevenbergenThorne` is used, then the algorithm of #citet(<Zevenbergen87>) is used.
   This uses only the 4 neighbours, and is a variation of the method "3. Finite difference" above.
   \
   The documentation of `gdaldem` states that: _"literature suggests Zevenbergen & Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain."_
@@ -160,7 +160,7 @@ We are often not interested in the value of the curvature itself ($frac(degree, 
 
 The curvature at a point $p$ is often decomposed into types:
 + *profile curvature:* the curvature of the vertical cross-section through $p$ perpendicular to the contour line passing through $p$ (or of the vertical plane along the 2D vector of the aspect at $p$)
-+ *plan curvature:* the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$) 
++ *plan curvature:* the curvature along the contour line passing through $p$ (or along the line segment perpendicular to the 2D vector aspect and passing through $p$)
 Because there are 2 types of curvatures and each have 3 potential values, there are 9 possible options (as @fig:curvatures shows).
 
 #figure(
@@ -206,7 +206,7 @@ The terms "roughness" and "ruggedness" are often used interchangeably and have s
 We can however claim that they both refer to how "undulating" or "regular" a (part of a) terrain is.
 A terrain with a high roughness will have small local deviations, while one with low roughness will be "smoother".
 In other words, the normals of the surface of the terrain will deviate from each other greatly for a high roughness, and less for low roughness.
-Another way to measure roughness, is to think of it as the ratio between the surface area and its projection into a plane. 
+Another way to measure roughness, is to think of it as the ratio between the surface area and its projection into a plane.
 #notefigure(
   image("figs/roughness.png", width: 100%),
   caption: [The green profile of a terrain has a lower roughness than the orange one (normals locally deviate less).],
@@ -284,7 +284,7 @@ If they point in different directions, then $e$ is neither.
 
 === Slope
 
-The slope (gradient + aspect) are a cornerstone of runoff modelling (see Chapter @chap:runoff), the prediction of the flow and accumulation of water on a terrain.
+The slope (gradient + aspect) are a cornerstone of runoff modelling (see @chap:runoff), the prediction of the flow and accumulation of water on a terrain.
 The slope is used to calculate the flow direction at a given location, which is the direction with the steepest descent at that location.
 
 The slope can also be used to predict the irradiation (from the sun) that a given location at a given day/time would receive.
@@ -295,7 +295,7 @@ This is often the input of (local) meteorological models, can be used to optimis
 While curvature is used implicitly to calculate the flow direction in runoff modelling, there are use-cases where the value is useful.
 One of them is for the predicting of where snow covering will be.
 
-The values of the curvature can help a practitioners understand and characterise the drainage basins, once extracted from a terrain (see Section @se:drainage_basins).
+The values of the curvature can help a practitioners understand and characterise the drainage basins, once extracted from a terrain (see @se:drainage_basins).
 
 === Roughness
 
@@ -333,7 +333,7 @@ Given a regular gridded terrain, hillshading means that each cell gets a value w
 The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original grid (for convenience).
 The values computed for each cell need as input the gradient and the aspect of the terrain.
 The formula to compute the hillshade of a given cell $c_"ij"$ differs from software to software, and we present here one (it is used in QGIS and ArcGIS for example, and surely others).
-It assumes that the output hillshade value is an integer in the range $[0, 255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known. 
+It assumes that the output hillshade value is an integer in the range $[0, 255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source is known.
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain.
 As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alpha_"ij"$, its aspect is $theta_"ij"$, the azimuth of the sun is $psi$ (angle clockwise from the north, like the aspect), and the height of the sun is $gamma$ (0 rad is the horizon, $pi/2$ rad is the zenith).
 #figure(
