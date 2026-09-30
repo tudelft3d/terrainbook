@@ -324,6 +324,7 @@
   
   //-- raw font
   show raw: set text(font: mono-font)
+  show raw.where(block: false): set text(size: 1em / 0.8)
 
   // Set link style
   // show link: set text(fill: rgb("#1a1a1a"), font: mono-font)
