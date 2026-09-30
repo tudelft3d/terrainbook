@@ -268,23 +268,31 @@
     leading: 0.60em,
   )
 
-  show heading: set text(font: sans-font, weight: "bold")
+  show heading: set text(font: sans-font, number-type: "lining", weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
   show heading.where(level: 1): it => counter(figure.where(kind: table)).update(0) + it
+  //-- generic level-1 headings (front matter: Preface, Contents). Chapters override
+  //-- this in `main-matter` with the chapter-opening grid.
+  show heading.where(level: 1): it => {
+    set par(justify: false)
+    pagebreak(weak: true, to: "odd")
+    align(left, text(font: sans-font, number-type: "lining", hyphenate: false, weight: "bold", size: 18pt, it))
+    v(2em)
+  }
   show heading.where(level: 2): it => {
     v(3em, weak: true)
-    text(font: sans-font, size: 14pt, weight: "bold", it)
+    text(font: sans-font, number-type: "lining", size: 14pt, weight: "bold", it)
     v(2em, weak: true)
   }
   show heading.where(level: 3): it => {
     v(3em, weak: true)
-    text(font: sans-font, size: 12pt, it)
+    text(font: sans-font, number-type: "lining", size: 12pt, it)
     v(1.5em, weak: true)
   }
   show heading.where(level: 4): it => {
     let title = it.body
     v(1em)
-    text(font: sans-font, weight: "bold")[#title.] + h(0.8em)
+    text(font: sans-font, number-type: "lining", weight: "bold")[#title.] + h(0.8em)
   }
 
   //-- figures
@@ -490,7 +498,7 @@
           bottom+right,
   			  text(
             font: sans-font,
-            size: 1.8em,
+            size: 2.0em,
   					it.body
   			  )
         ),
