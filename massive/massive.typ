@@ -55,7 +55,7 @@ The downsamples grids are used to speed up visualisation (when a user zooms out 
   \
   For other formats, if the GDAL library is used (the _de facto_ open-source library for GIS images and grids), the pyramids can be stored in an auxiliary file with the extension `.ovr`, which is actually a TIFF format.
   \
-  The GDAL utility \href{https://www.gdal.org/gdaladdo.html}{gdaladdo \faExternalLink} can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
+  The GDAL utility `gdaladdo` (#link("https://www.gdal.org/gdaladdo.html")) can create automatically the pyramids for a few formats, and the downsampling method can be chosen.
   In QGIS, one can use `gdaladdo`, or there is also a built-in mechanism, as can be seen in @fig:qgis
 ]
 
