@@ -57,8 +57,8 @@ The term "3D" is misleading #note[3D is misleading] in a DTM context---as it is 
 )
 
 === 2.5D 
-
 #index[2.5D] 
+
 What is usually used for modelling terrains: a surface (which is topologically a 2D object; also called a 2-manifold) 
 is embedded in 3D space, and each location ($x,y$) is assigned to one and only one height $z$.
 #note[2-manifold]#index[2-manifold]
