@@ -55,7 +55,7 @@ A PLY file contains a header#note[A header is supplemental information placed at
 Because the user can decide on the composition of the point record, this makes it a very flexible format.
 @fig:ply shows an example PLY file.
 
-PLY files are readable by many software packages and can also be stored in a binary encoding#note[#link("https://en.wikipedia.org/wiki/PLY_(file_format)\#ASCII_or_binary_format")].
+PLY files are readable by many software packages and can also be stored in a binary encoding.
 Compared to the ASCII encoding, the binary encoding results in a smaller file size and quicker reading and writing from and to the file.
 There is however no standardised way to specify the CRS in a PLY file, although one could add a comment in the header stating the CRS.
 
