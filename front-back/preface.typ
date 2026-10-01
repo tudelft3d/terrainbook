@@ -15,12 +15,11 @@ The course is tailored for MSc students who have already followed introductory c
 Each chapter corresponds to a lesson in the course, whose content is also openly available: #link("https://3d.bk.tudelft.nl/courses/geo1015")
 
 ==== Accompanying videos
-Most of the chapters have a short video explaining the key concepts, and
-those are freely available online:
+Most of the chapters have a short video explaining the key concepts, and those are freely available online:
 #link("https://tudelft3d.github.io/terrainbook/videos")
 
 ==== Who is this book for
-The book is written for MSc students (in geomatics, but it can also be used at the BSc level. 
+The book is written for MSc students (in geomatics), but it can also be used at the BSc level. 
 Prerequisites include: knowledge of GIS, background in linear algebra, and an introductory programming course.
 
 ==== Acknowledgements

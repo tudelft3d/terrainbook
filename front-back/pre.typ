@@ -30,23 +30,12 @@ International Licence. For licence details, see
 The latest version of this book can be downloaded in PDF at \
 #link("https://github.com/tudelft3d/terrainbook/releases")
 
-==== Extra material
-Most chapters have a short YouTube video explaining the key concepts,
-and some chapters have extra material. Available at \
-#link("https://tudelft3d.github.io/terrainbook/videos")
-
-==== Source code
+==== Open book
 The source code of the book, in Typst, is available at \
 #link("https://github.com/tudelft3d/terrainbook")
 
 ==== Errors? Feedback?
 Please report errors or potential improvements at \
 #link("https://github.com/tudelft3d/terrainbook/issues")
-
-==== Colophon
-This book was typeset with #link("https://typst.app")[Typst] by using several great packages made by others. 
-The aim was more or less to obtain the same as the fabulous #link("https://github.com/fmarotta/kaobook")[kaobook] class from LaTeX.
-The figures were created using Ipe, OmniGraffle, Affinity Designer, or Blender. 
-The front cover image shows the Tanaka contours of a random place in Tasmania.
 
 ]
