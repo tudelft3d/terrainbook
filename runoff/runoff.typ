@@ -61,7 +61,7 @@ This method can therefore easily create artefacts in certain geometric configura
 )
 
 Many of these artefacts can be reduced by using the rho8 ($rho 8$) method, the stochastic counterpart of D8, which assigns the flow direction of a cell to one of its lower neighbours randomly, with a probability proportional to the slope.
-#note[rho8 ($rho 8$)]#index[$rho 8$]#index[rho8]
+#note[rho8 ($rho 8$)]#index[rho8 ($rho 8$)]
 However, it produces non-deterministic results, which is often a sufficient reason not to use it.
 
 Despite its age and limitations, the SFD method is still widely used and available in many GIS tools.
