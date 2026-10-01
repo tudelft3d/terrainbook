@@ -21,7 +21,7 @@
 #import "template.typ": *
 
 #show: doc => tbtemplate(
-  version: "2026.0-beta4",
+  version: "2026.0-beta5",
   cover: true,
   doc,
 )
