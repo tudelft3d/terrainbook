@@ -17,6 +17,27 @@
 //-- icons
 #import "@preview/heroic:0.1.2": hi
 
+//-- fonts, defined once at module level so the box helpers below can use them too
+//-- if bundling, see fonts/README.md and compile with --font-path fonts
+#let serif-font = ("IBM Plex Serif",) //-- body text
+#let sans-font = ("IBM Plex Sans",) //-- headings
+#let math-font = ("IBM Plex Math",) //-- math
+#let mono-font = ("IBM Plex Mono",) //-- code, links, version
+// #let serif-font = ("TeX Gyre Pagella")
+// #let sans-font = ("Alegreya Sans")
+// #let math-font = ("TeX Gyre Pagella Math")
+// #let mono-font = ("Inconsolata", "Comic Sans MS") //-- code, links, version
+//--
+// #let serif-font = ("Source Serif 4",) //-- body text
+// #let sans-font = ("Source Sans 3",) //-- headings
+// #let math-font = ("STIX Two Text",) //-- math
+// #let mono-font = ("Source Code Mono",) //-- code, links, version
+
+//-- The IBM Plex semibold (used for the big chapter number in the chapter opener)
+//-- is a separate family name in Typst, not a weight of "IBM Plex Serif".
+//-- Defined at module level because it is used in `main-matter` (see fonts/README.md).
+#let serif-semibold-font = ("IBM Plex Serif SmBld",)
+
 //-- natbib
 #let citet = cite.with(form: "prose")
 #let citep = cite
@@ -138,7 +159,7 @@
     shadow: (
       offset: 1pt,
     ),
-    title: hi("cog", solid: false) + " " + title,
+    title: hi("cog", solid: false) + " " + text(font: sans-font)[#title],
     body,
   )
 ]
@@ -156,7 +177,7 @@
     shadow: (
       offset: 1pt,
     ),
-    title:  hi("arrow-top-right-on-square") + " " + title,
+    title:  hi("arrow-top-right-on-square") + " " + text(font: sans-font)[#title],
     body,
   )
 ]
@@ -174,7 +195,7 @@
     shadow: (
       offset: 1pt,
     ),
-    title: hi("information-circle", solid: false) + " " + title,
+    title: hi("information-circle", solid: false) + " " + text(font: sans-font)[#title],
     body,
   )
 ]
@@ -195,6 +216,23 @@
   baseline: depth,
   line(stroke: stroke, length: height, angle: 90deg),
 )
+
+//-- vertical space around lists: applied to top-level lists only
+//-- (a plain `show list: v(1.5em) + it + v(1.5em)` would also space out nested lists)
+#let list-depth = state("list-depth", 0)
+#let spaced-list(it) = context {
+  let d = list-depth.get()
+  if d == 0 {
+    list-depth.update(d + 1)
+    v(1.5em, weak: true) + it + v(1.5em, weak: true) + context {
+      list-depth.update(d)
+      none
+    }
+  } else {
+    it
+  }
+}
+
 
 #let tbtemplate(
   title: "Computational modelling of terrains",
@@ -225,48 +263,40 @@
     numbering: "i",
   )
 
-  let serif-font = ("TeX Gyre Pagella", "Palatino", "New Computer Modern") //-- https://www.1001fonts.com/tex-gyre-pagella-font.html
-  let sans-font = ("TeX Gyre Heros", "Source Sans Pro", "Calibri") //-- https://www.1001fonts.com/texgyreheros-font.html + https://github.com/adobe-fonts/source-sans-pro
-  let math-font = ("Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
-  // let math-font = ("TeX Gyre Pagella Math", "Stix Two Math", "New Computer Modern Math") //-- free: https://github.com/stipub/stixfonts
-  let mono-font = ("Consolas", "Monaco") //-- Input Mono Condensed
   set text(
     font: serif-font,
     size: 10pt,
   )
   set par(
     justify: true,
-    leading: 0.53em,
+    leading: 0.60em,
   )
 
-  show heading: set text(font: serif-font, weight: "bold")
+  show heading: set text(font: sans-font, number-type: "lining", weight: "bold")
   show heading.where(level: 1): it => counter(figure.where(kind: image)).update(0) + it
   show heading.where(level: 1): it => counter(figure.where(kind: table)).update(0) + it
+  //-- generic level-1 headings (front matter: Preface, Contents). Chapters override
+  //-- this in `main-matter` with the chapter-opening grid.
   show heading.where(level: 1): it => {
     set par(justify: false)
     pagebreak(weak: true, to: "odd")
-    // place(top+right)[
-    //   #rect(fill: blue, width: 10%, height: 10%)
-    // ]
-    align(left, text(font: sans-font, hyphenate: false, weight: "bold", size: 18pt, it))
-    // note(counter(heading).get().first())
-    // place(top, note(counter: none, side: "outer")[#text(font: sans-font, hyphenate: false, weight: "bold", size: 28pt, "1")])
+    align(left, text(font: sans-font, number-type: "lining", hyphenate: false, weight: "bold", size: 18pt, it))
     v(2em)
   }
   show heading.where(level: 2): it => {
     v(3em, weak: true)
-    text(font: sans-font, size: 14pt, weight: "bold", it)
+    text(font: sans-font, number-type: "lining", size: 14pt, weight: "bold", it)
     v(2em, weak: true)
   }
   show heading.where(level: 3): it => {
     v(3em, weak: true)
-    text(font: sans-font, size: 11pt, it)
+    text(font: sans-font, number-type: "lining", size: 12pt, it)
     v(1.5em, weak: true)
   }
   show heading.where(level: 4): it => {
     let title = it.body
     v(1em)
-    strong(title + ".") + h(0.8em)
+    text(font: sans-font, number-type: "lining", weight: "bold")[#title.] + h(0.8em)
   }
 
   //-- figures
@@ -298,6 +328,7 @@
   
   //-- raw font
   show raw: set text(font: mono-font)
+  show raw.where(block: false): set text(size: 1em / 0.8)
 
   // Set link style
   // show link: set text(fill: rgb("#1a1a1a"), font: mono-font)
@@ -307,11 +338,11 @@
 
 
   set list(indent: 1em, tight: true)
-  show list: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)
   set enum(indent: 1em, tight: true)
-  show enum: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)
   set terms(indent: 1em)
-  show terms: it => v(1.5em, weak: true) + it + v(1.5em, weak: true)
+  show list: spaced-list
+  show enum: spaced-list
+  show terms: spaced-list
 
   show quote: it => v(1.5em, weak: true) + pad(left: 2em, right: 2em, it) + v(1.5em, weak: true)
 
@@ -347,10 +378,10 @@
         #grid(
           columns: (5cm, 5cm),
           inset: 5pt,
-          text(1.2em, "Hugo Ledoux"),
-          text(1.2em, "Ken Arroyo Ohori"),
-          text(1.2em, "Ravi Peters"),
-          text(1.2em, "Maarten Pronk"),
+          text(font: sans-font, size: 1.2em, "Hugo Ledoux"),
+          text(font: sans-font, size: 1.2em, "Ken Arroyo Ohori"),
+          text(font: sans-font, size: 1.2em, "Ravi Peters"),
+          text(font: sans-font, size: 1.2em, "Maarten Pronk"),
         )
         #v(5mm)
         #text(font: mono-font, size: 10pt, [v#version])
@@ -471,8 +502,9 @@
         place(
           bottom+right,
   			  text(
-            size: 1.8em,
-  					it.body,
+            font: sans-font,
+            size: 2.0em,
+  					it.body
   			  )
         ),
         // place(bottom+center, 
@@ -482,8 +514,9 @@
         place(
           bottom+left,
           text(
+    				// font: serif-semibold-font,
     				size: 6em,
-    				weight: "semibold",
+    				// weight: "semibold",
     				style: "italic",
     				fill: luma(25%),
     				counter(heading).display(),

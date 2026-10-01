@@ -26,6 +26,20 @@ Each chapter is a lesson in the course, and each lesson is accompanied by a vide
 [The latest version of the book in PDF can be downloaded here](https://github.com/tudelft3d/terrainbook/releases)
 
 
+## Compilation of the book
+
+Until v2025 the book was written in LaTeX, and we converted it to [Typst](https://typst.app) for the v2026 version.
+The LaTeX original files are still present for a while if errors are identified we can check the original source.
+
+The book uses the [IBM Plex](https://github.com/IBM/plex) superfamily, bundled here (in folder `./fonts/`) so that the PDF renders identically on every machine (macOS, Linux, CI).
+
+If you don't have the fonts installed on your machine, you can specify the fonts folder:
+
+```
+typst compile --font-path fonts main.typ
+```
+
+
 ## Errors? Feedback?
 
 Please report errors, typos, and suggestions for improvements [as issues](https://github.com/tudelft3d/terrainbook/issues).

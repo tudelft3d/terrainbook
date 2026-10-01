@@ -4,6 +4,7 @@
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
 // [ ] search in PDF for: "Target not found:"
+// [ ] check colophon on correct page at the end
 // [x] references have DOIs: remove?
 // [x] headers + page numbering at the bottom to fix
 // [x] empty page at first have page numbering
@@ -130,9 +131,10 @@
   #pagebreak()
 
   #align(bottom)[
-  This document was typeset using #link("https://typst.app")[Typst]\; its source code is freely available at #link("https://github.com/tudelft3d/terrainbook/").
-    // TODO: colofon
-    // The main font is Palatino.
-    // The figures and diagrams were mostly drawn using IPE, PGF/Ti\emph{k}z and Omnigraffle.
+    This book was typeset using #link("https://typst.app")[Typst] and the aim was more or less to obtain the same as the great _kaobook_ class from LaTeX (#link("https://github.com/fmarotta/kaobook")).
+    It uses the _IBM Plex_ fonts superfamily (#link("https://github.com/IBM/plex")).
+    The figures were created using Ipe, OmniGraffle, Affinity Designer, and Blender. 
+    The front cover image shows the Tanaka contours of a random place in Tasmania. \ \
+    The source code of the book is openly available at #link("https://github.com/tudelft3d/terrainbook/").
   ]
 ]
