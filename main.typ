@@ -3,6 +3,7 @@
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
 // [ ] search in PDF for: "Target not found:"
+// [ ] check colophon on correct page at the end
 // [x] references have DOIs: remove?
 // [x] headers + page numbering at the bottom to fix
 // [x] empty page at first have page numbering
