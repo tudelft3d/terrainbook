@@ -78,6 +78,9 @@ Tanaka's illuminated contours, presented below, can be seen as the modern, compu
 
 == Contour lines  <sec:vis-contours>
 
+To extract contour lines from a terrain, we can use the algorithms described in @sec:r-iso (for regular grids) and @sec:tin-iso (for TINs). 
+These algorithms identify the locations where the terrain reaches specific elevation levels.
+ 
 // Scale dependence and the warning that technique is a means, not an end.
 // The second were the _contour lines_: an abstract but measurable device that encodes elevation in equally spaced lines, and which became the standard for large-scale topographic maps.
 // Imhof described this as an imagined "contour blanket" laid over the terrain; we are so accustomed to it that its abstract character is seldom appreciated, and on its own it gives a poor impression of form, so it was soon combined with shading, hachures, and colour.
@@ -112,7 +115,7 @@ The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has 
   figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]), <fig:hillshade_nw>,
   figure(image("figs/hillshade/hillshade_se.png", width: 100%), caption: [Hillshade with light from South-East]), <fig:hillshade_se>,
   columns: (1fr, 1fr),
-  caption: [Hillshade for the terrain from @fig:tasmania_dem_01. Observe how we perceive the same terrain differently when the light comes from different directions, and that in *(b)* we see peaks as valleys. ],
+  caption: [Two hillshades for the terrain from @fig:tasmania_dem_01. Observe how we perceive the same terrain differently when the light comes from different directions: in *(a)* we preceive mountains, and in *(b)* we see peaks as valleys and the water appears at higher altitude. ],
   placement: auto,
   label: <fig:hillshade>,
 )
