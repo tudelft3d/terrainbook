@@ -85,21 +85,60 @@ In this section, we focus on how the extracted contours are rendered and depicte
 
 Spacing between contours (contour interval) #index[contour interval]#note[contour interval] is the vertical distance between successive contour lines. 
 This parameter controls the density of the contour network and determines how much detail is visible in the map. 
+Observe that this parameter is crucial for balancing detail against legibility and that scale affects it directly.
+If we draw contour lines with a width of #qty("0.5", "mm"), then this value will be used for all the scales. At very small scales (eg #num("1"):#num("100000")) the contour interval must be chosen such that the line spacing remains legible at the given scale.
+One usually chooses a contour interval that is a multiple of 10, 20, or 50 meters, depending on the terrain and the map's scale, and based on the terrain's general relief: very steep slopes (eg alpine regions with gradients up to potentially #qty("45", "deg")) will require larger intervals to maintain legibility.  
+
+// Scale is crucial: it determines the physical size of the map relative to the terrain extent, and it directly influences the choice of contour interval. A small scale (large map) can accommodate fine contour intervals without clutter, whereas a large scale (small map) requires coarser intervals to maintain readability.
+// - scale is very important to select the contour interval and stuff in Imhof book
+#subfigure(
+  figure(image("figs/interval_10.pdf", width: 100%), caption: [contour interval = #qty("10", "m")]),
+  figure(image("figs/interval_100.pdf", width: 100%), caption: [contour interval = #qty("100", "m")]),
+  columns: (1fr, 1fr),
+  caption: [Comparison of contour intervals showing how increasing the spacing from #qty("10", "m") to #qty("100", "m") increases visual clutter.],
+  placement: auto,
+  label: <fig:contour_interval_comparison>,
+) 
 
 A smaller interval reveals more detail but increases visual clutter, while a larger interval provides a cleaner, more general view of the terrain.
 
 We want the smallest possible contour interval (a more accurate representation of the terrain), but the map needs to remain legible.
 
-// Scale is crucial: it determines the physical size of the map relative to the terrain extent, and it directly influences the choice of contour interval. A small scale (large map) can accommodate fine contour intervals without clutter, whereas a large scale (small map) requires coarser intervals to maintain readability.
+//
 
-// - scale is very important to select the contour interval and stuff in Imhof book
-// - index contours: emphasis of every 5th or 10th contours (in bold)
-// - intermediate contours: done manually only?
-// - labelling: elevation values placed on index contours (up == higher? or legibility?)
+==== Index contours
+To improve the legibility of a map with contour lines, we can emphasise some lines, eg every 5th or 10th line by using a thicker line.
+This is called an index contour and one example is shown in @fig:contour_index.
+#figure(
+  image("figs/contourindex.pdf", width: 100%),
+  caption: [For the same region as @fig:contour_interval_comparison, with a contour interval of #qty("20", "m"), and with every 5th contour emphasized in bold.],
+  placement: auto,
+) <fig:contour_index>
 
-// Imhof described this as an imagined "contour blanket" laid over the terrain; we are so accustomed to it that its abstract character is seldom appreciated, and on its own it gives a poor impression of form, so it was soon combined with shading, hachures, and colour.
+
+==== Intermediate contours
+The steepest slopes in an area can dictate the contour interval, but in areas where the terrain is relatively flat, the spacing between index contours becomes too large and detail is lost.
+For those areas, intermediate contours can be added. 
+As shown in @fig:contour_intermediate, these are typically drawn with a dashed line to distinguish them from the solid index contours.
+#figure(
+  image("figs/contourintemediate.pdf", width: 100%),
+    caption: [With a contour interval of #qty("20", "m") we can add intermediate contours between the index contours where the terrain is relatively flat, here some lines manually picked shown with a dashed line.],
+  placement: auto,
+) <fig:index_intermediate>
 
 
+==== Labelling
+Notice that for @fig:contour_index and @fig:contour_intermediate the labels for the contours (only for the indexed ones) are oriented towards the reader of the map (upright position mostly; this was performed automatically with QGIS). 
+
+However, elevation labels orientated to the direction of the slope---where higher ground is above the label---improves the legibility of the map (see @fig:contour_orientation).
+#subfigure(
+  figure(image("figs/c_orientation_1.pdf", width: 100%), caption: [Higher ground above label]),
+  figure(image("figs/c_orientation_2.pdf", width: 100%), caption: [Random orientation]),
+  columns: (1fr, 1fr),
+  caption: [Contour labelling orientation.],
+  placement: auto,
+  label: <fig:contour_orientation>,
+) 
 
 
 == Hillshading <sec:vis-hillshading>
