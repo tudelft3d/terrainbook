@@ -39,7 +39,7 @@ A given property is in most cases as easy as for a grid to calculate for a given
 This makes the use of TINs more cumbersome in practice.
 
 
-=== Slope
+=== Slope <sec:slope>
 
 #index[slope]
 
