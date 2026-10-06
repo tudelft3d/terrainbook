@@ -78,20 +78,26 @@ Tanaka's illuminated contours, presented below, can be seen as the modern, compu
 
 == Contour lines  <sec:vis-contours>
 
-To extract contour lines from a terrain, we can use the algorithms described in @sec:r-iso (for regular grids) and @sec:tin-iso (for TINs). 
-These algorithms identify the locations where the terrain reaches specific elevation levels.
- 
-// Scale dependence and the warning that technique is a means, not an end.
-// The second were the _contour lines_: an abstract but measurable device that encodes elevation in equally spaced lines, and which became the standard for large-scale topographic maps.
-// Imhof described this as an imagined "contour blanket" laid over the terrain; we are so accustomed to it that its abstract character is seldom appreciated, and on its own it gives a poor impression of form, so it was soon combined with shading, hachures, and colour.
+Contour lines, also called isolines, are the most important element for the representation of elevation of an area, and they are the only method in this chapter that allows us to _geometrically_ reconstruct the shape of the terrain (with some loss of detail, as explained in @sec:representation_others and @sec:iso.
 
-// - contour lines are the oldest and most used technique; how they are read
-//   (closeness = steepness), index vs intermediate contours, labelling
-// - only geometric representation (hachures and shading give an impression of relief; 
-//   from contours we can reconstruct the shape)
-// - the algorithms to *extract* contour lines are covered in @sec:iso
-//   (Chapter @chap:conversion); here we focus on how they are *rendered/presented*
+The algorithms to extract contour lines from a terrain are described in  @sec:r-iso (for regular grids) and @sec:tin-iso (for TINs); these algorithms identify the locations where the terrain reaches specific elevation levels.
+In this section, we focus on how the extracted contours are rendered and depicted.
+
+Spacing between contours (contour interval) #index[contour interval]#note[contour interval] is the vertical distance between successive contour lines. 
+This parameter controls the density of the contour network and determines how much detail is visible in the map. 
+
+A smaller interval reveals more detail but increases visual clutter, while a larger interval provides a cleaner, more general view of the terrain.
+
+We want the smallest possible contour interval (a more accurate representation of the terrain), but the map needs to remain legible.
+
+// Scale is crucial: it determines the physical size of the map relative to the terrain extent, and it directly influences the choice of contour interval. A small scale (large map) can accommodate fine contour intervals without clutter, whereas a large scale (small map) requires coarser intervals to maintain readability.
+
 // - scale is very important to select the contour interval and stuff in Imhof book
+// - index contours: emphasis of every 5th or 10th contours (in bold)
+// - intermediate contours: done manually only?
+// - labelling: elevation values placed on index contours (up == higher? or legibility?)
+
+// Imhof described this as an imagined "contour blanket" laid over the terrain; we are so accustomed to it that its abstract character is seldom appreciated, and on its own it gives a poor impression of form, so it was soon combined with shading, hachures, and colour.
 
 
 
@@ -183,7 +189,7 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 
 == Tanaka contours <sec:tanaka>
 
-imhof calls them "3D shaded contours with flat area tones"
+Imhof calls them "3D shaded contours with flat area tones"
 
 #notefigure(
   image("figs/tanaka_original.png", width: 100%),
