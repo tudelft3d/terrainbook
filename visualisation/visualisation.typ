@@ -226,32 +226,40 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 //   Patterson & Jenny (2011) cross-blended hypsometric tints
 
 
+
 == Tanaka contours <sec:tanaka>
 
-Imhof calls them "3D shaded contours with flat area tones"
-
+The so-called "Tanaka contours", named after the cartographer Kitirô Tanaka who formalised the concept in 1950, is a visualisation method that (1) shades contour lines and (2) uses flat area tones to give a better impression of the relief of a terrain. 
+@fig:tanaka_original shows a figure from the original paper, and the cover of this book shows the same technique applied to an terrain somewhere in Tasmania (Australia).
 #notefigure(
   image("figs/tanaka_original.png", width: 100%),
   caption: [Tanaka's illuminated contours showing how contour lines vary with their orientation relative to the light source.],
-  // placement: auto,
+  placement: auto,
 ) <fig:tanaka_original>
 
-// - Tanaka maps (Tanaka 1950): illuminated contours, where the width/style of
-// - hypsometric layer tints between contours
-//   each contour line varies with the direction of the line relative to the
-//   light source; reuses the gradient and aspect from @chap:topofeatures
+For the illumination, the source of light is usually located at the North-West direction.
+The lines are white when facing the source of light (slopes that are illuminated), and black when located on the opposite side of a hill/obstacle (shadow).
+In between the lines appear in intermediate shades of grey; the shade of grey is defined by linear interpolation between white and black based on the angle between the line and the light direction.
 
+Observe that when extracting contour lines from a terrain (see @sec:iso), one needs to correctly determine the orientation of the line to avoid 'inverting the relief' (notice that this is determined by the aspect of the slope, see @sec:slope).
+One way to do this is to always orient a segment of a contour lines such that higher ground is always on the left of a line (or right, it just depends on the convention).
 
+The horizontal areas between contour lines (which are considered flat) are filled with a uniform tone/colour, and the colour can be chosen by using a discrete colour map for each value of the contour interval.
 
-#place(float: true, auto,
-  wideblock[
-    #figure(
-      image("figs/sunlight_direction.pdf", width: 100%),
-      caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
-      placement: auto,
-    ) <fig:tanaka>
-  ]
-)
+The original method applies a different thickness to the lines so that where white and black lines meet, there is only a point of contact (or a smaller area of contact).
+This can be observed from the Tanaka contours on the cover of Imhof's book (see @fig:imhof_cover).
+// This can be obtained by several methods, one of them being drawing twice: first in light grey for the illuminated side, then in dark grey for the shadowed side, with the widths determined by the angle between the line and the light direction.
+
+// ([more information on Wikipedia](https://en.wikipedia.org/wiki/Terrain_cartography#Tanaka_(relief)_contours)).
+// #place(float: true, auto,
+//   wideblock[
+//     #figure(
+//       image("figs/sunlight_direction.pdf", width: 100%),
+//       caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
+//       placement: auto,
+//     ) <fig:tanaka>
+//   ]
+// )
 
 == SVF-based hillshading
 
@@ -272,7 +280,7 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 
 
 // TODO: add notes when sections are written
-// - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?)
+// - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?) (see the [original paper](https://doi.org/10.2307/211219))
 // - Imhof (1982), Cartographic Relief Presentation
 // - Patterson & Jenny (2011), cross-blended hypsometric tints
 
@@ -293,3 +301,6 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 == Exercises
 
 // TODO: add exercises
+
++ For creating the Tanaka contours, it is mentioned that segments should be oriented such that higher ground is always on the left of a line. Does this mean that lines are always oriented counter-clockwise? 
+// +
