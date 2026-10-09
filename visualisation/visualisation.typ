@@ -156,6 +156,8 @@ The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has 
   caption: [The terrain of a random region in Tasmania, Australia.],
   placement: auto,
 ) <fig:tasmania_dem_01>
+
+
 #subfigure(
   figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]), <fig:hillshade_nw>,
   figure(image("figs/hillshade/hillshade_se.png", width: 100%), caption: [Hillshade with light from South-East]), <fig:hillshade_se>,
@@ -195,13 +197,34 @@ As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alp
 $ "hillshade"_(i j) = 255 dot.op &[(cos(pi/2 - gamma) cos(alpha_(i j))) + \
 &(sin(pi/2 - gamma) sin(alpha_(i j)) cos(psi - theta_(i j)))] $
 
-
 Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ then $"hillshade"_"ij" = 0$.
 
 === Multi-directional hillshading
 
-// https://deltares.github.io/Geomorphometry.jl/dev/reference#Geomorphometry.multihillshade-Tuple{AbstractMatrix{%3C:Real}}
-// multihillshade is the simulated illumination of a surface based on its slope and aspect. Like hillshade, but combining multiple light sources at the given azimuth angles (degrees) as defined in Mark, R.K. (1992), similar to GDAL's -multidirectional. Returns a Matrix{Union{Missing,UInt8}} of illumination values in 0:255.
+When using hillshading only one source of light is used to illuminate the terrain, and this can remove structures in the terrain and create a "flat" appearance.
+
+Multi-directional hillshading combines multiple light sources at different angles to illuminate the terrain, and then combining the resulting images to produce a final output. 
+
+The resulting image will have a more dynamic and three-dimensional appearance, with shadows and highlights that are more accurately represented; @fig:multi_hillshade shows an example.
+
+The standard is that of Robert Mark from his 1992 paper: 4 sources are used (azimuth at #qty("225", "deg"), #qty("270", "deg"), #qty("315", "deg"), and #qty("360", "deg")) #note[GDAL and QGIS use the same 4 angles] with the height of the sun ($gamma$) constant at #qty("30", "deg"). 
+The weights to apply to each of the 4 hillshades are per pixel, and are linked to the aspect of the pixel.  
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]),
+      figure(image("figs/hillshade/multi_hillshade.png", width: 100%), caption: [Multi-directional hillshade]), 
+      columns: (1fr, 1fr),
+      caption: [Example of multi-directional hillshade for the terrain shown in @fig:tasmania_dem_01.],
+      placement: auto,
+      label: <fig:multi_hillshade>,
+    )
+  ]
+)
+
+
+
 
 
 // TODO: possible additions
@@ -234,7 +257,7 @@ The so-called "Tanaka contours", named after the cartographer Kitirô Tanaka who
 #notefigure(
   image("figs/tanaka_original.png", width: 100%),
   caption: [Tanaka's illuminated contours showing how contour lines vary with their orientation relative to the light source.],
-  placement: auto,
+  // placement: auto,
 ) <fig:tanaka_original>
 
 For the illumination, the source of light is usually located at the North-West direction.
@@ -272,6 +295,8 @@ This can be observed from the Tanaka contours on the cover of Imhof's book (see 
 The introduction of this chapter---in particular the tension between the measurability and the pictorial representation of relief---draws on #citet(<Imhof65>), which remains the classic reference on the subject.
 
 The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (#link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")[link]).
+
+For the multi-directional hillshade, the 4 sources of light and the weights to apply to each hillshade is from #citet(<Mark92>).
 
 The sky-view factor was proposed as a relief visualisation technique by #citet(<Zaksek11>), where the formula given above and the influence of the parameters (number of directions, search radius) on the results are discussed in detail.
 The paper also describes its use for spatial analysis, eg for energy balance studies and to estimate the availability of GPS signals in urban areas.
