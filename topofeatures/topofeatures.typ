@@ -39,7 +39,7 @@ A given property is in most cases as easy as for a grid to calculate for a given
 This makes the use of TINs more cumbersome in practice.
 
 
-=== Slope
+=== Slope <sec:slope>
 
 #index[slope]
 
@@ -353,8 +353,6 @@ Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ t
 The polynomial fitting method for computing the slope is from #citet(<Evans80>) and #citet(<Wood96>).
 #citet(<Skidmore89>) carried out a comparison of 6 methods to extract slope from regular gridded DTMs, and concluded that methods using 8 neighbours perform better than those using only 4 or the biggest height difference.
 He did not however investigate how the resolution of the grid influences the results.
-
-The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (#link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")[link]).
 
 Some algorithms have been developed to identify the features forming a DTM: #citet(<Kweon94>) and #citet(<Schneider05>) can identify simple features in DEMs (if they are pre-processed into bilinear patches); and #citet(<Magillo09>) and #citet(<Edelsbrunner01-1>) describe algorithms to perform the same, but directly on TINs.
 

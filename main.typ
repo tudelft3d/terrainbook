@@ -1,9 +1,11 @@
-// TODOs
+// TODO
+// [x] the box-practice/tool increment the figure by 1, see Fig1.4 
 // [ ] @app:ahn[Appendix]
 // [ ] check that the index has correct page number references
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
 // [ ] search in PDF for: "Target not found:"
+// [ ] add an AI declaration
 // [ ] check colophon on correct page at the end
 // [x] references have DOIs: remove?
 // [x] headers + page numbering at the bottom to fix
@@ -48,20 +50,10 @@
     }
     #outline(depth: 2, indent: auto)
   ]
-
-  // // TODO: remove list of tables/algorithms
-  // #outline(
-  //   title: [List of tables],
-  //   target: figure.where(kind: table),
-  // )
-
-  // #outline(
-  //   title: [List of algorithms],
-  //   target: figure.where(kind: "algorithm"),
-  // )
 ]
 
 //-- put in red chapter errors (instead of not being able to compile)
+//-- TODO: remove the red-missing-refs
 #let possible-missing-ref(it) = {
   if it.element != none {
     it
@@ -83,30 +75,30 @@
 
   //-- main chapters
   #include "whatisterrain/whatisterrain.typ" //-- 01
-  #include "acquisition/acquisition.typ"     //-- 02
-  #include "gdem/gdem.typ"                   //-- 03
-  #include "dtvd/dtvd.typ"                   //-- 04
-  #include "interpol/interpol.typ"           //-- 05
+  // #include "acquisition/acquisition.typ"     //-- 02
+  // #include "gdem/gdem.typ"                   //-- 03
+  // #include "dtvd/dtvd.typ"                   //-- 04
+  // #include "interpol/interpol.typ"           //-- 05
+  // #include "kriging/kriging.typ"             //-- 06
+  // #include "conversion/conversion.typ"       //-- 07
+  // #include "topofeatures/topofeatures.typ"   //-- 08
+  #include "visualisation/visualisation.typ" //-- 09
+  #include "visibility/visibility.typ"       //-- 10
+  // #include "runoff/runoff.typ"               //-- 11
+  // #include "pcprocessing/pcprocessing.typ"   //-- 12
+  // #include "massive/massive.typ"             //-- 13
+  // #include "spatialextent/spatialextent.typ" //-- 14
+  // #include "bathymetry/bathymetry.typ"       //-- 15
 
-  #include "kriging/kriging.typ"             //-- 06
-  #include "conversion/conversion.typ"       //-- 07
-  #include "topofeatures/topofeatures.typ"   //-- 08
-  #include "visibility/visibility.typ"       //-- 09
-  #include "runoff/runoff.typ"               //-- 10
-  #include "pcprocessing/pcprocessing.typ"   //-- 11
-  #include "massive/massive.typ"             //-- 12
-  #include "spatialextent/spatialextent.typ" //-- 13
-  #include "bathymetry/bathymetry.typ"       //-- 14
-
-  //-- Appendices
-  // #heading(numbering: none)[Appendices]
-  #set heading(numbering: "A.1")
-  #set figure(numbering: dependent-numbering("A.1"))
-  #counter(heading).update(0)
-  #include "./appendices/pcformats/pcformats.typ"     //-- A
-  #include "./appendices/ahn/ahn.typ"                 //-- B
-  #include "./appendices/normalplane/normalplane.typ" //-- C
-  #include "./appendices/equations/equations.typ"     //-- D
+  // //-- Appendices
+  // // #heading(numbering: none)[Appendices]
+  // #set heading(numbering: "A.1")
+  // #set figure(numbering: dependent-numbering("A.1"))
+  // #counter(heading).update(0)
+  // #include "./appendices/pcformats/pcformats.typ"     //-- A
+  // #include "./appendices/ahn/ahn.typ"                 //-- B
+  // #include "./appendices/normalplane/normalplane.typ" //-- C
+  // #include "./appendices/equations/equations.typ"     //-- D
 
 ]
 
@@ -116,8 +108,19 @@
 
 #back-matter[
   //-- references
-  // https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
+  // TODO https://github.com/typst/typst/issues/5898 -- without this, entries don't justify consistently
   #show bibliography: set block(width: 100%)
+  //-- hack: prefix DOI links in the bibliography with an icon
+  //-- (CSL cannot call Typst functions, so this is done at the Typst level)
+  #show link: it => {
+    if type(it.dest) == str and it.dest.contains("doi.org") {
+      box(hi("bookmark", solid: false, height: 0.9em) + it)
+      // box(hi("bookmark", height: 0.9em, color: olive.lighten(80%)) + it)
+      // box(hi("bookmark", height: 0.9em, color: gray) + it)
+    } else {
+      it
+    }
+  }
   #bibliography("./refs/tb.bib", style: "./refs/apa-annotated-bibliography_modified-HL.csl")
 
   = Index

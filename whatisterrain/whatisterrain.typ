@@ -78,7 +78,7 @@ The surface represents the exterior of all objects/features together, and vertic
 Surface modelling is popular in CAD, but in GIS it is rather rare.
 We are not aware of any popular GIS software that allows us to model a terrain as a 2.75D and perform operations on it.
 
-=== #flex-heading[3D][Full 3D, or volumetric modelling]
+=== Full 3D, or volumetric modelling
 
 This refers to the modelling of not only the boundaries of objects, but also of the interior of these.
 #note[volumetric modelling]#index[volumetric modelling]
@@ -261,7 +261,7 @@ Conceptually speaking, these should therefore not be considered valid representa
 While this might seems odd, this is in line with the consensus among practitioners today, where a point cloud or contour lines would typically be used as an input to a process to generate a terrain.
 In @chap:pcprocessing we present and discuss several algorithms and techniques to process raw point clouds, so that the points can be used to construct terrains.
 
-#place(float:true, bottom, 
+#place(float:true, auto, 
   wideblock[
     #figure(
       image("figs/reps.pdf"),
@@ -272,12 +272,12 @@ In @chap:pcprocessing we present and discuss several algorithms and techniques t
 )
 We will nevertheless consider these in the course; the four representations we will use are shown in @fig:reps.
 
-==== Contour lines
-Given a bivariate field $f(x,y) = z$, an _isoline_ (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, where $z_0$ is a constant. 
+==== Contour lines (isolines)
+Given a bivariate field $f(x,y) = z$, an _isoline_ (commonly named contour line) is the set of points in space where $f(x,y) = z_0$, that is where elevation is a constant. 
 
 #index[isolines]#index[contour lines]
 
-Isolines have been traditionally used to represent the elevation in topographic maps and the depth in bathymetric maps for navigation at sea.
+Isolines have been traditionally used to represent the elevation in topographic maps and the depth in bathymetric maps for navigation at sea, and they are the most important element in the cartographic representation of terrains (see @chap:vis for more information and other techniques).
 
 #figure(
   image("figs/contours.pdf", width: 70%),
@@ -286,17 +286,22 @@ Isolines have been traditionally used to represent the elevation in topographic 
 ) <fig:contours>
 
 One particular property of an isoline is that its direction is always perpendicular to the direction of the steepest slope of the terrain. 
-Another property that follows from the $2.5D$ property of the field is that contours neither intersect themselves nor each other.
+Another property that follows from the $2.5D$ property of the elevation field is that contour lines neither intersect themselves nor each other.
 
-The purpose of isolines on a map is to reveal the shape of the underlying terrain. 
-By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent; see @fig:contours for an example.
-It should be noticed that data between contours is absent in the contour map. 
-Yet, in case of good contours the reader will still be able to deduct the general morphology of the field. 
-It is even so that the use of contours will speed up the map reading process, as it conveys just that relevant bit of data to the map reader rather than 'flooding' the reader with information which essentially makes the user do his own cartographic selection. 
-Contouring is a form of discretizing the field that makes it easier to use a map. 
+The purpose of isolines on a two-dimensional map is to reveal the morphology of the underlying terrain. 
+By observing the shape and interrelation of neighbouring contours, the presence and significance of surface features becomes apparent.
+Contour lines that are close to each other indicate a steep area; see @fig:contours for an example.
+
+
+It should be noticed that data between contours is absent in a contour map. 
+Yet, in case of good contours, the reader will still be able to deduct the general morphology of the field. 
+It is even so that the use of contours will speed up the map reading process, as it conveys just that relevant bit of data to the map reader rather than 'flooding' the reader with information which essentially makes the user do her own cartographic selection. 
+
+Contouring is a form of discretisation of the field to make it possible to represent the third dimension. 
 Naturally, this comes at a price. 
 The level of approximation of the field can (dramatically) differ between contours, the biggest error would be midway in between contour lines. 
-But, depending on the relation between the spacing between contours (the _contour interval_) and the map scale, which in turn is dependent on the map application, this effect may be neglected.
+However, depending on the relation between the spacing between contours (the _contour interval_) and the map scale, which in turn is dependent on the map application, this effect may be neglected.
+We discuss in @sec:vis-contours the cartographic implications of these choices.
 
 In practice, isolines are only approximated from the computer representation of a field.
 They are usually extracted directly from a TIN or a regular grid. 

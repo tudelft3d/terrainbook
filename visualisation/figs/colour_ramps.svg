@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="600" viewBox="0 0 640 600">
+  <defs>
+    <linearGradient id="imhof" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0.00" stop-color="#a0c48a"/>
+      <stop offset="0.14" stop-color="#c3cc8a"/>
+      <stop offset="0.28" stop-color="#ded6a0"/>
+      <stop offset="0.42" stop-color="#e8d2a8"/>
+      <stop offset="0.56" stop-color="#e2c8a4"/>
+      <stop offset="0.70" stop-color="#d6c0b2"/>
+      <stop offset="0.82" stop-color="#dcd8da"/>
+      <stop offset="1.00" stop-color="#f2f4f6"/>
+    </linearGradient>
+    <linearGradient id="viridis" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0.00" stop-color="#440154"/>
+      <stop offset="0.14" stop-color="#46327e"/>
+      <stop offset="0.29" stop-color="#365c8d"/>
+      <stop offset="0.43" stop-color="#277f8e"/>
+      <stop offset="0.57" stop-color="#1fa187"/>
+      <stop offset="0.71" stop-color="#4ac36b"/>
+      <stop offset="0.86" stop-color="#a0da39"/>
+      <stop offset="1.00" stop-color="#fde725"/>
+    </linearGradient>
+    <linearGradient id="natural" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0.000" stop-color="#3d6b34"/>
+      <stop offset="0.143" stop-color="#6fa055"/>
+      <stop offset="0.286" stop-color="#c3cf7a"/>
+      <stop offset="0.429" stop-color="#efe3a0"/>
+      <stop offset="0.571" stop-color="#d9b978"/>
+      <stop offset="0.714" stop-color="#b98a58"/>
+      <stop offset="0.857" stop-color="#96683f"/>
+      <stop offset="1.000" stop-color="#f6f4ee"/>
+    </linearGradient>
+  </defs>
+
+  <!-- <text x="20" y="24" font-size="16" font-weight="bold" fill="#222">Hypsometric ramps compared</text> -->
+
+  <!-- Imhof -->
+  <text x="20" y="56" font-size="14" font-weight="bold" fill="#333">Natural earth tones (land-cover-like)</text>
+  <rect x="20" y="66" width="600" height="60" fill="url(#natural)"/>
+  <text x="20" y="146" font-size="12" fill="#555">low</text>
+  <text x="285" y="146" font-size="12" fill="#555">medium</text>
+  <text x="592" y="146" font-size="12" fill="#555">high</text>
+  <text x="20" y="166" font-size="12" fill="#666" font-style="italic">Warm saturated lowlands &#8594; pale mid-slopes &#8594; cool, hazy bluish-white summits.</text>
+
+  <!-- Viridis -->
+  <text x="20" y="216" font-size="14" font-weight="bold" fill="#333">Viridis (perceptually uniform)</text>
+  <rect x="20" y="226" width="600" height="60" fill="url(#viridis)"/>
+  <text x="20" y="306" font-size="12" fill="#555">low</text>
+  <text x="285" y="306" font-size="12" fill="#555">medium</text>
+  <text x="592" y="306" font-size="12" fill="#555">high</text>
+  <text x="20" y="326" font-size="12" fill="#666" font-style="italic">Monotonically increasing lightness; colourblind-safe &#8212; but dark low elevations can read as &#8220;deep&#8221;.</text>
+
+  <!-- Natural -->
+  <text x="20" y="376" font-size="14" font-weight="bold" fill="#333">Imhof-style (Swiss aerial perspective)</text>
+  <rect x="20" y="386" width="600" height="60" fill="url(#imhof)"/>
+  <text x="20" y="466" font-size="12" fill="#555">low</text>
+  <text x="285" y="466" font-size="12" fill="#555">medium</text>
+  <text x="592" y="466" font-size="12" fill="#555">high</text>
+  <text x="20" y="486" font-size="12" fill="#666" font-style="italic">Forest green &#8594; meadow &#8594; sand &#8594; rock brown &#8594; snow. Intuitive &#8220;landscape&#8221; reading, but colour and land cover.</text>
+
+  <!-- <text x="20" y="540" font-size="13" fill="#444">All three encode absolute elevation only &#8212; combine with a hillshade (multiply blend, ~50% tint opacity)</text> -->
+  <!-- <text x="20" y="560" font-size="13" fill="#444">to show landform. Natural ramp is the most legible to lay readers; viridis the most rigorous for analysis.</text> -->
+</svg>

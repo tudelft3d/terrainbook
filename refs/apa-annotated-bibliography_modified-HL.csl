@@ -2086,7 +2086,7 @@
   <macro name="source-DOI-URL">
     <choose>
       <if variable="DOI">
-        <text prefix="doi:" variable="DOI" />
+        <text variable="DOI" />
       </if>
       <else-if variable="URL">
         <group delimiter=" ">

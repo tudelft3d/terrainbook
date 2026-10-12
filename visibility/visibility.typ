@@ -10,28 +10,47 @@ There are also several related problems.
 Two closely related examples are the estimation of shadows (position of the sun continually varies, also with seasons) and the calculation of the solar irradiance (how much sunlight will a certain area have per day/week).
 These can be used to estimate the photovoltaic potential (where can we best install solar panels?), for estimating where snow will accumulate in mountains, or for estimating the temperature of the ground (necessary for climate modelling), among other applications.
 
+
+
+When referring to visibility problems in terrains, we address the following three fundamental problems:
+/ line-of-sight (LoS): given a viewpoint $v$ and another point $q$, does $v$ see $q$ (and vice-versa)? Or, in other words, does the segment $v q$ intersect the terrain? The result is either True or False. (@fig:overview_los)
+/ viewshed: given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain "horizon", or radius of visibility. If the terrain is formed of different objects (eg buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex). (@fig:overview_viewshed)
+/ sky-view factor (SVF): given a viewpoint $v$, the SVF is the portion of the sky that is visible from $v$, ie the part of the sky hemisphere that is not obstructed by the surrounding terrain (and the objects on it, such as buildings and trees). (@fig:overview_svf)
+
 #notefigure(
-  image("./figs/overview_viewshed.pdf", width: 100%),
-  caption: [The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to #qty("15", "km")).],
+  image("figs/overview_los.pdf", width: 100%), 
+  caption: [Line-of-sight between $v$ and $q$; $q$ is not visible.], 
+  // placement: none,
+) <fig:overview_los>
+
+#notefigure(
+  image("figs/overview_viewshed.pdf", width: 100%), 
+  caption: [The viewshed at the location marked with a red star (green = visible; maximum view distance (dark grey) is set to #qty("15", "km")).], 
+  dy: 100pt,
 ) <fig:overview_viewshed>
 
-When referring to visibility problems, we address the following two fundamental problems:
-/ line-of-sight (LoS): given a viewpoint $v$ and another point $q$, does $v$ see $q$ (and vice-versa)? Or, in other words, does the segment $v q$ intersects the terrain? The result is either True or False.
-/ viewshed: given a viewpoint $v$, which area of the surrounding terrain is visible? The result is a polygon (potentially disconnected) showing the locations and extent of what is visible from $v$. Usually the extent is limited to a certain "horizon", or radius of visibility. If the terrain is formed of different objects (eg buildings), an object is either visible or not (simple case), or parts of objects can be visible (more complex).
-Observe that for both problems, the viewpoint can either be directly on the terrain (at relative elevation #qty("0", "m")) or at a given height (#qty("2", "m") for a human, or #qty("30", "m") for a telecommunication tower).
+#notefigure(
+  image("figs/flatiron_fishview_ideal.jpg", width: 100%), 
+  caption: [A fisheye view looking straight up: every direction of the sky visible from the camera position appears in the image, which is essentially what a sky-view factor measures. Adapted from a photo by Autopilot, remapped by Peter Wieden (CC BY-SA 3.0), via Wikimedia Commons.], 
+  dy: 200pt,
+) <fig:overview_svf>
 
-We discuss in this chapter the general problem of visibility as defined in computer graphics, and then discuss how terrains, being 2.5D surfaces, simplify the problem.
-We discuss how to solve these problems for both TINs and grids.
+      
+Observe that for all these problems, the viewpoint can either be directly on the terrain (at relative elevation #qty("0", "m")) or at a given height (#qty("2", "m") for a human, or #qty("30", "m") for a telecommunication tower).
 
-== Rendering + ray casting
+We discuss in this chapter the general problem of visibility as defined in computer graphics, and then discuss how terrains, being 2.5D surfaces, simplify the problem. 
 
-Rendering is the process of generating images from 2D or 3D scenes.
+
+// #pagebreak()
+== #flex-heading[General visibility problem][The general visibility problem]
+
+Rendering is the process of generating (2D) images from 2D or 3D scenes. #index[rendering] 
 As shown in @fig:Ray_trace_diagram, it involves projecting the (3D) objects in a scene to an image (say $800 times 800$ pixels) and assigning one colour to each pixel.
+In the simplest case the colour assigned is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (however this goes beyond the scope of this book).
 #notefigure(
   image("./figs/Ray_trace_diagram.pdf", width: 100%),
-  caption: [Ray tracing builds the image pixel-by-pixel by extending rays into the scene. (Figure from #link("https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg"))],
+  caption: [Ray tracing builds the image pixel-by-pixel by extending rays into the scene. (Figure from #link("https://commons.wikimedia.org/wiki/File:Ray_trace_diagram.svg")[Wikipedia])],
 ) <fig:Ray_trace_diagram>
-In the simplest case the colour assigned is that of the closest object, but to obtain photorealistic images, lighting, shading, and other physics-based functions are often applied (however this goes beyond the scope of this book).
 
 #index[ray casting] #note[ray casting]
 _Ray casting_ is used for each pixel: a ray is defined between the viewpoint $v$ and the centre of the pixel, and the closest object in the scene must be found.
@@ -39,8 +58,8 @@ The main issue involves finding that closest object, and especially discarding t
 #index[hidden-surface determination]#note[hidden-surface determination]
 @fig:zbuffer shows the idea for 2 objects ($O_1$ and $O_2$).
 Observe that objects can _partially_ be hidden by others, and that the value of the pixel should always contain the closest object at that location.
-#figure(
-  image("./figs/zbuffer.pdf", width: 55%),
+#notefigure(
+  image("./figs/zbuffer.pdf", width: 100%),
   caption: [Two planar objects $O_1$ and $O_2$ are partially overlapping when viewed from $v$.],
   placement: top,
 ) <fig:zbuffer>
@@ -57,6 +76,7 @@ It should be noticed that it is possible that objects cannot be strictly $z$-ord
 #notefigure(
   image("./figs/depthsort_issues.pdf", width: 100%),
   caption: [Part of $O_2$ is behind $O_1$ and part is in front.],
+  dy:250pt,
 ) <fig:depthsort_issues>
 The solution to this is to decompose one of the objects by the plane of the other, and to process all the parts as different objects.
 
@@ -64,9 +84,14 @@ An efficient implementation of the depth-sort algorithm requires indexing the ob
 #note[BSP-tree: binary space partitioning]
 A depth order for the scene can now be obtained by a traversal of the BSP tree.
 
-== #flex-heading[2.5D terrains are simple][For 2.5D terrains, the problem is simpler]
 
-The problem is simplified for terrains because we can sort the cells (pixels or triangles) and, because a terrain is a 2.5D surface, we can convert the problem to a 2D one.
+== Visibility in terrains
+
+For 2.5D terrains, the visibility problem is simplified because:
+  1. cells are simple polygons, usually triangles or squares;
+  2. we can sort those cells from closest to farthest;
+  3. we can convert the problem to a 2D one (because a terrain is a 2.5D surface).
+  
 We can then exploit the connectivity and adjacency between the 2D cells forming a terrain to minimise the number of objects to test (for intersections and for hidden-surface determination).
 
 === Visibility in grids
@@ -74,9 +99,33 @@ We can then exploit the connectivity and adjacency between the 2D cells forming 
 Solving visibility queries in grids is simpler than with triangles since the topology of the grid is implied (we have direct access to the neighbours of a given cell), and because grid cells are usually small we can assume that a grid cell is visible (or not) if its centre is visible (or not).
 The same assumption is tricky for triangles, since these can be large; in practice it is often assumed that a triangle is visible if its 3 vertices are visible, but this varies per implementation.
 
-We describe here how both LoS and viewshed queries can be implemented for grids; the same principles could be applied to TINs with minor modifications.
+We describe below how both LoS, viewshed, and SVF queries can be implemented for grids; the same principles could be applied to TINs with minor modifications.
 
-==== Line-of-sight
+
+=== Visibility in TINs
+
+Using the depth-sort algorithm for arbitrary triangles would require using a BSP-tree for indexing and sorting the triangles, and some triangles would need to be decomposed, as explained above.
+@fig:acyclicity shows one simple example.
+#notefigure(
+  image("./figs/acyclicity.pdf", width: 100%),
+  caption: [The 3 triangles $tau_1$, $tau_2$, and $tau_3$ form a cycle when viewed from the viewpoint $v$, and it is not possible to sort them from furthest to closest (without decomposing them).],
+  dy: -100pt,
+) <fig:acyclicity>
+
+However, it has been proven that Delaunay triangulations are _acyclic_ for any fixed viewpoint.
+In other words, the in-front/behind relationship for the triangles of a DT, with respect to a given viewpoint, is acyclic (see @fig:ordering_triangles).
+#notefigure(
+  image("./figs/ordering_triangles.pdf", width: 100%),
+  caption: [The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.],
+) <fig:ordering_triangles>
+Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slightly the point location algorithm from @sec:dtwalk.
+This operation can be performed in 2D, by projecting the triangles of the TIN to the $x y$-plane.
+
+This means that visibility queries in TINs---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in @fig:depthsort_issues).
+
+
+
+== Line-of-sight
 A LoS query, between a viewpoint $v$ and another point $q$, implies reconstructing the profile of the terrain along the vertical projection of $v q$ (let us call it $v q_"xy"$).
 It then suffices to follow $v q$ and verify whether the elevation at any ($x,y$) location along the profile is higher than that of $v q$.
 As shown in @fig:los, 
@@ -109,7 +158,7 @@ If the pixel containing $q$ is reached without detecting an intersection, then t
   ]
 )
 
-==== Viewshed
+== Viewshed
 As shown in @fig:viewshed, computing the viewshed from a single viewpoint $v$ implies that the LoS between $v$ and the centre of each pixel in a given radius is tested. 
 The result of a viewshed is a binary grid; in @fig:overview_viewshed, True/visible pixels are green, and False/invisible ones are dark grey.
 
@@ -130,26 +179,101 @@ Viewsheds with several viewpoints $v_i$ are also very useful, think for instance
 This can be computed by sampling the road at every #qty("50", "m") and computing the viewsheds from each of the points. 
 Each viewshed yields a binary grid, and it suffices to use a map algebra operator to combine the results into one grid (if one cell is visible from any viewpoint, then it is visible).
 
-=== Visibility in TINs
 
-Using the depth-sort algorithm for arbitrary triangles would require using a BSP-tree for indexing and sorting the triangles, and some triangles would need to be decomposed, as explained above.
-@fig:acyclicity shows one simple example.
-#notefigure(
-  image("./figs/acyclicity.pdf", width: 100%),
-  caption: [The 3 triangles $tau_1$, $tau_2$, and $tau_3$ form a cycle when viewed from the viewpoint $v$, and it is not possible to sort them from furthest to closest (without decomposing them).],
-  dy: -100pt,
-) <fig:acyclicity>
+== Sky-view factor <sec:svf>
 
-However, it has been proven that Delaunay triangulations are _acyclic_ for any fixed viewpoint.
-In other words, the in-front/behind relationship for the triangles of a DT, with respect to a given viewpoint, is acyclic (see @fig:ordering_triangles).
-#notefigure(
-  image("./figs/ordering_triangles.pdf", width: 100%),
-  caption: [The triangles in a DT can be ordered in an in-front/behind manner when viewed from a viewpoint.],
-) <fig:ordering_triangles>
-Therefore, to obtain the triangles intersecting a ray coming out of a viewpoint (ordered from the closest to farthest), it suffices to modify slightly the point location algorithm from @sec:dtwalk.
-This operation can be performed in 2D, by projecting the triangles of the TIN to the $x y$-plane.
+#index[sky-view factor]
 
-This means that visibility queries in TINs---like in grids---are greatly simplified compared to the general case where the ordering of objects is the main difficulty (and handling overlapping objects like in @fig:depthsort_issues).
+The sky-view factor (SVF) is the fraction of the sky that is visible from a given location $v$ on the ground (usually at the surface itself, or at pedestrian height, #qty("2", "m")).
+It depends on the height and locations of the obstacles (eg buildings, trees, etc.) in the surroundings of $v$.
+#note[SVF is value in range [0,1]]
+The result is a normalised value between 0 (the sky is completely hidden) and 1 (the entire sky hemisphere is visible).
+
+The SVF is not only a geometric indicator: under the assumption that the sky brightness is approximately uniform, it is a proxy for the amount of diffuse sky radiation that a location receives, which explains its use in many applications.
+It is for instance used in urban climatology to quantify how open a street or a courtyard is (it correlates with the urban heat island effect in cities), to estimate the formation of frost on roads, or to estimate the availability of GPS signals in urban areas.
+It is also a useful terrain visualisation technique, as we explain in @chap:relief: since the SVF does not depend on any light direction, it does not suffer from the relief inversion that affects hillshading (see @sec:vis-hillshading).
+
+The SVF can be computed in different ways: from fisheye images, from a digital terrain model, or from point clouds (where the full 3D geometry is considered, since the 2.5D assumption no longer holds).
+
+
+=== Fisheye images
+
+As shown in @fig:fisheye_images_svf, a fisheye image captures the entire sky hemisphere in a single image: the centre of the image corresponds to the zenith, and its border to the horizon.
+To compute the SVF, the pixels of the image are first classified as sky or as obstruction.
+The image cannot however simply be counted as-is: because the hemisphere is projected onto the plane of the image, the pixels close to the border (near the horizon) represent a larger part of the sky than those close to the centre.
+The image is therefore divided into concentric rings and sectors (@fig:fisheye_images_svf\c), each sky pixel is weighted by the solid angle of its cell, and the SVF is the ratio of the weighted sky to the weighted whole.
+This method is common in urban climatology and in forestry, but it captures the sky at only one location, while a terrain model (or a point cloud) allows computing the SVF everywhere at once.
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/flatiron_fishview_ideal.jpg", width: 80%), caption: []),
+      figure(image("figs/flatiron_fishview_svf.svg", width: 80%), caption: []),
+      figure(image("figs/flatiron_fishview_subdivision.svg", width: 80%), caption: []),
+      columns: (1fr, 1fr, 1fr),
+      caption: [*(a)* Fisheye image showing the entire sky hemisphere (same image as @fig:overview_svf); *(b)* the pixels are classified as sky or as obstruction, and the SVF is computed from the sky pixels; in this case the SVF value is about 0.6, ie 60% of the sky hemisphere is unobstructed; *(c)* the image is divided into concentric rings and sectors; the cells towards the border (close to the horizon) are larger and represent a larger solid angle, and each sky cell is weighted by the solid angle that it represents.
+      ],
+      placement: auto,
+      label: <fig:fisheye_images_svf>,
+    )
+  ]
+)
+
+
+=== Gridded terrains
+
+The SVF can also be computed from a gridded terrain, using the same principles as the viewshed.
+For each of the $n$ directions (azimuths) equally spaced around $v$, we 'walk' along the ray starting at $v$ up to a maximum distance $R$ (the search radius), and we store the vertical elevation angle $gamma_i$ of the horizon, ie the maximal angle under which the terrain is seen along that direction.
+Observe that this is exactly the tangent algorithm described above, except that instead of comparing each cell to the current tangent, we simply keep the largest angle encountered.
+The sky visible from $v$ is the portion of the hemisphere lying above the horizon.
+Contrary to the fisheye method, no projection (and no tessellation of the sky) is needed: because a terrain is a 2.5D surface, a direction of the sky is visible from $v$ if and only if its elevation angle is larger than the horizon elevation angle $gamma_i$ of its azimuth.
+The contribution of each sector can therefore be computed analytically, and only $n$ angles need to be stored.
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/svf_profile.pdf", width: 90%), caption: []), <fig:svf_profile>,
+      figure(image("figs/svf_hemisphere.pdf", width: 80%), caption: []), <fig:svf_hemisphere>,
+      columns: (1fr, 1fr),
+      caption: [Sky-view factor computation. *(a)* Profile of a scene with obstacles on both sides of the viewpoint $v$: in a given direction, the horizon elevation angle $gamma_i$ is the angle above the horizontal (dashed) at which the line of sight is tangent to the horizon (here the rooftops). *(b)* The same scene in 3D with the $n = 8$ azimuths along which the horizon elevation angle $gamma_i$ is computed up to the search radius $R$.],
+      placement: auto,
+      label: <fig:svf>,
+    )
+  ]
+)
+
+Let us first consider the case where the horizon has the same elevation angle $gamma$ in every direction.
+The visible sky is then the part of the hemisphere above a cone with apex $v$, and its solid angle is $2 pi (1 - sin gamma)$ (the solid angle of the complete hemisphere is $2 pi$).
+#note[solid angle]
+// TODO: solid angle in Appendix add info about solid angle
+//  https://www.mathwords.com/s/solid_angle.htm
+The visible portion of the sky is thus $(1 - sin gamma)$, and with $n$ directions the sky-view factor is obtained by averaging this quantity:
+
+$ "SVF" = 1 - frac(1, n) sum_(i=1)^n sin gamma_i $
+
+The values range from 1 (the entire hemisphere is visible; this is the case on exposed locations such as peaks) to 0 (the sky is completely obstructed; this happens in deep sinks and at the bottom of deep valleys).
+In practice, the two parameters to set are the number of directions $n$ (8 or 16 is common) and the search radius $R$, which should be chosen according to the scale of the features of interest.
+Observe that both parameters influence the result: with too few directions, narrow obstacles lying between 2 rays are missed, and with a search radius that is too small, the distant terrain is ignored; in both cases the terrain looks less obstructed than it is, and the computed SVF is thus an overestimation of the true value.
+
+#box-practice("Sky-view factor computation in practice")[
+  The QGIS plugin UMEP (Urban Multi-scale Environmental Predictor: #link("https://umep-docs.readthedocs.io")) provides tools for calculating the sky-view factor from gridded DSMs.
+
+  The tool allows for separate analysis of building and tree contributions, assuming a transmissivity of light through the vegetation based on tree species.
+]
+
+// TODO: stuff about UMEP
+// UMEP does it for buildings and separately for trees also (assuming a transmissivity of light through the vegetation, usually based on the tree species).
+// https://umep-docs.readthedocs.io/en/latest/pre-processor/Urban%20Geometry%20Sky%20View%20Factor%20Calculator.html
+// 
+// add that the discretisation of the horizon angles leads to a loss of detail in complex environments, and that it's a lower-bound on the SVF since we can miss details (which would lower the SVF value)
+
+=== Using point clouds
+
+Computing the SVF from a point cloud requires considering the full 3D geometry of the surroundings, including buildings, trees, and terrain.
+This is needed because with real 3D objects 1 horizon angle per direction no longer suffices: gaps in the canopy, and overhangs (eg balconies or bridges), mean that the sky visible in one direction cannot be summarised by a single angle.
+As for the fisheye method, the sky hemisphere is divided into cells, each weighted by its solid angle, and many rays are cast from the viewpoint to determine whether they intersect any of the points in the cloud.
+While this method can capture complex occlusion patterns more accurately than gridded approaches, it is computationally intensive, and the result depends on the density of the point cloud and on how the points are classified (vegetation points, for instance, are often given a transmissivity).
+In practice, a gridded DSM derived from the same point cloud is often used instead, as a compromise between accuracy and computation time.
 
 
 == Notes and comments
@@ -162,8 +286,13 @@ The description here is inspired by that of #citet(<DeFloriani99-1>).
 
 #citet(<Edelsbrunner90>) proved that Delaunay triangulations, in any dimensions, are acyclic.
 
+A good explanation of the fisheye projection (from hemisphere to a plane) can be found at #link("https://paulbourke.net/dome/fisheye/").
+
+The QGIS plugin UMEP is based on the paper #citet(<Lindberg18>). 
 
 == Exercises
 
 + Explain why the spacing in @fig:los\c along the profile has points that are not equally spaced.
++ The sky-view factor of a location is computed with $n = 8$ equally spaced directions. What is the SVF if the horizon elevation angle is #qty("30", "degree") in all directions? And if it is #qty("0", "degree") in 4 directions and #qty("60", "degree") in the 4 others?
++ In a fisheye image, do the pixels close to the centre or those close to the border of the image represent a larger part of the sky? What would happen to the SVF if one simply counted the sky pixels without weighting them?
 + You are given a 2.75D terrain of an area, it is composed of triangles, and your aim is to perform line-of-sight queries between some locations. Describe the algorithm that you will implement to perform the queries.
