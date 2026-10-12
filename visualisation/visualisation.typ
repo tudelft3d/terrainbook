@@ -126,7 +126,7 @@ As shown in @fig:contour_intermediate, these are typically drawn with a dashed l
   image("figs/contourintemediate.pdf", width: 100%),
     caption: [With a contour interval of #qty("20", "m") we can add intermediate contours between the index contours where the terrain is relatively flat, here some lines manually picked shown with a dashed line.],
   placement: auto,
-) <fig:index_intermediate>
+) <fig:contour_intermediate>
 
 
 ==== Labelling
@@ -209,7 +209,7 @@ Multi-directional hillshading combines multiple light sources at different angle
 
 The resulting image will have a more dynamic and three-dimensional appearance, with shadows and highlights that are more accurately represented; @fig:multi_hillshade shows an example.
 
-The standard is that of Robert Mark from his 1992 paper: 4 sources are used (azimuths at #qty("225", "deg"), #qty("270", "deg"), #qty("315", "deg"), and #qty("360", "deg")) #note[GDAL and QGIS use the same 4 angles] with the height of the sun ($gamma$) constant at #qty("30", "deg"). 
+The standard is that of Robert Mark from his 1992 paper: 4 sources are used (azimuths at #qty("225", "deg"), #qty("270", "deg"), #qty("315", "deg"), and #qty("360", "deg")) #note[GDAL (and QGIS) uses the same 4 angles] with the height of the sun ($gamma$) constant at #qty("30", "deg"). 
 The weights to apply to each of the 4 hillshades are per pixel, and are linked to the aspect of the pixel.  
 
 #place(float: true, auto,
@@ -226,30 +226,31 @@ The weights to apply to each of the 4 hillshades are per pixel, and are linked t
 )
 
 
-
-
 == #flex-heading[Colour + shading][Combining colour and shading] <sec:vis-colour>
 
-Notice that hillshade and shading give a sense of form, but not of height; two flat areas at different elevations look identical.
+Notice that hillshade and shading give a sense of form, but not of the exact elevation: two flat areas at different elevations look identical.
 Therefore, they are not sufficient to represent terrain.
 
-Elevation colouring, also called hypsometric tints#index[hypsometric tints]#note[hypsometric tints], on the other hands, give a sense of absolute elevation, but not of form. 
-It assigns a colour to elevation bands along a ramp, either continuous or discrete. 
-Every pixel gets its colour purely from its z value (absolute elevation). 
-@fig:colour_ramps shows three widely used ramps:
-/ Natural Earth tones: Green for lowlands, yellow/brown for hills, white for snow-capped peaks (as used in @fig:tasmania_dem_01);
-/ Viridis-style ramps: widely available in GIS such as QGIS;
-/ Imhof's Swiss tints: a classic scheme for topographic maps.
-
 #figure(
-  image("figs/colour_ramps.svg", width: 80%),
+  image("figs/colour_ramps.svg", width: 100%),
   caption: [Three widely used colour ramps for colouring terrains],
-  // dy:250pt,
+  placement: auto,
 ) <fig:colour_ramps>
-Notice in @fig:tasmania_dem_01 that the hypsometric tints are flat within each band, and therefore no form inside one step of the band is perceivable.
 
+Elevation colouring, also called _hypsometric tints_#index[hypsometric tints]#note[hypsometric tints], on the other hands, give a sense of absolute elevation (but not of form). 
+It assigns a colour to elevation bands along a ramp (either continuous or discrete), and every pixel gets its colour purely from its $z$-value (absolute elevation). 
+@fig:colour_ramps shows three widely used ramps:
+/ Natural Earth tones: Green for lowlands, yellow/brown for hills, white for snow-capped peaks (as used in @fig:tasmania_dem_01). It has the advantage of being immediately legible by everyone, the lightness progression is good, and summits are easily identifiable. A major drawback in practice is that many people misread elevation colours as climate or vegetation information.
+/ Viridis: it is a perceptually uniform colour ramp: every equal elevation jump looks like an equally-sized colour change. Furthermore, it is robust for colourblind and greyscale printing. This is the default in many (generic, not GIS-related) visualisation libraries (such as `matplotlib`). However, for depicting terrains, it has drawbacks: the dark purple used for low elevation can be misread as "deep/sea", and its strong saturation can compete with a hillshade underneath. 
+/ Imhof's Swiss tints: was developed to sit under shading and to exploit the "near = bright, far = hazy" aerial-perspective cue, which viridis ignores entirely. Forest green $->$ meadow $->$ sand $->$ rock brown $->$ snow. It is a classic scheme for topographic maps.
+
+As a rule of thumb: viridis is probably best for analysis (if one is measuring elevations) and Imhof-style for presentating maps.
+
+==== Combination with hillshading
+If used alone, hypsometric tints are flat within each band, and therefore one does not perceive form inside one step of the band (this is clearly visible in @fig:tasmania_dem_01).
 The combination of the two is arguably the best way to represent terrain so that both its form and the elevation are clear.
 @fig:hillshade_colours shows the same terrain with the same hypsometric tints, but with a hillshade applied.
+Observe that with those one can get both a idea of the absolute elevation and of the morphology of the area.
 
 #place(float: true, auto,
   wideblock[
@@ -264,20 +265,12 @@ The combination of the two is arguably the best way to represent terrain so that
   ]
 )
 
-
-// Imhof's design questions, still relevant today: how to choose the step heights (equidistant, equal-area, arithmetic/geometric progressions — Imhof Ch. 13 §E) and how to adjust the tones to those steps (§G). This is a nice "computational choice" angle for a book like yours.
-
-// - hypsometric tints: colouring elevations along a ramp; why they are
-//   misleading on their own (they encode absolute elevation, not the form)
-
-// - blending the two: multiplicative hillshade over a coloured DEM, weighted
-//   multi-layer compositing (blending modes in GIS software)
-
-// - references: Imhof (1982) Cartographic Relief Presentation;
-//   Patterson & Jenny (2011) cross-blended hypsometric tints
+Those were obtained by applying a transparency of ~60% to the coloured terrain, which is overlaid over a simple greyscale hillshade.
+But other methods exist, for instance where the colour of the ramp is multiplied (darkened) by the value of the hillshade.
+This way, the colour (which represents the elevation) stays the same, but its lightness is modified by the value of the hillshade (so the form of the terrain is visible).
 
 
-#pagebreak()
+// #pagebreak()
 == Tanaka contours <sec:tanaka>
 
 The so-called "Tanaka contours", named after the cartographer Kitirô Tanaka who formalised the concept in 1950, is a visualisation method that (1) shades contour lines and (2) uses flat area tones to give a better impression of the relief of a terrain. 
@@ -301,17 +294,6 @@ The original method applies a different thickness to the lines so that where whi
 This can be observed from the Tanaka contours on the cover of Imhof's book (see @fig:imhof_cover).
 // This can be obtained by several methods, one of them being drawing twice: first in light grey for the illuminated side, then in dark grey for the shadowed side, with the widths determined by the angle between the line and the light direction.
 
-// ([more information on Wikipedia](https://en.wikipedia.org/wiki/Terrain_cartography#Tanaka_(relief)_contours)).
-// #place(float: true, auto,
-//   wideblock[
-//     #figure(
-//       image("figs/sunlight_direction.pdf", width: 100%),
-//       caption: [The same map showing how Tanaka contours are illuminated based on their orientation relative to the light source. Notice that the hill looks like a depression when the light comes from the South-East.],
-//       placement: auto,
-//     ) <fig:tanaka>
-//   ]
-// )
-// 
 
 == SVF-based hillshading
 
@@ -339,7 +321,8 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 // A closely related measure is the _openness_ of #citet(<Yokoyama02>), where instead of the solid angle of the visible sky, the zenith angles of the horizon are averaged (positive openness), or the nadir angles below the surface (negative openness).
 // Free and open-source implementations of both, together with several other techniques to visualise high-resolution DTMs, are available in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
 
-#citet(<Patterson11>) proposed a method to blend the hypsometric tints with the sky-view factor, which is implemented in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
+#citet(<Patterson11>) proposed a method to blend properly the hypsometric tints with a hillshade and avoid the confusion wiht land cover. 
+They lowland colours vary with climate/vegetation (olives/greens in humid regions, tans in arid ones) while highlands go to browns/whites. 
 
 // TODO: add notes when sections are written
 // - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?) (see the [original paper](https://doi.org/10.2307/211219))

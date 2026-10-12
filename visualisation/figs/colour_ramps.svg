@@ -48,7 +48,7 @@
   <text x="20" y="306" font-size="12" fill="#555">low</text>
   <text x="285" y="306" font-size="12" fill="#555">medium</text>
   <text x="592" y="306" font-size="12" fill="#555">high</text>
-  <text x="20" y="326" font-size="12" fill="#666" font-style="italic">Monotonically increasing lightness; colourblind-safe &#8212; but dark lowlands can read as &#8220;deep&#8221;.</text>
+  <text x="20" y="326" font-size="12" fill="#666" font-style="italic">Monotonically increasing lightness; colourblind-safe &#8212; but dark low elevations can read as &#8220;deep&#8221;.</text>
 
   <!-- Natural -->
   <text x="20" y="376" font-size="14" font-weight="bold" fill="#333">Imhof-style (Swiss aerial perspective)</text>
@@ -56,7 +56,7 @@
   <text x="20" y="466" font-size="12" fill="#555">low</text>
   <text x="285" y="466" font-size="12" fill="#555">medium</text>
   <text x="592" y="466" font-size="12" fill="#555">high</text>
-  <text x="20" y="486" font-size="12" fill="#666" font-style="italic">Forest green &#8594; meadow &#8594; sand &#8594; rock brown &#8594; snow. Intuitive &#8220;landscape&#8221; reading, but colour &#880; land cover.</text>
+  <text x="20" y="486" font-size="12" fill="#666" font-style="italic">Forest green &#8594; meadow &#8594; sand &#8594; rock brown &#8594; snow. Intuitive &#8220;landscape&#8221; reading, but colour and land cover.</text>
 
   <!-- <text x="20" y="540" font-size="13" fill="#444">All three encode absolute elevation only &#8212; combine with a hillshade (multiply blend, ~50% tint opacity)</text> -->
   <!-- <text x="20" y="560" font-size="13" fill="#444">to show landform. Natural ramp is the most legible to lay readers; viridis the most rigorous for analysis.</text> -->
