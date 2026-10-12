@@ -8,29 +8,32 @@ We consider in this chapter the following four terrain representations and discu
 
 #figure(
   image("figs/reps.pdf", width: 100%),
+  numbering: none,
   // caption: [],
   // placement: auto,
 )
 
+#v(1cm)
+
 #wideblock[
-#figure(
-  // placement: ,
-  caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
-  table(
-    stroke: 0.2pt,
-    columns: (19mm, 1fr, 1fr, 1fr, 1fr),
-    align: (left, center, center, center, center),
-    table.hline(),
-    table.header[from/to][*PC*][*raster*][*TIN*][*isolines*],
-    table.hline(),
-    [*PC*], [--], [interpolate at middle points of cells], [create DT using 2D projection of points (ie using $x$ and $y$ only)], [convert to TIN + extract from triangles + structure output],
-    [*raster*], [keep middle points only], [--], [create TIN using middle points of cells + TIN simplification], [extract from grid cells + structure output],
-    [*TIN*], [keep only vertices], [interpolate at middle points of cells], [--], [extract from triangles + structure output],
-    [*isolines*], [keep only vertices \ (⚠️ wedding cake effect)], [convert lines to points + interpolate \ (⚠️ wedding cake effect)], [create DT using points \ (⚠️ wedding cake effect)], [--],
-    
-    table.hline(),
+  #figure(
+    // placement: ,
+    caption: [Overview of the interpolation methods discussed in this chapter, with their properties (as described in @sec:interpol_properties)],
+    table(
+      stroke: 0.2pt,
+      columns: (19mm, 1fr, 1fr, 1fr, 1fr),
+      align: (left, center, center, center, center),
+      table.hline(),
+      table.header[from/to][*PC*][*raster*][*TIN*][*isolines*],
+      table.hline(),
+      [*PC*], [--], [interpolate at middle points of cells], [create DT using 2D projection of points (ie using $x$ and $y$ only)], [convert to TIN + extract from triangles + structure output],
+      [*raster*], [keep middle points only], [--], [create TIN using middle points of cells + TIN simplification], [extract from grid cells + structure output],
+      [*TIN*], [keep only vertices], [interpolate at middle points of cells], [--], [extract from triangles + structure output],
+      [*isolines*], [keep only vertices \ (⚠️ wedding cake effect)], [convert lines to points + interpolate \ (⚠️ wedding cake effect)], [create DT using points \ (⚠️ wedding cake effect)], [--],
+      
+      table.hline(),
+    ) 
   ) 
-) 
 ]
 
 
