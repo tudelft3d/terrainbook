@@ -80,7 +80,7 @@ The surface represents the exterior of all objects/features together, and vertic
 Surface modelling is popular in CAD, but in GIS it is rather rare.
 We are not aware of any popular GIS software that allows us to model a terrain as a 2.75D and perform operations on it.
 
-=== #flex-heading[3D][Full 3D, or volumetric modelling]
+=== Full 3D, or volumetric modelling
 
 This refers to the modelling of not only the boundaries of objects, but also of the interior of these.
 #note[volumetric modelling]#index[volumetric modelling]
