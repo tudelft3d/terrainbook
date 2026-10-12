@@ -6,10 +6,10 @@ tag = false
 push = false
 
 [bumpver.file_patterns]
-"terrainbook.tex" = [
-  'v{version}',
-]
-"main.typ" = [
+# "terrainbook.tex" = [
+#   'v{version}',
+# ]
+"terrainbook.typ" = [
   'version: "{version}",',
 ]
 "docs/_config.yml" = [
@@ -18,9 +18,9 @@ push = false
 "CITATION.bib" = [
   "year = {YYYY}",
 ]
-"front-back/pre.tex" = [
-  " YYYY % VER:YEAR",
-]
+# "front-back/pre.tex" = [
+#   " YYYY % VER:YEAR",
+# ]
 "front-back/pre.typ" = [
   " YYYY Hugo",
 ]
