@@ -1,0 +1,24 @@
+<!DOCTYPE qgis_style>
+<qgis_style version="2">
+<symbols/>
+<colorramps>
+<colorramp type="preset" name="Imhof" tags="custom,ramp1">
+  <Option type="Map">
+    <Option type="QString" name="preset_color_0" value="160,196, 138, 255"/>
+    <Option type="QString" name="preset_color_1" value="195,204, 138, 255"/>
+    <Option type="QString" name="preset_color_2" value="220,212, 138, 255"/>
+    <Option type="QString" name="preset_color_3" value="222,214, 160, 255"/>
+    <Option type="QString" name="preset_color_4" value="232,210, 168, 255"/>
+    <Option type="QString" name="preset_color_5" value="226,200, 164, 255"/>
+    <Option type="QString" name="preset_color_6" value="214,192, 178, 255"/>
+    <Option type="QString" name="preset_color_7" value="220,216, 218, 255"/>
+    <Option type="QString" name="preset_color_8" value="242,244, 246, 255"/>
+    <Option type="QString" name="rampType" value="preset"/>
+  </Option>
+</colorramp>
+</colorramps>
+<textformats/>
+<labelsettings/>
+<legendpatchshapes/>
+<symbols3d/>
+</qgis_style>

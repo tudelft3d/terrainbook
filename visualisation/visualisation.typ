@@ -5,12 +5,12 @@
 
 #minitoc(suboutline(depth: 1, indent: 0pt))
 
-The problem we are tackling in this chapter is how to represent the 3D surface of a terrain on a flat 2D medium (a map or a computer screen) while maintaining both its measurable properties (position, shape, elevation) and its pictorial form (to obtain a legible impression of the relief).
+The main problem we are tackling in this chapter is how to represent the 3D surface of a terrain on a flat 2D medium (a map or a computer screen) while maintaining both its _measurable properties_ (position and shape of the hills/mountains and their elevation) and its _pictorial form_ (to obtain a legible impression of the relief).
 Before computers were mainstream this has occupied cartographers for centuries, who had to _manually_ draw hachures, contours, and shading.
 
 Eduard Imhof's book, _Cartographic Relief Presentation_, first published in German in 1965 and later translated into English, is the classic synthesis of this body of practice, and it remains the reference work on the subject.
 #notefigure(
-  image("figs/imhof_cover.pdf", width: 100%),
+  image("figs/imhof_cover.jpg", width: 100%),
   caption: [Eduard Imhof seminal book.],
   dy:250pt,
 ) <fig:imhof_cover>
@@ -23,16 +23,18 @@ Instead, we provide a short overview of the first attemps at depicting relief on
 
 Nowadays the medium is a computer screen and the images are now computed from a gridded terrain (or a TIN, or a point cloud), but the questions are the same as in Imhof's time: which graphic device, and with which parameters, makes the form of the terrain legible?
 // TODO: what about scale? where to put this discussion in this chapter?
-The answer also depends on the scale, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
 
-Finally, we explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
+Observe that the answer also depends on the scale, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
+
+We also explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
+
 The algorithms that produce the underlying data are covered elsewhere---gradient and aspect in @chap:topofeatures, contour extraction in @sec:iso; here we focus on how the result is rendered.
 
 
 == Perpective views of relief <sec:vis_history>
 
 The oldest maps (from the Middle Ages) showed mountains depicted from the side, as rows of rounded "molehills", which are regularly rounded domes arranged in certain patterns.
-Figure @fig:molehills shows three examples taken from Imhof's book. 
+@fig:molehills shows three examples taken from Imhof's book. 
 #subfigure(
   figure(image("figs/molehill_1.png", width: 100%), caption: []),
   figure(image("figs/molehill_2.png", width: 100%), caption: []),
@@ -152,7 +154,7 @@ It assumes that the source of light (the sun) is located at a given position (us
 Consider the gridded DEM shown in @fig:tasmania_dem_01, which contains a river at low elevation and two peaks.
 The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has the sun located at an azimuth of #qty("315", "deg") (North-West) and an elevation of #qty("45", "deg").
 #figure(
-  image("figs/hillshade/dem_01_colour.pdf", width: 80%),
+  image("figs/hillshade/dem_01_colour.jpg", width: 80%),
   caption: [The terrain of a random region in Tasmania, Australia.],
   placement: auto,
 ) <fig:tasmania_dem_01>
@@ -207,13 +209,13 @@ Multi-directional hillshading combines multiple light sources at different angle
 
 The resulting image will have a more dynamic and three-dimensional appearance, with shadows and highlights that are more accurately represented; @fig:multi_hillshade shows an example.
 
-The standard is that of Robert Mark from his 1992 paper: 4 sources are used (azimuth at #qty("225", "deg"), #qty("270", "deg"), #qty("315", "deg"), and #qty("360", "deg")) #note[GDAL and QGIS use the same 4 angles] with the height of the sun ($gamma$) constant at #qty("30", "deg"). 
+The standard is that of Robert Mark from his 1992 paper: 4 sources are used (azimuths at #qty("225", "deg"), #qty("270", "deg"), #qty("315", "deg"), and #qty("360", "deg")) #note[GDAL and QGIS use the same 4 angles] with the height of the sun ($gamma$) constant at #qty("30", "deg"). 
 The weights to apply to each of the 4 hillshades are per pixel, and are linked to the aspect of the pixel.  
 
 #place(float: true, auto,
   wideblock[
     #subfigure(
-      figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]),
+      figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with single light source (NW)]),
       figure(image("figs/hillshade/multi_hillshade.png", width: 100%), caption: [Multi-directional hillshade]), 
       columns: (1fr, 1fr),
       caption: [Example of multi-directional hillshade for the terrain shown in @fig:tasmania_dem_01.],
@@ -226,38 +228,64 @@ The weights to apply to each of the 4 hillshades are per pixel, and are linked t
 
 
 
+== #flex-heading[Colour + shading][Combining colour and shading] <sec:vis-colour>
 
-// TODO: possible additions
-// - alternatives based on diffuse illumination (no single light direction,
-//   thus no relief inversion): present the sky-view factor as the main one
-//   (it is defined in @sec:svf, Chapter @chap:visibility), and mention
-//   openness (average zenith/nadir angles, Yokoyama et al. 2002) in passing.
-//   Show the SVF + hillshade combination, which is the recommended one for
-//   cartography (Zaksek et al. 2011)
+Notice that hillshade and shading give a sense of form, but not of height; two flat areas at different elevations look identical.
+Therefore, they are not sufficient to represent terrain.
+
+Elevation colouring, also called hypsometric tints#index[hypsometric tints]#note[hypsometric tints], on the other hands, give a sense of absolute elevation, but not of form. 
+It assigns a colour to elevation bands along a ramp, either continuous or discrete. 
+Every pixel gets its colour purely from its z value (absolute elevation). 
+@fig:colour_ramps shows three widely used ramps:
+/ Natural Earth tones: Green for lowlands, yellow/brown for hills, white for snow-capped peaks (as used in @fig:tasmania_dem_01);
+/ Viridis-style ramps: widely available in GIS such as QGIS;
+/ Imhof's Swiss tints: a classic scheme for topographic maps.
+
+#figure(
+  image("figs/colour_ramps.svg", width: 80%),
+  caption: [Three widely used colour ramps for colouring terrains],
+  // dy:250pt,
+) <fig:colour_ramps>
+Notice in @fig:tasmania_dem_01 that the hypsometric tints are flat within each band, and therefore no form inside one step of the band is perceivable.
+
+The combination of the two is arguably the best way to represent terrain so that both its form and the elevation are clear.
+@fig:hillshade_colours shows the same terrain with the same hypsometric tints, but with a hillshade applied.
+
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/hillshade/dem_01_colour_hillshade.jpg", width: 100%), caption: []), 
+      figure(image("figs/hillshade/dem_01_imhof_hillshade.jpg", width: 100%), caption: []), 
+      columns: (1fr, 1fr),
+      caption: [Two colour ramps applied to @fig:tasmania_dem_01: the natural Earth tones and the Imhof's tints.],
+      placement: auto,
+      label: <fig:hillshade_colours>,
+    )
+  ]
+)
 
 
+// Imhof's design questions, still relevant today: how to choose the step heights (equidistant, equal-area, arithmetic/geometric progressions — Imhof Ch. 13 §E) and how to adjust the tones to those steps (§G). This is a nice "computational choice" angle for a book like yours.
 
-== Combining colour and shading <sec:vis-colour>
-
-// TODO:
 // - hypsometric tints: colouring elevations along a ramp; why they are
 //   misleading on their own (they encode absolute elevation, not the form)
-// - why a hillshade alone lacks height context
+
 // - blending the two: multiplicative hillshade over a coloured DEM, weighted
 //   multi-layer compositing (blending modes in GIS software)
+
 // - references: Imhof (1982) Cartographic Relief Presentation;
 //   Patterson & Jenny (2011) cross-blended hypsometric tints
 
 
-
+#pagebreak()
 == Tanaka contours <sec:tanaka>
 
 The so-called "Tanaka contours", named after the cartographer Kitirô Tanaka who formalised the concept in 1950, is a visualisation method that (1) shades contour lines and (2) uses flat area tones to give a better impression of the relief of a terrain. 
-@fig:tanaka_original shows a figure from the original paper, and the cover of this book shows the same technique applied to an terrain somewhere in Tasmania (Australia).
+@fig:tanaka_original shows a figure from the original paper, and the cover of this book shows the same technique applied to an actual area somewhere in Tasmania (Australia).
 #notefigure(
   image("figs/tanaka_original.png", width: 100%),
   caption: [Tanaka's illuminated contours showing how contour lines vary with their orientation relative to the light source.],
-  // placement: auto,
+  placement: auto,
 ) <fig:tanaka_original>
 
 For the illumination, the source of light is usually located at the North-West direction.
@@ -283,16 +311,24 @@ This can be observed from the Tanaka contours on the cover of Imhof's book (see 
 //     ) <fig:tanaka>
 //   ]
 // )
+// 
 
 == SVF-based hillshading
 
 // TODO
 // it's not with a source of light, but can be considered as having diffuse light
 // not affected by the "reverse-effect"
+// - alternatives based on diffuse illumination (no single light direction,
+//   thus no relief inversion): present the sky-view factor as the main one
+//   (it is defined in @sec:svf, Chapter @chap:visibility), and mention
+//   openness (average zenith/nadir angles, Yokoyama et al. 2002) in passing.
+//   Show the SVF + hillshade combination, which is the recommended one for
+//   cartography (Zaksek et al. 2011)
+
 
 == Notes and comments
 
-The introduction of this chapter---in particular the tension between the measurability and the pictorial representation of relief---draws on #citet(<Imhof65>), which remains the classic reference on the subject.
+The introduction of this chapter---in particular the tension between the measurability and the pictorial representation of relief---is heavily inspired by #citet(<Imhof65>), which remains the classic reference on the subject.
 
 The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (#link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")[link]).
 
@@ -303,6 +339,7 @@ The paper also describes its use for spatial analysis, eg for energy balance stu
 // A closely related measure is the _openness_ of #citet(<Yokoyama02>), where instead of the solid angle of the visible sky, the zenith angles of the horizon are averaged (positive openness), or the nadir angles below the surface (negative openness).
 // Free and open-source implementations of both, together with several other techniques to visualise high-resolution DTMs, are available in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
 
+#citet(<Patterson11>) proposed a method to blend the hypsometric tints with the sky-view factor, which is implemented in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
 
 // TODO: add notes when sections are written
 // - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?) (see the [original paper](https://doi.org/10.2307/211219))
