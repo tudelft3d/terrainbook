@@ -295,17 +295,32 @@ This can be observed from the Tanaka contours on the cover of Imhof's book (see 
 // This can be obtained by several methods, one of them being drawing twice: first in light grey for the illuminated side, then in dark grey for the shadowed side, with the widths determined by the angle between the line and the light direction.
 
 
-== SVF-based hillshading
+== SVF-based hillshading <sec:vis-svf>
 
-// TODO
-// it's not with a source of light, but can be considered as having diffuse light
-// not affected by the "reverse-effect"
-// - alternatives based on diffuse illumination (no single light direction,
-//   thus no relief inversion): present the sky-view factor as the main one
-//   (it is defined in @sec:svf, Chapter @chap:visibility), and mention
-//   openness (average zenith/nadir angles, Yokoyama et al. 2002) in passing.
-//   Show the SVF + hillshade combination, which is the recommended one for
-//   cartography (Zaksek et al. 2011)
+The hillshading techniques presented above rely on _direct_ illumination: one (or a few) light sources with a fixed direction.
+This has one well-known consequence: inversion of the perceived relief (see @fig:hillshade_se).
+
+An alternative is to use _diffuse_ illumination: instead of lighting the terrain from a few directions, or from a single direction, we consider a fictive light source that illuminates the entire sky hemisphere uniformly---as on a completely overcast day.
+The brightness of a location is then given by the portion of the sky that it sees, which is precisely the sky-view factor as defined in @sec:svf.
+A location on a ridge or on a plateau sees most of the sky and is rendered bright, while the bottom of a deep valley sees almost none and is rendered dark.
+
+// Figure generated with visualisation/figs/hillshade/svf_dem.py
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/hillshade/dem_01_svf.jpg", width: 100%), caption: [SVF visualisation]),
+      figure(image("figs/hillshade/dem_01_svf_hillshade.jpg", width: 100%), caption: [SVF combined with the hillshade]),
+      columns: (1fr, 1fr),
+      caption: [SVF-based hillshading of the terrain from @fig:tasmania_dem_01, computed with $n = 16$ directions and a search radius $R = #qty("1", "km")$: *(a)* the SVF alone---the enclosed valleys are the darkest, and the flat cells (the river and the plateau) the brightest since nothing obstructs the sky there; *(b)* the SVF drawn as a semi-transparent layer over the hillshade from @fig:hillshade.],
+      placement: auto,
+      label: <fig:svf-hillshade>,
+    )
+  ]
+)
+
+@fig:svf-hillshade shows the technique for the terrain from @fig:tasmania_dem_01.
+The main drawback of the technique is that the result informs us less on the shape of the slope.
+The two techniques are therefore complementary, and it is recommended to combine them, eg by drawing the SVF as a semi-transparent layer over the hillshade; this enhances the legibility of the relief and is especially suitable for cartographic purposes.
 
 
 == Notes and comments
@@ -316,32 +331,12 @@ The formula to calculate the hillshade for one cell in a gridded DTM is from #ci
 
 For the multi-directional hillshade, the 4 sources of light and the weights to apply to each hillshade is from #citet(<Mark92>).
 
-The sky-view factor was proposed as a relief visualisation technique by #citet(<Zaksek11>), where the formula given above and the influence of the parameters (number of directions, search radius) on the results are discussed in detail.
+The sky-view factor was proposed as a relief visualisation technique by #citet(<Zaksek11>), where the formula (given in @sec:svf) and the influence of the parameters (number of directions, search radius) on the results are discussed in detail.
 The paper also describes its use for spatial analysis, eg for energy balance studies and to estimate the availability of GPS signals in urban areas.
-// A closely related measure is the _openness_ of #citet(<Yokoyama02>), where instead of the solid angle of the visible sky, the zenith angles of the horizon are averaged (positive openness), or the nadir angles below the surface (negative openness).
 // Free and open-source implementations of both, together with several other techniques to visualise high-resolution DTMs, are available in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
 
 #citet(<Patterson11>) proposed a method to blend properly the hypsometric tints with a hillshade and avoid the confusion wiht land cover. 
 They lowland colours vary with climate/vegetation (olives/greens in humid regions, tans in arid ones) while highlands go to browns/whites. 
-
-// TODO: add notes when sections are written
-// - Tanaka 1950 (original, in Japanese) + English translation (Tanaka 1952?) (see the [original paper](https://doi.org/10.2307/211219))
-// - Imhof (1982), Cartographic Relief Presentation
-// - Patterson & Jenny (2011), cross-blended hypsometric tints
-
-// - Yoeli 1985, Topographic relief depiction by hachures with computer and
-//   plotter, Cartographic Journal 22(2): 111-124, doi:10.1179/caj.1985.22.2.111
-//   (first computer algorithm; works from contour lines -> backward pointer
-//   to @sec:iso)
-// - Kennelly & Kimerling 2000, Desktop hachure maps from digital elevation
-//   models, Cartographic Perspectives 37, doi:10.14714/cp37.811 (small-scale
-//   illuminated hachures from DEM slope/aspect; explicitly Tanaka-like)
-// - Automated Swiss-style relief shading and rock hachuring (2018),
-//   Cartographic Journal, doi:10.1080/00087041.2018.1551955
-
-
-
-
 
 == Exercises
 
