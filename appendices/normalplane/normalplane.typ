@@ -9,7 +9,7 @@ Given a point cloud $S$, the normal vector for a point $p in S$ can be found by 
 The vector orthogonal to this plane is the normal vector $arrow(n)$ of $p$.
 
 In practice, we might want to use the 10 (or 15 or 20, depending on the resolution of $S$) nearest neighbours to $p$.
-This can be efficiently (and easily with the many implementations available) performed with a $k$d-tree, see @sec:knn-m.
+This can be efficiently (and easily with the many implementations available) performed with a $k$d-tree, see @sec:kdtree.
 
 To fit the plane, the preferred option is to use least-square fitting because it minimises the sum of squared distances between the points and the plane $P$.
 

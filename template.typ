@@ -191,7 +191,7 @@
 #let box-info(title, body) = figure(
   kind: "infobox",
   numbering: none,
-  placement: auto,
+  // placement: auto,
 )[
   #showybox(
     frame: (
