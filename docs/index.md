@@ -2,7 +2,6 @@
 layout: default
 ---
 
-
 # Computational modelling of terrains
 
 An open book about algorithms and methodologies to reconstruct terrains, to manipulate them, and to extract information from them.
@@ -32,9 +31,10 @@ Written by [Hugo Ledoux](https://3d.bk.tudelft.nl/hledoux), [Ken Arroyo Ohori](h
   1. Spatial interpolation: kriging
   1. Conversions between terrain representations
   1. Topographic properties and features
+  1. Cartographic relief representation
   1. Visibility queries on terrains
   1. Runoff modelling
-  1. Point cloud processing
+  1. Processing point clouds
   1. Handling and processing massive terrains
   1. Spatial extent of a set of points
   1. Processing bathymetric data to produce hydrographic charts

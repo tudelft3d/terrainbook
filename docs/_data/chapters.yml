@@ -1,6 +1,6 @@
 
 - chapter: 1
-  title: "What is a terrain"
+  title: "What is a terrain?"
   # video:
 
 - chapter: 2
@@ -24,7 +24,7 @@
   video: ZaadzBvgE2s
 
 - chapter: 7
-  title: "Conversion between terrain representations"
+  title: "Conversions between terrain representations"
   video: Nqfp94KpcUA
 
 - chapter: 8
@@ -32,26 +32,29 @@
   video: iF64Qeb_isw
 
 - chapter: 9
+  title: "Cartographic relief representation"
+  # video:
+
+- chapter: 10
   title: "Visibility queries on terrains"
   video: 3HYlBogztOU
-  
-- chapter: 10
+
+- chapter: 11
   title: "Runoff modelling"
   video: 0NzZoJATFjc
 
-- chapter: 11
+- chapter: 12
   title: "Processing point clouds"
   video: gGchA5fluos
 
-- chapter: 12
-  title:  "Handling and processing massive terrains"  
-  # video: 
-
 - chapter: 13
+  title:  "Handling and processing massive terrains"
+  # video:
+
+- chapter: 14
   title: "Spatial extent of a set of points"
   video: dqRb32iGZ_c
 
-- chapter: 14
+- chapter: 15
   title: "Processing bathymetric data to produce hydrographic charts"
   video: DVUm7SdzhfI
-
