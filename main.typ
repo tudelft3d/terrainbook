@@ -45,20 +45,10 @@
     }
     #outline(depth: 2, indent: auto)
   ]
-
-  // TODO: remove list of tables/algorithms
-  // #outline(
-  //   title: [List of tables],
-  //   target: figure.where(kind: table),
-  // )
-  
-  // #outline(
-  //   title: [List of algorithms],
-  //   target: figure.where(kind: "algorithm"),
-  // )
 ]
 
 //-- put in red chapter errors (instead of not being able to compile)
+//-- TODO: remove the red-missing-refs
 #let possible-missing-ref(it) = {
   if it.element != none {
     it
