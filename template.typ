@@ -119,7 +119,14 @@
 ]
 
 //-- the custom boxes in the text
-#let box-practice(title, body) = figure(placement: auto)[
+//-- NB: they are figures (placement: auto) so that they float, but with their
+//-- own kind and numbering: none, so that they do not consume a number in the
+//-- sequence of the figures of the chapter (hence no gaps in the numbering).
+#let box-practice(title, body) = figure(
+  kind: "practicebox",
+  numbering: none,
+  placement: auto,
+)[
   #showybox(
     frame: (
       border-color: orange.darken(50%),
@@ -137,7 +144,11 @@
     body,
   )
 ]
-#let box-toread(title, body) = figure(placement: auto)[
+#let box-toread(title, body) = figure(
+  kind: "toreadbox",
+  numbering: none,
+  placement: auto,
+)[
   #showybox(
     frame: (
       border-color: blue.darken(50%),
@@ -155,7 +166,11 @@
     body,
   )
 ]
-#let box-info(title, body) = figure(placement: auto)[
+#let box-info(title, body) = figure(
+  kind: "infobox",
+  numbering: none,
+  placement: auto,
+)[
   #showybox(
     frame: (
       border-color: olive.darken(50%),

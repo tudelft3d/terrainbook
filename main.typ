@@ -1,4 +1,5 @@
 // TODO
+// [x] the box-practice/tool increment the figure by 1, see Fig1.4 
 // [ ] @app:ahn[Appendix]
 // [ ] eg + ie
 // [ ] https://github.com/typst/hayagriva/pull/484 school/institution not printed
