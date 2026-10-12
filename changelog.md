@@ -7,6 +7,16 @@ All notable changes to this book will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026.0] - 2026-xx-xx
+### Added
+- Typst files for all chapters
+- chapter about cartographic visualisation of relief
+### Modified
+- whole book rewritten in Typst!
+- several small improvements and typos fixing while rewriting the book
+- the latex .tex are still in the respective folders to monitor is anything got lost in translation...
+- many figures redrawn
+
 ## [2025.1] - 2025-12-28
 ### Modified
 - fixed multiple typos throughout the book (thanks to many students, and Claude!)
