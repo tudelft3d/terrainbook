@@ -47,6 +47,6 @@ Please report errors or potential improvements at \
 This book was typeset with #link("https://typst.app")[Typst] by using several great packages made by others. 
 The aim was more or less to obtain the same as the fabulous #link("https://github.com/fmarotta/kaobook")[kaobook] class from LaTeX.
 The figures were created using Ipe, OmniGraffle, Affinity Designer, or Blender. 
-The front cover image shows the Tanaka contours of a random place in Tasmania.
+The front cover image shows the Tanaka contours of a random place in Tasmania (Australia).
 
 ]
