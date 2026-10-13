@@ -51,8 +51,35 @@
 #let flex-caption(long, short) = context {
   if in-outline.at(here()) { long } else { short }
 }
-#let flex-heading(long, short) = context {
-  if in-outline.get() { long } else { short }
+//-- Two titles for a heading (a level-2 `==` one in the book):
+//-- the first is shown in the margin minitoc, the second is printed in the body
+//-- (and is also what the running header, the TOC and the PDF bookmark use).
+//-- The heading body must remain *plain text*: if it holds a `context` block,
+//-- the PDF outline entry gets a number but no title (typst#1889, typst#3424).
+//-- The minitoc title is therefore carried out-of-band in a metadata element,
+//-- and read back with `flex-minitoc-title` by the minitoc show rule below.
+#let flex-heading(margintoc-title, body-title) = {
+  body-title
+  metadata((flex-margintoc-title: margintoc-title))
+}
+#let flex-minitoc-title(body) = {
+  if body == none or not body.has("children") {
+    return none
+  }
+  //-- the metadata is the last child of the heading body (the minitoc title may
+  //-- be nested one level deeper, hence the second attempt)
+  let last = body.children.at(-1, default: none)
+  for candidate in (last, if last != none and last.has("children") {
+    last.children.at(-1, default: none)
+  }) {
+    if candidate != none and type(candidate) == content and candidate.func() == metadata {
+      let title = candidate.value.at("flex-margintoc-title", default: none)
+      if title != none {
+        return title
+      }
+    }
+  }
+  none
 }
 
 //-- subfigure numbering
@@ -103,10 +130,34 @@
       // ),
     ),
     {
-      show outline: it => {
-        [#in-outline.update(true)]
-        it
-        [#in-outline.update(false)]
+      //-- the margin minitoc shows the "margintoc" title of a `flex-heading`
+      //-- section (the heading body itself holds the printed title instead, so
+      //-- that the PDF bookmarks work: see `flex-heading` above)
+      show outline.entry: it => {
+        let title = flex-minitoc-title(it.element.body)
+        if title == none {
+          it
+        } else {
+          link(
+            it.element.location(),
+            //-- `tbtemplate` sets the mono font on all links (`show link`);
+            //-- outline entries must keep the body font, otherwise they are too
+            //-- wide and wrap. The built-in outline show rule escapes that rule,
+            //-- so it must be undone explicitly here.
+            text(
+              font: serif-font,
+              it.indented(
+                it.prefix(),
+                title
+                  + " "
+                  + box(width: 1fr, it.fill)
+                  + " "
+                  + "\u{2060}"
+                  + it.page(),
+              ),
+            ),
+          )
+        }
       }
       toc
     },
