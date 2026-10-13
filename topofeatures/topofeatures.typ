@@ -139,13 +139,13 @@ and if a local coordinate system centered at $c_(i,j)$ is used, then $x = y = 0$
 
 #box-practice("How does it work in practice?")[
   The GDAL utility `gdaldem` (#link("https://www.gdal.org/gdaldem.html")) does not have the best documentation and does not explicitly mention which method is used.
-  \
+  \ \
   After some searching, we can conclude that the method "4. Local polynomial fitting" is used by default for slope/aspect, and specifically the Horn's method is used #citep(<Horn81>).
   This uses a $3 times 3$ window, and fits a polynomial; the centre pixel value is not used.
-  \
-  If the option `-alg ZevenbergenThorne` is used, then the algorithm of #citet(<Zevenbergen87>) is used.
+  \ \
+  If the option '`-alg ZevenbergenThorne`' is used, then the algorithm of #citet(<Zevenbergen87>) is used.
   This uses only the 4 neighbours, and is a variation of the method "3. Finite difference" above.
-  \
+  \ \
   The documentation of `gdaldem` states that: _"literature suggests Zevenbergen & Thorne to be more suited to smooth landscapes, whereas Horn's formula to perform better on rougher terrain."_
 ]
 
@@ -280,7 +280,7 @@ An edge $e$, incident to 2 triangles, is considered a valley-edge if the project
 If the 2 normals projected point in the opposite direction, then $e$ is a ridge.
 If they point in different directions, then $e$ is neither.
 
-== #flex-heading[Properties used in practice][Properties and features used in practice]
+== #flex-heading[In practice][Properties and features used in practice]
 
 === Slope
 
