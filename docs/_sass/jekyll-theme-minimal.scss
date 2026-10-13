@@ -35,12 +35,17 @@ h3, h4, h5, h6 {
 }
 
 a {
-  color:#267CB9;
+  /* greens sampled from the book cover: dark for readability, lighter once visited */
+  color:#006D2C;
   text-decoration:none;
 }
 
+a:visited {
+  color:#329250;
+}
+
 a:hover, a:focus {
-  color:#069;
+  color:#00441B;
   -webkit-text-stroke-width: thin;
   -webkit-text-stroke-color: inherit;
 }
