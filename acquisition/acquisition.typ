@@ -22,7 +22,7 @@ This is because, as with any kind of real-world measurements, there are various 
 == Principles of lidar <sec:lidar-principles>
 
 #index[lidar]
-#note[While 'lidar' is often treated as the acronym of #strong[li]ght #strong[d]etection #strong[a]nd #strong[r]anging, it actually originated as a portmanteau of 'light' and 'radar'. (from #link("https://en.wikipedia.org/wiki/Lidar\#History\_and\_etymology")[Wikipedia])]
+#note[While 'lidar' is often treated as the acronym of #strong[li]ght #strong[d]etection #strong[a]nd #strong[r]anging, it actually originated as a portmanteau of 'light' and 'radar'.]
 
 A lidar system measures the distance to a target by illuminating it with pulsed laser light and measuring the reflected or _backscattered_ signal with a sensor (see @fig:acqLidar).
 #note[Backscattering is the natural phenomenon of the reflection of (electromagnetic) waves or signals back to the direction they came from.]
@@ -250,9 +250,9 @@ If the strip adjustment process fails or is omitted, a 'ghosting' effect can occ
 Photogrammetry knows a similar process called aerial triangulation, in which camera positions and orientation parameters (one set for each image) are adjusted to fit with each other. Errors in the aerial triangulation can lead to a noisy result for the dense matching as seen in @fig:dim.
 
 #subfigure(
-  figure(image("figs/Roof_OP_NA_10cm.jpg", width: 100%), caption: [Nadir image.]),
-  figure(image("figs/Roof_DSM_NA_10cm.jpg", width: 100%), caption: [DSM with good aerial triangulation.]),
-  figure(image("figs/Roof_DSM_NA+OBL_10cm.jpg", width: 100%), caption: [DSM with poor aerial triangulation.]),
+  figure(image("figs/Roof_OP_NA_10cm.jpg", width: 100%), caption: [Nadir image]),
+  figure(image("figs/Roof_DSM_NA_10cm.jpg", width: 100%), caption: [good aerial triangulation]),
+  figure(image("figs/Roof_DSM_NA+OBL_10cm.jpg", width: 100%), caption: [poor aerial triangulation]),
   columns: (1fr, 1fr, 1fr),
   caption: [Errors in aerial triangulation can lead to distortions in the DSM (derived from dense image matching). Images courtesy of Vermessung AVT.],
   placement: auto,
@@ -268,7 +268,7 @@ The shape of the target surfaces in relation to the sensor position has a great 
 #notefigure(
   image("figs/lidarAcq.pdf", width: 100%, page: 2),
   caption: [Point distribution and occlusion],
-  dy: 150pt,
+  // dy: 150pt,
 ) <fig:lidarAcquisitionConditions:a>
 
 _Occlusion_ happens when a surface is not visible from the scanner position.
