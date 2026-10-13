@@ -191,7 +191,7 @@ The result is a normalised value between 0 (the sky is completely hidden) and 1 
 
 The SVF is not only a geometric indicator: under the assumption that the sky brightness is approximately uniform, it is a proxy for the amount of diffuse sky radiation that a location receives, which explains its use in many applications.
 It is for instance used in urban climatology to quantify how open a street or a courtyard is (it correlates with the urban heat island effect in cities), to estimate the formation of frost on roads, or to estimate the availability of GPS signals in urban areas.
-It is also a useful terrain visualisation technique, as we explain in @chap:relief: since the SVF does not depend on any light direction, it does not suffer from the relief inversion that affects hillshading (see @sec:vis-hillshading).
+It is also a useful terrain visualisation technique, as we explain in @chap:vis, since the SVF does not depend on any light direction, it does not suffer from the relief inversion that affects hillshading (see @sec:vis-hillshading).
 
 The SVF can be computed in different ways: from fisheye images, from a digital terrain model, or from point clouds (where the full 3D geometry is considered, since the 2.5D assumption no longer holds).
 
