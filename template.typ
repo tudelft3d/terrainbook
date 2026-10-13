@@ -23,20 +23,10 @@
 #let sans-font = ("IBM Plex Sans",) //-- headings
 #let math-font = ("IBM Plex Math",) //-- math
 #let mono-font = ("IBM Plex Mono",) //-- code, links, version
-// #let serif-font = ("TeX Gyre Pagella")
-// #let sans-font = ("Alegreya Sans")
-// #let math-font = ("TeX Gyre Pagella Math")
-// #let mono-font = ("Inconsolata", "Comic Sans MS") //-- code, links, version
-//--
-// #let serif-font = ("Source Serif 4",) //-- body text
-// #let sans-font = ("Source Sans 3",) //-- headings
-// #let math-font = ("STIX Two Text",) //-- math
-// #let mono-font = ("Source Code Mono",) //-- code, links, version
-
 //-- The IBM Plex semibold (used for the big chapter number in the chapter opener)
 //-- is a separate family name in Typst, not a weight of "IBM Plex Serif".
 //-- Defined at module level because it is used in `main-matter` (see fonts/README.md).
-#let serif-semibold-font = ("IBM Plex Serif SmBld",)
+// #let serif-semibold-font = ("IBM Plex Serif SmBld",)
 
 //-- natbib
 #let citet = cite.with(form: "prose")
@@ -460,14 +450,6 @@
         align(if is-odd { right } else { left }, group),
       )
     }
-    //-- previous attempts, kept for reference:
-    // move(dy: 3mm, line(stroke: 0.6pt, start: (173mm, 20mm), end: (173mm, -50mm)))
-    // move(dy: 3mm, line(stroke: 0.6pt, start: (-53mm, 20mm), end: (-53mm, -50mm)))
-    // place(dx: 100mm, dy: 1cm, align(left, emph(hydra(1))))
-    // place(right, emph(hydra(1) + " • " + counter(page).display() + [🚀]))
-    // marginalia.header(text-style: (size: 10pt), align(right, emph(hydra(2))), [hugo], counter(page).display())
-    // marginalia.header(text-style: (size: 10pt), [a], [b], align(right, emph(hydra(2) + h(1cm) + counter(page).display())))
-    // marginalia.header(text-style: (size: 10pt), [], [], align(left, counter(page).display() + h(1cm) + emph(hydra(1))))
   })
   set page(numbering: none)
   
@@ -525,8 +507,8 @@
     				// font: serif-semibold-font,
     				size: 6em,
     				// weight: "semibold",
-    				style: "italic",
-    				fill: luma(25%),
+    				// style: "italic",
+    				fill: luma(20%),
     				counter(heading).display(),
     			)
         )
