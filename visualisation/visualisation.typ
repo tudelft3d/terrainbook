@@ -9,22 +9,22 @@ The main problem we are tackling in this chapter is how to represent the 3D surf
 Before computers were mainstream, this had occupied cartographers for centuries, who had to _manually_ draw hachures, contours, and shading.
 
 Eduard Imhof's book, _Cartographic Relief Presentation_, first published in German in 1965 and later translated into English, is the classic synthesis of this body of practice, and it remains the reference work on the subject.
+As Imhof states, the main difficulty when creating a map is that we look at the terrain from directly above, a viewing direction that does not help to convey an impression of three dimensions.
+Our most effective hint for form and relief is the _light_#note[light is used to see form]: even the smallest undulation of a surface becomes visible when light falls on it at a specific angle, and this is precisely the effect that most of the techniques in this chapter exploit.
 #notefigure(
   image("figs/imhof_cover.jpg", width: 100%),
   caption: [Eduard Imhof's seminal book.],
   dy:250pt,
 ) <fig:imhof_cover>
-As Imhof states, the main difficulty when creating a map is that we look at the terrain from directly above, a viewing direction that does not help to convey an impression of three dimensions.
-Our most effective hint for form and relief is the light: even the smallest undulation of a surface becomes visible when light falls on it at an angle, and this is precisely the effect that most of the techniques in this chapter exploit.
 // Notice however that using light as a cue has its risks: the wrong light direction can _invert_ the relief, so that mountains are read as valleys (see @sec:vis-hillshading).
 
-Note that the topic of this chapter is extremely vast and complex, and for a thorough treatment it would require a whole book (we will not attempt it here; we simply refer the interested reader to the book of Imhof, among others).
-Instead, we provide a short overview of the first attempts at depicting relief on a 2D medium, and then focus on the key techniques that remain central to cartographic practice today.
+// Note that the topic of this chapter is extremely vast and complex, and for a thorough treatment it would require a whole book (we will not attempt it here; we simply refer the interested reader to the book of Imhof, among others).
+// Instead, we provide a short overview of the first attempts at depicting relief on a 2D medium, and then focus on the key techniques that remain central to cartographic practice today.
 
 Nowadays the medium is a computer screen and the images are computed from a gridded terrain (or a TIN, or a point cloud), but the questions are the same as in Imhof's time: which graphic device, and with which parameters, makes the form of the terrain legible?
 // TODO: what about scale? where to put this discussion in this chapter?
 
-Observe that the answer also depends on the scale, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
+Observe that the the depiction of terrains also depends on the _scale_, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
 
 We also explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
 
@@ -60,7 +60,7 @@ Leonardo da Vinci's map of Tuscany (see @fig:leonardo_tuscany) represents one of
 Notice that this map is still drawn in perspective, but it provides insights into the morphology of the area.
 
 We can observe in Leonardo da Vinci's map that hachures (short parallel lines) were used to depict slope and shadow.
-#index[hachures] Hachures are usually drawn along the direction of steepest gradient, and their thickness (and thus spacing between adjacent lines) is proportional to the steepness at that location: the steeper the slope, the thicker and darker the lines.
+#index[hachures]#note[hachures follow direction of steepest slope] Hachures are usually drawn along the direction of steepest gradient, and their thickness (and thus spacing between adjacent lines) is proportional to the steepness at that location: the steeper the slope, the thicker and darker the lines.
 This can be observed in the so-called "Dufour Map" from 1842 by the Swiss Topographic Bureau.
 #index[slope lines]
 
@@ -74,18 +74,18 @@ The slope lines/hachures were later refined into _shadow hachures_ that imitate 
 #note[slope lines]
 
 It should be mentioned that hachures are no longer used because they require enormous engraving workload, especially for steep terrain where they darken the map (see @fig:leonardo_tuscany), and because absolute elevation is not encoded.
-Hillshading and contours have replaced these techniques.
-Tanaka's illuminated contours, presented below, can be seen as the modern, computational reincarnation of shadow hachures.
+Hillshading and contours have replaced these techniques, see below.
+// Tanaka's illuminated contours, presented below, can be seen as the modern, computational reincarnation of shadow hachures.
 
 
 == Contour lines  <sec:vis-contours>
 
-Contour lines, also called isolines, are the most important element for the representation of elevation of an area, and they are the only method in this chapter that allows us to _geometrically_ reconstruct the shape of the terrain (with some loss of detail, as explained in @sec:representation_others and @sec:iso).
+Contour lines, also called isolines, are the most important element for the representation of elevation of an area, and they are the only method in this chapter that allows us to _geometrically_ reconstruct the shape of the terrain (albeit with some loss of detail, as explained in @sec:representation_others and @sec:iso).
 
 The algorithms to extract contour lines from a terrain are described in @sec:r-iso (for regular grids) and @sec:tin-iso (for TINs); these algorithms identify the locations where the terrain reaches specific elevation levels.
-In this section, we focus on how the extracted contours are rendered and depicted.
+In this section, we focus on how the extracted contours should be rendered and depicted.
 
-Spacing between contours (contour interval) #index[contour interval]#note[contour interval] is the vertical distance between successive contour lines. 
+The spacing between contours, called the _contour interval_#index[contour interval]#note[contour interval], is the vertical distance between successive contour lines. 
 This parameter controls the density of the contour network and determines how much detail is visible in the map. 
 Observe that this parameter is crucial for balancing detail against legibility and that scale affects it directly.
 If we draw contour lines with a width of #qty("0.5", "mm"), then this width will be used for all the scales. At very small scales (eg #num("1"):#num("100000")) the contour interval must be chosen such that the line spacing remains legible at the given scale.
@@ -93,20 +93,23 @@ One usually chooses a contour interval that is a multiple of 10, 20, or 50 meter
 
 // Scale is crucial: it determines the physical size of the map relative to the terrain extent, and it directly influences the choice of contour interval. A small scale (large map) can accommodate fine contour intervals without clutter, whereas a large scale (small map) requires coarser intervals to maintain readability.
 // - scale is very important to select the contour interval and stuff in Imhof book
-#subfigure(
-  figure(image("figs/interval_10.pdf", width: 100%), caption: [contour interval = #qty("10", "m")]),
-  figure(image("figs/interval_100.pdf", width: 100%), caption: [contour interval = #qty("100", "m")]),
-  columns: (1fr, 1fr),
-  caption: [Comparison of contour intervals showing how increasing the spacing from #qty("10", "m") to #qty("100", "m") increases visual clutter.],
-  placement: auto,
-  label: <fig:contour_interval_comparison>,
-) 
+#place(float: true, auto,
+  wideblock[
+    #subfigure(
+      figure(image("figs/interval_10.pdf", width: 100%), caption: [contour interval = #qty("10", "m")]),
+      figure(image("figs/interval_100.pdf", width: 100%), caption: [contour interval = #qty("100", "m")]),
+      columns: (1fr, 1fr),
+      caption: [Comparison of contour intervals showing how increasing the spacing from #qty("10", "m") to #qty("100", "m") increases visual clutter.],
+      placement: auto,
+      label: <fig:contour_interval_comparison>,
+    ) 
+  ]
+)
 
 A smaller interval reveals more detail but increases visual clutter, while a larger interval provides a cleaner, more general view of the terrain.
 
-We want the smallest possible contour interval (a more accurate representation of the terrain), but the map needs to remain legible.
+In practice we want the smallest possible contour interval (a more accurate representation of the terrain) so that the map needs to remain legible.
 
-//
 
 ==== Index contours
 To improve the legibility of a map with contour lines, we can emphasise some lines, eg every 5th or 10th line by using a thicker line.
@@ -123,35 +126,32 @@ The steepest slopes in an area can dictate the contour interval, but in areas wh
 For those areas, intermediate contours can be added. 
 As shown in @fig:contour_intermediate, these are typically drawn with a dashed line to distinguish them from the solid index contours.
 #figure(
-  image("figs/contourintemediate.pdf", width: 100%),
+  image("figs/contourintemediate.png", width: 100%),
     caption: [With a contour interval of #qty("20", "m") we can add intermediate contours between the index contours where the terrain is relatively flat, here some lines manually picked shown with a dashed line.],
   placement: auto,
 ) <fig:contour_intermediate>
 
 
 ==== Labelling
-Notice that for @fig:contour_index and @fig:contour_intermediate the labels for the contours (only for the indexed ones) are oriented towards the reader of the map (upright position mostly; this was performed automatically with QGIS).
+Notice that for @fig:contour_index, the labels for the contours (only for the indexed ones) are mostly oriented towards the reader of the map (upright position mostly; this was performed automatically with QGIS).
 
 However, elevation labels oriented to the direction of the slope---where higher ground is above the label---improve the legibility of the map (see @fig:contour_orientation).
-#subfigure(
-  figure(image("figs/c_orientation_1.pdf", width: 100%), caption: [Higher ground above label]),
-  figure(image("figs/c_orientation_2.pdf", width: 100%), caption: [Random orientation]),
-  columns: (1fr, 1fr),
-  caption: [Contour labelling orientation.],
+#figure(
+  image("figs/c_orientation.pdf", width: 100%),
+  caption: [Contour labelling orientation with higher ground above label.],
   placement: auto,
-  label: <fig:contour_orientation>,
-) 
+) <fig:contour_orientation>
 
 
 == Hillshading <sec:vis-hillshading>
 
 #index[hillshading]
 
-Hillshading is a technique used to visualise the relief of a gridded terrain.
+Hillshading is a technique used to visualise the relief of a (gridded) terrain.
 It involves creating an image that depicts the relative slopes and highlights features such as ridges and valleys; a hillshade does not depict absolute elevation.
 It assumes that the source of light (the sun) is located at a given position (usually North-West and at a certain elevation) and illuminates the terrain.
 
-Consider the gridded DEM shown in @fig:tasmania_dem_01, which contains a river at low elevation and two peaks.
+Consider the gridded terrain shown in @fig:tasmania_dem_01, which contains a river at low elevation and two peaks.
 The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has the sun located at an azimuth of #qty("315", "deg") (North-West) and an elevation of #qty("45", "deg").
 #figure(
   image("figs/hillshade/dem_01_colour.jpg", width: 80%),
@@ -161,8 +161,8 @@ The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has 
 
 
 #subfigure(
-  figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West]), <fig:hillshade_nw>,
-  figure(image("figs/hillshade/hillshade_se.png", width: 100%), caption: [Hillshade with light from South-East]), <fig:hillshade_se>,
+  figure(image("figs/hillshade/hillshade_nw.png", width: 100%), caption: [Hillshade with light from North-West (#sym.arrow.br)]), <fig:hillshade_nw>,
+  figure(image("figs/hillshade/hillshade_se.png", width: 100%), caption: [Hillshade with light from South-East (#sym.arrow.tl)]), <fig:hillshade_se>,
   columns: (1fr, 1fr),
   caption: [Two hillshades for the terrain from @fig:tasmania_dem_01. Observe how the same terrain is perceived differently when the light comes from different directions: in *(a)* we perceive mountains, and in *(b)* we see peaks as valleys and the water appears at higher altitude.],
   placement: auto,
@@ -172,7 +172,7 @@ The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has 
 
 
 #box-practice("Why does the sunlight come from the North-West?")[
-  The source of the light for hillshading, and other techniques using light, is usually set at the North-West, but in reality the sun is _never_ located there (in the northern hemisphere).
+  The source of the light for hillshading, and other techniques using light, is usually set at the North-West, but in reality the sun is _never_ located there (at least in the northern hemisphere...).
   Why is this a common practice then?
   The main reason is that the human brain usually assumes that the light comes from above when looking at a picture.
   Doing so reduces the chances of _relief inversion_, ie when mountains are perceived as valleys, and vice-versa.
@@ -184,8 +184,8 @@ The resulting hillshade image is shown in @fig:hillshade_nw; this hillshade has 
 While it would be possible to use advanced computer graphics methods (see @chap:visibility) to compute the shadows created by the terrain surface, in practice most GIS software implements a simplified version of it which can be computed very efficiently.
 
 Given a regular gridded terrain, hillshading means that each cell gets a value that depicts the variation in tone, from light to dark.
-The output of a hillshade operation is thus a regular gridded DTM, usually with the same extent and resolution as the original grid (for convenience).
-The values computed for each cell require as input the gradient and the aspect of the terrain (see @chap:topofeatures).
+The output of a hillshade operation is thus a regular gridded terrain, usually with the same extent and resolution as the original grid (for convenience).
+The value computed for each cell require as input the gradient and the aspect of the terrain (see @chap:topofeatures).
 The formula to compute the hillshade of a given cell $c_"ij"$ differs from software to software, and we present here one (it is used in QGIS and ArcGIS for example, among others).
 It assumes that the output hillshade value is an integer in the range $[0, 255]$ (8-bit pixel), and that the direction (azimuth) and the height (given as an angle) of the illumination source are known.
 Notice that the position of the sun is relative to the cell, its position thus changes for different cells of a terrain.
@@ -197,13 +197,13 @@ As above and in @fig:hillshade-params, for a cell $c_"ij"$, its gradient is $alp
 ) <fig:hillshade-params>
 
 $ "hillshade"_(i j) = 255 dot.op &[(cos(pi/2 - gamma) cos(alpha_(i j))) + \
-&(sin(pi/2 - gamma) sin(alpha_(i j)) cos(psi - theta_(i j)))] $
+&(sin(pi/2 - gamma) sin(alpha_(i j)) cos(psi - theta_(i j)))] $ <eq:hillshade>
 
 Notice that: (1) all angles need to be radians; (2) if $"hillshade"_"i j" < 0$ then $"hillshade"_"ij" = 0$.
 
 === Multi-directional hillshading
 
-When using hillshading only one source of light is used to illuminate the terrain, and this can obscure features in the terrain and create a "flat" appearance.
+When using @eq:hillshade for hillshading, only one source of light is used to illuminate the terrain, and this can obscure features in the terrain and create a "flat" appearance.
 
 Multi-directional hillshading combines multiple light sources at different angles to illuminate the terrain, and then combines the resulting images to produce a final output.
 
@@ -228,7 +228,7 @@ The weights to apply to each of the 4 hillshades are per pixel, and are linked t
 
 == #flex-heading[Colour + shading][Combining colour and shading] <sec:vis-colour>
 
-Notice that hillshade and shading give a sense of form, but not of the exact elevation: two flat areas at different elevations look identical.
+Notice that hillshade and shading give a sense of form, but not of the exact elevation: two flat areas at different elevations will look identical.
 Therefore, they are not sufficient to represent terrain.
 
 #figure(
@@ -237,7 +237,7 @@ Therefore, they are not sufficient to represent terrain.
   placement: auto,
 ) <fig:colour_ramps>
 
-Elevation colouring, also called _hypsometric tints_#index[hypsometric tints]#note[hypsometric tints], on the other hand, gives a sense of absolute elevation (but not of form).
+Elevation colouring, also called _hypsometric tints_#index[hypsometric tints]#note[hypsometric tints], on the other hand, gives a sense of absolute elevation but not of form.
 It assigns a colour to elevation bands along a ramp (either continuous or discrete), and every pixel gets its colour purely from its $z$-value (absolute elevation). 
 @fig:colour_ramps shows three widely used ramps:
 / Natural Earth tones: green for lowlands, yellow/brown for hills, white for snow-capped peaks (as used in @fig:tasmania_dem_01). It has the advantage of being immediately legible by everyone, the lightness progression is good, and summits are easily identifiable. A major drawback in practice is that many people misread elevation colours as climate or vegetation information.
@@ -255,10 +255,10 @@ Observe that with this one can get both an idea of the absolute elevation and of
 #place(float: true, auto,
   wideblock[
     #subfigure(
-      figure(image("figs/hillshade/dem_01_colour_hillshade.jpg", width: 100%), caption: []), 
-      figure(image("figs/hillshade/dem_01_imhof_hillshade.jpg", width: 100%), caption: []), 
+      figure(image("figs/hillshade/dem_01_colour_hillshade.jpg", width: 100%), caption: [Natural Earth tones]), 
+      figure(image("figs/hillshade/dem_01_imhof_hillshade.jpg", width: 100%), caption: [Imhof's tints]), 
       columns: (1fr, 1fr),
-      caption: [Two colour ramps applied to @fig:tasmania_dem_01: the natural Earth tones and the Imhof's tints.],
+      caption: [Hillshades, combined with two colour ramps, applied to @fig:tasmania_dem_01.],
       placement: auto,
       label: <fig:hillshade_colours>,
     )
@@ -283,7 +283,7 @@ The so-called "Tanaka contours", named after the cartographer Kitirô Tanaka who
 
 For the illumination, the source of light is usually located at the North-West direction.
 The lines are white when facing the source of light (slopes that are illuminated), and black when located on the opposite side of a hill/obstacle (shadow).
-In between the lines appear in intermediate shades of grey; the shade of grey is defined by linear interpolation between white and black based on the angle between the line and the light direction.
+In between these 2 extremes, the lines appear in intermediate shades of grey; the shade of grey is defined by linear interpolation between white and black based on the angle between the line and the light direction.
 
 Observe that when extracting contour lines from a terrain (see @sec:iso), one needs to correctly determine the orientation of the line to avoid "inverting the relief" (notice that this is determined by the aspect of the slope, see @sec:slope).
 One way to do this is to always orient a segment of a contour line such that higher ground is always on the left of a line (or right, it just depends on the convention).
@@ -297,9 +297,7 @@ This can be observed from the Tanaka contours on the cover of Imhof's book (see 
 
 == SVF-based hillshading <sec:vis-svf>
 
-The hillshading techniques presented above rely on _direct_ illumination: one (or a few) light sources with a fixed direction.
-This has one well-known consequence: inversion of the perceived relief (see @fig:hillshade_se).
-
+The hillshading techniques presented above rely on _direct_ illumination: one (or a few) light source(s).
 An alternative is to use _diffuse_ illumination: instead of lighting the terrain from a few directions, or from a single direction, we consider a hypothetical light source that illuminates the entire sky hemisphere uniformly---as on a completely overcast day.
 The brightness of a location is then given by the portion of the sky that it sees, which is precisely the sky-view factor as defined in @sec:svf.
 A location on a ridge or on a plateau sees most of the sky and is rendered bright, while the bottom of a deep valley sees almost none and is rendered dark.
@@ -327,7 +325,7 @@ The two techniques are therefore complementary, and it is recommended to combine
 
 The introduction of this chapter---in particular the tension between the measurability and the pictorial representation of relief---is heavily inspired by #citet(<Imhof65>), which remains the classic reference on the subject.
 
-The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (#link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")[link]).
+The formula to calculate the hillshade for one cell in a gridded DTM is from #citet(<Burrough98>), and the ArcGIS manual describes it in detail (see #link("https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/how-hillshade-works.htm")).
 
 For the multi-directional hillshade, the 4 sources of light and the weights to apply to each hillshade is from #citet(<Mark92>).
 
