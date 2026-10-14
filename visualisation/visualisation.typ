@@ -333,7 +333,7 @@ The sky-view factor was proposed as a relief visualisation technique by #citet(<
 The paper also describes its use for spatial analysis, eg for energy balance studies and to estimate the availability of GPS signals in urban areas.
 // Free and open-source implementations of both, together with several other techniques to visualise high-resolution DTMs, are available in the Relief Visualization Toolbox (#link("https://rvt-py.readthedocs.io/")).
 
-#citet(<Patterson11>) proposed a method to properly blend the hypsometric tints with a hillshade and avoid the confusion with land cover.
+#citet(<Patterson11>) propose a method to properly blend the hypsometric tints with a hillshade and avoid the confusion with land cover.
 Their lowland colours vary with climate/vegetation (olives/greens in humid regions, tans in arid ones) while highlands go to browns/whites.
 
 == Exercises
