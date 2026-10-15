@@ -390,7 +390,6 @@ When the stack is empty, then there are no more triangles to be tested, and we a
 Constructing a DT and manipulating it essentially require two basic geometric tests (called _predicates_): #Orient  determines if a point $p$ is left, right or lies on the line segment defined by two points $a$ and $b$; and #Incircle determines if a point $p$ is inside, outside or lies on a circle defined by three points $a$, $b$ and $c$.
 Both tests can be reduced to the computation of the determinant of a matrix:
 
-//-- TODO: add InCircle smallcaps
 $ op(#Orient)(a, b, p) = mat(delim: "|", a_x, a_y, 1 ; b_x, b_y, 1 ; p_x, p_y, 1) $
 
 $ "InCircle"(a, b, c, p) = mat(delim: "|", a_x, a_y, a^(2)_x + a^(2)_y, 1 ; b_x, b_y, b^(2)_x + b^(2)_y, 1 ; c_x, c_y, c^(2)_x + c^(2)_y, 1 ; p_x, p_y, p^(2)_x + p^(2)_y, 1)  $ <eq-insphere>

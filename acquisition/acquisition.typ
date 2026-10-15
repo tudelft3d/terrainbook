@@ -343,8 +343,8 @@ And void-filling is only effective if the void area is not too large, since inte
 	This is a paper that compares lidar and photogrammetry derived point clouds for the generation of a DEM.
 	It shows that even when artefacts seem to be under control, both techniques may measure different elevations
 
-	// TODO \fullcite{Ressl16}
-	#link("https://3d.bk.tudelft.nl/courses/geo1015/data/others/Ressl16.pdf")
+	#cite(<Ressl16>, form: "full")
+	
 ]
 
 == Notes and comments

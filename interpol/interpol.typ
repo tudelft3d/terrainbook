@@ -239,7 +239,7 @@ To achieve this, the normal of each vertex is calculated by averaging the normal
 
 This is a method based on the Voronoi diagram for both selecting the data points involved in the process, and assigning them a weight. 
 It is also called Sibson's interpolation, after the name of its inventor.
-It uses two VDs: one for the set $S$ of data points (@fig:nna}), and another one where a point $x$ is inserted at the estimation location (@fig:nnb}). 
+It uses two VDs: one for the set $S$ of data points (@fig:nna), and another one where a point $x$ is inserted at the estimation location (@fig:nnb). 
 The insertion of $x$ modifies _locally_ a VD($S$): the Voronoi cell $cal(V)_x$ of $x$ 'steals' some parts of some Voronoi cells of VD($S$).
 
 #notefigure(
@@ -251,7 +251,7 @@ The insertion of $x$ modifies _locally_ a VD($S$): the Voronoi cell $cal(V)_x$ o
   caption: [Natural neighbour coordinates in 2D for $x$. The shaded polygon is $cal(V) ^(+)_x$.],
 ) <fig:nnb>
 
-This idea forms the basis of natural neighbour coordinates, which define quantitatively the amount $cal(V)_x$ steals from each of its natural neighbours (@fig:nnb}). 
+This idea forms the basis of natural neighbour coordinates, which define quantitatively the amount $cal(V)_x$ steals from each of its natural neighbours (@fig:nnb). 
 Let $cal(D)$ be the VD($S$), and $cal(D) ^(+) = cal(D) union {x}$. 
 The Voronoi cell of a point $p$ in $cal(D)$ is defined by $cal(V)_p$, and $cal(V) ^(+)_p$ is its cell in $cal(D) ^(+)$. 
 The natural neighbour coordinate of $x$ with respect to a point $p_i$ is
@@ -271,7 +271,7 @@ Its main disadvantage is that its implementation is rather complex, and obtainin
 From @sec:dtconstruction we know that one insertion of a single point $p$ in a DT can be done in $cal(O) (log n)$, but the deletion of a point is a more complex operation (outside the scope of this book).
 
 ==== Higher-order function  (NNI-c1)
-The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant (see @fig:nni1d}).
+The NNI method can be thought of performing linear interpolation, in the 1D case (where we have one independent variable) then it is equivalent to a linear interpolant (see @fig:nni1d).
 
 #subfigure(
   image("figs/nni-1d.pdf", width: 100%, page: 1),
@@ -468,15 +468,14 @@ The description of the barycentric coordinates is mostly taken from #citet(<Eber
 
 The natural neighbour interpolation method is also called Sibson's interpolation, after the name of the inventor #citep(<Sibson81>). 
 
-// TODO: FIX THIS EQUATION NUMBERING
-// An excellent summary of the methods to modify Equation @eq:nnc to obtain a continuous function is found in #citet(<Flototto03>). 
+An excellent summary of the methods to modify @eq:nnc to obtain a continuous function is found in #citet(<Flototto03>). 
 
-The Laplace interpolant was discovered independently by #citet(<Belikov97>) and /* TODO: split \citet{Hiyoshi99,Hiyoshi00} */ #citet(<Hiyoshi99>) #citet(<Hiyoshi00>).
+The Laplace interpolant was discovered independently by #citet(<Belikov97>), #citet(<Hiyoshi99>), and #citet(<Hiyoshi00>).
 
 The regularised spline with tension (RST) is available in the open-source GIS GRASS.
 
 The construction of a polynomial inside each triangle of a TIN can be done with several methods. 
-The simplest method is the Clough-Tocher method /* TODO: split \citep{Clough65,Farin85} */ #citep(<Clough65>) #citep(<Farin85>).
+The simplest method is the Clough-Tocher method #citep(<Clough65>)#citep(<Farin85>).
 It splits each triangle into 3 sub-triangles (by inserting a temporary point at the centroid of the triangle) and a cubic function is built over each.
 
 #citet(<Dyn90>) shows how to obtain a data-dependent triangulation.

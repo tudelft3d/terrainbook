@@ -51,6 +51,7 @@ If 14 is not used, the pylons and cables are in class 26/`kunstwerk`.
     // stroke: none,
     // inset: 3pt,
     align: (right,left),
+    table.hline(),
     table.header([Code], [Meaning],),
     table.hline(),
     [0], [never classified],

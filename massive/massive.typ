@@ -9,7 +9,7 @@ In this chapter we discuss three methods to handle and/or process _massive_ terr
 "Massive" is a vague and undefined term in GIS, and it is continuously changing: 15 years ago a point cloud dataset containing 5 million elevation points was considered massive, but in 2024 it is considered a small one.
 #index[massive datasets]
 Examples of massive datasets:
-+ the point cloud dataset of a $qty("1.5", "km^2")$ of Dublin #note(link("https://bit.ly/32GXiFq")) contains around 1.4 billion points (density of $num("300")$ pts/$m^2$), which was collected with airborne laser scanners; //TODO m^2
++ the point cloud dataset of a $qty("1.5", "km^2")$ of Dublin #note(link("https://bit.ly/32GXiFq")) contains around 1.4 billion points (density of $num("300")$ pts/$m^2$), which was collected with airborne laser scanners; 
 + the lidar dataset of the whole of the Netherlands (AHN #note(link("https://www.ahn.nl/"))) has about $num("10")$ pts/$m^2$ and its latest version (AHN6) has more than 900 billion points;
 + the global digital surface model _ALOS World 3D---30m (AW3D30)_ #note(link("https://www.eorc.jaxa.jp/ALOS/en/dataset/aw3d30/aw3d30_e.htm")) is a raster dataset with a resolution of #qty(1, "arcsecond"), therefore we have about #num("8.4e11") pixels.
 

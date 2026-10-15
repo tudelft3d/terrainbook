@@ -177,7 +177,7 @@ There is even a #qty("0.5", "m") commercial version, based on multiple optical s
   table(
     stroke: none,
     columns: (auto, auto, auto, auto, auto, auto, auto),
-    align: (left, left, left, left, left, left, left),
+    align: (left, center, left, left, left, left, left),
     table.hline(),
     table.header[][Release year][By][Sensor][Type][License][Resolution],
     table.hline(),

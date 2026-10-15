@@ -334,7 +334,7 @@ However, he still finishes by stating: "Yeah, well... TINs still _look_ better."
 
 #citet(<Fisher97>) discusses the disadvantages of rasters, in a GIS and remote sensing context.
 
-/* TODO: split \citet{Frank92,Goodchild92a} */ #citet(<Frank92>) #citet(<Goodchild92a>) discuss at length the issue of data model, data structure and representation of reality. 
+#citet(<Frank92>) and #citet(<Goodchild92a>) discuss at length the issue of data model, data structure and representation of reality. 
 
 #citet(<Tse04>) coined the term '2.75D GIS' and show an example of a where a triangulation is used to represent the surface of the Earth, with holes (for tunnels), cliffs and caves. 
 The same idea is also referred to as a '2.8D GIS' by #citet(<Groger05>).
