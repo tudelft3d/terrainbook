@@ -209,7 +209,6 @@ In a decimation algorithm, we start with a TIN that contains all the input point
 In a refinement algorithm, we do the opposite: we start with a very simple TIN, and we gradually refine it by adding the important points.
 
 ==== TIN simplification by refinement
-
 Here we describe an iterative refinement algorithm based on a series of insertion.
 It begins with a simple triangulation of the spatial extent and, at each iteration, finds the input point with highest importance---the highest vertical error---in the current TIN and inserts it as a new vertex in the triangulation.
 The algorithm stops when the highest error of the remaining input points with respect to the current TIN is below a user-defined threshold $epsilon _(max )$.
@@ -240,6 +239,7 @@ It is also possible to insert only a certain percentage of the number of input p
   ]
 ) <algo:tin-simp:ref>
 
+==== TIN simplification by decimation
 The implementation of the decimation algorithm is similar to the refinement algorithm. The main differences are
 + we start with a full triangulation of all the input points, instead of an empty triangulation;
 + instead of iteratively adding the point with the highest importance, we iteratively remove the point with the lowest importance, and
