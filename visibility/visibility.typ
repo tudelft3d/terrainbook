@@ -164,7 +164,7 @@ The result of a viewshed is a binary grid; in @fig:overview_viewshed, True/visib
 
 While this brute-force approach will work, several redundant computations will be made, since several of the rays from $v$ will intersect the same grid cells.
 Furthermore, depending on the resolution, the number of cells in a #qty("5", "km") radius (a reasonable value where humans can see) can become _very_ large.
-As an example, with the AHN5 gridded version (#qty("50", "cm") resolution), this means roughly 400 million queries ($(frac(5000 times 2, 0.5))^(2)$).
+As an example, with the AHN gridded version (#qty("50", "cm") resolution), this means about 314 million queries ($pi times (5000/0.5)^2$).
 
 One alternative solution is shown in @fig:viewshed\b: it involves sampling the grid cells intersecting the border of the visible circle (obtaining several centres $q_i$), and computing the visibility of each of the cells along the line segment $v q_i$ as we 'walk' from $v$.
 Observe that, along $v q_i$, it is possible that a point far from $v$ is visible, while several closer points are not; @fig:viewshed\c gives an example.
