@@ -22,13 +22,10 @@ Our most effective hint for form and relief is the _light_#note[light is used to
 // Instead, we provide a short overview of the first attempts at depicting relief on a 2D medium, and then focus on the key techniques that remain central to cartographic practice today.
 
 Nowadays the medium is a computer screen and the images are computed from a gridded terrain (or a TIN, or a point cloud), but the questions are the same as in Imhof's time: which graphic device, and with which parameters, makes the form of the terrain legible?
-// TODO: what about scale? where to put this discussion in this chapter?
-
-Observe that the depiction of terrains also depends on the _scale_, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
-
-We also explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
-
+In this chapter, we also explain how colour and shading are combined (@sec:vis-colour), which is the recommended way to represent terrain.
 The algorithms that produce the underlying data are covered elsewhere---gradient and aspect in @chap:topofeatures, contour extraction in @sec:iso; here we focus on how the result is rendered.
+
+Observe that the depiction of terrains is highly _scale-dependent_, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
 
 
 == Perspective views of relief <sec:vis_history>
