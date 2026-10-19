@@ -22,6 +22,10 @@ Most of the chapters have a short video explaining the key concepts, and those a
 The book is written for MSc students (in geomatics), but it can also be used at the BSc level. 
 Prerequisites include: knowledge of GIS, background in linear algebra, and an introductory programming course.
 
+==== Use of AI/LLMs
+The bulk of this book was written in an era where LLMs did not exist.
+When preparing the latest version of this book, we used LLMs to find typos, improve the sentences, convert bad figures to nicer ones, help clarify concepts, and help draft content (eg the new chapter about visualisation).
+
 ==== Acknowledgements
-We thank the many students of the GEO1015 course over the years who have helped us by pointing—and often fixing with a pull request—the errors, typos, and weird sentences of this book. 
+We thank the many students of the TU Delft's GEO1015 course over the years who have helped us by pointing—and often fixing with a pull request—the errors, typos, and weird sentences of this book. 
 A special thanks to the students of the year 2018--2019 who had to deal with the first version of this book, to Balázs Dukai for thoroughly proofreading the first drafts of this book, and to Artemi Kurski who (re-)read the whole book after the Typst conversion.
