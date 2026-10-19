@@ -309,7 +309,7 @@ The polynomial fitting method for computing the slope is from #citet(<Evans80>) 
 #citet(<Skidmore89>) carried out a comparison of 6 methods to extract slope from regular gridded DTMs, and concluded that methods using 8 neighbours perform better than those using only 4 or the biggest height difference.
 He did not however investigate how the resolution of the grid influences the results.
 
-Some algorithms have been developed to identify the features forming a DTM: #citet(<Kweon94>) and #citet(<Schneider05>) can identify simple features in DEMs (if they are pre-processed into bilinear patches); and #citet(<Magillo09>) and #citet(<Edelsbrunner01-1>) describe algorithms to perform the same, but directly on TINs.
+Some algorithms have been developed to identify the features forming a DTM: #citet(<Kweon94>) and #citet(<Schneider05>) can identify simple features in DEMs (if they are pre-processed into bilinear patches); and #citet(<Magillo08>) and #citet(<Edelsbrunner01-1>) describe algorithms to perform the same, but directly on TINs.
 
 The algorithm to extract profile and plan curvatures from a TIN is taken from #citet(<VanKreveld97>).
 
