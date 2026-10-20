@@ -7,7 +7,7 @@
 We define as "global digital elevation models" (or global terrains; we refer to them as "gDEMs" in this book) the datasets that cover (most of) the Earth.
 #index[global DEM]
 Those datasets require different acquisition methods from local datasets, since flying an airplane or performing local surveys at the scale of the Earth has not been done yet, and it would be prohibitively expensive.
-The acquisition instruments for a global coverage must be _space-borne_, ie mounted on a satellite for instance.
+The acquisition instruments for a global coverage must be _spaceborne_, ie mounted on a satellite for instance.
 Notice that the orbit of some satellites makes them technically non-global, but that we still refer to their datasets as global since they have a wide coverage, just restricted to certain latitudes.
 
 It cannot be understated that before the introduction of gDEMs (with SRTM v1 in 2000, see below for more information), we had no way of knowing the elevation for a given location on the Earth.
@@ -47,7 +47,7 @@ See @sec:photogrammetry.
 The first gDEM (SRTM v1) was collected with InSAR in 2000, aboard the Space Shuttle Endeavour.
 As InSAR requires two images of the same area for stereoscopy to derive a DEM, the Shuttle was equipped with two antennas, one in the payload bay, and one on a mast protruding #qty("60", "m") from the Shuttle.
 
-Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred meters (!) away, to generate InSAR data in a single pass.
+Similarly, the TerraSAR-X satellite was joined by TanDEM-X in 2010, a twin satellite orbiting only a few hundred metres (!) away, to generate InSAR data in a single pass.
 
 See @sec:insar for more information.
 
@@ -101,8 +101,8 @@ wideblock(side: "right")[
       [laser pulse power], [#qty(120, "uJ") / #qty(30, "uJ")], [#qty(15000, "uJ") / #qty(4500, "uJ")], [NA],
       [altitude], [$tilde$#qty("480", "km")], [$tilde$#qty("420", "km")], [#qty(0.5, "km")],
       [beam footprint], [#qty(11, "m")], [#qty(23, "m")], [#qty(0.05, "m")],
-      [along track spacing], [#qty(0.7, "m")], [#qty(70, "m")], [#qty(0.1, "m")],
-      [across track spacing], [#qty(3, "km") / #qty(90, "m") between pair], [#qty(0.6, "km")], [#qty(0.1, "m")],
+      [along-track spacing], [#qty(0.7, "m")], [#qty(70, "m")], [#qty(0.1, "m")],
+      [across-track spacing], [#qty(3, "km") / #qty(90, "m") between pair], [#qty(0.6, "km")], [#qty(0.1, "m")],
       [swath width], [#qty(6.6, "km")], [#qty(4.2, "km")], [#qty(1, "km")],
       [beam frequency], [#qty(532, "nm") (green)], [#qty(1064, "nm") (near-infrared)], [either],
       [\# laser(s)], [1], [3], [1],
@@ -130,10 +130,10 @@ The data from the ICESat-2 and GEDI missions is made publicly available in sever
  GEDI also has Level 4 data products, which are model outputs---like carbon estimates---based on Level 2 data.
 
 ==== Comparison to typical airborne lidar
-These space-borne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
+These spaceborne lasers also differ considerably from airborne lasers, most notably so in their platform, resulting in significant differences in beam footprint and ground coverage.
 The altitude increase results in a wider beam footprint, from #qty("0.5", "m") (at #qty("500", "m")) for airborne platforms to #qty("15", "m") for space platforms.
 Although much wider, it is a small increase compared to the increase in altitude, going from #qty("0.5", "km") to #qty("500", "km").
-A comparison is given in Table @tab:lidarcomparison.
+A comparison is given in @tab:lidarcomparison.
 Airborne lidar often focuses on maximizing coverage (#unit[pt/m^2]) of smaller areas, whereas the coverage for space lasers is the ground track of the satellite.
 While both ICESat-2 and GEDI employ instruments with multiple (split) laser beams, including the ability to point the laser away from the ground track, all to maximize coverage, this still results in very sparse and uneven coverage as shown in @fig:beams.
 #figure(
@@ -234,7 +234,7 @@ Most of the gDEMS are tiled in a similar way.
 CopernicusDEM---adhering to the DGED level 3 standard---has tiles of $3601 times 3601$ pixels on the equator, but $3600 times 2400$ (height, width) pixels at #qty("50", "degree") latitude, $3600 times 1800$ at #qty("60", "degree") latitude, $3600 times 1200$ at #qty("70", "degree") latitude, becoming as small as $3600 times 360$ for the last 5 degrees of latitude.
 This tiling scheme results in pixels being as square as possible, but makes it hard to work with tiles from different latitudes.
 
-In this context it becomes clear that the resolution should not be discussed in terms of meters, but terms of degrees (or divisions of a degree).
+In this context it becomes clear that the resolution should not be discussed in terms of metres, but terms of degrees (or divisions of a degree).
 As the Earth has a circumference of #"~"#qty("40000", "km") (measured around the Equator), #qty(1, "deg") of latitude is #"~"#qty("111", "km") and #qty(1, "deg") of longitude is $111 cos phi$ km at latitude $phi$.
 Degrees are further divided into 60 arcminutes, which themselves are divided into 60 arcseconds.
 In practice, the highest resolution for SRTM (#qty("30", "m")) is actually #qty(1, "arcsecond"), and its #qty("90", "m") product has a resolution of #qty(3, "arcsecond").
@@ -320,7 +320,7 @@ In case of the most recent gDEMS, such as CopernicusDEM, the data must be downlo
 Data is duplicated for the border areas, totalling #qty("2", "TB").
 
 To learn more about the DGED format, read #link("https://dgiwg.org/documents/dgiwg-standards").
-Similarly, reading a user guide on any of the gDEMS is a good idea, such as the one for #link("https://spacedata.copernicus.eu/documents/20126/0/GEO1988-CopernicusDEM-SPE-002_ProductHandbook_I3.0+")[CopernicusDEM Product
+Similarly, reading a user guide on any of the gDEMS is a good idea, such as the one for #link("https://dataspace.copernicus.eu/sites/default/files/media/files/2024-06/geo1988-copernicusdem-spe-002_producthandbook_i5.0.pdf")[CopernicusDEM Product
 Handbook].
 
 #citet(<Hawker22>) give the details how the vegetation and buildings are removed from CopernicusDEM to create FABDEM.

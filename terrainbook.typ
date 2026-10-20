@@ -22,6 +22,16 @@
 
 #import "template.typ": *
 
+#set document(
+  title: "Computational modelling of terrains",
+  author: (
+    "Hugo Ledoux",
+    "Ken Arroyo Ohori",
+    "Ravi Peters",
+    "Maarten Pronk",
+  ),
+)
+
 #show: doc => tbtemplate(
   version: "2026.0-beta6",
   cover: true,

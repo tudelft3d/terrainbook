@@ -43,7 +43,7 @@ A typical lidar systems performs hundreds of thousands of such range measurement
 Lidar scanners exist in various forms.
 They can be mounted on a static tripod (terrestrial lidar) for detailed local scans, or on a moving platform such as a car (mobile lidar) or an aircraft (airborne lidar) for rapid scanning of larger areas. Nowadays, also hand-held lidar systems exist, and even some of the latest smartphones have a lidar sensor.
 Furthermore, lidar can also be used from a satellite in space.
-#note[NASA has used space lidar #link("https://en.wikipedia.org/wiki/ICESat-2")[on Earth], #link("https://lola.gsfc.nasa.gov")[on the Moon], and #link("https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter")[on Mars].]
+#note[NASA has used space lidar #link("https://en.wikipedia.org/wiki/ICESat-2")[on Earth], #link("https://science.nasa.gov/mission/lro/lola/")[on the Moon], and #link("https://en.wikipedia.org/wiki/Mars_Orbiter_Laser_Altimeter")[on Mars].]
 
 However, in the remainder of this text we will focus on airborne lidar.
 
@@ -63,7 +63,7 @@ To obtain an accurate global position, _differential GPS_ (DGPS) is employed.
 #note[differential GPS]#index[differential GPS]
 DGPS is a technique to enhance the accuracy of GPS by using GPS stations on the ground (one is visible in @fig:airborne-lidar).
 These DGPS stations have a known position and they broadcast the difference between that known position and the position at the station as indicated by GPS.
-This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from nearby DGPS stations and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 meters to several centimetres.
+This difference is essentially a correction for errors in the GPS signal. The aircraft receives these differences from nearby DGPS stations and uses them to correct the GPS position of the aircraft. Using DGPS the accuracy of the GPS position on the aircraft can be improved from around 15 metres to several centimetres.
 
 To obtain the accurate orientation of the laser scanner, the INS of the aircraft is used.
 The INS accurately measures the orientation, ie the yaw, pitch and roll angles of the aircraft, by means of an inertial measurement unit (IMU).
@@ -126,7 +126,7 @@ As a result, most lidar systems use a wavelength in the near-infrared spectrum, 
 
 === Scanning patterns
 
-In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these optical elements, ie mirrors or prisms, the emitted laser pulse is guided in a cross-track direction (ie perpendicular to the along-track direction in which the aircraft moves, see @fig:acqLidar), thereby greatly increasing the scanned ground area per travelled meter of the aircraft.
+In order to improve the capacity to quickly scan large areas, a number of rotating optical elements are typically present in a lidar system. Using these optical elements, ie mirrors or prisms, the emitted laser pulse is guided in a cross-track direction (ie perpendicular to the along-track direction in which the aircraft moves, see @fig:acqLidar), thereby greatly increasing the scanned ground area per travelled metre of the aircraft.
 @fig:lidar-patterns depicts a number of possible configurations of rotating optics and shows the resulting scanning patterns. It is clear that density of points on the ground is affected by the scanning pattern. The top example for example, yields much higher densities on edges of the scanned area. In practice more uniform patterns, such as the bottom two examples, are often preferred.
 
 #figure(
@@ -165,7 +165,7 @@ The number of 3D point measurements resulting from photogrammetry thus depends o
 With _dense image matching_
 #note[dense image matching]#index[dense image matching]
 it is attempted to find a match for every pixel in an image.
-If the ground sampling distance, ie the pixel size on ground level, is small (around #qty("5", "cm") for state-of-the-art systems), point densities of hundreds of points per square meter can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square meter).
+If the ground sampling distance, ie the pixel size on ground level, is small (around #qty("5", "cm") for state-of-the-art systems), point densities of hundreds of points per square metre can be achieved, which is much higher than the typical lidar point cloud (typically up to dozens of points per square metre).
 
 In photogrammetry we distinguish between _nadir_ images,
 #note[nadir images]#index[nadir images]
@@ -182,12 +182,12 @@ Both airborne and spaceborne photogrammetry are possible.
 
 === InSAR <sec:insar>
 
-#index[InSar]
+#index[InSAR]
 
 Interferometric synthetic aperture radar (InSAR) is a radar-based technique that is used from space in the context of terrain generation.
 It is quite different from airborne lidar or photogrammetry-based acquisition because of the extremely high altitude of the satellite carrying the sensor.
 Signals have to travel very long distances through several layers of unpredictable atmospheric conditions.
-As a result the speed of the radar signal is not known and the time-of-flight principle can not be used to get detailed measurements.
+As a result the speed of the radar signal is not known and the time-of-flight principle cannot be used to get detailed measurements.
 However, by using a comprehensive chain of processing operations based on the measured phase shifts and the combination of multiple InSAR images, accurate elevation can still be measured.
 With InSAR it is possible to cover very large regions in a short amount of time, eg the global SRTM dataset was generated with InSAR (see @chap:gdem).
 Compared to dense image matching and lidar, InSAR-derived DTMs usually have a much lower resolution, eg SRTM has a pixel size of #qty("30", "m").
@@ -203,8 +203,8 @@ Compared to dense image matching and lidar, InSAR-derived DTMs usually have a mu
 Echo sounding is a form of sonar that can be used for bathymetry, ie mapping underwater terrains from a boat.
 Similar to lidar, it uses the time-of-flight principle to compute distance, but sound is used instead of light.
 
-Single-beam and multi-beam echo sounders exist. Multi-beam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result it measures the target surface much more accurately.
-For bathymetry usually a multi-beam echo sounder is used.
+Single-beam and multibeam echosounders exist. Multibeam systems are capable of receiving many narrow sound beams from one emitted pulse. As a result they measure the target surface much more accurately.
+For bathymetry usually a multibeam echosounder is used.
 
 @chap:bathymetry describes techniques to process bathymetric datasets and create terrain of the seabed.
 

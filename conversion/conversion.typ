@@ -122,7 +122,7 @@ This can be resolved by simply picking a random option or consistently choose on
 
 === Conversion TIN to isolines <sec:tin-iso>
 
-Since a triangle has one fewer vertices than a square grid cell, there are less possible intersection cases and, more importantly, there is no ambiguous case.
+Since a triangle has one fewer vertex than a square grid cell, there are fewer possible intersection cases and, more importantly, there is no ambiguous case.
 
 When one or more vertices of the triangle are at the same elevation as $z_0$, then one must be careful.
 As shown in @fig:isoline-tr, if only one vertex is at $z_0$ then nothing should be extract; if two vertices are at $z_0$ then the edge between these can be extracted; if all three vertices are at $z_0$ then the triangle is flat/horizontal and nothing should be extracted (because adjacent triangles will have edges extracted).
@@ -175,7 +175,7 @@ $C^(0)$ interpolants are not enough, and $C^(2)$ ones are not necessary.
 
 The TIN simplification problem is:
 #quote(block: true)[
-  Given a TIN formed by the Delaunay triangulation of a set $S$ of points, the aim is to find a subset $R$ of $S$ which will approximate the surface of the TIN as accurately as possible, using as few points as possible. The subset $R$ will contain the 'important' points of $S$, ie a point $p$ is important when the elevation at location $p$ can not be accurately estimated by using the neighbours of $p$.
+  Given a TIN formed by the Delaunay triangulation of a set $S$ of points, the aim is to find a subset $R$ of $S$ which will approximate the surface of the TIN as accurately as possible, using as few points as possible. The subset $R$ will contain the 'important' points of $S$, ie a point $p$ is important when the elevation at location $p$ cannot be accurately estimated by using the neighbours of $p$.
 ]
 
 The overarching goal of TIN simplification is always to (smartly) reduce the number of points in the TIN.
@@ -270,7 +270,7 @@ The implementation of the decimation algorithm is similar to the refinement algo
 ) <algo:tin-simp:dec>
 
 It should be noticed that the implementation of this algorithm requires a method to delete/remove a vertex from a (Delaunay) triangulation, and that many libraries do not have one.
-#note[The implementation of the DT in #link("https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Delaunay.html")[SciPy] does not allow to delete/remove vertices, but #link("https://www.cgal.org")[CGAL] and #link("https://github.com/hugoledoux/startinpy")[startinpy] do.]
+#note[The implementation of the DT in #link("https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Delaunay.html")[SciPy] does not allow deleting/removing vertices, but #link("https://www.cgal.org")[CGAL] and #link("https://github.com/hugoledoux/startinpy")[startinpy] do.]
 
 Observe that the @algo:tin-simp:ref and @algo:tin-simp:dec both state that the importance of the points must be completely recomputed after each iteration of the algorithms (either one removal or one insertion), but that in practice several of these will not have changed.
 As can be seen in @chap:dtvd, the insertion/deletion of a single point/vertex will only _locally_ modify the triangulation, and it is thus faster from a computational point of view to flag the vertices incident to the modified triangles, and only update these.
@@ -300,7 +300,7 @@ However, decimation could be more efficient when you already have a detailed TIN
   ]
 )
 
-== #flex-heading[Wedding cake effect][Conversion isolines to TIN/raster creates the "wedding cake effect"] <sec:weddingcake>
+== #flex-heading[Wedding cake effect][Conversion of isolines to TIN/raster creates the "wedding cake effect"] <sec:weddingcake>
 
 If the input is a set of isolines, then the simplest solution is, as shown in @fig:wedding\a, to convert these to points and then use any of the interpolation methods previously discussed.
 This conversion can be done by either keeping only the vertices of the polylines, or by sampling points at regular intervals along the lines (say every #qty("10", "m")).

@@ -328,7 +328,7 @@ This means converting between the two data models when it is necessary (topic of
 == Notes and comments
 
 #citet(<Kumler94>) carried out a 4-year comparison between TINs and rasters.
-He states that the common belief that a TIN is more space-efficient than raster is handicapped by the fact that a TIN must have _at least_ 3 times less points to be of equal space.
+He states that the common belief that a TIN is more space-efficient than raster is handicapped by the fact that a TIN must have _at least_ 3 times fewer points to be of equal space.
 His conclusions are also that rasters can estimate elevation more accurately than comparably-sized TINs.
 However, he still finishes by stating: "Yeah, well... TINs still _look_ better." 
 

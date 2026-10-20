@@ -135,12 +135,12 @@ $  f(x,y) = a x^(2) + b y^(2) + c x y + d x + e y + f  $
 , and thus:
 $  frac(partial f, partial x) = 2 a x + c y + d  $
 $  frac(partial f, partial y) = 2 b y + c x + e  $
-and if a local coordinate system centered at $c_(i,j)$ is used, then $x = y = 0$, and thus $frac(partial f, partial x) = d$ and $frac(partial f, partial y) = e$.
+and if a local coordinate system centred at $c_(i,j)$ is used, then $x = y = 0$, and thus $frac(partial f, partial x) = d$ and $frac(partial f, partial y) = e$.
 
 #box-practice("How does it work in practice?")[
   The GDAL utility `gdaldem` (#link("https://www.gdal.org/gdaldem.html")) does not have the best documentation and does not explicitly mention which method is used.
   \ \
-  After some searching, we can conclude that the method "4. Local polynomial fitting" is used by default for slope/aspect, and specifically the Horn's method is used #citep(<Horn81>).
+  After some searching, we can conclude that the method "4. Local polynomial fitting" is used by default for slope/aspect, and specifically Horn's method is used #citep(<Horn81>).
   This uses a $3 times 3$ window, and fits a polynomial; the centre pixel value is not used.
   \ \
   If the option '`-alg ZevenbergenThorne`' is used, then the algorithm of #citet(<Zevenbergen87>) is used.
@@ -231,7 +231,7 @@ One could recreate a TIN with the values of the vertices having the roughness, o
 
 #figure(
   image("figs/feature_points.png", width: 100%),
-  caption: [#strong[(a)] Peaks and pits. #strong[(b)] A saddle point (Figure from #link("https://www.armystudyguide.com"))],
+  caption: [#strong[(a)] Peaks and pits. #strong[(b)] A saddle point (Figure from #link("https://www.rmu.edu/sites/default/files/user_files/rotc-fm3-25-26.pdf")[FM 3-25.26])],
   placement: auto,
 ) <fig:feature_points>
 

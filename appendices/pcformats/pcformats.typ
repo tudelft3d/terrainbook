@@ -198,7 +198,7 @@ A compressed variant of the LAS format, dubbed "LAZ", exists.
 While it is not maintained by an 'official' organisation like the LAS standard, it is an open standard and it is widely used, especially for very big datasets.
 Through the use of lossless compression algorithms that are specialised for point cloud data, a LAZ file can be compressed into a fraction of the storage space required for the equivalent LAS file, without any loss of information.
 This makes it more effective than simply using ZIP compression on a LAS file.
-In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different than opening a LAS file (although the compression and decompression operations do take extra time).
+In addition, support for LAZ is typically built into point cloud reading and writing software, so to the user it is no different from opening a LAS file (although the compression and decompression operations do take extra time).
 
 The LAZ format closely resembles the LAS format, ie the header and the structure of the point records are virtually identical.
 In a LAZ file the point records are grouped in blocks of 50,000 records each.

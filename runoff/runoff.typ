@@ -61,7 +61,7 @@ This method can therefore easily create artefacts in certain geometric configura
 )
 
 Many of these artefacts can be reduced by using the rho8 ($rho 8$) method, the stochastic counterpart of D8, which assigns the flow direction of a cell to one of its lower neighbours randomly, with a probability proportional to the slope.
-#note[rho8 ($rho 8$)]#index[rho8 ($rho 8$)]
+#note[rho8 ($rho 8$)]#index[rho8]
 However, it produces non-deterministic results, which is often a sufficient reason not to use it.
 
 Despite its age and limitations, the SFD method is still widely used and available in many GIS tools.
@@ -97,7 +97,7 @@ D∞ thus avoids both the quantisation of the flow direction inherent to D8 and 
   figure(image("figs/dispersion_d8.pdf", width: 100%), caption: [D8]),
   figure(image("figs/dispersion_quinn.pdf", width: 100%), caption: [Quinn]),
   columns: (1fr, 1fr),
-  caption: [Flows in a circular cone: SFD (D8) versus MFD (#citet(<Quinn91>)). Based on #citet(<Tarboton97>).],
+  caption: [Flows in a circular cone: SFD (D8) versus MFD #citep(<Quinn91>). Based on #citet(<Tarboton97>).],
   placement: auto,
   label: <fig:dispersion>,
 )

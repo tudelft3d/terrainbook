@@ -220,7 +220,7 @@ Streaming would mean here: can we assess that a given triangle is Delaunay witho
 #box-practice("Streaming is realised with Unix pipes")[
   The key to implementing streaming of geometries is to use Unix pipes (also called _pipelines_).
   \
-  Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow to chain several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the _stream_). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
+  Pipelines were designed by Douglas McIlroy at Bell Labs during the development of Unix, and they allow chaining several processes together. The output of a process becomes the input of the next one, and so on (the data flowing through the process is the _stream_). Given 2 processes, the 2nd one can usually start before the 1st one has finished processing all the data.
   \
   In Unix, the pipe operator is the vertical line "`|`", and several commands can be chained with it: "`cmd1 | cmd2 | cmd3`".
   A simple example would be "`ls -l | grep json | wc -l`" which would:
@@ -314,7 +314,7 @@ The ideas behind streaming are very useful for certain _local_ problems (eg inte
 
 == Notes and comments
 
-The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (#link("https://en.wikipedia.org/wiki/K-d_tree")) and the lecture notes entitled "kd-Trees---CMSC 420" from Carl Kingsford (available at #link("https://www.cs.cmu.edu/ckingsf/bioinfo-lectures/kdtrees.pdf")).
+The description of the $k$d-tree and the nearest neighbour query is adapted from Wikipedia (#link("https://en.wikipedia.org/wiki/K-d_tree")) and the lecture notes entitled "kd-Trees---CMSC 420" from Carl Kingsford (available at #link("https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/kdtrees.pdf")).
 
 #citet(<Vitter01>) provides an overview of external algorithms.
 

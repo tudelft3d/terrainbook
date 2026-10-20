@@ -19,16 +19,16 @@ It is an open dataset.
 #note[AHN6 is the current version]
 It began in 1997, and its current version is 6 (called AHN6).
 
-The AHN6 dataset uses the "Point Data Record Format 6", see Table @tab:las-record.
+The AHN6 dataset uses the "Point Data Record Format 6", see @tab:las-record.
 
 LAS v1.4 allows us to store certain extra user-defined attributes, and in AHN4 the following 3 are also stored (but not in other versions):
 + _Amplitude:_ echo signal amplitude [dB] (min: 0; max: 10000)
 + _Reflectance:_ echo signal reflectance [dB] (min: 0; max: 10000)
 + _Deviation:_ pulse shape deviation (min: 0; max: 65535)
 
-The AHN lidar dataset is disseminated in the LAZ format (a compressed version of LAS, see Appendices @sec:lasformat and @sec:lazformat) and uses the LAS classification codes (see Table @tab:las-classes). 
+The AHN lidar dataset is disseminated in the LAZ format (a compressed version of LAS, see @sec:lasformat and @sec:lazformat) and uses the LAS classification codes (see @tab:las-classes).
 @fig:ahn3 shows all the codes that are used. 
-Notice that apart from the pre-defined codes from Table @tab:las-classes, AHN4/5/6 also uses the custom code $26$ for a 'civil structure' (Dutch: _kunstwerk_) class that includes special infrastructures such as bridges, statues, and viaducts.
+Notice that apart from the pre-defined codes from @tab:las-classes, AHN4/5/6 also uses the custom code $26$ for a 'civil structure' (Dutch: _kunstwerk_) class that includes special infrastructures such as bridges, statues, and viaducts.
 
 It should be noticed that in AHN5 the class 6/`building` is for the roofs of the buildings _only_, the façades of a building are in class 1/`unclassified`.
 This is in contrast to previous versions, and the current version, in which all points representing a building were classified as 6/`building`.

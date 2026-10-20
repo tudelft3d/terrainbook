@@ -73,7 +73,7 @@ The underlying assumption of most outlier detection methods is that an outlier i
 
 These methods generally work well if the outliers are isolated.
 However, in some cases this assumption does not hold.
-For example in case of a point cloud derived from multi-beam echo sounding (see @sec:mbes), a common issue is the occurrence of (shoals of) fish.
+For example in case of a point cloud derived from multibeam echo sounding (see @sec:mbes), a common issue is the occurrence of (shoals of) fish.
 These fish cause large groups of points that are clustered closely together above the seafloor.
 These are not isolated points since each outlier will have plenty of other points nearby.
 A possible solution is to construct a TIN of all points and to remove the relatively long edges that connect the outlier clusters to the seafloor.
@@ -83,7 +83,7 @@ This splits the TIN into several smaller TINs, and the largest of those should t
   figure(image("./figs/mbes_cleaning_before.png", width: 100%), caption: [before outlier detection]),
   figure(image("./figs/mbes_cleaning_after.png", width: 100%), caption: [after outlier detection]),
   columns: (1fr, 1fr),
-  caption: [Outlier detection in a multi-beam echo sounding dataset using a TIN. Figure from #citep(<Arge10>).],
+  caption: [Outlier detection in a multibeam echo sounding dataset using a TIN. Figure from #citep(<Arge10>).],
   placement: auto,
   label: <fig:mbes>,
 )
@@ -456,7 +456,7 @@ To find the possible shape instances for $p$, the algorithm simply checks all po
 
 It is thus important to choose a good parametrisation of the shape that is to be detected.
 For instance when detecting lines one could use the slope-intercept form, ie $y = m x+b$.
-However, this particular parametrisation can not easily represent vertical lines, because $m$ would need to become infinite which is computationally difficult to manage.
+However, this particular parametrisation cannot easily represent vertical lines, because $m$ would need to become infinite which is computationally difficult to manage.
 A better line parametrisation is the Hesse normal form#index[Hesse normal form]#note[Hesse normal form] which is defined as
 $  r = x cos phi.alt + y sin phi.alt  $
 As illustrated in @fig:hough-transform:a, $(r,phi.alt )$ are the polar coordinates of the point on the line that is closest to the origin, ie $r$ is the distance from the origin to the closest point on the line, and $phi.alt in 0^(degree ), 180^(degree )$ is the angle between the positive $x$-axis and the line from the origin to that closest point on the line.

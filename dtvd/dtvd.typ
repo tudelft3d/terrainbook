@@ -415,7 +415,7 @@ The simplest data structure, as shown in @fig:tr_ds, considers the triangle as b
 Observe that the order in which the vertices and adjacent triangles are stored correspond to each other.
 This is an important property that allows an efficient retrieval of triangles in the Walk algorithm (@algo:walk) for instance.
 
-== #flex-heading[Constraints in DT][Constrained and Conforming Delaunay Triangulations]
+== #flex-heading[Constraints in DT][Constrained and conforming Delaunay triangulations]
 
 #index[Constrained DT]#index[CDT]#index[Conforming DT]
 

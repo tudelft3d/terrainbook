@@ -55,14 +55,14 @@ This interpolant will be exact, continuous and smooth (at least $C^(2)$).
 However, it will not be local (which is problematic for terrains), and finding the polynomial of a high degree for large datasets might be impossible (or take a lot of time).
 
 The biggest concern with polynomials is probably that while the interpolant is exact (the surface passes through the sample points), higher-degree polynomials can oscillate between the samples and 'overshoot', ie be (far) outside the minimum or maximum $z$ values of the set $S$.
-#index[Runge's phenomenon ]#note[Runge's phenomenon]
-This is known as the Runge's phenomenon in numerical analysis, and is shown in @fig:polynomial.
+#index[Runge phenomenon]#note[Runge's phenomenon]
+This is known as Runge's phenomenon in numerical analysis, and is shown in @fig:polynomial.
 
 #place(float: true, auto,
   wideblock[
     #figure(
       image("figs/polynomial.pdf", width: 100%),
-      caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and the Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
+      caption: [A few of the interpolation methods shown for a 1D dataset. #strong[(a)] Input sample points. #strong[(b)] Polynomial fitting, and Runge's effect shown. #strong[(c)] Nearest neighbour. #strong[(d)] Linear interpolation in TIN.],
       placement: auto,
     ) <fig:polynomial>
   ]
@@ -79,7 +79,7 @@ The polynomials used in each piece of the subdivision is usually of low degree (
 
 There are several types of splines (and variation of them, such as Bézier), and most of them are not suited for terrains.
 The most used spline in practice seems to be the _regularised spline with tension_ (RST), where the dataset is decomposed into square pieces of a certain size.
-The Runge's effect (also called _overshoots_) are eliminated (since the degree is low), and the tension parameter can be tuned to obtain an interpolant that is smooth.
+Runge's effect (also called _overshoots_) is eliminated (since the degree is low), and the tension parameter can be tuned to obtain an interpolant that is smooth.
 
 == Weighted-average methods <sec:wam_interpol>
 
@@ -112,7 +112,7 @@ This data point gets a weight of exactly 1.0.
 
 Given a set $S$ of data points, if interpolation is performed with this method at many locations close to each other, the result is the Voronoi diagram (VD) of $S$ (see @sec:vd), where all the points inside a Voronoi cell have the same value.
 
-Although the method possesses many of the desirable properties (it is exact, local and can handle anisotropic data distributions), the reconstruction of continuous fields can not realistically be done using it since it fails lamentably properties 2 and 3. 
+Although the method possesses many of the desirable properties (it is exact, local and can handle anisotropic data distributions), the reconstruction of continuous fields cannot realistically be done using it since it fails lamentably properties 2 and 3.
 The interpolation function is indeed discontinuous at the border of cells; if the location $x$ is directly on an edge or vertex of the VD($S$), then which value should be returned?
 
 The implementation of the method sounds easy: simply find the closest data point and assign its value to the interpolation location. 
@@ -233,7 +233,7 @@ These methods are usually used more for finite element analysis where the flow o
 Most methods would define a cubic Bézier polynomial inside each triangle (which is $C^(1)$), and then ensure that the function is $C^(1)$ along the edges and at the 3 vertices of the triangles.
 To achieve this, the normal of each vertex is calculated by averaging the normals of the incident triangles, and the normal along an edge is computed similarly with the 2 incident triangles.
 
-=== Natural Neighbour Interpolation (NNI)
+=== Natural neighbour interpolation (NNI)
 
 #index[natural neighbour interpolation]#index[Sibson interpolation]
 
@@ -327,7 +327,7 @@ This limits the computational cost and supports efficient addition or removal of
 Finally, like the VD itself, it is adaptive to the spatial configuration of sample points. 
 Unlike other methods such as IDW interpolation, the Laplace interpolant requires no user-defined parameters.
 
-=== Bilinear Interpolation
+=== Bilinear interpolation
 
 #index[bilinear interpolation]
 
