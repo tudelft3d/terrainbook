@@ -502,7 +502,7 @@
       )
     }
   })
-  set page(numbering: none)
+  set page(numbering: "1", number-align: center + top)
   
   counter(page).update(1)
   set heading(numbering: "1.1")
@@ -574,7 +574,7 @@
 
 // Back matter: Roman numerals continuing from front matter
 #let back-matter(body) = {
-  set page(numbering: none)
+  set page(numbering: "1", number-align: center + top)
   // set heading(numbering: none)
   // counter(heading).update(0)
   set page(
