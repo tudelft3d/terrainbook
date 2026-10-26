@@ -81,7 +81,7 @@ There are several types of splines (and variation of them, such as Bézier), and
 The most used spline in practice seems to be the _regularised spline with tension_ (RST), where the dataset is decomposed into square pieces of a certain size.
 Runge's effect (also called _overshoots_) is eliminated (since the degree is low), and the tension parameter can be tuned to obtain an interpolant that is smooth.
 
-== Weighted-average methods <sec:wam_interpol>
+== #flex-heading[Weighted-avg methods][Weighted-average methods] <sec:wam_interpol>
 
 The six interpolation methods discussed in this section are _weighted-average methods_.
 These are methods that use a subset of the sample points, to which a weight (importance) 
@@ -336,6 +336,7 @@ Resampling means transforming an input grid so that the resolution and/or the or
 #notefigure(
   image("figs/resampling.pdf", width: 100%),
   caption: [Resampling of an input grid, the output grid has a different orientation and a different resolution.],
+  dy: 100pt,
 ) <fig:resampling>
 
 Bilinear interpolation has been shown to give better results than using the value of the pixel. 
@@ -362,7 +363,7 @@ $ mat(delim: #none,
   ;)  
 $
 
-== #flex-heading[Assessing interpolation results][Assessing the results of an interpolation method and/or fine-tuning the parameters]
+== #flex-heading[Assessing interpolations][Assessing the results of an interpolation method and/or fine-tuning the parameters]
 
 Finding the "best" interpolation method for a given dataset, and the most suitable parameters (if any are needed), can be a rather tricky task in practice because we most often do not have extra control points.
 

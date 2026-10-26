@@ -42,7 +42,7 @@ We discuss in this chapter the general problem of visibility as defined in compu
 
 
 // #pagebreak()
-== #flex-heading[General visibility problem][The general visibility problem]
+== #flex-heading[General problem][The general visibility problem]
 
 Rendering is the process of generating (2D) images from 2D or 3D scenes. #index[rendering] 
 As shown in @fig:Ray_trace_diagram, it involves projecting the (3D) objects in a scene to an image (say $800 times 800$ pixels) and assigning one colour to each pixel.

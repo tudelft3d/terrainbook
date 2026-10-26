@@ -424,7 +424,7 @@ We are mostly interested in the _constrained Delaunay triangulation_ (ConsDT) an
 #notefigure(
   image("./figs/cdt_example.pdf", width: 85%),
   caption: [#strong[(top)] A set $S$ of points and straight-line segments. #strong[(middle)] Constrained DT of $S$. #strong[(bottom)] Conforming DT of $S$; the Steiner points added are in red.],
-  // dy: 200pt,
+  dy: 80pt,
 ) <fig:cdt_example>
 
 ==== Constrained DT (ConsDT)

@@ -28,7 +28,7 @@ The algorithms that produce the underlying data are covered elsewhere---gradient
 Observe that the depiction of terrains is highly _scale-dependent_, since a technique that suits a #qty("1", "km")-wide alpine valley is not necessarily suited to a map of a whole country.
 
 
-== Perspective views of relief <sec:vis_history>
+== #flex-heading[Perspective views][Perspective views of relief] <sec:vis_history>
 
 The oldest maps (from the Middle Ages) showed mountains depicted from the side, as rows of rounded "molehills"—regular domes arranged in certain patterns.
 @fig:molehills shows three examples taken from Imhof's book. 

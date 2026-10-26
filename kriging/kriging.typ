@@ -137,7 +137,8 @@ $ "cov"(Z(x + h), Z(x)) = C(h), $ <eq:stationarityofthecovariance>
 where $C$ is the covariance function.
 Since both the expectation (@eq:stationarityofthemean) and the covariance (@eq:stationarityofthecovariance) are translation invariant, this pair of assumptions is together known as _second-order stationarity_#note[second-order stationarity]#index[second-order stationarity].
 
-== Covariance, dissimilarity and the semivariogram
+
+== #flex-heading[Covariance & dissimilarity][Covariance, dissimilarity and the semivariogram]
 
 According to the standard geostatistical model described above, the residual term is spatially correlated.
 That is, even after removing the general spatial trend from a dataset, nearby samples will tend to have more similar values than those farther apart.
