@@ -420,7 +420,7 @@ The differences in the lower areas (which is water) are smaller since these area
         columns: 7,
         align: (left, center, center, center, center, center, center),
         table.hline(),
-        table.header[][exact][continuous \ smooth][local][adaptable][efficient][automatic],
+        table.header[][exact][continuous][local][adaptable][efficient][automatic],
         table.hline(),
         [*global\ function*], [#sym.crossmark], [$C^(2+)$] , [#sym.crossmark] , [--] , [--] , [#sym.crossmark],
         [*splines*], [#sym.crossmark], [$C^(2+)$], [depends], [0], [--], [#sym.crossmark],

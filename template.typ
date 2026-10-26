@@ -1,10 +1,11 @@
 
+//-- engine for the page setup and margins
 #import "@preview/marginalia:0.3.1" as marginalia: note, notefigure, wideblock
-//-- index at the end
-#import "@preview/in-dexter:0.7.2": *
+//-- for the mini-toc of each chapter
 #import "@preview/suboutline:0.3.0": suboutline
+//-- for the information boxes
 #import "@preview/showybox:2.0.4": showybox
-//-- headers
+//-- headers to get context (page and chapter/section titles)
 #import "@preview/hydra:0.6.2": hydra
 //-- helper for numbering of figures and tables
 #import "@preview/headcount:0.1.1": dependent-numbering, reset-counter
@@ -12,8 +13,10 @@
 #import "@preview/subpar:0.2.2"
 //-- pseudo-code
 #import "@preview/lovelace:0.3.0": *
-//-- siunitx
+//-- siunitx replacement
 #import "@preview/unify:0.8.1": num, numrange, qty, qtyrange, unit
+//-- index at the end
+#import "@preview/in-dexter:0.7.2": *
 //-- icons
 #import "@preview/heroic:0.1.2": hi
 
