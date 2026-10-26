@@ -42,8 +42,8 @@ Certain tiles contain the classification 14/`high-voltage pylons and cables`, bu
 // #note[class=14 for pylons+cables (for some tiles only)]
 If 14 is not used, the pylons and cables are in class 26/`kunstwerk`.
 
-#coffee-b(where: center + horizon, angle: 95deg, opacity: 50%)
-#coffee-d(where: right + bottom, angle: 95deg, opacity: 50%)
+#coffee-b(where: center + horizon, angle: 95deg, opacity: 30%)
+#coffee-d(where: left + top, dx: -120pt, dy: -10pt, angle: 95deg, opacity: 60%)
 
 #figure(
   table(
