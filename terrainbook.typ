@@ -1,9 +1,10 @@
 // TODO
-// [ ] check that the index has correct page number references
+// [ ] check all the "TODO" in the source code
 // [ ] https://github.com/typst/hayagriva/pull/484 
 //      school/institution in PhD thesis not printed until new version released
-// [ ] search in PDF for: "Target not found:"
-// [ ] check colophon on correct page at the end
+// [x] check colophon on correct page at the end
+// [x] search in PDF for: "Target not found:"
+// [x] check that the index has correct page number references
 // [x] eg + ie
 // [x] @app:ahn[Appendix]
 // [x] add an AI declaration
@@ -64,14 +65,14 @@
 
 //-- put in red chapter errors (instead of not being able to compile)
 //-- TODO: remove the red-missing-refs
-#let possible-missing-ref(it) = {
-  if it.element != none {
-    it
-  } else {
-    text(fill: red)[\<Target not found: #emph(str(it.target))\>]
-  }
-}
-#show ref: possible-missing-ref
+// #let possible-missing-ref(it) = {
+//   if it.element != none {
+//     it
+//   } else {
+//     text(fill: red)[\<Target not found: #emph(str(it.target))\>]
+//   }
+// }
+// #show ref: possible-missing-ref
 
 
 //-- main-matter
@@ -147,7 +148,7 @@
     This book was typeset using #link("https://typst.app")[Typst] and the aim was more or less to obtain the same as the great _kaobook_ class from LaTeX (#link("https://github.com/fmarotta/kaobook")).
     It uses the _IBM Plex_ fonts superfamily (#link("https://github.com/IBM/plex")).
   The figures were created using Ipe, OmniGraffle, Affinity Designer, LLM-generation, and Blender. \ \
-    The front cover image shows the Tanaka contours of a random place in Tasmania. \ \
+    The front cover image shows the Tanaka contours of a random place in Tasmania (Australia). \ \
     The source code of the book is openly available at #link("https://github.com/tudelft3d/terrainbook/").
   ]
 ]
