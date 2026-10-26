@@ -335,7 +335,8 @@ Their lowland colours vary with climate/vegetation (olives/greens in humid regio
 
 == Exercises
 
-// TODO: add exercises
-
++ Explain why hachures encode the same information as a hillshade: which terrain property determines the direction of a hachure, and which one determines its thickness? 
++ A map at a scale of 1:#num("50000") shows a slope of #qty("20", "deg"). If the contour interval is #qty("20", "m"), what is the horizontal distance between 2 successive contour lines on the map (in mm)? Is the map still legible, knowing that the contour lines themselves are #qty("0.5", "mm") wide? (1 mm on the map corresponds to #qty("50", "m") on the ground.)
++ In @eq:hillshade, show that a flat cell is rendered as $255 sin gamma$. What is the hillshade value of a flat cell when the sun is at an elevation of #qty("45", "deg")? And what happens to the image when the sun is at the zenith ($gamma = pi/2$)? Explain why a light source at an angle, and not a vertical one, is used to reveal the form of the terrain.
++ Look at @fig:svf-hillshade. (a) Why are the flat areas (the river and the plateau) the brightest cells in the SVF image? (b) The SVF was computed with $n = 16$ directions and a search radius $R = #qty("1", "km")$. What would change in the image if $R$ were reduced to #qty("100", "m")? And if $n$ were reduced to 4?
 + When creating the Tanaka contours, it is mentioned that segments should be oriented such that higher ground is always on the left of a line. Does this mean that lines are always oriented counter-clockwise?
-// +
