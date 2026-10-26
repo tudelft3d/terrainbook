@@ -27,7 +27,7 @@ Since these differ significantly from the data model used (TINs and grids), we g
 The extraction of these properties is more common with grids, and in most cases kernel filters are used, @fig:filter shows one example.
 #notefigure(
   image("figs/filter.pdf", width: 100%),
-  caption: [Example of a $3 times 3$ filter. The new value of the cell $x$ of the input (in blue) is calculated by using its 8 neighbours (eg \ averaging the values) and the output terrain $t_"output"$ contains that value for its cell $x$. This operation is usually performed for all cells in the input $t_"input"$.],
+  caption: [Example of a $3 times 3$ filter. The new value of the cell $x$ of the input (in blue) is calculated by using its 8 neighbours (eg averaging the values) and the output terrain $t_"output"$ contains that value for its cell $x$. This operation is usually performed for all cells in the input $t_"input"$.],
 ) <fig:filter>
 #index[kernel filter]
 A filter is conceptually the same as a focal operation in map algebra (in GIS), or as a convolutional filter in computer vision.
@@ -231,7 +231,7 @@ One could recreate a TIN with the values of the vertices having the roughness, o
 
 #figure(
   image("figs/feature_points.png", width: 100%),
-  caption: [#strong[(a)] Peaks and pits. #strong[(b)] A saddle point (Figure from #link("https://www.rmu.edu/sites/default/files/user_files/rotc-fm3-25-26.pdf")[FM 3-25.26])],
+  caption: [#strong[(a)] Peaks and pits. #strong[(b)] A saddle point (Figure from #citet(<USAArmy01>))],
   placement: auto,
 ) <fig:feature_points>
 
