@@ -105,6 +105,7 @@
   // #heading(numbering: none)[Appendices]
   #set heading(numbering: "A.1")
   #set figure(numbering: dependent-numbering("A.1"))
+  #set math.equation(numbering: dependent-numbering("(A.1)"))
   #counter(heading).update(0)
   #include "./appendices/pcformats/pcformats.typ"     //-- A
   #include "./appendices/ahn/ahn.typ"                 //-- B

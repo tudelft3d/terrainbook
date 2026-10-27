@@ -367,11 +367,6 @@
   
   //-- math
   show math.equation: set text(font: math-font)
-  set math.equation(numbering: "(1)")
-  // show heading.where(level: 1): it => {
-  //   counter(math.equation).update(0)
-  //   it
-  // }
   
   //-- raw font
   show raw: set text(font: mono-font)
@@ -506,11 +501,15 @@
   counter(page).update(1)
   set heading(numbering: "1.1")
   set figure(numbering: dependent-numbering("1.1"))
+  set math.equation(numbering: dependent-numbering("(1.1)"))
   show heading: reset-counter(
     counter(figure.where(kind: image)),
   )
   show heading: reset-counter(
     counter(figure.where(kind: table)),
+  )
+  show heading: reset-counter(
+    counter(math.equation),
   )
   counter(heading).update(0)
 
@@ -532,6 +531,7 @@
     set par(justify: false)
     counter(figure.where(kind: image)).update(0)
     counter(figure.where(kind: table)).update(0)
+    counter(math.equation).update(0)
     pagebreak(weak: true, to: "odd")
     block(
       width: 100%,
