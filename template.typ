@@ -26,10 +26,6 @@
 #let sans-font = ("IBM Plex Sans",) //-- headings
 #let math-font = ("IBM Plex Math",) //-- math
 #let mono-font = ("IBM Plex Mono",) //-- code, links, version
-//-- The IBM Plex semibold (used for the big chapter number in the chapter opener)
-//-- is a separate family name in Typst, not a weight of "IBM Plex Serif".
-//-- Defined at module level because it is used in `main-matter` (see fonts/README.md).
-// #let serif-semibold-font = ("IBM Plex Serif SmBld",)
 
 //-- natbib
 #let citet = cite.with(form: "prose")
@@ -551,14 +547,10 @@
   					it.body
   			  )
         ),
-        // place(bottom+center, 
-        //   line(stroke: 0.6pt, start: (0mm, 0mm), end: none, angle: 90deg, length: 100%), 
-        // ),
         move(dy:3mm, line(stroke: 0.9pt, start: (0mm, 20mm), end: (0mm, -50mm))), 
         place(
           bottom+left,
           text(
-    				// font: serif-semibold-font,
     				size: 6em,
     				// weight: "semibold",
     				// style: "italic",
