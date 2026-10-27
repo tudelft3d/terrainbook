@@ -367,6 +367,26 @@
   
   //-- math
   show math.equation: set text(font: math-font)
+  //-- references to equations render as "Equation 9.1" (the number displayed on
+  //-- the equation itself keeps its parentheses); the chapter prefix is the
+  //-- numbering of the nearest chapter heading, so it is "D.1" in the appendices
+  //-- and stays correct in cross-chapter references
+  show ref: it => {
+    let el = it.element
+    if el != none and el.func() == math.equation {
+      context {
+        let loc = el.location()
+        let eq = counter(math.equation).at(loc).first()
+        let chap = counter(heading).at(loc).first()
+        let heads = query(heading.where(level: 1).before(loc))
+        let style = if heads.len() > 0 { heads.last().numbering } else { none }
+        let pat = if type(style) == str { style.split(".").first() } else { "1" }
+        link(it.target, [Equation~#numbering(pat, chap).#eq])
+      }
+    } else {
+      it
+    }
+  }
   
   //-- raw font
   show raw: set text(font: mono-font)
