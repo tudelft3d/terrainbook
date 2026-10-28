@@ -264,6 +264,7 @@ The implementation of the decimation algorithm is similar to the refinement algo
         + *if* $epsilon_(tau ) < epsilon$ *then*
           + $epsilon <- epsilon_(tau )$
           + $q <- p$
+        + put back $p$ into $cal(T)$
       + \//-- remove the point $q$ that has the smallest error
       + remove from $cal(T)$ the point $q$
   ]
