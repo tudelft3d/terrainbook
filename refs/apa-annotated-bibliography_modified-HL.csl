@@ -1047,7 +1047,9 @@
           <group delimiter=": ">
             <group delimiter=". ">
               <text macro="label-volume" />
-              <text variable="volume-title" />
+              <!-- `volume-title` not printed: Typst's BibTeX import wrongly populates it
+                   with the `booktitle` of chapter-like entries (any container with
+                   editors), which would print the container title twice -->
             </group>
             <text macro="title-part" />
           </group>

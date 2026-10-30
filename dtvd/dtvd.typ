@@ -509,7 +509,7 @@ Since a DT can be locally modified by adding one point (and not reconstructing t
 
 + A DT has 32 triangles and we insert a new point $p$ that falls inside one of the triangles. If we insert and update the triangulation (for Delaunay criterion), what is the number of triangles?
 + Given the input formed of elevation points and breaklines below (both projected to the $x y$-plane), draw both the constrained and conforming Delaunay triangulation (an approximation is fine).
-#image("./figs/cdt_exercise.pdf")
+  #image("./figs/cdt_exercise.pdf")
 + If a given vertex $v$ in a DT has 7 incident triangles, how many vertices will its dual polygon contain?
 + Identify the 5 infinite triangles in @fig:infinite_vertex.
 + A DT has 6 vertices, and 3 of these are forming the convex hull. How many triangles does the DT have?

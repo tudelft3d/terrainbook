@@ -307,10 +307,10 @@ Here, we can use the definitions of the variance based on residuals from @eq:var
 $ "var"(hat(R)_0 - R_0) &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j "cov"(R_i, R_j) - 2 sum_(i=1)^(n) w_i "cov"(R_i, R_0) + "cov"(R_0, R_0) \
   &= sum_(i=1)^(n) sum_(j=1)^(n) w_i w_j C(x_i - x_j) - 2 sum_(i=1)^(n) w_i C(x_i - x_0) + C(x_0 - x_0). $ <eq:variancesk>
 
-In order to minimise this, we set its first derivative with respect to each weight $w_i$ to zero.
+In order to minimise this, we set its first derivative with respect to each weight $w_i$ to zero; this must hold for all $1 <= i <= n$.
 This is:
 
-$ (partial "var"(hat(R)_0 - R_0)) / (partial w_i) = 2 sum_(j=1)^(n) w_j C(x_i - x_j) - 2 C(x_i - x_0) = 0 quad "for all" 1 <= i <= n $
+$ (partial "var"(hat(R)_0 - R_0)) / (partial w_i) = 2 sum_(j=1)^(n) w_j C(x_i - x_j) - 2 C(x_i - x_0) = 0 $
 
 which yields the set of $n$ simple kriging equations:
 

@@ -95,14 +95,21 @@ As shown in @fig:filter-profile, ground points are those points that are part of
 The ground points can then be used to generate a DTM, usually as a TIN or a raster.
 Or, the non-ground points can be used as input for another classifier, eg to classify buildings and vegetation possibly using a region growing algorithm (see @sec:regiongrowing).
 
-#subfigure(
-  figure(image("./figs/filter-profile-before.png", width: 100%), caption: [Original point cloud]),
-  figure(image("./figs/filter-profile-after.png", width: 100%), caption: [After ground filtering]),
-  columns: (1fr),
-  caption: [Profile of the point cloud of an area.],
-  placement: auto,
-  label: <fig:filter-profile>,
-)
+#{
+  //-- render this caption in the flow below the figure: with the default
+  //-- margin caption, a figure at the top of a page pushes the caption into
+  //-- the running header (the caption would otherwise be anchored at the top)
+  in-wideblock.update(true)
+  subfigure(
+    figure(image("./figs/filter-profile-before.png", width: 100%), caption: [Original point cloud]),
+    figure(image("./figs/filter-profile-after.png", width: 100%), caption: [After ground filtering]),
+    columns: (1fr),
+    caption: [Profile of the point cloud of an area.],
+    placement: auto,
+    label: <fig:filter-profile>,
+  )
+  in-wideblock.update(false)
+}
 
 Ground filtering methods are typically based on the assumptions that
 + the ground is a continuous surface without sudden elevation jumps,
@@ -508,7 +515,6 @@ Notice that the accumulator can be made more sensitive by choosing a finer quant
 ==== Time complexity
 The time complexity of the Hough transform algorithm as discussed here is $cal(O) (n m)$, where $m$ is the number of elements in the accumulator.
 
-#pagebreak()
 == Notes and comments
 
 #citet(<Arge10>) introduced the outlier detection method for echo-sounding datasets by cutting long edges in a TIN.

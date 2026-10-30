@@ -442,8 +442,8 @@ The differences in the lower areas (which is water) are smaller since these area
 #wideblock(side: "outer")[
   #subfigure(
     figure(image("figs/results/nn.png", width: 75%), caption: [Nearest neighbour]),
-    figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500))]),
-    figure(image("figs/results/idw_r1500_p4.png", width: 75%), caption: [IDW (radius=#num(1500))]),
+    figure(image("figs/results/idw_r1500_p2.png", width: 75%), caption: [IDW (radius=#num(1500), power=2)]),
+    figure(image("figs/results/idw_r1500_p4.png", width: 75%), caption: [IDW (radius=#num(1500), power=4)]),
     figure(image("figs/results/tin.png", width: 75%), caption: [TIN (linear)]),
     figure(image("figs/results/tin_c1.png", width: 75%), caption: [TIN ($C^(1)$)]),
     figure(image("figs/results/nni.png", width: 75%), caption: [Natural neighbours]),
@@ -491,9 +491,9 @@ Here, roughness is defined as the integral of the square of the $L^(2)$-norm of 
 + What happens when the search distance is very large for inverse distance weighting interpolation (IDW)?
 + For grids, can IDW or others be used instead of bilinear? If yes, how does that work?
 + The 15 elevation samples below have been collected. You want to interpolate at two locations:
- \begin{enumerate}
-+ at location ($7,6$) with IDW (radius=3; power=2); the purple circle.
-+ at location ($15,6$) with linear interpolation in TIN; the orange cross. 
+  + at location ($7,6$) with IDW (radius=3; power=2); the purple circle.
+  + at location ($15,6$) with linear interpolation in TIN; the orange cross.
+
   What are the respective answers?
   \
   #image("figs/interpol.pdf", width: 90%)
