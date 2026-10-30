@@ -26,15 +26,15 @@ International Licence. For licence details, see
   [`v0.6`],    [`[2019–11–11]`],  
 ) 
 
-==== Download latest version
+#heading(level:4, outlined: false)[Download latest version]
 The latest version of this book can be downloaded in PDF at \
 #link("https://github.com/tudelft3d/terrainbook/releases")
 
-==== Open book
+#heading(level:4, outlined: false)[Open book]
 The source code of the book, in Typst, is available at \
 #link("https://github.com/tudelft3d/terrainbook")
 
-==== Errors? Feedback?
+#heading(level:4, outlined: false)[Errors? Feedback?]
 Please report errors or potential improvements at \
 #link("https://github.com/tudelft3d/terrainbook/issues")
 
