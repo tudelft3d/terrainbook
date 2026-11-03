@@ -96,7 +96,7 @@ One usually chooses a contour interval that is a multiple of 10, 20, or 50 metre
       figure(image("figs/interval_10.pdf", width: 100%), caption: [contour interval = #qty("10", "m")]),
       figure(image("figs/interval_100.pdf", width: 100%), caption: [contour interval = #qty("100", "m")]),
       columns: (1fr, 1fr),
-      caption: [Comparison of contour intervals showing how increasing the spacing from #qty("10", "m") to #qty("100", "m") decreases visual clutter.],
+      caption: [Increasing the contour interval from #qty("10", "m") to #qty("100", "m") decreases visual clutter.],
       placement: auto,
       label: <fig:contour_interval_comparison>,
     ) 

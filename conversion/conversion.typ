@@ -328,7 +328,7 @@ Such methods require more storage, but can be useful for interactive environment
 #citet(<Garland95>) elaborate further on different aspects of TIN simplification, such as different importance measures, the differences between refinement and decimation, and the usefulness of data-dependent triangulations.
 They also show how @algo:tin-simp:ref can be made a lot faster by only recomputing the importance of points in triangles that have been modified.
 
-#pagebreak()
+// #pagebreak()
 
 == Exercises
 
