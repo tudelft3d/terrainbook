@@ -7,7 +7,7 @@
 We consider in this chapter the following four terrain representations and discuss the conversions between them:
 
 #figure(
-  image("figs/reps.pdf", width: 100%),
+  image("../whatisterrain/figs/reps.pdf", width: 100%),
   numbering: none,
   // caption: [],
   // placement: auto,
