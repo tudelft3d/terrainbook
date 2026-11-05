@@ -7,6 +7,12 @@ All notable changes to this book will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026.1] - 2026-11-05
+### Modified
+- fix glitches in printed version of some PDF figures
+- change font in many figures to IBM Flex (the ones made with IPE)
+- 2--3 other minor cosmetic fixes
+
 ## [2026.0] - 2026-10-30
 ### Added
 - Typst files for all chapters
@@ -119,6 +125,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - First release of the book (beta version)
 
 
+[2026.1]: https://github.com/tudelft3d/terrainbook/compare/2026.0...2026.1
+[2026.0]: https://github.com/tudelft3d/terrainbook/compare/2025.1...2026.0
 [2025.1]: https://github.com/tudelft3d/terrainbook/compare/2025.0...2025.1
 [2025.0]: https://github.com/tudelft3d/terrainbook/compare/2024.0...2025.0
 [2024.0]: https://github.com/tudelft3d/terrainbook/compare/2023.0...2024.0
